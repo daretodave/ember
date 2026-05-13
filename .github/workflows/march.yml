@@ -49,7 +49,10 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 22
-          cache: pnpm
+          # pnpm cache is only valid once pnpm-lock.yaml exists.
+          # Phase 1 lands the lockfile; until then this is empty
+          # (which disables caching, ~5s overhead).
+          cache: ${{ hashFiles('pnpm-lock.yaml') != '' && 'pnpm' || '' }}
 
       - name: Install dependencies
         if: hashFiles('pnpm-lock.yaml') != ''
