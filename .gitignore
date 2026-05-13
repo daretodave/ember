@@ -9,3 +9,6 @@ dist
 
 # bootstrap — manifest holds settings, must not be tracked
 setup/bootstrap.local.json
+
+# Supabase CLI local cache
+supabase/.temp/

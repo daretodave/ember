@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "bootstrap": "node scripts/bootstrap.mjs",
-    "bootstrap:status": "node scripts/bootstrap.mjs status"
+    "bootstrap:status": "node scripts/bootstrap.mjs status",
+    "deploy:check": "node scripts/deploy-check.mjs"
   }
 }
