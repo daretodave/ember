@@ -1,51 +1,46 @@
 name: march
 
-# Cloud half of the autonomous loop. One scheduled invocation =
-# one /march tick. State of truth is the repo on origin/main;
-# every tick reads it fresh, no memory between runs.
+# Cloud half of the ember autonomous loop. One scheduled invocation =
+# one /march tick. State of truth is the repo on origin/main; every
+# tick reads it fresh, no memory between runs.
 #
-# See .github/CLOUD_LOOP.md for setup, debugging, and the upgrade path
-# from bot-author to user-author.
+# See .github/CLOUD_LOOP.md and nexus/customization/bootstrap-automation.md
+# for setup, debugging, and the upgrade path.
 
 on:
   schedule:
-    # Every 2h, off-peak UTC. Adjust to match your timezone — GH cron
-    # always runs in UTC. The example below = ~7 ticks/day, weighted
-    # toward 22:00-12:00 UTC (US East off-peak).
+    # Every 2h, off-peak UTC. Adjust to your timezone — GH cron always
+    # runs in UTC. Conservative starting cadence for a brand-new repo;
+    # bump to hourly once the loop has run cleanly for a few days.
+    # Bounded downstream by:
+    #   - the daily commit ceiling (12 cloud-shipped / 24h)
+    #   - the concurrency group `march`
+    #   - the 5h timeout per tick.
     - cron: '0 1,3,5,7,9,11,23 * * *'
   workflow_dispatch:
 
 concurrency:
-  # Serialize ticks. A long-running tick blocks the next scheduled
-  # firing rather than racing the working tree. Acceptable.
   group: march
   cancel-in-progress: false
 
 jobs:
   march:
     runs-on: ubuntu-latest
-    # 6h is the GH-Actions hard limit; 5h leaves headroom. Most ticks
-    # finish in under 15min; the long tail is /ship-a-phase doing a
-    # full prerendered build.
     timeout-minutes: 300
     permissions:
-      contents: write   # push back to main
-      issues: write     # /triage labels + cloud-failed issue
-      id-token: write   # Claude Code Action's OIDC handshake
+      contents: write
+      issues: write
+      id-token: write
     steps:
       - name: Checkout (full history for /march dispatch)
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-          # Default: GITHUB_TOKEN (commits as github-actions[bot]).
-          # To switch to user-author mode, mint a fine-grained PAT
-          # scoped to this repo with Contents:write + Issues:write,
-          # add it as ACTIONS_PAT secret, and uncomment the next line:
-          # token: ${{ secrets.ACTIONS_PAT }}
-
-      # ───────────────────────────────────────────────────────────
-      # Project-specific install. Adjust for your stack.
-      # ───────────────────────────────────────────────────────────
+          # PAT (not GITHUB_TOKEN) so git push commits attribute to
+          # you, not to github-actions[bot]. Required for the uniform
+          # git log posture (per agents.md). Needs contents:write +
+          # issues:write + actions:write.
+          token: ${{ secrets.ACTIONS_PAT }}
 
       - name: Set up pnpm
         uses: pnpm/action-setup@v4
@@ -57,11 +52,13 @@ jobs:
           cache: pnpm
 
       - name: Install dependencies
+        if: hashFiles('pnpm-lock.yaml') != ''
         run: pnpm install --frozen-lockfile
 
-      # If you have a Playwright e2e leg, cache + install browsers.
-      # Drop this block entirely for projects without e2e.
+      # Hermetic e2e cache. Phase 1+ wires the harness; until apps/e2e
+      # exists this step is a no-op.
       - name: Cache Playwright browsers
+        if: hashFiles('apps/e2e/package.json') != ''
         uses: actions/cache@v4
         with:
           path: ~/.cache/ms-playwright
@@ -70,22 +67,36 @@ jobs:
             playwright-${{ runner.os }}-
 
       - name: Install Playwright browsers (chromium only)
+        if: hashFiles('apps/e2e/package.json') != ''
         run: pnpm --filter "@ember/e2e" e2e:install
 
-      # ───────────────────────────────────────────────────────────
-      # Cloud-loop control plane.
-      # ───────────────────────────────────────────────────────────
+      # Supabase CLI for the hermetic e2e leg. Skipped until
+      # supabase/config.toml lands (phase 4 — auth migrations).
+      - name: Install Supabase CLI
+        if: hashFiles('supabase/config.toml') != ''
+        uses: supabase/setup-cli@v1
+        with:
+          version: latest
+
+      - name: Pre-start Supabase containers
+        if: hashFiles('supabase/config.toml') != ''
+        run: supabase start
+        timeout-minutes: 5
 
       - name: Daily commit ceiling check
         id: ceiling
         run: |
           # Cloud commits are identified by the `Cloud-Run:` trailer
-          # the agent appends to every commit message (the brief
-          # mandates it). The ceiling bounds *cloud volume* in 24h —
-          # local commits don't count toward it.
+          # the agent appends to every commit message (agents.md §2
+          # carve-out). Author is daretodave on both cloud AND local
+          # commits, so we distinguish via trailer. The ceiling
+          # bounds *cloud-shipped volume*; local commits don't count.
           since="$(date -u -d '24 hours ago' '+%Y-%m-%d %H:%M:%S')"
           count=$(git log --since="$since" --grep='Cloud-Run:' --oneline | wc -l | tr -d ' ')
           echo "Cloud-shipped commits in last 24h: $count"
+          # Ceiling: 12/day — paired with the every-2h cron (~12
+          # ticks/day) so cadence + ceiling line up. Bump when the
+          # loop matures.
           if [ "$count" -ge 12 ]; then
             echo "Cloud ceiling reached (12 cloud-shipped commits / 24h). Exiting cleanly — no work this tick."
             echo "skip=true" >> "$GITHUB_OUTPUT"
@@ -93,32 +104,30 @@ jobs:
             echo "skip=false" >> "$GITHUB_OUTPUT"
           fi
 
-      - name: Configure git author for cloud commits
-        if: steps.ceiling.outputs.skip != 'true'
-        run: |
-          # Default: github-actions[bot]. To switch to user-author,
-          # replace the values below with your username + noreply
-          # email (`<id>+<username>@users.noreply.github.com`) and
-          # also uncomment the `token: ${{ secrets.ACTIONS_PAT }}`
-          # line under the checkout step above.
-          git config user.name  "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+      # Git author identity is set via env vars on the Claude Code
+      # action step below, NOT via `git config` in a separate step.
+      # The action's internal `git config user.name "claude[bot]"`
+      # runs AFTER any preceding workflow step and would override
+      # repo-local config silently. The only reliable override is
+      # the GIT_AUTHOR_* / GIT_COMMITTER_* env-var path — git checks
+      # env vars first when reading author identity at `git commit`
+      # time, before falling back to config.
 
       - name: Run /march (cloud mode)
+        id: claude_run
         if: steps.ceiling.outputs.skip != 'true'
         uses: anthropics/claude-code-action@v1
         with:
-          # Default: OAuth token against your Claude Pro/Max
-          # subscription. $0 marginal cost; quota shared with local.
-          # Alternative: ANTHROPIC_API_KEY env var (pay-per-token).
+          # OAuth token bills against the user's Claude Pro/Max
+          # subscription. $0 marginal cost; quota shared with local
+          # sessions.
           claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
-          # Sonnet for cheap-on-quota dispatch. Upgrade to
-          # claude-opus-4-7 once you've measured a week of weekly-cap
-          # consumption and confirmed headroom.
+          # Sonnet 4.6 for v1. Upgrade to opus-4-7 once Ember has
+          # phase 1+ shipped and the cloud loop has proven stable —
+          # opus costs ~2x weekly cap weight.
           claude_args: |
-            {
-              "model": "claude-sonnet-4-6"
-            }
+            --model claude-sonnet-4-6
+            --dangerously-skip-permissions
           prompt: |
             You are running ember's autonomous loop in CI (GitHub Actions).
             Read agents.md first for the standing rules — they all apply.
@@ -129,47 +138,149 @@ jobs:
             2. Skip /critique. The reader sub-agent depends on a Chrome MCP that is not available on the runner. /critique stays a local-only ritual.
             3. /expand may run; candidates land in plan/PHASE_CANDIDATES.md. Promotion happens only via local /oversight — do not promote candidates from cloud.
             4. The verify gate (`pnpm verify`) and deploy gate (`pnpm deploy:check`) are non-negotiable. Same as local. NEVER --no-verify.
-            5. The git author identity is already configured by the workflow. Do not change it.
+            5. Commit author is David Rehmat <me@dave.blue> via GIT_AUTHOR_* / GIT_COMMITTER_* env vars (already configured by the workflow). Do not run `git config user.*` to change it — the env vars take precedence anyway, but explicit overrides muddy the log.
             6. EVERY commit you ship in this tick MUST end with this exact trailer (a blank line before it, then the trailer as its own line):
 
                   Cloud-Run: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
 
-               This is how the next tick's ceiling check distinguishes cloud-shipped commits from the user's local work. If a commit lacks this trailer it does not count toward the cloud ceiling, which would let the loop run away. Treat the trailer as non-negotiable, like the verify gate. agents.md's "no Co-Authored-By trailers, plain commit message bodies" rule has an explicit carve-out for this single trailer; nothing else.
+               This is how the next tick's ceiling check distinguishes cloud-shipped commits from the user's local work — both have the same author. If a commit lacks this trailer it does not count toward the cloud ceiling, which would let the loop run away. Treat the trailer as non-negotiable, like the verify gate. agents.md's "no Co-Authored-By trailers, plain commit message bodies" rule has an explicit carve-out for this single trailer; nothing else.
             7. If the tick cannot ship cleanly (red verify, red deploy, blocked phase, no work to do, anything else), do NOT half-commit. Either:
                - exit cleanly with a one-line note in the action log explaining why no work shipped this tick, or
                - if there is a real failure to surface, open a GitHub issue with `gh issue create --title "Cloud march failed: <iso-date>" --body "<context + run URL>"` and exit. Do not pass `--label` — the issue lands unlabeled and the next scheduled tick's /triage classifies and labels it appropriately.
 
             The dispatch order is the standard /march order from skills/march.md: triage → critique (skipped) → ship-a-phase → ship-data → expand → iterate.
 
+            Note: ember is at phase 0 (bootstrap just landed). Phase 1 (Next.js substrate) is the first /ship-a-phase target. There is no app code yet; the verify gate's typecheck/build legs will fail until phase 1 ships them.
+
             Begin. One tick. One commit-and-push (or no-op). Then exit.
         env:
-          # Add any secrets your verify/deploy gates need. Examples:
-          # NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
-          # VERCEL_TOKEN:       ${{ secrets.VERCEL_TOKEN }}
-          # CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          #
-          # Default: GITHUB_TOKEN. To switch to user-PAT mode,
-          # replace with: GH_TOKEN: ${{ secrets.ACTIONS_PAT }}
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # Deploy gate
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+          VERCEL_PROJECT_ID: ${{ vars.VERCEL_PROJECT_ID }}
+          VERCEL_TEAM_ID: ${{ vars.VERCEL_TEAM_ID }}
+          # ACTIONS_PAT (not GITHUB_TOKEN) so the agent's `gh` calls
+          # and any direct git operations identify as you, not as the
+          # bot.
+          GH_TOKEN: ${{ secrets.ACTIONS_PAT }}
+          # Supabase (runtime + e2e)
+          NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
+          NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY }}
+          NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+          SUPABASE_PROJECT_ID: ${{ secrets.SUPABASE_PROJECT_ID }}
+          SUPABASE_DB_PASSWORD: ${{ secrets.SUPABASE_DB_PASSWORD }}
+          # Hermetic e2e: keep the Vercel beacons quiet
+          DISABLE_ANALYTICS: '1'
+          # Git author identity. These four env vars take precedence
+          # over any `git config user.*` value at `git commit` time,
+          # including the action's own internal "Set git user as
+          # claude[bot]" step. Without them, commits author as
+          # claude[bot]; with them, commits attribute to the human
+          # user the way local commits do. Email matches the user's
+          # verified GitHub address so the avatar resolves on
+          # github.com.
+          GIT_AUTHOR_NAME:     "David Rehmat"
+          GIT_AUTHOR_EMAIL:    "me@dave.blue"
+          GIT_COMMITTER_NAME:  "David Rehmat"
+          GIT_COMMITTER_EMAIL: "me@dave.blue"
 
-      - name: Open cloud-failed issue if action crashed
-        # Safety net for the case where Claude Code itself crashed
-        # (auth error, runner OOM, etc.) before the agent could open
-        # the issue per its brief. Only fires on genuine non-zero exit.
-        if: failure() && steps.ceiling.outputs.skip != 'true'
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      # Surface execution problems through the GitHub-issue address
+      # loop the rest of the project uses, instead of accumulating
+      # transcripts as artifacts on every tick. A clean tick (no
+      # denials, no errors, action exit 0) leaves no artifact and no
+      # issue. A problematic tick uploads the transcript and opens a
+      # single issue linking to it. The next /triage tick classifies
+      # the issue naturally.
+
+      - name: Inspect execution for problem signals
+        id: inspect
+        if: always() && steps.ceiling.outputs.skip != 'true'
         run: |
-          # Dedupe by title prefix instead of label — labels need
-          # extra PAT scope (Issues:write at label-management level)
-          # which not every PAT grants. Issue creation only needs
-          # Issues:write at content level. The next /triage tick
-          # labels these naturally.
-          existing=$(gh issue list --search 'in:title "Cloud march tick crashed" state:open' --json number --jq 'length')
-          if [ "$existing" -eq 0 ]; then
-            gh issue create \
-              --title "Cloud march tick crashed: $(date -u +%Y-%m-%dT%H:%M:%SZ)" \
-              --body "Action exited non-zero before the agent could file its own issue. Run: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          transcript="${{ steps.claude_run.outputs.execution_file }}"
+          outcome="${{ steps.claude_run.outcome }}"
+          reasons=""
+
+          if [ -z "$transcript" ] || [ ! -f "$transcript" ]; then
+            if [ "$outcome" = "failure" ]; then
+              reasons="- action crashed before producing a transcript (no artifact available)"
+              echo "has_issues=true"     >> "$GITHUB_OUTPUT"
+              echo "has_transcript=false">> "$GITHUB_OUTPUT"
+            else
+              echo "has_issues=false"    >> "$GITHUB_OUTPUT"
+              echo "has_transcript=false">> "$GITHUB_OUTPUT"
+            fi
           else
-            echo "An open 'Cloud march tick crashed' issue already exists — skipping dedupe."
+            denials=$(jq    '[.[] | select(.type=="result") | .permission_denials_count // 0][0] // 0' "$transcript")
+            is_error=$(jq   '[.[] | select(.type=="result") | .is_error // false][0] // false'        "$transcript")
+            api_error=$(jq -r '[.[] | select(.type=="result") | .api_error_status // empty][0] // ""' "$transcript")
+
+            if [ "$denials" != "0" ];      then reasons="${reasons}- permission_denials_count: ${denials}"$'\n'; fi
+            if [ "$is_error" = "true" ];   then reasons="${reasons}- result.is_error: true"$'\n'; fi
+            if [ -n "$api_error" ];        then reasons="${reasons}- api_error_status: ${api_error}"$'\n'; fi
+            if [ "$outcome" = "failure" ]; then reasons="${reasons}- action outcome: failure"$'\n'; fi
+
+            if [ -n "$reasons" ]; then
+              echo "has_issues=true"     >> "$GITHUB_OUTPUT"
+            else
+              echo "has_issues=false"    >> "$GITHUB_OUTPUT"
+            fi
+            echo "has_transcript=true"   >> "$GITHUB_OUTPUT"
           fi
+
+          {
+            echo "reasons<<EOF_REASONS"
+            printf "%s" "$reasons"
+            echo
+            echo "EOF_REASONS"
+          } >> "$GITHUB_OUTPUT"
+
+          echo "--- inspect summary ---"
+          echo "outcome:        $outcome"
+          echo "has_transcript: $([ -f "$transcript" ] && echo true || echo false)"
+          echo "reasons:"
+          printf "%s" "$reasons"
+
+      - name: Upload Claude execution transcript (only when problematic)
+        if: steps.inspect.outputs.has_issues == 'true' && steps.inspect.outputs.has_transcript == 'true'
+        uses: actions/upload-artifact@v4
+        with:
+          name: claude-execution-${{ github.run_id }}
+          path: ${{ steps.claude_run.outputs.execution_file }}
+          retention-days: 30
+          if-no-files-found: warn
+
+      - name: Open GitHub issue for problematic execution
+        if: steps.inspect.outputs.has_issues == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.ACTIONS_PAT }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          REASONS: ${{ steps.inspect.outputs.reasons }}
+          HAS_TRANSCRIPT: ${{ steps.inspect.outputs.has_transcript }}
+        run: |
+          existing=$(gh issue list --search 'in:title "Cloud march execution had issues" state:open' --json number --jq 'length')
+          if [ "$existing" != "0" ]; then
+            echo "An open 'Cloud march execution had issues' issue already exists — skipping."
+            exit 0
+          fi
+
+          if [ "$HAS_TRANSCRIPT" = "true" ]; then
+            transcript_line="**Transcript:** download the \`claude-execution-${{ github.run_id }}\` artifact from the run page (Artifacts section). 30-day retention."
+          else
+            transcript_line="**Transcript:** unavailable — action crashed before writing one."
+          fi
+
+          body_file="$(mktemp)"
+          {
+            echo "The cloud /march tick at ${RUN_URL} surfaced one or more execution issues."
+            echo
+            echo "**Signals:**"
+            printf '%s\n' "${REASONS}"
+            echo
+            echo "${transcript_line}"
+            echo
+            echo "The next /triage tick will classify and label this issue."
+          } > "$body_file"
+
+          gh issue create \
+            --title "Cloud march execution had issues: $(date -u +%Y-%m-%dT%H:%M:%SZ)" \
+            --body-file "$body_file"
