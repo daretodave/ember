@@ -70,7 +70,7 @@ your streak" UI. No likes/comments/follows.
 ## Project
 
 **Ember** — a calm daily-practice site. One prompt + one
-tiny task per day. Lives at https://ember.vercel.app (once
+tiny task per day. Lives at https://ember-rust-sigma.vercel.app (once
 deployed).
 
 The spec is `spec.md` at the repo root. Read it once.

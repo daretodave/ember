@@ -20,7 +20,7 @@
 
 ## What it is NOT doing
 
-- Custom domain (defer to v1.5; `ember.vercel.app` is fine)
+- Custom domain (defer to v1.5; `ember-rust-sigma.vercel.app` is fine)
 - Vercel Postgres (Supabase owns DB)
 - Vercel Blob (no images in v1)
 - Vercel Cron (cloud loop runs on GitHub Actions)
@@ -80,7 +80,7 @@ To be populated by `/bootstrap vercel` after Supabase setup:
 
 ## Section E — Domains
 
-- [ ] `ember.vercel.app` (auto-assigned)
+- [ ] `ember-rust-sigma.vercel.app` (auto-assigned)
 - Custom domain — defer
 
 ## Section F — Function regions (HANDOFF)
@@ -118,7 +118,7 @@ For `scripts/deploy-check.mjs` (added in phase 1):
 vercel whoami
 vercel ls
 vercel env ls production
-vercel inspect ember.vercel.app
+vercel inspect ember-rust-sigma.vercel.app
 ```
 
 ## What requires manual post-launch action

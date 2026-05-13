@@ -11,7 +11,7 @@
 - **Repo:** daretodave/ember
 - **Hosting:** Vercel (pdx1)
 - **Default branch:** main
-- **Default URL (v1):** https://ember.vercel.app
+- **Default URL (v1):** https://ember-rust-sigma.vercel.app
 
 ## Stack (locked — do not re-litigate)
 
