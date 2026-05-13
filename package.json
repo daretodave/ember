@@ -3,6 +3,10 @@
   "version": "0.0.0",
   "private": true,
   "type": "module",
+  "packageManager": "pnpm@9.12.3",
+  "engines": {
+    "node": ">=22.0.0"
+  },
   "scripts": {
     "bootstrap": "node scripts/bootstrap.mjs",
     "bootstrap:status": "node scripts/bootstrap.mjs status",
