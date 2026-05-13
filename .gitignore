@@ -6,9 +6,14 @@ node_modules
 *.log
 .DS_Store
 dist
+tsconfig.tsbuildinfo
 
 # bootstrap — manifest holds settings, must not be tracked
 setup/bootstrap.local.json
 
 # Supabase CLI local cache
 supabase/.temp/
+
+# Playwright artifacts
+apps/e2e/test-results/
+apps/e2e/playwright-report/

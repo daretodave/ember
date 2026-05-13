@@ -6,8 +6,8 @@
 
 ## Status (at-a-glance)
 
-- [ ] Phase 0 — Bootstrap (external services, deploys, cloud loop) — via `/bootstrap`
-- [ ] Phase 1 — Substrate (Next.js app skeleton, Supabase client wiring, design tokens stub)
+- [x] Phase 0 — Bootstrap (external services, deploys, cloud loop) — via `/bootstrap`
+- [x] Phase 1 — Substrate (Next.js app skeleton, Supabase client wiring, design tokens stub)
 - [ ] Phase 2 — Visual system commission (palette, type, mosaic tile shape) — design artifact
 - [ ] Phase 3 — Anonymous landing + 7-day preview
 - [ ] Phase 4 — Magic-link auth (Supabase Auth, `/signin`, session middleware)

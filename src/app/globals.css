@@ -1,0 +1,7 @@
+@import 'tailwindcss';
+
+@theme {
+  --font-family-serif: 'Source Serif 4', Georgia, serif;
+  --font-family-sans: Inter, system-ui, sans-serif;
+  --font-family-mono: 'JetBrains Mono', monospace;
+}

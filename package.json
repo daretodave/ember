@@ -8,8 +8,36 @@
     "node": ">=22.0.0"
   },
   "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "typecheck": "tsc --noEmit",
+    "lint": "biome check .",
+    "format": "biome format --write .",
+    "test:run": "vitest run --passWithNoTests",
+    "verify": "pnpm typecheck && pnpm test:run && pnpm build && pnpm --filter @ember/e2e test",
+    "deploy:check": "DEPLOY_PROVIDER=vercel node scripts/deploy-check.mjs",
     "bootstrap": "node scripts/bootstrap.mjs",
-    "bootstrap:status": "node scripts/bootstrap.mjs status",
-    "deploy:check": "node scripts/deploy-check.mjs"
+    "bootstrap:status": "node scripts/bootstrap.mjs status"
+  },
+  "dependencies": {
+    "@supabase/ssr": "^0.6.1",
+    "@supabase/supabase-js": "^2.49.4",
+    "next": "^15.3.2",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^1.9.4",
+    "@tailwindcss/postcss": "^4.1.6",
+    "@types/jsdom": "^28.0.3",
+    "@types/node": "^22",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "@vitejs/plugin-react": "^4.4.1",
+    "jsdom": "^29.1.1",
+    "tailwindcss": "^4.1.6",
+    "typescript": "^5.8.3",
+    "vitest": "^3.1.3"
   }
 }
