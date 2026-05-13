@@ -1,0 +1,52 @@
+{
+  "_help": {
+    "purpose": "Bootstrap manifest. Copy to setup/bootstrap.local.json (gitignored).",
+    "auth_note": "This file holds SETTINGS, not provider auth. Auth handled via `gh auth login`, `vercel login`, `supabase login` out of band. Anthropic OAuth + ACTIONS_PAT are paste-prompted during /bootstrap cloud-loop.",
+    "schema_doc": "See ../../customization/bootstrap-automation.md (nexus customization) for field descriptions."
+  },
+
+  "project": {
+    "name": "<PROJECT>",
+    "tagline": "<one-line description>",
+    "github_owner": "<user-or-org>",
+    "github_repo": "<PROJECT_LOWER>",
+    "visibility": "public",
+    "description": "<one-line description for repo About>",
+    "default_branch": "main",
+    "topics": ["<topic-1>", "<topic-2>"]
+  },
+
+  "providers": {
+    "vercel": {
+      "framework": "nextjs",
+      "region": "pdx1",
+      "team": "",
+      "custom_domain": ""
+    },
+    "supabase": {
+      "region": "us-west-1",
+      "org": "",
+      "db_password": ""
+    }
+  },
+
+  "cloud_loop": {
+    "enabled": true,
+    "identity": "user",
+    "schedule_cron": "0 */2 * * *",
+    "daily_ceiling": 12
+  },
+
+  "optional_services": {
+    "_comment": "Comment-out (remove) any block you're not adopting in v1. Adding later is `/bootstrap <service>`.",
+    "anthropic": {
+      "_purpose": "in-product prompt generation / summarization",
+      "model": "claude-sonnet-4-6"
+    },
+    "openai": {
+      "_purpose": "in-product moderation / fallback",
+      "spend_cap_usd": 20,
+      "model": "gpt-4o-mini"
+    }
+  }
+}

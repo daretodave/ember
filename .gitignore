@@ -1,0 +1,11 @@
+node_modules
+.env
+.env.local
+.next
+.vercel
+*.log
+.DS_Store
+dist
+
+# bootstrap — manifest holds settings, must not be tracked
+setup/bootstrap.local.json
