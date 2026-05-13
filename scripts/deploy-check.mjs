@@ -124,10 +124,10 @@ else if (PROVIDER === 'vercel') {
       return {
         state: 'error',
         message: match.errorMessage,
-        admin: `https://vercel.com/${match.ownerId}/${match.name}/${match.id}`,
+        admin: `https://vercel.com/${match.ownerId}/${match.name}/${match.uid ?? match.id}`,
       }
     }
-    return { state: match.readyState.toLowerCase(), id: match.id.slice(0, 8) }
+    return { state: match.readyState.toLowerCase(), id: (match.uid ?? match.id ?? '').slice(0, 8) }
   })
 }
 
