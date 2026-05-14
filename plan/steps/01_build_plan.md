@@ -12,7 +12,7 @@
 - [x] Phase 3 — Anonymous landing + 7-day preview
 - [x] Phase 4 — Magic-link auth (Supabase Auth, `/signin`, session middleware) — 08eb4a4
 - [x] Phase 5 — Today + entry write (`/today`, prompt curation, entry model) — 43a4594
-- [ ] Phase 6 — Log + mosaic (`/log`, `/log/[date]`, 60-day mosaic component)
+- [x] Phase 6 — Log + mosaic (`/log`, `/log/[date]`, 60-day mosaic component) — 1467ac6
 - [ ] Phase 7 — Settings (`/settings`, timezone, display name, public username)
 - [ ] Phase 8 — Public profile (`/u/[username]`, `/u/[username]/[date]`, publish toggle)
 - [ ] Phase 9 — Polish (mobile reflow, empty states, error pages)
