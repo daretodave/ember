@@ -1,0 +1,267 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>ember · today</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,500;0,8..60,600;1,8..60,400&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="tokens.css" />
+  <style>
+    body { padding-bottom: var(--space-8); }
+
+    /* header — shared chrome pattern */
+    .header { max-width: 720px; margin: 0 auto; padding: var(--space-7) var(--space-6) var(--space-6); display:flex; align-items:center; justify-content:space-between; border-bottom: 1px solid var(--color-border); }
+    .lockup { display:flex; align-items:center; gap: var(--space-3); }
+    .glyph { display:grid; grid-template-columns: repeat(6, 4px); grid-auto-rows: 4px; gap: 1px; }
+    .glyph .tile { width:4px; height:4px; border-width: 0.5px; animation:none; opacity:1; }
+    .wordmark { font-family: var(--font-serif); font-size: var(--type-24); letter-spacing: var(--tracking-tight); color: var(--color-ink); line-height: 1; }
+    .nav { font-family: var(--font-sans); font-size: var(--type-14); display: flex; align-items: center; gap: var(--space-5); }
+    .nav a { color: var(--color-ink-muted); text-decoration: none; transition: color var(--motion-fade) var(--easing); }
+    .nav a:hover { color: var(--color-ink); }
+    .nav a.is-current { color: var(--color-ink); position: relative; }
+    .nav a.is-current::after { content: ""; position: absolute; left: 0; right: 0; bottom: -8px; height: 1px; background: var(--color-accent); }
+
+    /* main */
+    main { max-width: 720px; margin: 0 auto; padding: var(--space-8) var(--space-6) var(--space-7); }
+
+    .date-stamp {
+      font-family: var(--font-mono);
+      font-size: var(--type-12);
+      color: var(--color-ink-muted);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin: 0 0 var(--space-7);
+    }
+
+    .prompt {
+      font-family: var(--font-serif);
+      font-size: var(--type-32);
+      line-height: 1.25;
+      letter-spacing: var(--tracking-tight);
+      color: var(--color-ink);
+      margin: 0 0 var(--space-6);
+      max-width: 600px;
+    }
+    .prompt em { font-style: italic; color: var(--color-accent-2); }
+
+    .task {
+      display: flex;
+      align-items: flex-start;
+      gap: var(--space-3);
+      padding: var(--space-4) 0;
+      border-top: 1px solid var(--color-border-faint);
+      border-bottom: 1px solid var(--color-border-faint);
+      margin-bottom: var(--space-7);
+    }
+    .task-check {
+      width: 18px; height: 18px;
+      border: 1px solid var(--color-ink-muted);
+      border-radius: var(--radius-1);
+      flex-shrink: 0;
+      cursor: pointer;
+      position: relative;
+      background: transparent;
+      transition: border-color var(--motion-fade) var(--easing), background var(--motion-fade) var(--easing);
+      margin-top: 4px;
+    }
+    .task-check.is-done { background: var(--color-ink); border-color: var(--color-ink); }
+    .task-check.is-done::after {
+      content: "";
+      position: absolute;
+      left: 5px; top: 2px;
+      width: 4px; height: 9px;
+      border: solid var(--color-paper);
+      border-width: 0 1.5px 1.5px 0;
+      transform: rotate(45deg);
+    }
+    .task-body {
+      font-family: var(--font-serif);
+      font-size: var(--type-16);
+      line-height: var(--leading-snug);
+      color: var(--color-ink);
+      margin: 0;
+    }
+    .task-body span { color: var(--color-ink-muted); }
+
+    /* entry */
+    .entry-label {
+      font-family: var(--font-sans);
+      font-size: var(--type-12);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--color-ink-muted);
+      margin: 0 0 var(--space-3);
+    }
+    .entry {
+      font-family: var(--font-serif);
+      font-size: var(--type-17);
+      line-height: var(--leading-prose);
+      color: var(--color-ink);
+      background: transparent;
+      border: 0;
+      border-bottom: 1px solid var(--color-border);
+      padding: 0 0 var(--space-4);
+      width: 100%;
+      resize: vertical;
+      min-height: 220px;
+      outline: none;
+      transition: border-color var(--motion-fade) var(--easing);
+    }
+    .entry:focus { border-bottom-color: var(--color-accent); }
+    .entry::placeholder { color: var(--color-ink-faint); font-style: italic; }
+
+    .entry-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: var(--space-4);
+      font-family: var(--font-mono);
+      font-size: var(--type-12);
+      color: var(--color-ink-muted);
+    }
+    .entry-actions { display:flex; gap: var(--space-3); align-items: center; }
+    .save-btn {
+      font-family: var(--font-sans);
+      font-size: var(--type-14);
+      font-weight: var(--weight-medium);
+      padding: 8px 16px;
+      background: var(--color-ink);
+      color: var(--color-paper);
+      border: 0;
+      border-radius: var(--radius-1);
+      cursor: pointer;
+      transition: opacity var(--motion-fade) var(--easing);
+    }
+    .save-btn:hover { opacity: 0.88; }
+    .publish-toggle {
+      display: inline-flex; align-items: center; gap: var(--space-2);
+      font-family: var(--font-sans);
+      font-size: var(--type-14);
+      color: var(--color-ink-muted);
+      cursor: pointer;
+    }
+    .publish-toggle input { appearance: none; width: 32px; height: 18px; background: var(--color-border); border-radius: 999px; position: relative; cursor: pointer; transition: background var(--motion-fade) var(--easing); margin: 0; }
+    .publish-toggle input::after { content: ""; position: absolute; left: 2px; top: 2px; width: 14px; height: 14px; border-radius: 50%; background: var(--color-paper); transition: left var(--motion-fade) var(--easing); }
+    .publish-toggle input:checked { background: var(--color-accent); }
+    .publish-toggle input:checked::after { left: 16px; }
+
+    /* footer 7-day strip */
+    .strip {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: var(--space-7) var(--space-6);
+      border-top: 1px solid var(--color-border);
+    }
+    .strip-head {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      margin-bottom: var(--space-5);
+    }
+    .strip-label {
+      font-family: var(--font-sans);
+      font-size: var(--type-12);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--color-ink-muted);
+    }
+    .strip-link {
+      font-family: var(--font-sans);
+      font-size: var(--type-14);
+      color: var(--color-ink);
+      text-decoration: none;
+      border-bottom: 1px solid var(--color-border);
+      padding-bottom: 1px;
+    }
+    .strip-link:hover { border-bottom-color: var(--color-ink); }
+    .strip-row {
+      display: flex;
+      align-items: flex-end;
+      gap: var(--space-5);
+    }
+    .strip-day { display:flex; flex-direction: column; align-items: center; gap: var(--space-2); }
+    .strip-day .tile { width: 32px; height: 32px; animation:none; opacity:1; }
+    .strip-day .tile.tile--today { box-shadow: 0 0 0 5px var(--color-accent); }
+    .strip-day-date { font-family: var(--font-mono); font-size: var(--type-12); color: var(--color-ink-muted); }
+    .strip-day-date.is-today { color: var(--color-accent-2); }
+  </style>
+</head>
+<body data-screen-label="04 Today">
+
+  <header class="header">
+    <div class="lockup">
+      <div class="glyph">
+        <div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div>
+        <div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile"></div>
+        <div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div>
+        <div class="tile"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div>
+        <div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div>
+        <div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div>
+        <div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div>
+        <div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div>
+        <div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div>
+        <div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--today"></div><div class="tile"></div>
+      </div>
+      <span class="wordmark">ember</span>
+    </div>
+    <nav class="nav">
+      <a href="#today" class="is-current">today</a>
+      <a href="#log">log</a>
+      <a href="#settings">settings</a>
+    </nav>
+  </header>
+
+  <main>
+    <p class="date-stamp">Wed 13 May 2026 · 07:14</p>
+
+    <h1 class="prompt">notice one thing on the way in this morning — a sound, a color, a person's posture — and write it <em>down</em> before you forget.</h1>
+
+    <div class="task">
+      <button class="task-check is-done" aria-pressed="true" aria-label="mark task done"></button>
+      <p class="task-body">today's tiny task <span>— drink a glass of water before opening any app.</span></p>
+    </div>
+
+    <p class="entry-label">your response</p>
+    <textarea class="entry" placeholder="take your time.">i noticed the light on the back of the kitchen chairs at 7:14 and thought, briefly, about the word amber, which i think i learned the meaning of from a song. the chairs were warm in a way that nothing else was. the cat hadn't moved yet. someone two floors up was running water. i don't usually pay attention to the running-water sound but today i did, and it made the apartment feel like it was inside a larger building, which is true, but i'd forgotten.</textarea>
+
+    <div class="entry-meta">
+      <span>last saved · 07:21</span>
+      <div class="entry-actions">
+        <label class="publish-toggle">
+          <input type="checkbox" />
+          publish
+        </label>
+        <button class="save-btn">save</button>
+      </div>
+    </div>
+  </main>
+
+  <section class="strip">
+    <div class="strip-head">
+      <span class="strip-label">your last seven days</span>
+      <a href="#log" class="strip-link">see all sixty</a>
+    </div>
+    <div class="strip-row">
+      <div class="strip-day"><div class="tile tile--filled"></div><span class="strip-day-date">Thu</span></div>
+      <div class="strip-day"><div class="tile tile--filled"></div><span class="strip-day-date">Fri</span></div>
+      <div class="strip-day"><div class="tile tile--published"></div><span class="strip-day-date">Sat</span></div>
+      <div class="strip-day"><div class="tile tile--filled"></div><span class="strip-day-date">Sun</span></div>
+      <div class="strip-day"><div class="tile"></div><span class="strip-day-date">Mon</span></div>
+      <div class="strip-day"><div class="tile tile--filled"></div><span class="strip-day-date">Tue</span></div>
+      <div class="strip-day"><div class="tile tile--today"></div><span class="strip-day-date is-today">today</span></div>
+    </div>
+  </section>
+
+  <script>
+    document.querySelectorAll('.mosaic .tile, .glyph .tile, .strip-day .tile').forEach((t, i) => {
+      t.style.animationDelay = (i * 6) + 'ms';
+    });
+    // checkbox toggle
+    document.querySelector('.task-check').addEventListener('click', (e) => {
+      e.currentTarget.classList.toggle('is-done');
+    });
+  </script>
+</body>
+</html>

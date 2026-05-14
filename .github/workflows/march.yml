@@ -172,6 +172,10 @@ jobs:
           SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
           SUPABASE_PROJECT_ID: ${{ secrets.SUPABASE_PROJECT_ID }}
           SUPABASE_DB_PASSWORD: ${{ secrets.SUPABASE_DB_PASSWORD }}
+          # OpenAI (in-product use; available for any phase that
+          # needs it — moderation pre-filter, prompt fallback,
+          # /iterate research). Available but not yet consumed.
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
           # Hermetic e2e: keep the Vercel beacons quiet
           DISABLE_ANALYTICS: '1'
           # Git author identity. These four env vars take precedence

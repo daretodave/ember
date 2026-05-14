@@ -1,0 +1,228 @@
+/* =============================================================
+   ember — design tokens
+   the authoritative source. all preview HTML references these
+   via custom properties.
+
+   palette read: "warm cream paper, slate ink, one ember accent."
+   restraint over decoration. no shadows. no gradients.
+   ============================================================= */
+
+:root {
+  /* -------------------------------------------------------------
+     palette — light (default)
+     warm cream paper, slate-leaning-warm ink,
+     a single ember accent (restrained terracotta),
+     a deeper ember-2 for the "published" 4px inset.
+     ------------------------------------------------------------- */
+  --color-paper:        oklch(0.978 0.008 80);    /* #f8f5ef — warm cream */
+  --color-paper-sunk:   oklch(0.955 0.010 80);    /* #efeae0 — for footer / inset zones */
+  --color-ink:          oklch(0.255 0.014 60);    /* #2a2620 — warm slate */
+  --color-ink-muted:    oklch(0.535 0.012 65);    /* #807870 — for chrome labels, dates */
+  --color-ink-faint:    oklch(0.745 0.010 70);    /* #b8b2a8 — for placeholder + empty-tile border */
+  --color-border:       oklch(0.880 0.008 75);    /* #ddd6cc — hairlines */
+  --color-border-faint: oklch(0.930 0.008 75);    /* #ebe5db — softer hairlines */
+  --color-accent:       oklch(0.625 0.135 48);    /* #c2683f — ember terracotta */
+  --color-accent-2:     oklch(0.480 0.110 42);    /* #874826 — deep ember, for the published inset */
+  --color-signal-error: oklch(0.525 0.155 28);    /* #a64a3a — muted alarm */
+
+  /* -------------------------------------------------------------
+     type
+     ------------------------------------------------------------- */
+  --font-serif: "Source Serif 4", "Source Serif Pro", Georgia, "Times New Roman", serif;
+  --font-sans:  "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-mono:  "JetBrains Mono", "SF Mono", Menlo, Consolas, monospace;
+
+  /* sizes — 7-stop ramp on a quiet musical scale */
+  --type-12: 0.75rem;     /* 12px — micro / tooltip / smallest mono */
+  --type-14: 0.875rem;    /* 14px — chrome labels, buttons */
+  --type-16: 1rem;        /* 16px — body small */
+  --type-17: 1.0625rem;   /* 17px — body (serif default for entries) */
+  --type-20: 1.25rem;     /* 20px — section heads */
+  --type-24: 1.5rem;      /* 24px — wordmark / h2 */
+  --type-32: 2rem;        /* 32px — hero prompt floor */
+  --type-40: 2.5rem;      /* 40px — hero prompt ceiling */
+
+  /* line heights */
+  --leading-tight:  1.15;
+  --leading-snug:   1.35;
+  --leading-normal: 1.55;
+  --leading-prose:  1.7;   /* for entry textareas and rendered responses */
+
+  /* tracking — restrained, no aggressive letter-spacing tricks */
+  --tracking-tight: -0.01em;
+  --tracking-normal: 0;
+  --tracking-mono:   0.01em;  /* mono dates breathe a touch */
+
+  /* weights */
+  --weight-regular:  400;
+  --weight-medium:   500;
+  --weight-semibold: 600;
+
+  /* -------------------------------------------------------------
+     spacing — 8 stops on a 4px ramp
+     ------------------------------------------------------------- */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+  --space-8: 64px;
+
+  /* -------------------------------------------------------------
+     radii
+     ------------------------------------------------------------- */
+  --radius-0: 0px;   /* mosaic tiles, hairline UI */
+  --radius-1: 4px;   /* cards, buttons, inputs */
+  --radius-2: 8px;   /* modals, larger surfaces */
+
+  /* -------------------------------------------------------------
+     mosaic — the brand mark geometry
+     ------------------------------------------------------------- */
+  --mosaic-tile:    16px;
+  --mosaic-gap:     4px;
+  --mosaic-cols:    6;
+  --mosaic-rows:    10;
+  --mosaic-ring:    2px;   /* "today" ring thickness */
+  --mosaic-inset:   4px;   /* "published" inner inset thickness */
+
+  /* -------------------------------------------------------------
+     motion — exactly one fade. nothing else.
+     ------------------------------------------------------------- */
+  --motion-fade: 200ms;
+  --easing:      cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+/* =============================================================
+   dark mode — honored via prefers-color-scheme.
+   tone shifts to warm near-black + warm off-white.
+   accent loosens slightly to preserve contrast against ink-paper.
+   ============================================================= */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-paper:        oklch(0.185 0.010 60);  /* #1f1c17 — warm near-black */
+    --color-paper-sunk:   oklch(0.225 0.010 60);  /* #29251f */
+    --color-ink:          oklch(0.925 0.008 80);  /* #ece7dc — warm off-white */
+    --color-ink-muted:    oklch(0.665 0.010 70);  /* #a39c92 */
+    --color-ink-faint:    oklch(0.420 0.010 65);  /* #5e5750 */
+    --color-border:       oklch(0.285 0.010 65);  /* #36322c */
+    --color-border-faint: oklch(0.235 0.010 60);  /* #2a2620 */
+    --color-accent:       oklch(0.680 0.130 52);  /* #d4825a — lifted ember */
+    --color-accent-2:     oklch(0.540 0.115 46);  /* #a55a36 */
+    --color-signal-error: oklch(0.625 0.150 28);  /* #c46959 */
+  }
+}
+
+/* explicit override via [data-theme="dark"] — for the brand sheet
+   which needs to show both modes side by side */
+[data-theme="dark"] {
+  --color-paper:        oklch(0.185 0.010 60);
+  --color-paper-sunk:   oklch(0.225 0.010 60);
+  --color-ink:          oklch(0.925 0.008 80);
+  --color-ink-muted:    oklch(0.665 0.010 70);
+  --color-ink-faint:    oklch(0.420 0.010 65);
+  --color-border:       oklch(0.285 0.010 65);
+  --color-border-faint: oklch(0.235 0.010 60);
+  --color-accent:       oklch(0.680 0.130 52);
+  --color-accent-2:     oklch(0.540 0.115 46);
+  --color-signal-error: oklch(0.625 0.150 28);
+}
+
+[data-theme="light"] {
+  --color-paper:        oklch(0.978 0.008 80);
+  --color-paper-sunk:   oklch(0.955 0.010 80);
+  --color-ink:          oklch(0.255 0.014 60);
+  --color-ink-muted:    oklch(0.535 0.012 65);
+  --color-ink-faint:    oklch(0.745 0.010 70);
+  --color-border:       oklch(0.880 0.008 75);
+  --color-border-faint: oklch(0.930 0.008 75);
+  --color-accent:       oklch(0.625 0.135 48);
+  --color-accent-2:     oklch(0.480 0.110 42);
+  --color-signal-error: oklch(0.525 0.155 28);
+}
+
+/* =============================================================
+   base reset — only what the preview pages need
+   ============================================================= */
+*, *::before, *::after { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body {
+  background: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-serif);
+  font-size: var(--type-17);
+  line-height: var(--leading-normal);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* =============================================================
+   mosaic — the brand mark component
+   used across every preview file. canonical spec.
+   ============================================================= */
+.mosaic {
+  display: grid;
+  grid-template-columns: repeat(var(--mosaic-cols), var(--mosaic-tile));
+  grid-auto-rows: var(--mosaic-tile);
+  gap: var(--mosaic-gap);
+  width: max-content;
+}
+
+.mosaic--md { --mosaic-tile: 24px; --mosaic-gap: 6px; }
+.mosaic--lg { --mosaic-tile: 32px; --mosaic-gap: 8px; }
+
+.tile {
+  width: var(--mosaic-tile);
+  height: var(--mosaic-tile);
+  border-radius: var(--radius-0);
+  background: transparent;
+  border: 1px solid var(--color-ink-faint);
+  position: relative;
+  cursor: default;
+  transition: opacity var(--motion-fade) var(--easing);
+  opacity: 0;
+  animation: tile-fade var(--motion-fade) var(--easing) forwards;
+}
+
+@keyframes tile-fade { to { opacity: 1; } }
+
+.tile--filled {
+  background: var(--color-accent);
+  border-color: var(--color-accent);
+}
+
+.tile--today {
+  background: var(--color-accent);
+  border-color: var(--color-accent);
+  outline: var(--mosaic-ring) solid var(--color-paper);
+  outline-offset: calc(var(--mosaic-ring) * -1 - 1px);
+  box-shadow: 0 0 0 calc(var(--mosaic-ring) + 1px) var(--color-accent);
+}
+
+.tile--published {
+  background: var(--color-accent);
+  border-color: var(--color-accent);
+}
+.tile--published::after {
+  content: "";
+  position: absolute;
+  inset: var(--mosaic-inset);
+  background: var(--color-accent-2);
+}
+
+.tile:hover:not(.tile--empty) { opacity: 0.92; }
+
+/* =============================================================
+   wordmark — for use only inside the mosaic-as-brand-mark
+   pairing. the mosaic IS the brand mark; the wordmark is a
+   companion lockup.
+   ============================================================= */
+.wordmark {
+  font-family: var(--font-serif);
+  font-size: var(--type-24);
+  font-weight: var(--weight-regular);
+  letter-spacing: var(--tracking-tight);
+  color: var(--color-ink);
+  line-height: 1;
+}

@@ -1,0 +1,697 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>ember · brand</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,500;0,8..60,600;1,8..60,400&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="tokens.css" />
+  <style>
+    body { padding: var(--space-8) var(--space-7) var(--space-8); }
+    .page { max-width: 1100px; margin: 0 auto; }
+
+    /* ----------- masthead ----------- */
+    .masthead { display: flex; align-items: baseline; justify-content: space-between; margin: 0 0 var(--space-7); padding-bottom: var(--space-5); border-bottom: 1px solid var(--color-border); }
+    .masthead-title { font-family: var(--font-serif); font-size: var(--type-32); font-weight: var(--weight-regular); letter-spacing: var(--tracking-tight); line-height: var(--leading-tight); margin: 0; }
+    .masthead-meta { font-family: var(--font-mono); font-size: var(--type-12); color: var(--color-ink-muted); }
+    .lede { font-family: var(--font-serif); font-size: var(--type-20); line-height: var(--leading-snug); max-width: 720px; margin: 0 0 var(--space-8); color: var(--color-ink); }
+    .lede em { font-style: italic; color: var(--color-accent-2); }
+
+    /* ----------- section scaffold ----------- */
+    .section { margin: var(--space-8) 0; padding-top: var(--space-6); border-top: 1px solid var(--color-border); }
+    .section:first-of-type { border-top: 0; padding-top: 0; }
+    .section-num { font-family: var(--font-mono); font-size: var(--type-12); color: var(--color-ink-muted); letter-spacing: var(--tracking-mono); }
+    .section-title { font-family: var(--font-serif); font-size: var(--type-24); font-weight: var(--weight-regular); margin: var(--space-1) 0 var(--space-2); letter-spacing: var(--tracking-tight); }
+    .section-note { font-family: var(--font-serif); font-size: var(--type-17); color: var(--color-ink-muted); line-height: var(--leading-normal); max-width: 680px; margin: 0 0 var(--space-6); }
+
+    /* ----------- the brand-mark hero ----------- */
+    .hero {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-1);
+      overflow: hidden;
+    }
+    .hero-cell {
+      padding: var(--space-8) var(--space-7);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-5);
+      min-height: 420px;
+    }
+    .hero-cell--dark {
+      background: var(--color-paper);
+      color: var(--color-ink);
+      border-left: 1px solid var(--color-border);
+    }
+    .hero-mode {
+      position: absolute;
+      font-family: var(--font-mono);
+      font-size: var(--type-12);
+      letter-spacing: var(--tracking-mono);
+      color: var(--color-ink-muted);
+    }
+    .hero-mark { display: grid; gap: var(--space-4); justify-items: center; }
+    .hero-wordmark { font-family: var(--font-serif); font-size: var(--type-24); letter-spacing: var(--tracking-tight); }
+    .hero-cap { font-family: var(--font-mono); font-size: var(--type-12); color: var(--color-ink-muted); letter-spacing: var(--tracking-mono); }
+
+    /* ----------- mosaic sample at sizes ----------- */
+    .sizes { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; border: 1px solid var(--color-border); border-radius: var(--radius-1); overflow: hidden; }
+    .size-cell {
+      padding: var(--space-7) var(--space-5);
+      display: flex; flex-direction: column; align-items: center; gap: var(--space-5);
+      border-right: 1px solid var(--color-border);
+      min-height: 360px;
+      justify-content: space-between;
+    }
+    .size-cell:last-child { border-right: 0; }
+    .size-cap { font-family: var(--font-mono); font-size: var(--type-12); color: var(--color-ink-muted); text-align: center; line-height: 1.55; }
+    .size-cap b { color: var(--color-ink); font-weight: var(--weight-medium); display:block; font-family: var(--font-sans); font-size: var(--type-14); letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: var(--space-2); }
+    .size-use { font-family: var(--font-serif); font-size: var(--type-16); color: var(--color-ink-muted); line-height: var(--leading-snug); max-width: 220px; text-align: center; }
+
+    /* ----------- states ----------- */
+    .states {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: var(--space-5);
+    }
+    .state {
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-1);
+      padding: var(--space-6) var(--space-5);
+      display: flex; flex-direction: column; align-items: center; gap: var(--space-4);
+      background: var(--color-paper);
+    }
+    .state-large {
+      --mosaic-tile: 96px;
+      --mosaic-gap: 0;
+    }
+    .state-large.tile {
+      width: 96px; height: 96px;
+    }
+    .state-name {
+      font-family: var(--font-sans);
+      font-size: var(--type-14);
+      font-weight: var(--weight-medium);
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--color-ink);
+    }
+    .state-spec {
+      font-family: var(--font-mono);
+      font-size: var(--type-12);
+      color: var(--color-ink-muted);
+      line-height: 1.55;
+      text-align: center;
+    }
+    .state-spec em { font-style: normal; color: var(--color-ink); }
+
+    /* a single big tile for state demonstration with annotations */
+    .big-tile {
+      width: 96px; height: 96px;
+      background: transparent;
+      border: 1px solid var(--color-ink-faint);
+      position: relative;
+    }
+    .big-tile--filled { background: var(--color-accent); border-color: var(--color-accent); }
+    .big-tile--today {
+      background: var(--color-accent); border-color: var(--color-accent);
+      outline: 8px solid var(--color-paper);
+      outline-offset: -10px;
+      box-shadow: 0 0 0 11px var(--color-accent);
+    }
+    .big-tile--published { background: var(--color-accent); border-color: var(--color-accent); }
+    .big-tile--published::after { content: ""; position: absolute; inset: 18px; background: var(--color-accent-2); }
+
+    /* ----------- lockups ----------- */
+    .lockups {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-1);
+      overflow: hidden;
+    }
+    .lockup-cell {
+      padding: var(--space-7) var(--space-6);
+      display: flex; align-items: center; gap: var(--space-5);
+      border-right: 1px solid var(--color-border);
+      min-height: 200px;
+    }
+    .lockup-cell:last-child { border-right: 0; }
+    .lockup-note { font-family: var(--font-mono); font-size: var(--type-12); color: var(--color-ink-muted); line-height: 1.55; }
+    .lockup-note b { font-family: var(--font-sans); font-size: var(--type-14); color: var(--color-ink); font-weight: var(--weight-medium); display: block; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: var(--space-2); }
+
+    /* small mosaic-icon brand mark for header-scale use */
+    .mark-tiny {
+      display: grid;
+      grid-template-columns: repeat(6, 4px);
+      grid-auto-rows: 4px;
+      gap: 1px;
+    }
+    .mark-tiny .tile { width:4px; height:4px; border-width: 0.5px; animation:none; opacity:1; }
+
+    .mark-small {
+      display: grid;
+      grid-template-columns: repeat(6, 8px);
+      grid-auto-rows: 8px;
+      gap: 2px;
+    }
+    .mark-small .tile { width:8px; height:8px; border-width: 0.5px; animation:none; opacity:1; }
+
+    /* ----------- hover tooltip spec ----------- */
+    .tooltip-spec {
+      background: var(--color-paper-sunk);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-1);
+      padding: var(--space-7) var(--space-6);
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: var(--space-7);
+      align-items: center;
+    }
+    .tooltip {
+      display: inline-flex;
+      flex-direction: column;
+      gap: 4px;
+      background: var(--color-ink);
+      color: var(--color-paper);
+      padding: var(--space-3) var(--space-4);
+      border-radius: var(--radius-1);
+      font-family: var(--font-mono);
+      font-size: var(--type-12);
+      line-height: 1.5;
+      max-width: 280px;
+    }
+    .tooltip-date { color: var(--color-paper); }
+    .tooltip-excerpt { color: var(--color-ink-faint); }
+
+    /* ----------- don'ts ----------- */
+    .donts { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-5); }
+    .dont {
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-1);
+      padding: var(--space-6) var(--space-5);
+      display: flex; flex-direction: column; gap: var(--space-4);
+      background: var(--color-paper);
+      position: relative;
+      min-height: 220px;
+    }
+    .dont-cross {
+      position: absolute;
+      top: var(--space-4); right: var(--space-4);
+      font-family: var(--font-mono);
+      font-size: var(--type-12);
+      color: var(--color-signal-error);
+      letter-spacing: var(--tracking-mono);
+    }
+    .dont-body { display:flex; align-items:center; justify-content:center; min-height: 100px; }
+    .dont-label { font-family: var(--font-sans); font-size: var(--type-14); color: var(--color-ink); font-weight: var(--weight-medium); }
+    .dont-note { font-family: var(--font-serif); font-size: var(--type-16); color: var(--color-ink-muted); line-height: var(--leading-snug); }
+
+    /* ----------- construction ----------- */
+    .construction {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-7);
+      align-items: start;
+    }
+    .construction-svg {
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-1);
+      padding: var(--space-6);
+      background: var(--color-paper-sunk);
+      display: flex; justify-content: center;
+    }
+    .construction-table {
+      font-family: var(--font-mono);
+      font-size: var(--type-12);
+      color: var(--color-ink);
+      line-height: 1.8;
+    }
+    .construction-table dt { color: var(--color-ink-muted); float: left; width: 140px; }
+    .construction-table dd { margin-left: 140px; }
+
+    .pull-quote {
+      font-family: var(--font-serif);
+      font-style: italic;
+      font-size: var(--type-20);
+      line-height: var(--leading-snug);
+      color: var(--color-ink);
+      max-width: 640px;
+      margin: var(--space-8) 0;
+      padding-left: var(--space-5);
+      border-left: 1px solid var(--color-accent);
+    }
+  </style>
+</head>
+<body data-screen-label="01 Brand">
+  <div class="page">
+
+    <header class="masthead">
+      <h1 class="masthead-title">ember · brand</h1>
+      <div class="masthead-meta">v1 · canonical mosaic reference</div>
+    </header>
+
+    <p class="lede">
+      the mosaic <em>is</em> the brand mark. wherever ember needs a mark — header chrome, favicon, og card, social — the same 6&times;10 grid does the job. there is no separate logo. there is no wordmark-only treatment. the brand is the practice rendered.
+    </p>
+
+    <!-- ============================================================
+         1. the mark, large, light + dark
+         ============================================================ -->
+    <section class="section">
+      <div class="section-num">01</div>
+      <h2 class="section-title">the brand mark</h2>
+      <p class="section-note">a 60-day practice rendered: 6 columns &times; 10 rows of 16px tiles with a 4px gap. shown here at hero scale (32px tile) so the geometry reads clearly. the mark is identical in both modes — only the paper changes around it.</p>
+
+      <div class="hero">
+        <div class="hero-cell" data-theme="light" style="background: var(--color-paper); position:relative;">
+          <span class="hero-mode" style="top:var(--space-4); left:var(--space-5);">light · default</span>
+          <div class="hero-mark">
+            <div class="mosaic mosaic--lg">
+              <div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div>
+              <div class="tile tile--filled"></div><div class="tile tile--published"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div>
+              <div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile"></div>
+              <div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--published"></div><div class="tile tile--filled"></div>
+              <div class="tile"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div>
+              <div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--published"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div>
+              <div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div>
+              <div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div>
+              <div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div>
+              <div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--today"></div><div class="tile"></div>
+            </div>
+            <div class="hero-wordmark">ember</div>
+            <div class="hero-cap">mosaic + wordmark · header lockup</div>
+          </div>
+        </div>
+        <div class="hero-cell hero-cell--dark" data-theme="dark" style="position:relative;">
+          <span class="hero-mode" style="top:var(--space-4); left:var(--space-5);">dark · prefers-color-scheme</span>
+          <div class="hero-mark">
+            <div class="mosaic mosaic--lg">
+              <div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div>
+              <div class="tile tile--filled"></div><div class="tile tile--published"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div>
+              <div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile"></div>
+              <div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--published"></div><div class="tile tile--filled"></div>
+              <div class="tile"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div>
+              <div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--published"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div>
+              <div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div>
+              <div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div>
+              <div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div>
+              <div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--today"></div><div class="tile"></div>
+            </div>
+            <div class="hero-wordmark">ember</div>
+            <div class="hero-cap">mosaic + wordmark · header lockup</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         2. three sizes
+         ============================================================ -->
+    <section class="section">
+      <div class="section-num">02</div>
+      <h2 class="section-title">three sizes · three uses</h2>
+      <p class="section-note">tile geometry is fixed (square, no radius). only the tile and gap scale. the proportions of tile-to-gap (4:1) are preserved at every size so the mark looks like itself.</p>
+
+      <div class="sizes">
+        <div class="size-cell">
+          <div class="mosaic">
+            <div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div>
+            <div class="tile tile--filled"></div><div class="tile tile--published"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div>
+            <div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile"></div>
+            <div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--published"></div><div class="tile tile--filled"></div>
+            <div class="tile"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div>
+            <div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--published"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div>
+            <div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div>
+            <div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div>
+            <div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div>
+            <div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--today"></div><div class="tile"></div>
+          </div>
+          <div class="size-cap">
+            <b>16px tile</b>
+            tile 16 · gap 4 · grid 124&times;196<br>
+            default canonical size
+          </div>
+          <p class="size-use">used on the brand sheet, in-app header marks, the /log full mosaic, the favicon (rendered as a flattened raster).</p>
+        </div>
+
+        <div class="size-cell">
+          <div class="mosaic mosaic--md">
+            <div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div>
+            <div class="tile tile--filled"></div><div class="tile tile--published"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div>
+            <div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile"></div>
+            <div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--published"></div><div class="tile tile--filled"></div>
+            <div class="tile"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div>
+            <div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--published"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div>
+            <div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div>
+            <div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div>
+            <div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div>
+            <div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--today"></div><div class="tile"></div>
+          </div>
+          <div class="size-cap">
+            <b>24px tile</b>
+            tile 24 · gap 6 · grid 174&times;294<br>
+            display
+          </div>
+          <p class="size-use">used on /today's "you are here" footer strip (preview surfaces), the og card, brand sheets like this one.</p>
+        </div>
+
+        <div class="size-cell">
+          <div class="mosaic mosaic--lg">
+            <div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div>
+            <div class="tile tile--filled"></div><div class="tile tile--published"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div>
+            <div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile"></div>
+            <div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--published"></div><div class="tile tile--filled"></div>
+            <div class="tile"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div>
+            <div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--published"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div>
+            <div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div>
+            <div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div>
+            <div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div>
+            <div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--today"></div><div class="tile"></div>
+          </div>
+          <div class="size-cap">
+            <b>32px tile</b>
+            tile 32 · gap 8 · grid 224&times;392<br>
+            hero
+          </div>
+          <p class="size-use">used on the landing-page hero, the brand sheet's section 01, marketing canvases. never inside the app shell.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         3. tile states
+         ============================================================ -->
+    <section class="section">
+      <div class="section-num">03</div>
+      <h2 class="section-title">tile states · the only four</h2>
+      <p class="section-note">the mosaic encodes exactly four states. there is no "in-progress," no "draft," no "saved-but-not-published" — the model is binary at the tile level (entry exists or not) with a single qualifier (this entry is public). today is a temporary state, swapped to "filled" or "published" at the user's local midnight.</p>
+
+      <div class="states">
+        <div class="state">
+          <div class="big-tile"></div>
+          <div class="state-name">empty</div>
+          <div class="state-spec">
+            no entry for this day.<br>
+            <em>fill</em> none · <em>border</em> 1px <em>ink-faint</em><br>
+            radius 0
+          </div>
+        </div>
+        <div class="state">
+          <div class="big-tile big-tile--filled"></div>
+          <div class="state-name">filled</div>
+          <div class="state-spec">
+            a private entry exists.<br>
+            <em>fill</em> accent · <em>border</em> accent<br>
+            radius 0
+          </div>
+        </div>
+        <div class="state">
+          <div class="big-tile big-tile--today"></div>
+          <div class="state-name">today</div>
+          <div class="state-spec">
+            filled, plus a 2px ring of paper.<br>
+            outline 2px paper, offset -1px<br>
+            a quiet "you are here"
+          </div>
+        </div>
+        <div class="state">
+          <div class="big-tile big-tile--published"></div>
+          <div class="state-name">published</div>
+          <div class="state-spec">
+            filled, plus a 4px inset of accent-2.<br>
+            opt-in, per entry, always reversible.<br>
+            never implies a mass-publish toggle
+          </div>
+        </div>
+      </div>
+
+      <p class="pull-quote">
+        the mosaic shows what is, not what isn't. empty tiles are quiet, not accusatory. a long streak of empty tiles is information, not failure.
+      </p>
+    </section>
+
+    <!-- ============================================================
+         4. construction / anatomy
+         ============================================================ -->
+    <section class="section">
+      <div class="section-num">04</div>
+      <h2 class="section-title">anatomy · construction</h2>
+      <p class="section-note">the geometry, written down so nothing drifts. when this gets ported to react/tailwind in phase 2, these are the numbers.</p>
+
+      <div class="construction">
+        <div class="construction-svg">
+          <!-- a simple annotated diagram drawn in pure DOM (no hand-drawn svg) -->
+          <div style="position:relative; padding: 40px 60px 40px 40px;">
+            <div class="mosaic mosaic--lg" style="--mosaic-cols: 3;">
+              <div class="tile tile--filled" style="animation:none; opacity:1;"></div>
+              <div class="tile tile--filled" style="animation:none; opacity:1;"></div>
+              <div class="tile" style="animation:none; opacity:1;"></div>
+              <div class="tile tile--published" style="animation:none; opacity:1;"></div>
+              <div class="tile tile--filled" style="animation:none; opacity:1;"></div>
+              <div class="tile tile--today" style="animation:none; opacity:1;"></div>
+            </div>
+            <div style="position:absolute; top:34px; left:140px; font-family: var(--font-mono); font-size: var(--type-12); color: var(--color-ink-muted);">
+              ← 32px tile
+            </div>
+            <div style="position:absolute; top:74px; left:140px; font-family: var(--font-mono); font-size: var(--type-12); color: var(--color-ink-muted);">
+              ← 8px gap
+            </div>
+            <div style="position:absolute; top:114px; left:140px; font-family: var(--font-mono); font-size: var(--type-12); color: var(--color-ink-muted);">
+              ← 4px inset (published)
+            </div>
+          </div>
+        </div>
+
+        <dl class="construction-table">
+          <dt>tile size</dt>           <dd>16px · 24px · 32px</dd>
+          <dt>gap (tile : gap)</dt>     <dd>4 : 1 always</dd>
+          <dt>grid</dt>                 <dd>6 cols &times; 10 rows = 60 days</dd>
+          <dt>order</dt>                <dd>row-major, top-left = oldest, bottom-right = today</dd>
+          <dt>border radius</dt>        <dd>0px (always)</dd>
+          <dt>empty border</dt>         <dd>1px solid var(--color-ink-faint)</dd>
+          <dt>fill</dt>                 <dd>var(--color-accent)</dd>
+          <dt>today ring</dt>           <dd>2px solid var(--color-paper), inset</dd>
+          <dt>published inset</dt>      <dd>4px var(--color-accent-2), inset of accent tile</dd>
+          <dt>hover (desktop)</dt>      <dd>tooltip · date · first 80 chars · 1px opacity shift</dd>
+          <dt>focus (keyboard)</dt>     <dd>2px solid accent-2 outline, offset 2px</dd>
+          <dt>animation</dt>            <dd>200ms fade-in on first render, staggered 8ms · nothing else</dd>
+        </dl>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         5. hover tooltip spec
+         ============================================================ -->
+    <section class="section">
+      <div class="section-num">05</div>
+      <h2 class="section-title">hover · the only place mono lives</h2>
+      <p class="section-note">on desktop, hovering a filled tile surfaces a tooltip with the date (mono) and the first 80 characters of the entry (mono, faint). no tooltip on mobile — tap navigates to <code style="font-family:var(--font-mono); color:var(--color-ink); font-size:var(--type-14);">/log/[date]</code>.</p>
+
+      <div class="tooltip-spec">
+        <div style="display:flex; align-items:flex-start; gap: var(--space-3); padding: var(--space-4);">
+          <div class="tile tile--filled" style="animation:none; opacity:1; width:24px; height:24px;"></div>
+          <div class="tooltip">
+            <span class="tooltip-date">Wed 13 May 2026</span>
+            <span class="tooltip-excerpt">i noticed the light on the back of the kitchen chairs at 7:14 and th…</span>
+          </div>
+        </div>
+        <div style="font-family: var(--font-mono); font-size: var(--type-12); color: var(--color-ink-muted); line-height: 1.7;">
+          <b style="font-family: var(--font-sans); font-size: var(--type-14); color: var(--color-ink); font-weight: var(--weight-medium); display:block; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: var(--space-2);">tooltip</b>
+          background &nbsp;&nbsp;var(--color-ink)<br>
+          color &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;var(--color-paper)<br>
+          excerpt &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;var(--color-ink-faint)<br>
+          padding &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;12px 16px<br>
+          radius &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;4px<br>
+          max-width &nbsp;&nbsp;&nbsp;280px<br>
+          excerpt &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;first 80 chars · ellipsis<br>
+          period &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;a complete sentence is allowed to be cut mid-word
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         6. lockups
+         ============================================================ -->
+    <section class="section">
+      <div class="section-num">06</div>
+      <h2 class="section-title">lockups · two, no more</h2>
+      <p class="section-note">the mosaic alone is the canonical brand mark. for header chrome the small lockup pairs a tiny mosaic glyph with the lowercase wordmark. there is no third lockup. the wordmark never appears alone.</p>
+
+      <div class="lockups">
+        <div class="lockup-cell">
+          <div style="display:flex; align-items:center; gap: var(--space-3);">
+            <div class="mark-small">
+              <div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div>
+              <div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile"></div>
+              <div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div>
+              <div class="tile"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div>
+              <div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div>
+              <div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div>
+              <div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div>
+              <div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div>
+              <div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div>
+              <div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--today"></div><div class="tile"></div>
+            </div>
+            <div class="hero-wordmark" style="font-size: var(--type-24);">ember</div>
+          </div>
+          <div class="lockup-note">
+            <b>header lockup</b>
+            small mosaic glyph (8px tile · 2px gap)<br>
+            paired with the 24px serif wordmark<br>
+            used in the global header on every page
+          </div>
+        </div>
+
+        <div class="lockup-cell">
+          <div class="mosaic">
+            <div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div>
+            <div class="tile tile--filled"></div><div class="tile tile--published"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div>
+            <div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile"></div>
+            <div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--published"></div><div class="tile tile--filled"></div>
+            <div class="tile"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div>
+            <div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--published"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div>
+            <div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div>
+            <div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div>
+            <div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div>
+            <div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--today"></div><div class="tile"></div>
+          </div>
+          <div class="lockup-note">
+            <b>mark alone</b>
+            the full mosaic, no wordmark<br>
+            used on /log, og card, favicon source<br>
+            this is the canonical brand mark
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         7. don'ts
+         ============================================================ -->
+    <section class="section">
+      <div class="section-num">07</div>
+      <h2 class="section-title">don't</h2>
+      <p class="section-note">five places the mark would drift if left unattended. these are non-negotiable.</p>
+
+      <div class="donts">
+        <div class="dont">
+          <span class="dont-cross">×</span>
+          <div class="dont-body">
+            <div class="hero-wordmark" style="font-size: var(--type-32);">ember</div>
+          </div>
+          <div class="dont-label">don't use the wordmark alone.</div>
+          <div class="dont-note">there is no wordmark-only treatment. the mosaic always sits with it (or alone).</div>
+        </div>
+
+        <div class="dont">
+          <span class="dont-cross">×</span>
+          <div class="dont-body">
+            <!-- a fake illustration placeholder using a striped svg -->
+            <svg width="120" height="80" viewBox="0 0 120 80" style="border:1px dashed var(--color-ink-faint);">
+              <defs>
+                <pattern id="stripes" patternUnits="userSpaceOnUse" width="6" height="6" patternTransform="rotate(45)">
+                  <line x1="0" y="0" x2="0" y2="6" stroke="var(--color-ink-faint)" stroke-width="2"/>
+                </pattern>
+              </defs>
+              <rect width="120" height="80" fill="url(#stripes)" />
+              <text x="60" y="46" text-anchor="middle" font-family="JetBrains Mono" font-size="10" fill="var(--color-ink-muted)">illustration</text>
+            </svg>
+          </div>
+          <div class="dont-label">don't add an illustration.</div>
+          <div class="dont-note">the mosaic is the only graphic in the entire product. no flames, no candles, no abstract marks.</div>
+        </div>
+
+        <div class="dont">
+          <span class="dont-cross">×</span>
+          <div class="dont-body">
+            <div class="mosaic" style="filter: drop-shadow(0 8px 24px rgba(0,0,0,0.18));">
+              <div class="tile tile--filled" style="animation:none; opacity:1;"></div>
+              <div class="tile tile--filled" style="animation:none; opacity:1;"></div>
+              <div class="tile" style="animation:none; opacity:1;"></div>
+              <div class="tile tile--filled" style="animation:none; opacity:1;"></div>
+              <div class="tile tile--filled" style="animation:none; opacity:1;"></div>
+              <div class="tile tile--filled" style="animation:none; opacity:1;"></div>
+              <div class="tile tile--filled" style="animation:none; opacity:1;"></div>
+              <div class="tile tile--published" style="animation:none; opacity:1;"></div>
+              <div class="tile tile--filled" style="animation:none; opacity:1;"></div>
+              <div class="tile tile--filled" style="animation:none; opacity:1;"></div>
+              <div class="tile tile--filled" style="animation:none; opacity:1;"></div>
+              <div class="tile tile--filled" style="animation:none; opacity:1;"></div>
+            </div>
+          </div>
+          <div class="dont-label">don't add shadow or glow.</div>
+          <div class="dont-note">the mark is flat. depth comes from the page, not the mark. no drop-shadow, no inner-glow, no halo.</div>
+        </div>
+
+        <div class="dont">
+          <span class="dont-cross">×</span>
+          <div class="dont-body">
+            <div class="mosaic" style="background: linear-gradient(135deg, var(--color-accent), var(--color-accent-2)); padding: var(--space-3); border-radius: var(--radius-1);">
+              <div class="tile tile--filled" style="animation:none; opacity:1; border-color: var(--color-paper);"></div>
+              <div class="tile tile--filled" style="animation:none; opacity:1; border-color: var(--color-paper);"></div>
+              <div class="tile" style="animation:none; opacity:1; border-color: var(--color-paper);"></div>
+              <div class="tile tile--filled" style="animation:none; opacity:1; border-color: var(--color-paper);"></div>
+              <div class="tile tile--filled" style="animation:none; opacity:1; border-color: var(--color-paper);"></div>
+              <div class="tile tile--filled" style="animation:none; opacity:1; border-color: var(--color-paper);"></div>
+              <div class="tile tile--filled" style="animation:none; opacity:1; border-color: var(--color-paper);"></div>
+              <div class="tile tile--published" style="animation:none; opacity:1; border-color: var(--color-paper);"></div>
+              <div class="tile tile--filled" style="animation:none; opacity:1; border-color: var(--color-paper);"></div>
+              <div class="tile tile--filled" style="animation:none; opacity:1; border-color: var(--color-paper);"></div>
+              <div class="tile tile--filled" style="animation:none; opacity:1; border-color: var(--color-paper);"></div>
+              <div class="tile tile--filled" style="animation:none; opacity:1; border-color: var(--color-paper);"></div>
+            </div>
+          </div>
+          <div class="dont-label">don't gradient the field.</div>
+          <div class="dont-note">no gradient backgrounds anywhere in the system. the mark sits on plain paper or plain dark paper. that is the rule.</div>
+        </div>
+
+        <div class="dont">
+          <span class="dont-cross">×</span>
+          <div class="dont-body">
+            <div class="mosaic">
+              <div class="tile tile--filled" style="border-radius: 50%; animation:none; opacity:1;"></div>
+              <div class="tile tile--filled" style="border-radius: 50%; animation:none; opacity:1;"></div>
+              <div class="tile" style="border-radius: 50%; animation:none; opacity:1;"></div>
+              <div class="tile tile--filled" style="border-radius: 50%; animation:none; opacity:1;"></div>
+              <div class="tile tile--filled" style="border-radius: 50%; animation:none; opacity:1;"></div>
+              <div class="tile tile--filled" style="border-radius: 50%; animation:none; opacity:1;"></div>
+              <div class="tile tile--filled" style="border-radius: 50%; animation:none; opacity:1;"></div>
+              <div class="tile tile--filled" style="border-radius: 50%; animation:none; opacity:1;"></div>
+              <div class="tile tile--filled" style="border-radius: 50%; animation:none; opacity:1;"></div>
+              <div class="tile tile--filled" style="border-radius: 50%; animation:none; opacity:1;"></div>
+              <div class="tile tile--filled" style="border-radius: 50%; animation:none; opacity:1;"></div>
+              <div class="tile tile--filled" style="border-radius: 50%; animation:none; opacity:1;"></div>
+            </div>
+          </div>
+          <div class="dont-label">don't round the tiles.</div>
+          <div class="dont-note">tile radius is 0. always. circles read as social signal (likes, dots, stickers); squares read as a calendar.</div>
+        </div>
+
+        <div class="dont">
+          <span class="dont-cross">×</span>
+          <div class="dont-body" style="display:flex; flex-direction: column; gap: 4px; align-items:center;">
+            <div style="font-family: var(--font-serif); font-size: var(--type-20); color: var(--color-ink);">12-day streak</div>
+            <div style="font-family: var(--font-mono); font-size: var(--type-12); color: var(--color-accent);">+1 today · keep it going</div>
+          </div>
+          <div class="dont-label">don't count.</div>
+          <div class="dont-note">no streak count. no "+N today." no "you've practiced N days." the mosaic shows what is.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- footer -->
+    <footer style="margin-top: var(--space-8); padding-top: var(--space-5); border-top: 1px solid var(--color-border); font-family: var(--font-sans); font-size: var(--type-12); color: var(--color-ink-muted); display: flex; justify-content: space-between;">
+      <span>ember · brand · v1</span>
+      <span style="font-family: var(--font-mono);">canonical mosaic reference · pause 2</span>
+    </footer>
+  </div>
+</body>
+</html>

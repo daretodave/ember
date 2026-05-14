@@ -1,0 +1,315 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>ember · pause 1 — palette + type</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,500;0,8..60,600;1,8..60,400&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="tokens.css" />
+  <style>
+    body { padding: var(--space-8) var(--space-7); }
+    .page { max-width: 1080px; margin: 0 auto; }
+    h1.page-title {
+      font-family: var(--font-serif);
+      font-size: var(--type-32);
+      font-weight: var(--weight-regular);
+      letter-spacing: var(--tracking-tight);
+      line-height: var(--leading-tight);
+      margin: 0 0 var(--space-2);
+    }
+    .page-subtitle {
+      font-family: var(--font-sans);
+      font-size: var(--type-14);
+      color: var(--color-ink-muted);
+      margin: 0 0 var(--space-7);
+    }
+    .section {
+      margin: var(--space-8) 0;
+      padding-top: var(--space-5);
+      border-top: 1px solid var(--color-border);
+    }
+    .section-label {
+      font-family: var(--font-sans);
+      font-size: var(--type-12);
+      font-weight: var(--weight-medium);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--color-ink-muted);
+      margin: 0 0 var(--space-5);
+    }
+    .palette {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: var(--space-3);
+    }
+    .swatch {
+      border: 1px solid var(--color-border-faint);
+      border-radius: var(--radius-1);
+      overflow: hidden;
+      background: var(--color-paper);
+    }
+    .swatch-chip {
+      height: 120px;
+      border-bottom: 1px solid var(--color-border-faint);
+    }
+    .swatch-meta {
+      padding: var(--space-3) var(--space-4) var(--space-4);
+      font-family: var(--font-sans);
+      font-size: var(--type-12);
+      line-height: 1.5;
+    }
+    .swatch-name {
+      font-weight: var(--weight-medium);
+      color: var(--color-ink);
+      font-size: var(--type-14);
+      margin-bottom: 2px;
+    }
+    .swatch-token {
+      font-family: var(--font-mono);
+      color: var(--color-ink-muted);
+      font-size: var(--type-12);
+    }
+    .swatch-hex {
+      font-family: var(--font-mono);
+      color: var(--color-ink-muted);
+      font-size: var(--type-12);
+      margin-top: var(--space-1);
+    }
+
+    .ladder { display: grid; gap: var(--space-4); }
+    .rung {
+      display: grid;
+      grid-template-columns: 92px 1fr;
+      align-items: baseline;
+      gap: var(--space-5);
+      padding: var(--space-3) 0;
+      border-bottom: 1px solid var(--color-border-faint);
+    }
+    .rung:last-child { border-bottom: 0; }
+    .rung-meta {
+      font-family: var(--font-mono);
+      font-size: var(--type-12);
+      color: var(--color-ink-muted);
+      line-height: 1.4;
+      padding-top: 6px;
+    }
+    .rung-meta b { display: block; color: var(--color-ink); font-weight: var(--weight-medium); font-family: var(--font-sans); font-size: var(--type-12); margin-bottom: 2px; letter-spacing: 0.04em; text-transform: uppercase; }
+
+    .specimen-serif { font-family: var(--font-serif); }
+    .specimen-sans  { font-family: var(--font-sans);  }
+    .specimen-mono  { font-family: var(--font-mono);  }
+
+    .t12 { font-size: var(--type-12); }
+    .t14 { font-size: var(--type-14); }
+    .t16 { font-size: var(--type-16); }
+    .t17 { font-size: var(--type-17); }
+    .t20 { font-size: var(--type-20); }
+    .t24 { font-size: var(--type-24); }
+    .t32 { font-size: var(--type-32); line-height: var(--leading-tight); letter-spacing: var(--tracking-tight); }
+    .t40 { font-size: var(--type-40); line-height: var(--leading-tight); letter-spacing: var(--tracking-tight); }
+
+    .pitch {
+      font-family: var(--font-serif);
+      font-size: var(--type-40);
+      line-height: 1.18;
+      letter-spacing: var(--tracking-tight);
+      max-width: 780px;
+      margin: 0;
+    }
+    .pitch em { font-style: italic; color: var(--color-accent-2); }
+
+    .mosaic-block {
+      display: flex;
+      align-items: center;
+      gap: var(--space-7);
+      padding: var(--space-5) 0;
+    }
+    .legend { font-family: var(--font-sans); font-size: var(--type-12); color: var(--color-ink-muted); display: grid; gap: 6px; }
+    .legend-row { display: flex; gap: var(--space-2); align-items: center; }
+
+    .footer-note {
+      margin-top: var(--space-8);
+      padding-top: var(--space-5);
+      border-top: 1px solid var(--color-border);
+      font-family: var(--font-sans);
+      font-size: var(--type-14);
+      color: var(--color-ink-muted);
+      line-height: var(--leading-normal);
+      max-width: 720px;
+    }
+    .footer-note b { color: var(--color-ink); font-weight: var(--weight-medium); }
+  </style>
+</head>
+<body data-screen-label="00 Pause 1 — Palette + Type">
+  <div class="page">
+
+    <p class="specimen-sans" style="font-size:var(--type-12); letter-spacing:0.12em; text-transform:uppercase; color: var(--color-ink-muted); margin:0 0 var(--space-3);">pause 1 · react before screens</p>
+    <h1 class="page-title">the palette + type, before a single screen is drawn.</h1>
+    <p class="page-subtitle">read: warm cream paper, slate-leaning-warm ink, one ember-toned accent, a deeper ember-2 for the published-inset state. tell me if the accent reads too hot or too tame on the cream — i'll adjust before drawing anything.</p>
+
+    <!-- mosaic specimen at three scales, so the brand mark sits next to its palette -->
+    <div class="section">
+      <p class="section-label">the brand mark — already speaks the palette</p>
+      <div class="mosaic-block">
+        <div class="mosaic" aria-label="60-day mosaic specimen">
+          <!-- 60 tiles, mix of states for specimen -->
+          <div class="tile tile--filled"></div><div class="tile"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile"></div><div class="tile tile--filled"></div>
+          <div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div>
+          <div class="tile tile--filled"></div><div class="tile tile--published"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile"></div>
+          <div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--published"></div><div class="tile tile--filled"></div>
+          <div class="tile"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div>
+          <div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--published"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div>
+          <div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div>
+          <div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div>
+          <div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div>
+          <div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--today"></div><div class="tile"></div>
+        </div>
+        <div class="legend">
+          <div class="legend-row"><span class="tile" style="animation:none; opacity:1;"></span> empty — a day not written</div>
+          <div class="legend-row"><span class="tile tile--filled" style="animation:none; opacity:1;"></span> filled — a private entry</div>
+          <div class="legend-row"><span class="tile tile--published" style="animation:none; opacity:1;"></span> published — opted-in publicly</div>
+          <div class="legend-row"><span class="tile tile--today" style="animation:none; opacity:1; margin-right:6px;"></span> today — you are here</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- palette -->
+    <div class="section">
+      <p class="section-label">palette · light mode</p>
+      <div class="palette">
+        <div class="swatch">
+          <div class="swatch-chip" style="background: var(--color-paper); border-bottom-color: var(--color-border);"></div>
+          <div class="swatch-meta"><div class="swatch-name">paper</div><div class="swatch-token">--color-paper</div><div class="swatch-hex">oklch(0.978 0.008 80) · ~#f8f5ef</div></div>
+        </div>
+        <div class="swatch">
+          <div class="swatch-chip" style="background: var(--color-paper-sunk);"></div>
+          <div class="swatch-meta"><div class="swatch-name">paper-sunk</div><div class="swatch-token">--color-paper-sunk</div><div class="swatch-hex">oklch(0.955 0.010 80) · ~#efeae0</div></div>
+        </div>
+        <div class="swatch">
+          <div class="swatch-chip" style="background: var(--color-ink);"></div>
+          <div class="swatch-meta"><div class="swatch-name">ink</div><div class="swatch-token">--color-ink</div><div class="swatch-hex">oklch(0.255 0.014 60) · ~#2a2620</div></div>
+        </div>
+        <div class="swatch">
+          <div class="swatch-chip" style="background: var(--color-ink-muted);"></div>
+          <div class="swatch-meta"><div class="swatch-name">ink-muted</div><div class="swatch-token">--color-ink-muted</div><div class="swatch-hex">oklch(0.535 0.012 65) · ~#807870</div></div>
+        </div>
+        <div class="swatch">
+          <div class="swatch-chip" style="background: var(--color-ink-faint);"></div>
+          <div class="swatch-meta"><div class="swatch-name">ink-faint</div><div class="swatch-token">--color-ink-faint</div><div class="swatch-hex">oklch(0.745 0.010 70) · ~#b8b2a8</div></div>
+        </div>
+        <div class="swatch">
+          <div class="swatch-chip" style="background: var(--color-border);"></div>
+          <div class="swatch-meta"><div class="swatch-name">border</div><div class="swatch-token">--color-border</div><div class="swatch-hex">oklch(0.880 0.008 75) · ~#ddd6cc</div></div>
+        </div>
+        <div class="swatch">
+          <div class="swatch-chip" style="background: var(--color-accent);"></div>
+          <div class="swatch-meta"><div class="swatch-name">accent · ember</div><div class="swatch-token">--color-accent</div><div class="swatch-hex">oklch(0.625 0.135 48) · ~#c2683f</div></div>
+        </div>
+        <div class="swatch">
+          <div class="swatch-chip" style="background: var(--color-accent-2);"></div>
+          <div class="swatch-meta"><div class="swatch-name">accent-2 · deep ember</div><div class="swatch-token">--color-accent-2</div><div class="swatch-hex">oklch(0.480 0.110 42) · ~#874826</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- dark palette mirror -->
+    <div class="section" data-theme="dark" style="background: var(--color-paper); color: var(--color-ink); margin-left: calc(-1 * var(--space-7)); margin-right: calc(-1 * var(--space-7)); padding: var(--space-7);">
+      <p class="section-label" style="color: var(--color-ink-muted);">palette · dark mode</p>
+      <div class="palette">
+        <div class="swatch" style="background: var(--color-paper); border-color: var(--color-border);">
+          <div class="swatch-chip" style="background: var(--color-paper); border-bottom-color: var(--color-border);"></div>
+          <div class="swatch-meta"><div class="swatch-name" style="color:var(--color-ink);">paper</div><div class="swatch-token" style="color:var(--color-ink-muted);">--color-paper</div><div class="swatch-hex" style="color:var(--color-ink-muted);">oklch(0.185 0.010 60)</div></div>
+        </div>
+        <div class="swatch" style="background: var(--color-paper); border-color: var(--color-border);">
+          <div class="swatch-chip" style="background: var(--color-ink);"></div>
+          <div class="swatch-meta"><div class="swatch-name" style="color:var(--color-ink);">ink</div><div class="swatch-token" style="color:var(--color-ink-muted);">--color-ink</div><div class="swatch-hex" style="color:var(--color-ink-muted);">oklch(0.925 0.008 80)</div></div>
+        </div>
+        <div class="swatch" style="background: var(--color-paper); border-color: var(--color-border);">
+          <div class="swatch-chip" style="background: var(--color-ink-muted);"></div>
+          <div class="swatch-meta"><div class="swatch-name" style="color:var(--color-ink);">ink-muted</div><div class="swatch-token" style="color:var(--color-ink-muted);">--color-ink-muted</div><div class="swatch-hex" style="color:var(--color-ink-muted);">oklch(0.665 0.010 70)</div></div>
+        </div>
+        <div class="swatch" style="background: var(--color-paper); border-color: var(--color-border);">
+          <div class="swatch-chip" style="background: var(--color-border);"></div>
+          <div class="swatch-meta"><div class="swatch-name" style="color:var(--color-ink);">border</div><div class="swatch-token" style="color:var(--color-ink-muted);">--color-border</div><div class="swatch-hex" style="color:var(--color-ink-muted);">oklch(0.285 0.010 65)</div></div>
+        </div>
+        <div class="swatch" style="background: var(--color-paper); border-color: var(--color-border);">
+          <div class="swatch-chip" style="background: var(--color-accent);"></div>
+          <div class="swatch-meta"><div class="swatch-name" style="color:var(--color-ink);">accent · ember (lifted)</div><div class="swatch-token" style="color:var(--color-ink-muted);">--color-accent</div><div class="swatch-hex" style="color:var(--color-ink-muted);">oklch(0.680 0.130 52)</div></div>
+        </div>
+        <div class="swatch" style="background: var(--color-paper); border-color: var(--color-border);">
+          <div class="swatch-chip" style="background: var(--color-accent-2);"></div>
+          <div class="swatch-meta"><div class="swatch-name" style="color:var(--color-ink);">accent-2</div><div class="swatch-token" style="color:var(--color-ink-muted);">--color-accent-2</div><div class="swatch-hex" style="color:var(--color-ink-muted);">oklch(0.540 0.115 46)</div></div>
+        </div>
+        <div class="swatch" style="background: var(--color-paper); border-color: var(--color-border);">
+          <div class="swatch-chip" style="background: var(--color-ink-faint);"></div>
+          <div class="swatch-meta"><div class="swatch-name" style="color:var(--color-ink);">ink-faint</div><div class="swatch-token" style="color:var(--color-ink-muted);">--color-ink-faint</div><div class="swatch-hex" style="color:var(--color-ink-muted);">oklch(0.420 0.010 65)</div></div>
+        </div>
+        <div class="swatch" style="background: var(--color-paper); border-color: var(--color-border);">
+          <div class="swatch-chip" style="background: var(--color-signal-error);"></div>
+          <div class="swatch-meta"><div class="swatch-name" style="color:var(--color-ink);">signal-error</div><div class="swatch-token" style="color:var(--color-ink-muted);">--color-signal-error</div><div class="swatch-hex" style="color:var(--color-ink-muted);">oklch(0.625 0.150 28)</div></div>
+        </div>
+      </div>
+
+      <div style="display:flex; align-items:center; gap: var(--space-7); margin-top: var(--space-7);">
+        <div class="mosaic">
+          <div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div>
+          <div class="tile tile--filled"></div><div class="tile tile--published"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile"></div>
+          <div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div>
+          <div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--today"></div><div class="tile"></div><div class="tile"></div>
+          <div class="tile"></div><div class="tile"></div><div class="tile"></div><div class="tile"></div><div class="tile"></div><div class="tile"></div>
+          <div class="tile"></div><div class="tile"></div><div class="tile"></div><div class="tile"></div><div class="tile"></div><div class="tile"></div>
+          <div class="tile"></div><div class="tile"></div><div class="tile"></div><div class="tile"></div><div class="tile"></div><div class="tile"></div>
+          <div class="tile"></div><div class="tile"></div><div class="tile"></div><div class="tile"></div><div class="tile"></div><div class="tile"></div>
+          <div class="tile"></div><div class="tile"></div><div class="tile"></div><div class="tile"></div><div class="tile"></div><div class="tile"></div>
+          <div class="tile"></div><div class="tile"></div><div class="tile"></div><div class="tile"></div><div class="tile"></div><div class="tile"></div>
+        </div>
+        <p style="font-family: var(--font-serif); font-size: var(--type-20); line-height: var(--leading-snug); margin:0; max-width: 420px;">the mosaic in the dark, same accent hue, gently lifted in lightness for contrast against the warm near-black paper.</p>
+      </div>
+    </div>
+
+    <!-- type ladder -->
+    <div class="section">
+      <p class="section-label">type · the ramp</p>
+
+      <p class="pitch">ten minutes of <em>intention</em> before the day swallows you.</p>
+
+      <div class="ladder" style="margin-top: var(--space-7);">
+        <div class="rung"><div class="rung-meta"><b>40 · serif</b>hero prompt ceiling<br>line 1.18</div><div class="specimen-serif t40">notice one thing on the way in this morning.</div></div>
+        <div class="rung"><div class="rung-meta"><b>32 · serif</b>hero floor / h1<br>line 1.18</div><div class="specimen-serif t32">notice one thing on the way in this morning.</div></div>
+        <div class="rung"><div class="rung-meta"><b>24 · serif</b>wordmark / h2</div><div class="specimen-serif t24">ember</div></div>
+        <div class="rung"><div class="rung-meta"><b>20 · serif</b>section heads</div><div class="specimen-serif t20">your past sixty days.</div></div>
+        <div class="rung"><div class="rung-meta"><b>17 · serif</b>body default<br>line 1.55</div><div class="specimen-serif t17">i noticed the light on the back of the kitchen chairs at 7:14 and thought, briefly, about the word <em>amber</em>.</div></div>
+        <div class="rung"><div class="rung-meta"><b>16 · serif</b>body small / task</div><div class="specimen-serif t16">today's tiny task — write down one thing you saw before opening your phone.</div></div>
+        <div class="rung"><div class="rung-meta"><b>14 · sans</b>inter · chrome</div><div class="specimen-sans t14">log · today · settings · sign out</div></div>
+        <div class="rung"><div class="rung-meta"><b>12 · mono</b>jetbrains · dates</div><div class="specimen-mono t12">Wed 13 May · 2026-05-13 · 07:14</div></div>
+      </div>
+    </div>
+
+    <!-- spacing + radii preview -->
+    <div class="section">
+      <p class="section-label">spacing · 8 stops on a 4px ramp · radius · 0 / 4 / 8</p>
+      <div style="display:flex; align-items:flex-end; gap: var(--space-2); margin-bottom: var(--space-6);">
+        <div style="width:4px;  height:4px;  background:var(--color-accent);"></div>
+        <div style="width:8px;  height:8px;  background:var(--color-accent);"></div>
+        <div style="width:12px; height:12px; background:var(--color-accent);"></div>
+        <div style="width:16px; height:16px; background:var(--color-accent);"></div>
+        <div style="width:24px; height:24px; background:var(--color-accent);"></div>
+        <div style="width:32px; height:32px; background:var(--color-accent);"></div>
+        <div style="width:48px; height:48px; background:var(--color-accent);"></div>
+        <div style="width:64px; height:64px; background:var(--color-accent);"></div>
+      </div>
+      <div style="display:flex; gap: var(--space-5);">
+        <div style="width:80px; height:80px; background:var(--color-paper-sunk); border:1px solid var(--color-border); border-radius:var(--radius-0); display:flex; align-items:center; justify-content:center; font-family:var(--font-mono); font-size:var(--type-12); color:var(--color-ink-muted);">0px</div>
+        <div style="width:80px; height:80px; background:var(--color-paper-sunk); border:1px solid var(--color-border); border-radius:var(--radius-1); display:flex; align-items:center; justify-content:center; font-family:var(--font-mono); font-size:var(--type-12); color:var(--color-ink-muted);">4px</div>
+        <div style="width:80px; height:80px; background:var(--color-paper-sunk); border:1px solid var(--color-border); border-radius:var(--radius-2); display:flex; align-items:center; justify-content:center; font-family:var(--font-mono); font-size:var(--type-12); color:var(--color-ink-muted);">8px</div>
+      </div>
+    </div>
+
+    <p class="footer-note">
+      <b>pause beat.</b> palette is the highest-stakes call. tell me if the ember accent reads too hot or too soft on this cream; whether the warm cream feels right against slate ink; whether the published-tile deep-ember reads enough as a distinct state at 16px. once approved i'll draw the mosaic-spec brand sheet, then the full token sheet, then the seven screens.
+    </p>
+  </div>
+</body>
+</html>

@@ -1,0 +1,343 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>ember</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,500;0,8..60,600;1,8..60,400&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="tokens.css" />
+  <style>
+    body { padding-bottom: 120px; }
+
+    /* ----------- header ----------- */
+    .header {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: var(--space-7) var(--space-6) var(--space-8);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .lockup { display:flex; align-items:center; gap: var(--space-3); }
+    .glyph {
+      display: grid;
+      grid-template-columns: repeat(6, 4px);
+      grid-auto-rows: 4px;
+      gap: 1px;
+    }
+    .glyph .tile { width:4px; height:4px; border-width: 0.5px; animation:none; opacity:1; }
+    .wordmark { font-family: var(--font-serif); font-size: var(--type-24); letter-spacing: var(--tracking-tight); color: var(--color-ink); line-height: 1; }
+    .header-nav { font-family: var(--font-sans); font-size: var(--type-14); color: var(--color-ink-muted); }
+    .header-nav a { color: var(--color-ink); text-decoration: none; border-bottom: 1px solid var(--color-border); padding-bottom: 2px; transition: border-color var(--motion-fade) var(--easing); }
+    .header-nav a:hover { border-bottom-color: var(--color-ink); }
+
+    /* ----------- hero ----------- */
+    .hero {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: var(--space-8) var(--space-6) var(--space-8);
+    }
+    .pitch {
+      font-family: var(--font-serif);
+      font-size: var(--type-40);
+      line-height: 1.18;
+      letter-spacing: var(--tracking-tight);
+      color: var(--color-ink);
+      margin: 0 0 var(--space-5);
+      max-width: 640px;
+    }
+    .pitch em { font-style: italic; color: var(--color-accent-2); }
+    .subpitch {
+      font-family: var(--font-serif);
+      font-size: var(--type-17);
+      line-height: var(--leading-prose);
+      color: var(--color-ink-muted);
+      margin: 0;
+      max-width: 540px;
+    }
+
+    /* ----------- the preview mosaic (the brand-mark, in situ) ----------- */
+    .preview-mark {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: var(--space-7) var(--space-6) var(--space-8);
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: var(--space-5);
+    }
+    .preview-mark-label {
+      font-family: var(--font-sans);
+      font-size: var(--type-12);
+      color: var(--color-ink-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    /* ----------- the seven days ----------- */
+    .seven {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: var(--space-7) var(--space-6) var(--space-8);
+    }
+    .seven-head {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      padding-bottom: var(--space-5);
+      border-bottom: 1px solid var(--color-border);
+      margin-bottom: var(--space-6);
+    }
+    .seven-title { font-family: var(--font-serif); font-size: var(--type-24); font-weight: var(--weight-regular); letter-spacing: var(--tracking-tight); margin: 0; }
+    .seven-meta { font-family: var(--font-mono); font-size: var(--type-12); color: var(--color-ink-muted); }
+
+    .day {
+      padding: var(--space-5) 0;
+      border-bottom: 1px solid var(--color-border-faint);
+      display: grid;
+      grid-template-columns: 120px 1fr;
+      gap: var(--space-6);
+      align-items: baseline;
+    }
+    .day:last-child { border-bottom: 0; }
+    .day-date {
+      font-family: var(--font-mono);
+      font-size: var(--type-12);
+      color: var(--color-ink-muted);
+      line-height: 1.55;
+      padding-top: 6px;
+      letter-spacing: var(--tracking-mono);
+    }
+    .day-body { display: grid; gap: var(--space-3); }
+    .day-prompt {
+      font-family: var(--font-serif);
+      font-size: var(--type-20);
+      line-height: var(--leading-snug);
+      color: var(--color-ink);
+      margin: 0;
+    }
+    .day-task {
+      font-family: var(--font-serif);
+      font-size: var(--type-16);
+      line-height: var(--leading-snug);
+      color: var(--color-ink-muted);
+      margin: 0;
+      display: flex;
+      align-items: baseline;
+      gap: var(--space-3);
+    }
+    .day-task::before {
+      content: "";
+      display: inline-block;
+      width: 12px; height: 12px;
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-1);
+      flex-shrink: 0;
+      transform: translateY(2px);
+    }
+
+    .seven-today { background: var(--color-paper-sunk); margin: 0 calc(-1 * var(--space-5)); padding-left: var(--space-5); padding-right: var(--space-5); border-radius: var(--radius-1); border-bottom: 0; }
+    .seven-today .day-date { color: var(--color-accent-2); }
+
+    /* ----------- closing note ----------- */
+    .closing {
+      max-width: 720px;
+      margin: var(--space-8) auto 0;
+      padding: var(--space-7) var(--space-6) var(--space-8);
+      border-top: 1px solid var(--color-border);
+    }
+    .closing p {
+      font-family: var(--font-serif);
+      font-size: var(--type-17);
+      line-height: var(--leading-prose);
+      color: var(--color-ink-muted);
+      margin: 0 0 var(--space-3);
+      max-width: 560px;
+    }
+    .closing p em { font-style: italic; color: var(--color-ink); }
+
+    /* ----------- sticky bottom CTA ----------- */
+    .cta {
+      position: fixed;
+      left: 0; right: 0; bottom: 0;
+      background: color-mix(in oklch, var(--color-paper) 88%, transparent);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border-top: 1px solid var(--color-border);
+      padding: var(--space-4) var(--space-6);
+      z-index: 10;
+    }
+    .cta-inner {
+      max-width: 720px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-5);
+    }
+    .cta-copy { font-family: var(--font-serif); font-size: var(--type-17); color: var(--color-ink); margin: 0; }
+    .cta-copy span { color: var(--color-ink-muted); }
+    .cta-btn {
+      font-family: var(--font-sans);
+      font-size: var(--type-14);
+      font-weight: var(--weight-medium);
+      padding: 10px 18px;
+      background: var(--color-ink);
+      color: var(--color-paper);
+      border: 0;
+      border-radius: var(--radius-1);
+      cursor: pointer;
+      text-decoration: none;
+      transition: opacity var(--motion-fade) var(--easing);
+      letter-spacing: 0.01em;
+    }
+    .cta-btn:hover { opacity: 0.88; }
+
+    /* tiny footer credit, lives above the CTA */
+    .footer-credit {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 0 var(--space-6) var(--space-6);
+      font-family: var(--font-mono);
+      font-size: var(--type-12);
+      color: var(--color-ink-muted);
+      display: flex;
+      justify-content: space-between;
+    }
+  </style>
+</head>
+<body data-screen-label="03 Landing">
+
+  <header class="header">
+    <div class="lockup">
+      <div class="glyph" aria-label="ember">
+        <div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div>
+        <div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile"></div>
+        <div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div>
+        <div class="tile"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div>
+        <div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div>
+        <div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div>
+        <div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div>
+        <div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div>
+        <div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div>
+        <div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--today"></div><div class="tile"></div>
+      </div>
+      <span class="wordmark">ember</span>
+    </div>
+    <nav class="header-nav">
+      <a href="#signin">sign in</a>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <h1 class="pitch">ten minutes of <em>intention</em> before the day swallows you.</h1>
+    <p class="subpitch">one small prompt and one tiny task each morning. you write a few sentences in response, mark the task done if you did it, and move on. over weeks, your responses accumulate into a quiet personal log.</p>
+  </section>
+
+  <section class="preview-mark">
+    <span class="preview-mark-label">the brand is the practice rendered</span>
+    <div class="mosaic mosaic--md" aria-label="sixty days of practice">
+      <div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div>
+      <div class="tile tile--filled"></div><div class="tile tile--published"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div>
+      <div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile"></div>
+      <div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--published"></div><div class="tile tile--filled"></div>
+      <div class="tile"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div>
+      <div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--published"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div>
+      <div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div>
+      <div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div>
+      <div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div>
+      <div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--today"></div><div class="tile"></div>
+    </div>
+  </section>
+
+  <section class="seven">
+    <div class="seven-head">
+      <h2 class="seven-title">the next seven days.</h2>
+      <span class="seven-meta">read-only preview</span>
+    </div>
+
+    <div class="day seven-today">
+      <span class="day-date">today<br>Wed 13 May</span>
+      <div class="day-body">
+        <p class="day-prompt">notice one thing on the way in this morning — a sound, a color, a person's posture — and write it down before you forget.</p>
+        <p class="day-task">today's tiny task — drink a glass of water before opening any app.</p>
+      </div>
+    </div>
+
+    <div class="day">
+      <span class="day-date">tomorrow<br>Thu 14 May</span>
+      <div class="day-body">
+        <p class="day-prompt">what's a small thing you've been putting off because it would only take five minutes?</p>
+        <p class="day-task">today's tiny task — write that thing down, with a verb in front of it.</p>
+      </div>
+    </div>
+
+    <div class="day">
+      <span class="day-date">in 2 days<br>Fri 15 May</span>
+      <div class="day-body">
+        <p class="day-prompt">name one person whose week you'd like to know about. you don't have to do anything with that information.</p>
+        <p class="day-task">today's tiny task — sit somewhere different for two minutes.</p>
+      </div>
+    </div>
+
+    <div class="day">
+      <span class="day-date">in 3 days<br>Sat 16 May</span>
+      <div class="day-body">
+        <p class="day-prompt">what did you think about most this week that you didn't tell anyone?</p>
+        <p class="day-task">today's tiny task — leave one tab open all day. only that tab.</p>
+      </div>
+    </div>
+
+    <div class="day">
+      <span class="day-date">in 4 days<br>Sun 17 May</span>
+      <div class="day-body">
+        <p class="day-prompt">describe the weather as if you were writing a letter to someone who lives nowhere near you.</p>
+        <p class="day-task">today's tiny task — eat one meal without a screen.</p>
+      </div>
+    </div>
+
+    <div class="day">
+      <span class="day-date">in 5 days<br>Mon 18 May</span>
+      <div class="day-body">
+        <p class="day-prompt">what's a sentence you've heard recently that's been sitting in the back of your head?</p>
+        <p class="day-task">today's tiny task — write a single line in a paper notebook, if you have one.</p>
+      </div>
+    </div>
+
+    <div class="day">
+      <span class="day-date">in 6 days<br>Tue 19 May</span>
+      <div class="day-body">
+        <p class="day-prompt">what would the version of you from a year ago be surprised by?</p>
+        <p class="day-task">today's tiny task — take the long way somewhere.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="closing">
+    <p>the same prompt and task arrive for everyone on a given day. that's deliberate. <em>ember does not personalize your morning.</em></p>
+    <p>there are no streaks to break, no reminders to dismiss, no notifications to mute. forgetting a day is fine. the mosaic shows what is, not what isn't.</p>
+  </section>
+
+  <div class="footer-credit">
+    <span>ember · v1</span>
+    <span>made for adults who want a low-friction ritual.</span>
+  </div>
+
+  <div class="cta">
+    <div class="cta-inner">
+      <p class="cta-copy">a sign-in link is the only thing you'll receive. <span>no password, no spam.</span></p>
+      <a class="cta-btn" href="#signin">sign in to start</a>
+    </div>
+  </div>
+
+  <script>
+    // staggered fade-in for mosaic tiles on first paint.
+    // the only motion in the entire product.
+    document.querySelectorAll('.mosaic .tile').forEach((t, i) => {
+      t.style.animationDelay = (i * 8) + 'ms';
+    });
+  </script>
+</body>
+</html>

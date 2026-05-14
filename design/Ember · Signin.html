@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>ember · sign in</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,500;0,8..60,600;1,8..60,400&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="tokens.css" />
+  <style>
+    body { display: grid; grid-template-rows: auto 1fr auto; min-height: 100vh; }
+
+    /* header */
+    .header { max-width: 720px; margin: 0 auto; width: 100%; padding: var(--space-7) var(--space-6) var(--space-5); display:flex; align-items:center; justify-content:space-between; }
+    .lockup { display:flex; align-items:center; gap: var(--space-3); text-decoration: none; }
+    .glyph { display:grid; grid-template-columns: repeat(6, 4px); grid-auto-rows: 4px; gap: 1px; }
+    .glyph .tile { width:4px; height:4px; border-width: 0.5px; animation:none; opacity:1; }
+    .wordmark { font-family: var(--font-serif); font-size: var(--type-24); letter-spacing: var(--tracking-tight); color: var(--color-ink); line-height: 1; }
+    .back-link { font-family: var(--font-sans); font-size: var(--type-14); color: var(--color-ink-muted); text-decoration: none; }
+    .back-link:hover { color: var(--color-ink); }
+
+    /* main — everything centered */
+    main {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: var(--space-8) var(--space-6);
+    }
+    .card {
+      width: 100%;
+      max-width: 420px;
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-6);
+    }
+    .title {
+      font-family: var(--font-serif);
+      font-size: var(--type-32);
+      font-weight: var(--weight-regular);
+      letter-spacing: var(--tracking-tight);
+      color: var(--color-ink);
+      margin: 0;
+      line-height: 1.18;
+    }
+    .form {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-4);
+    }
+    .field { display: flex; flex-direction: column; gap: 8px; }
+    .field-label {
+      font-family: var(--font-sans);
+      font-size: var(--type-12);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--color-ink-muted);
+    }
+    .field-input {
+      font-family: var(--font-serif);
+      font-size: var(--type-20);
+      color: var(--color-ink);
+      background: transparent;
+      border: 0;
+      border-bottom: 1px solid var(--color-border);
+      padding: 8px 0 10px;
+      outline: none;
+      transition: border-color var(--motion-fade) var(--easing);
+    }
+    .field-input:focus { border-bottom-color: var(--color-accent); }
+    .field-input::placeholder { color: var(--color-ink-faint); }
+    .submit {
+      font-family: var(--font-sans);
+      font-size: var(--type-14);
+      font-weight: var(--weight-medium);
+      padding: 12px 20px;
+      background: var(--color-ink);
+      color: var(--color-paper);
+      border: 0;
+      border-radius: var(--radius-1);
+      cursor: pointer;
+      transition: opacity var(--motion-fade) var(--easing);
+      align-self: flex-start;
+      margin-top: var(--space-2);
+    }
+    .submit:hover { opacity: 0.88; }
+    .reassurance {
+      font-family: var(--font-serif);
+      font-size: var(--type-16);
+      line-height: var(--leading-snug);
+      color: var(--color-ink-muted);
+      margin: 0;
+    }
+    .reassurance em { font-style: italic; color: var(--color-ink); }
+
+    /* footer */
+    footer {
+      max-width: 720px;
+      margin: 0 auto;
+      width: 100%;
+      padding: var(--space-6);
+      font-family: var(--font-mono);
+      font-size: var(--type-12);
+      color: var(--color-ink-muted);
+      display: flex;
+      justify-content: space-between;
+      border-top: 1px solid var(--color-border-faint);
+    }
+  </style>
+</head>
+<body data-screen-label="07 Signin">
+
+  <header class="header">
+    <a href="#" class="lockup">
+      <div class="glyph">
+        <div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div>
+        <div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile"></div>
+        <div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div>
+        <div class="tile"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div>
+        <div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div>
+        <div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div>
+        <div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div>
+        <div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div>
+        <div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div>
+        <div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--filled"></div><div class="tile tile--today"></div><div class="tile"></div>
+      </div>
+      <span class="wordmark">ember</span>
+    </a>
+    <a href="#" class="back-link">← back</a>
+  </header>
+
+  <main>
+    <div class="card">
+      <h1 class="title">sign in.</h1>
+
+      <form class="form" onsubmit="event.preventDefault();">
+        <div class="field">
+          <label class="field-label" for="email">email</label>
+          <input class="field-input" id="email" type="email" placeholder="you@somewhere.com" autofocus />
+        </div>
+        <button type="submit" class="submit">send the link</button>
+      </form>
+
+      <p class="reassurance">we email you a sign-in link. <em>no password, no spam.</em></p>
+    </div>
+  </main>
+
+  <footer>
+    <span>ember</span>
+    <span>magic-link via supabase</span>
+  </footer>
+
+  <script>
+    document.querySelectorAll('.glyph .tile').forEach((t, i) => {
+      t.style.animationDelay = (i * 6) + 'ms';
+    });
+  </script>
+</body>
+</html>

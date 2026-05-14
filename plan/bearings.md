@@ -106,9 +106,13 @@ typographic restraint reads better than capitalization.
 
 ## Visual / tonal defaults
 
+**Authoritative source: `design/CLAUDE.md` + `design/decisions.md` + `design/tokens.css`.** The design folder wins on conflict; this section is a working summary for orientation only. Any visual change starts in `design/`, then propagates to `src/`.
+
 - Light mode default; dark mode honored by `prefers-color-scheme`
-- Type: Source Serif 4 for headings + entries, Inter for chrome,
-  JetBrains Mono for dates
-- Palette: to be commissioned (see `design/CLAUDE.md` after phase 2)
-- The mosaic tile size: 16px × 16px with 4px gaps (60 days =
-  one 6×10 grid, ~140px wide)
+- Type: Source Serif 4 (body + entries + hero, optical-size axis), Inter (chrome only, 14px default), JetBrains Mono (dates only)
+- Palette: warm cream paper + warm slate ink + one held-back ember accent. Exact oklch values in `design/tokens.css`.
+- Mosaic: 6×10 = 60 days, three tile sizes (16/24/32px) at a 4:1 tile-to-gap ratio. Four states (empty / filled / today / published). **The only graphic in the entire product.**
+- Motion budget: 200ms fade-in on first mosaic render (8ms tile stagger) + 1px opacity hover. That is the entire inventory.
+- No shadows. No gradients. No icons. No illustrations. No avatars.
+
+See `design/CLAUDE.md` for the visual law; `design/INDEX.md` for a tour of every screen.

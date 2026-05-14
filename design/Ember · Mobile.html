@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>ember · mobile walkthrough</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,500;0,8..60,600;1,8..60,400&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="tokens.css" />
+  <style>
+    body { background: var(--color-paper-sunk); padding: var(--space-7) var(--space-6) var(--space-8); }
+    .page { max-width: 1900px; margin: 0 auto; }
+
+    .masthead { display:flex; align-items: baseline; justify-content: space-between; margin: 0 0 var(--space-3); padding-bottom: var(--space-5); border-bottom: 1px solid var(--color-border); }
+    .masthead-title { font-family: var(--font-serif); font-size: var(--type-32); font-weight: var(--weight-regular); margin: 0; letter-spacing: var(--tracking-tight); }
+    .masthead-meta { font-family: var(--font-mono); font-size: var(--type-12); color: var(--color-ink-muted); }
+    .lede { font-family: var(--font-serif); font-size: var(--type-17); line-height: var(--leading-snug); color: var(--color-ink-muted); margin: 0 0 var(--space-7); max-width: 720px; }
+
+    .row {
+      display: flex;
+      gap: var(--space-6);
+      overflow-x: auto;
+      padding-bottom: var(--space-7);
+      align-items: flex-start;
+    }
+
+    .device {
+      flex: 0 0 auto;
+      width: 375px;
+    }
+    .device-label {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      margin-bottom: var(--space-3);
+      padding: 0 4px;
+    }
+    .device-name {
+      font-family: var(--font-serif);
+      font-size: var(--type-20);
+      font-weight: var(--weight-regular);
+      letter-spacing: var(--tracking-tight);
+      color: var(--color-ink);
+      margin: 0;
+    }
+    .device-route {
+      font-family: var(--font-mono);
+      font-size: var(--type-12);
+      color: var(--color-ink-muted);
+    }
+    .device-note {
+      font-family: var(--font-sans);
+      font-size: var(--type-12);
+      color: var(--color-ink-muted);
+      line-height: var(--leading-snug);
+      margin: 0 4px var(--space-4);
+      max-width: 375px;
+    }
+    .device-frame {
+      width: 375px;
+      height: 812px;
+      background: var(--color-paper);
+      border: 1px solid var(--color-border);
+      border-radius: 16px;
+      overflow: hidden;
+      position: relative;
+    }
+    .device-frame iframe {
+      width: 100%;
+      height: 100%;
+      border: 0;
+      display: block;
+    }
+
+    /* status bar — quiet, just to mark the device feel */
+    .device-status {
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 28px;
+      padding: 0 var(--space-5);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--color-ink);
+      z-index: 5;
+      background: linear-gradient(var(--color-paper), color-mix(in oklch, var(--color-paper) 70%, transparent));
+      pointer-events: none;
+    }
+
+    .footer-note {
+      max-width: 720px;
+      margin: var(--space-8) 0 0;
+      padding-top: var(--space-5);
+      border-top: 1px solid var(--color-border);
+      font-family: var(--font-sans);
+      font-size: var(--type-14);
+      color: var(--color-ink-muted);
+      line-height: var(--leading-normal);
+    }
+  </style>
+</head>
+<body data-screen-label="08 Mobile">
+
+  <div class="page">
+    <header class="masthead">
+      <h1 class="masthead-title">ember · mobile</h1>
+      <div class="masthead-meta">375px walkthrough · 4 screens</div>
+    </header>
+
+    <p class="lede">the four primary surfaces at 375px, rendered live from their source pages. no separate mobile design — the desktop layout already reflows to a single column under its own max-width, so the same html ships on both. scroll the row to see all four.</p>
+
+    <div class="row">
+
+      <div class="device">
+        <div class="device-label">
+          <h2 class="device-name">landing</h2>
+          <span class="device-route">/</span>
+        </div>
+        <p class="device-note">brand mark, pitch, seven-day preview, sticky cta.</p>
+        <div class="device-frame">
+          <div class="device-status"><span>9:41</span><span>● ● ●</span></div>
+          <iframe src="Ember · Landing.html" title="landing"></iframe>
+        </div>
+      </div>
+
+      <div class="device">
+        <div class="device-label">
+          <h2 class="device-name">today</h2>
+          <span class="device-route">/today</span>
+        </div>
+        <p class="device-note">prompt, tiny task, entry textarea, seven-tile strip.</p>
+        <div class="device-frame">
+          <div class="device-status"><span>9:42</span><span>● ● ●</span></div>
+          <iframe src="Ember · Today.html" title="today"></iframe>
+        </div>
+      </div>
+
+      <div class="device">
+        <div class="device-label">
+          <h2 class="device-name">log</h2>
+          <span class="device-route">/log</span>
+        </div>
+        <p class="device-note">the 60-day mosaic plus today's entry rendered. tooltip is desktop-only — on mobile the tile is a tap target.</p>
+        <div class="device-frame">
+          <div class="device-status"><span>9:43</span><span>● ● ●</span></div>
+          <iframe src="Ember · Log.html" title="log"></iframe>
+        </div>
+      </div>
+
+      <div class="device">
+        <div class="device-label">
+          <h2 class="device-name">profile</h2>
+          <span class="device-route">/u/marlowe</span>
+        </div>
+        <p class="device-note">public view. only published tiles filled — empty days leak nothing.</p>
+        <div class="device-frame">
+          <div class="device-status"><span>9:44</span><span>● ● ●</span></div>
+          <iframe src="Ember · Profile.html" title="profile"></iframe>
+        </div>
+      </div>
+
+      <div class="device">
+        <div class="device-label">
+          <h2 class="device-name">signin</h2>
+          <span class="device-route">/signin</span>
+        </div>
+        <p class="device-note">email, link, one sentence of reassurance.</p>
+        <div class="device-frame">
+          <div class="device-status"><span>9:45</span><span>● ● ●</span></div>
+          <iframe src="Ember · Signin.html" title="signin"></iframe>
+        </div>
+      </div>
+
+    </div>
+
+    <p class="footer-note">
+      the headers across all four screens use the same lockup (small mosaic glyph + serif wordmark) so the brand mark is unmistakable at any width. nav items collapse to inline labels — no hamburger, no tabbed bottom-nav. there are only three places to be: today, log, settings.
+    </p>
+  </div>
+
+</body>
+</html>

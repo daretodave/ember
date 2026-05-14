@@ -4,6 +4,20 @@
 > cold. Read top-to-bottom; rules at the top are
 > non-negotiable.
 
+## Reading order (the "before you touch a thing" checklist)
+
+1. **`design/CLAUDE.md`** — **visual law.** Read cold before any UI work, any phase that ships rendered output, any `/iterate` finding that lands on the frontend, any `/critique` pass. It overrides this file on visual matters. Authoritative for: color, type, motion, mosaic geometry, what graphics the product is allowed to have.
+2. **`design/decisions.md`** — the brief with full rationale. Read after `design/CLAUDE.md` if you need to know *why* a constraint exists, not just *what* it is.
+3. **`design/Ember · <Screen>.html`** — the per-screen production target. Port to `src/`; don't re-interpret.
+4. **`spec.md`** — product spec.
+5. **`plan/bearings.md`** — stack, voice, URL contract, standing decisions. Design folder wins on visual conflicts.
+6. **`plan/steps/01_build_plan.md`** — what ships next.
+7. **This file (`agents.md`)** — standing rules + sub-agent index.
+
+If a phase brief mentions visual specifics older than `design/CLAUDE.md`, the design folder wins. Update the phase brief; don't litigate.
+
+---
+
 ## Standing rules
 
 ### 1. Commit and push. Always. As a single atomic act.
