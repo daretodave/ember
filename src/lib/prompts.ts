@@ -35,6 +35,14 @@ function formatShortDate(d: Date): string {
   return `${WEEKDAYS[d.getUTCDay()]} ${d.getUTCDate()} ${MONTHS[d.getUTCMonth()]}`
 }
 
+/** Return the prompt + task for any given UTC date string (YYYY-MM-DD). */
+export function getPromptForDate(isoDate: string): PromptEntry {
+  const prompts = promptsData as PromptEntry[]
+  const d = new Date(`${isoDate}T00:00:00Z`)
+  const idx = daysSinceEpoch(d) % prompts.length
+  return prompts[idx]
+}
+
 export function getSevenDayPreview(today: Date): DayPreview[] {
   const prompts = promptsData as PromptEntry[]
   const todayUtc = new Date(

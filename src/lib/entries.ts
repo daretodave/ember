@@ -113,3 +113,64 @@ export function offsetDate(offsetDays: number): string {
   const d = new Date(ms)
   return `${d.getUTCFullYear()}-${String(d.getUTCMonth() + 1).padStart(2, '0')}-${String(d.getUTCDate()).padStart(2, '0')}`
 }
+
+/**
+ * Fetch entries for the last 60 days (inclusive of today).
+ * Returns a map from date string → entry.
+ */
+export async function get60DayEntries(
+  supabase: SupabaseClient,
+  userId: string,
+): Promise<Map<string, Entry>> {
+  const dates: string[] = []
+  const todayMs = Date.UTC(
+    new Date().getUTCFullYear(),
+    new Date().getUTCMonth(),
+    new Date().getUTCDate(),
+  )
+  for (let i = 0; i < 60; i++) {
+    const d = new Date(todayMs - i * 86_400_000)
+    const iso = `${d.getUTCFullYear()}-${String(d.getUTCMonth() + 1).padStart(2, '0')}-${String(d.getUTCDate()).padStart(2, '0')}`
+    dates.push(iso)
+  }
+
+  const { data, error } = await supabase
+    .from('entries')
+    .select('*')
+    .eq('user_id', userId)
+    .in('date', dates)
+
+  if (error) {
+    console.error('get60DayEntries error:', error.message)
+    return new Map()
+  }
+
+  const map = new Map<string, Entry>()
+  for (const row of (data ?? []) as Entry[]) {
+    map.set(row.date, row)
+  }
+  return map
+}
+
+/**
+ * Fetch a single entry for the authenticated user on a specific date.
+ * Returns null if no entry exists or on error.
+ */
+export async function getEntryByDate(
+  supabase: SupabaseClient,
+  userId: string,
+  date: string,
+): Promise<Entry | null> {
+  const { data, error } = await supabase
+    .from('entries')
+    .select('*')
+    .eq('user_id', userId)
+    .eq('date', date)
+    .maybeSingle()
+
+  if (error) {
+    console.error('getEntryByDate error:', error.message)
+    return null
+  }
+  return data as Entry | null
+}
