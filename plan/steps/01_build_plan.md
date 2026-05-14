@@ -10,7 +10,7 @@
 - [x] Phase 1 — Substrate (Next.js app skeleton, Supabase client wiring, design tokens stub)
 - [x] Phase 2 — Visual system commission (palette, type, mosaic tile shape) — design artifact
 - [x] Phase 3 — Anonymous landing + 7-day preview
-- [ ] Phase 4 — Magic-link auth (Supabase Auth, `/signin`, session middleware)
+- [x] Phase 4 — Magic-link auth (Supabase Auth, `/signin`, session middleware) — 08eb4a4
 - [ ] Phase 5 — Today + entry write (`/today`, prompt curation, entry model)
 - [ ] Phase 6 — Log + mosaic (`/log`, `/log/[date]`, 60-day mosaic component)
 - [ ] Phase 7 — Settings (`/settings`, timezone, display name, public username)
