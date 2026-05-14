@@ -1,0 +1,194 @@
+/* Signin page — ported from design/Ember · Signin.html */
+
+.page {
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  min-height: 100vh;
+}
+
+/* ----------- header ----------- */
+.header {
+  max-width: 720px;
+  margin: 0 auto;
+  width: 100%;
+  padding: var(--space-7) var(--space-6) var(--space-5);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.lockup {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  text-decoration: none;
+}
+
+.wordmark {
+  font-family: var(--font-serif);
+  font-size: var(--type-24);
+  letter-spacing: var(--tracking-tight);
+  color: var(--color-ink);
+  line-height: 1;
+}
+
+.backLink {
+  font-family: var(--font-sans);
+  font-size: var(--type-14);
+  color: var(--color-ink-muted);
+  text-decoration: none;
+  transition: color var(--motion-fade) var(--easing);
+}
+
+.backLink:hover {
+  color: var(--color-ink);
+}
+
+/* ----------- main ----------- */
+.main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-8) var(--space-6);
+}
+
+.card {
+  width: 100%;
+  max-width: 420px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+.title {
+  font-family: var(--font-serif);
+  font-size: var(--type-32);
+  font-weight: var(--weight-regular);
+  letter-spacing: var(--tracking-tight);
+  color: var(--color-ink);
+  margin: 0;
+  line-height: 1.18;
+}
+
+/* ----------- form ----------- */
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.fieldLabel {
+  font-family: var(--font-sans);
+  font-size: var(--type-12);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-ink-muted);
+}
+
+.fieldInput {
+  font-family: var(--font-serif);
+  font-size: var(--type-20);
+  color: var(--color-ink);
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid var(--color-border);
+  padding: 8px 0 10px;
+  outline: none;
+  transition: border-color var(--motion-fade) var(--easing);
+  width: 100%;
+}
+
+.fieldInput:focus {
+  border-bottom-color: var(--color-accent);
+}
+
+.fieldInput::placeholder {
+  color: var(--color-ink-faint);
+}
+
+.fieldInput:disabled {
+  opacity: 0.6;
+}
+
+.submit {
+  font-family: var(--font-sans);
+  font-size: var(--type-14);
+  font-weight: var(--weight-medium);
+  padding: 12px 20px;
+  background: var(--color-ink);
+  color: var(--color-paper);
+  border: 0;
+  border-radius: var(--radius-1);
+  cursor: pointer;
+  transition: opacity var(--motion-fade) var(--easing);
+  align-self: flex-start;
+  margin-top: var(--space-2);
+}
+
+.submit:hover:not(:disabled) {
+  opacity: 0.88;
+}
+
+.submit:disabled {
+  opacity: 0.55;
+  cursor: default;
+}
+
+/* ----------- confirmation + error ----------- */
+.confirmation {
+  font-family: var(--font-serif);
+  font-size: var(--type-17);
+  line-height: var(--leading-snug);
+  color: var(--color-ink);
+  margin: 0;
+}
+
+.confirmation em {
+  font-style: italic;
+  color: var(--color-ink-muted);
+}
+
+.reassurance {
+  font-family: var(--font-serif);
+  font-size: var(--type-16);
+  line-height: var(--leading-snug);
+  color: var(--color-ink-muted);
+  margin: 0;
+}
+
+.reassurance em {
+  font-style: italic;
+  color: var(--color-ink);
+}
+
+.errorMsg {
+  font-family: var(--font-sans);
+  font-size: var(--type-14);
+  color: var(--color-signal-error);
+  margin: 0;
+  background: var(--color-paper-sunk);
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-1);
+  border: 1px solid var(--color-border-faint);
+}
+
+/* ----------- footer ----------- */
+.footer {
+  max-width: 720px;
+  margin: 0 auto;
+  width: 100%;
+  padding: var(--space-6);
+  font-family: var(--font-mono);
+  font-size: var(--type-12);
+  color: var(--color-ink-muted);
+  display: flex;
+  justify-content: space-between;
+  border-top: 1px solid var(--color-border-faint);
+}
