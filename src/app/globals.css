@@ -1,7 +1,17 @@
 @import 'tailwindcss';
+@import '../../design/tokens.css';
+
+/* Map next/font CSS variables into the design token font vars.
+   The --font-* variables below are set by applying the next/font
+   variable classes to <html> in layout.tsx. */
+:root {
+  --font-serif: var(--font-source-serif-4), "Source Serif 4", "Source Serif Pro", Georgia, "Times New Roman", serif;
+  --font-sans: var(--font-inter), "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-mono: var(--font-jetbrains-mono), "JetBrains Mono", "SF Mono", Menlo, Consolas, monospace;
+}
 
 @theme {
-  --font-family-serif: 'Source Serif 4', Georgia, serif;
-  --font-family-sans: Inter, system-ui, sans-serif;
-  --font-family-mono: 'JetBrains Mono', monospace;
+  --font-family-serif: var(--font-source-serif-4, 'Source Serif 4'), Georgia, serif;
+  --font-family-sans: var(--font-inter, 'Inter'), system-ui, sans-serif;
+  --font-family-mono: var(--font-jetbrains-mono, 'JetBrains Mono'), monospace;
 }

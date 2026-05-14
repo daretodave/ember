@@ -1,0 +1,15 @@
+.glyph {
+  display: grid;
+  grid-template-columns: repeat(6, 4px);
+  grid-auto-rows: 4px;
+  gap: 1px;
+}
+
+/* Override tile sizing for the mini header glyph */
+.glyph :global(.tile) {
+  width: 4px;
+  height: 4px;
+  border-width: 0.5px;
+  animation: none;
+  opacity: 1;
+}

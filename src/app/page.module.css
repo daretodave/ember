@@ -1,0 +1,287 @@
+/* Landing page styles — ported from design/Ember · Landing.html */
+
+/* Pad the page so the sticky CTA bar doesn't overlap the footer */
+.page {
+  padding-bottom: 120px;
+}
+
+/* ----------- header ----------- */
+.header {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: var(--space-7) var(--space-6) var(--space-8);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.lockup {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.wordmark {
+  font-family: var(--font-serif);
+  font-size: var(--type-24);
+  letter-spacing: var(--tracking-tight);
+  color: var(--color-ink);
+  line-height: 1;
+}
+
+.headerNav {
+  font-family: var(--font-sans);
+  font-size: var(--type-14);
+  color: var(--color-ink-muted);
+}
+
+.headerNav a {
+  color: var(--color-ink);
+  text-decoration: none;
+  border-bottom: 1px solid var(--color-border);
+  padding-bottom: 2px;
+  transition: border-color var(--motion-fade) var(--easing);
+}
+
+.headerNav a:hover {
+  border-bottom-color: var(--color-ink);
+}
+
+/* ----------- hero ----------- */
+.hero {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: var(--space-8) var(--space-6) var(--space-8);
+}
+
+.pitch {
+  font-family: var(--font-serif);
+  font-size: var(--type-40);
+  line-height: 1.18;
+  letter-spacing: var(--tracking-tight);
+  color: var(--color-ink);
+  margin: 0 0 var(--space-5);
+  max-width: 640px;
+}
+
+.pitch em {
+  font-style: italic;
+  color: var(--color-accent-2);
+}
+
+.subpitch {
+  font-family: var(--font-serif);
+  font-size: var(--type-17);
+  line-height: var(--leading-prose);
+  color: var(--color-ink-muted);
+  margin: 0;
+  max-width: 540px;
+}
+
+/* ----------- preview mosaic ----------- */
+.previewMark {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: var(--space-7) var(--space-6) var(--space-8);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-5);
+}
+
+.previewMarkLabel {
+  font-family: var(--font-sans);
+  font-size: var(--type-12);
+  color: var(--color-ink-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+/* ----------- seven days ----------- */
+.seven {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: var(--space-7) var(--space-6) var(--space-8);
+}
+
+.sevenHead {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  padding-bottom: var(--space-5);
+  border-bottom: 1px solid var(--color-border);
+  margin-bottom: var(--space-6);
+}
+
+.sevenTitle {
+  font-family: var(--font-serif);
+  font-size: var(--type-24);
+  font-weight: var(--weight-regular);
+  letter-spacing: var(--tracking-tight);
+  margin: 0;
+}
+
+.sevenMeta {
+  font-family: var(--font-mono);
+  font-size: var(--type-12);
+  color: var(--color-ink-muted);
+}
+
+.day {
+  padding: var(--space-5) 0;
+  border-bottom: 1px solid var(--color-border-faint);
+  display: grid;
+  grid-template-columns: 120px 1fr;
+  gap: var(--space-6);
+  align-items: baseline;
+}
+
+.day:last-child {
+  border-bottom: 0;
+}
+
+.dayDate {
+  font-family: var(--font-mono);
+  font-size: var(--type-12);
+  color: var(--color-ink-muted);
+  line-height: 1.55;
+  padding-top: 6px;
+  letter-spacing: var(--tracking-mono);
+}
+
+.dayBody {
+  display: grid;
+  gap: var(--space-3);
+}
+
+.dayPrompt {
+  font-family: var(--font-serif);
+  font-size: var(--type-20);
+  line-height: var(--leading-snug);
+  color: var(--color-ink);
+  margin: 0;
+}
+
+.dayTask {
+  font-family: var(--font-serif);
+  font-size: var(--type-16);
+  line-height: var(--leading-snug);
+  color: var(--color-ink-muted);
+  margin: 0;
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-3);
+}
+
+.dayTask::before {
+  content: '';
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-1);
+  flex-shrink: 0;
+  transform: translateY(2px);
+}
+
+.dayToday {
+  background: var(--color-paper-sunk);
+  margin: 0 calc(-1 * var(--space-5));
+  padding-left: var(--space-5);
+  padding-right: var(--space-5);
+  border-radius: var(--radius-1);
+  border-bottom: 0;
+}
+
+.dayToday .dayDate {
+  color: var(--color-accent-2);
+}
+
+/* ----------- closing note ----------- */
+.closing {
+  max-width: 720px;
+  margin: var(--space-8) auto 0;
+  padding: var(--space-7) var(--space-6) var(--space-8);
+  border-top: 1px solid var(--color-border);
+}
+
+.closing p {
+  font-family: var(--font-serif);
+  font-size: var(--type-17);
+  line-height: var(--leading-prose);
+  color: var(--color-ink-muted);
+  margin: 0 0 var(--space-3);
+  max-width: 560px;
+}
+
+.closing p em {
+  font-style: italic;
+  color: var(--color-ink);
+}
+
+/* ----------- footer credit ----------- */
+.footerCredit {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 0 var(--space-6) var(--space-6);
+  font-family: var(--font-mono);
+  font-size: var(--type-12);
+  color: var(--color-ink-muted);
+  display: flex;
+  justify-content: space-between;
+}
+
+/* ----------- sticky bottom CTA ----------- */
+.cta {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: color-mix(in oklch, var(--color-paper) 88%, transparent);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-top: 1px solid var(--color-border);
+  padding: var(--space-4) var(--space-6);
+  z-index: 10;
+}
+
+.ctaInner {
+  max-width: 720px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-5);
+}
+
+.ctaCopy {
+  font-family: var(--font-serif);
+  font-size: var(--type-17);
+  color: var(--color-ink);
+  margin: 0;
+}
+
+.ctaCopy span {
+  color: var(--color-ink-muted);
+}
+
+.ctaBtn {
+  font-family: var(--font-sans);
+  font-size: var(--type-14);
+  font-weight: var(--weight-medium);
+  padding: 10px 18px;
+  background: var(--color-ink);
+  color: var(--color-paper);
+  border: 0;
+  border-radius: var(--radius-1);
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+  transition: opacity var(--motion-fade) var(--easing);
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+}
+
+.ctaBtn:hover {
+  opacity: 0.88;
+}
