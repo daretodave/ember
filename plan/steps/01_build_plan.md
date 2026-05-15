@@ -14,7 +14,7 @@
 - [x] Phase 5 — Today + entry write (`/today`, prompt curation, entry model) — 43a4594
 - [x] Phase 6 — Log + mosaic (`/log`, `/log/[date]`, 60-day mosaic component) — 1467ac6
 - [x] Phase 7 — Settings (`/settings`, timezone, display name, public username) — 863114c
-- [ ] Phase 8 — Public profile (`/u/[username]`, `/u/[username]/[date]`, publish toggle)
+- [x] Phase 8 — Public profile (`/u/[username]`, `/u/[username]/[date]`, publish toggle) — fc0ccba
 - [ ] Phase 9 — Polish (mobile reflow, empty states, error pages)
 - [ ] Phase 10 — A11y pass (keyboard nav, aria, contrast)
 - [ ] Phase 11 — Perf pass (RSC streaming, image opt, bundle audit)
