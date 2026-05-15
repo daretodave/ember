@@ -46,7 +46,7 @@ export default function SigninPage() {
         </Link>
       </header>
 
-      <main className={styles.main}>
+      <main className={styles.main} id="main-content">
         <div className={styles.card}>
           <h1 className={styles.title}>sign in.</h1>
 

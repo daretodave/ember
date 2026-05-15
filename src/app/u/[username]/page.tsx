@@ -76,67 +76,69 @@ export default async function PublicProfilePage({ params }: Props) {
         )}
       </header>
 
-      <section className={styles.identity}>
-        <h1 className={styles.identityName}>{displayName}</h1>
-        <p className={styles.identityHandle}>@{profile.username}</p>
-      </section>
+      <main id="main-content">
+        <section className={styles.identity}>
+          <h1 className={styles.identityName}>{displayName}</h1>
+          <p className={styles.identityHandle}>@{profile.username}</p>
+        </section>
 
-      <section className={styles.mosaicWrap}>
-        <p className={styles.mosaicMeta}>published in the last sixty days</p>
-        <ProfileMosaic tiles={tiles} username={profile.username} />
-      </section>
+        <section className={styles.mosaicWrap}>
+          <p className={styles.mosaicMeta}>published in the last sixty days</p>
+          <ProfileMosaic tiles={tiles} username={profile.username} />
+        </section>
 
-      <p className={styles.privacyNote}>
-        empty days are private. they may be unwritten or they may be written and unshared —
-        there is no way to tell from here, and that is intentional.
-      </p>
+        <p className={styles.privacyNote}>
+          empty days are private. they may be unwritten or they may be written and unshared —
+          there is no way to tell from here, and that is intentional.
+        </p>
 
-      <div className={styles.divider}>
-        <div className={styles.dividerLine} />
-      </div>
+        <div className={styles.divider}>
+          <div className={styles.dividerLine} />
+        </div>
 
-      {recentEntry && recentPrompt && recentDate ? (
-        <>
-          <article className={styles.entryView}>
-            <header className={styles.entryDate}>
-              <span className={styles.pubMark} aria-hidden="true" />
-              {formatDisplayDate(recentDate)} · published
-            </header>
-            <h1 className={styles.entryPrompt}>{recentPrompt.prompt}</h1>
-            <p className={styles.entryTask}>{recentPrompt.task}</p>
-            <div className={styles.entryResponse}>
-              {recentEntry.response.split('\n\n').filter(Boolean).map((para, i) => (
-                <p key={i}>{para}</p>
-              ))}
-            </div>
-          </article>
+        {recentEntry && recentPrompt && recentDate ? (
+          <>
+            <article className={styles.entryView}>
+              <header className={styles.entryDate}>
+                <span className={styles.pubMark} aria-hidden="true" />
+                {formatDisplayDate(recentDate)} · published
+              </header>
+              <h2 className={styles.entryPrompt}>{recentPrompt.prompt}</h2>
+              <p className={styles.entryTask}>{recentPrompt.task}</p>
+              <div className={styles.entryResponse}>
+                {recentEntry.response.split('\n\n').filter(Boolean).map((para, i) => (
+                  <p key={i}>{para}</p>
+                ))}
+              </div>
+            </article>
 
-          <nav className={styles.entryNav} aria-label="entry navigation">
-            {adjacentDates.prev ? (
-              <Link
-                href={`/u/${profile.username}/${adjacentDates.prev}`}
-                className={styles.navPrev}
-              >
-                <span className={styles.navLabel}>← earlier</span>
-                <span>{formatDisplayDate(adjacentDates.prev)}</span>
-              </Link>
-            ) : (
-              <span />
-            )}
-            {adjacentDates.next ? (
-              <Link
-                href={`/u/${profile.username}/${adjacentDates.next}`}
-                className={styles.navNext}
-              >
-                <span className={styles.navLabel}>later →</span>
-                <span>{formatDisplayDate(adjacentDates.next)}</span>
-              </Link>
-            ) : null}
-          </nav>
-        </>
-      ) : (
-        <p className={styles.emptyState}>no published entries.</p>
-      )}
+            <nav className={styles.entryNav} aria-label="entry navigation">
+              {adjacentDates.prev ? (
+                <Link
+                  href={`/u/${profile.username}/${adjacentDates.prev}`}
+                  className={styles.navPrev}
+                >
+                  <span className={styles.navLabel}>← earlier</span>
+                  <span>{formatDisplayDate(adjacentDates.prev)}</span>
+                </Link>
+              ) : (
+                <span />
+              )}
+              {adjacentDates.next ? (
+                <Link
+                  href={`/u/${profile.username}/${adjacentDates.next}`}
+                  className={styles.navNext}
+                >
+                  <span className={styles.navLabel}>later →</span>
+                  <span>{formatDisplayDate(adjacentDates.next)}</span>
+                </Link>
+              ) : null}
+            </nav>
+          </>
+        ) : (
+          <p className={styles.emptyState}>no published entries.</p>
+        )}
+      </main>
     </div>
   )
 }

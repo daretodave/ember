@@ -34,14 +34,14 @@ export default async function SettingsPage() {
           <MosaicGlyph />
           <span className={styles.wordmark}>ember</span>
         </Link>
-        <nav className={styles.nav}>
+        <nav className={styles.nav} aria-label="site navigation">
           <a href="/today">today</a>
           <a href="/log">log</a>
-          <a href="/settings" className={styles.navCurrent}>settings</a>
+          <a href="/settings" className={styles.navCurrent} aria-current="page">settings</a>
         </nav>
       </header>
 
-      <main className={styles.main}>
+      <main className={styles.main} id="main-content">
         <h1 className={styles.heading}>settings</h1>
         <SettingsForm
           displayName={profile?.display_name ?? ''}

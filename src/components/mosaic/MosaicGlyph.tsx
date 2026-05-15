@@ -26,7 +26,7 @@ export function MosaicGlyph() {
   return (
     <div className={styles.glyph} aria-label="ember">
       {GLYPH_PATTERN.map((state, i) => (
-        <div key={i} className={tileClass(state)} />
+        <div key={i} className={tileClass(state)} aria-hidden="true" />
       ))}
     </div>
   )

@@ -21,7 +21,7 @@ export default function GlobalError({ error, reset }: Props) {
         </Link>
       </header>
 
-      <main className={styles.main}>
+      <main className={styles.main} id="main-content">
         <div className={styles.card}>
           <p className={styles.errorCode}>{code}</p>
           <div className={styles.actions}>

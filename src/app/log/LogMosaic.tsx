@@ -40,10 +40,10 @@ export function LogMosaic({ tiles }: Props) {
     excerpt: '',
   })
 
-  function handleEnter(e: React.MouseEvent<HTMLElement>, tile: MosaicTileData) {
+  function showTooltip(el: HTMLElement, tile: MosaicTileData) {
     const mosaicEl = mosaicRef.current
     if (!mosaicEl) return
-    const tileRect = e.currentTarget.getBoundingClientRect()
+    const tileRect = el.getBoundingClientRect()
     const mosaicRect = mosaicEl.getBoundingClientRect()
     setTooltip({
       visible: true,
@@ -52,6 +52,14 @@ export function LogMosaic({ tiles }: Props) {
       date: tile.displayDate,
       excerpt: tile.excerpt,
     })
+  }
+
+  function handleEnter(e: React.MouseEvent<HTMLElement>, tile: MosaicTileData) {
+    showTooltip(e.currentTarget, tile)
+  }
+
+  function handleFocus(e: React.FocusEvent<HTMLElement>, tile: MosaicTileData) {
+    showTooltip(e.currentTarget, tile)
   }
 
   function handleLeave() {
@@ -74,6 +82,8 @@ export function LogMosaic({ tiles }: Props) {
           aria-label={tile.displayDate}
           onMouseEnter={(e) => handleEnter(e, tile)}
           onMouseLeave={handleLeave}
+          onFocus={(e) => handleFocus(e, tile)}
+          onBlur={handleLeave}
         />
       ))}
 

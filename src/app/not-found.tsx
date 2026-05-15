@@ -12,7 +12,7 @@ export default function NotFound() {
         </Link>
       </header>
 
-      <main className={styles.main}>
+      <main className={styles.main} id="main-content">
         <div className={styles.card}>
           <p className={styles.errorCode}>404</p>
           <Link href="/" className={styles.tryAgain}>

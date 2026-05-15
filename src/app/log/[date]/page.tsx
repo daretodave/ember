@@ -56,14 +56,14 @@ export default async function LogDatePage({ params }: Props) {
           <MosaicGlyph />
           <span className={styles.wordmark}>ember</span>
         </Link>
-        <nav className={styles.nav}>
+        <nav className={styles.nav} aria-label="site navigation">
           <a href="/today">today</a>
-          <a href="/log" className={styles.navCurrent}>log</a>
+          <a href="/log" className={styles.navCurrent} aria-current="page">log</a>
           <a href="/settings">settings</a>
         </nav>
       </header>
 
-      <main className={styles.main}>
+      <main className={styles.main} id="main-content">
         <Link href="/log" className={styles.backLink}>
           back to log
         </Link>

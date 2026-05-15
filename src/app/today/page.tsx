@@ -42,14 +42,14 @@ export default async function TodayPage() {
           <MosaicGlyph />
           <span className={styles.wordmark}>ember</span>
         </Link>
-        <nav className={styles.nav}>
-          <a href="/today" className={styles.navCurrent}>today</a>
+        <nav className={styles.nav} aria-label="site navigation">
+          <a href="/today" className={styles.navCurrent} aria-current="page">today</a>
           <a href="/log">log</a>
           <a href="/settings">settings</a>
         </nav>
       </header>
 
-      <main className={styles.main}>
+      <main className={styles.main} id="main-content">
         <p className={styles.dateStamp}>{displayDate}</p>
 
         <h1 className={styles.prompt}>{prompt}</h1>

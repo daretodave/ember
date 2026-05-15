@@ -15,3 +15,22 @@
   --font-family-sans: var(--font-inter, 'Inter'), system-ui, sans-serif;
   --font-family-mono: var(--font-jetbrains-mono, 'JetBrains Mono'), monospace;
 }
+
+.skip-link {
+  position: absolute;
+  left: var(--space-4);
+  top: var(--space-4);
+  transform: translateY(-200%);
+  z-index: 9999;
+  padding: var(--space-2) var(--space-4);
+  background: var(--color-paper);
+  color: var(--color-ink);
+  border: 1px solid var(--color-border);
+  font-family: var(--font-sans);
+  font-size: var(--type-14);
+  text-decoration: none;
+  transition: transform 120ms ease;
+}
+.skip-link:focus-visible {
+  transform: translateY(0);
+}

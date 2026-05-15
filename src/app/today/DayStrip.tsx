@@ -46,7 +46,7 @@ export function DayStrip({ todayDate, entries }: Props) {
       <div className={styles.stripRow}>
         {days.map(({ date, isToday, state, label }) => (
           <div key={date} className={styles.stripDay}>
-            <div className={tileClass(state)} aria-label={date} />
+            <div className={tileClass(state)} aria-hidden="true" />
             <span className={`${styles.stripDate}${isToday ? ` ${styles.stripDateToday}` : ''}`}>
               {isToday ? 'today' : label}
             </span>

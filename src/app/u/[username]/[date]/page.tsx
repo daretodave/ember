@@ -74,7 +74,7 @@ export default async function PublicEntryPage({ params }: Props) {
         )}
       </header>
 
-      <main className={styles.main}>
+      <main className={styles.main} id="main-content">
         <Link href={`/u/${profile.username}`} className={styles.backLink}>
           back to {profile.username}&apos;s profile
         </Link>

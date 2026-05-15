@@ -67,15 +67,16 @@ export default async function LogPage() {
           <MosaicGlyph />
           <span className={styles.wordmark}>ember</span>
         </Link>
-        <nav className={styles.nav}>
+        <nav className={styles.nav} aria-label="site navigation">
           <a href="/today">today</a>
-          <a href="/log" className={styles.navCurrent}>log</a>
+          <a href="/log" className={styles.navCurrent} aria-current="page">log</a>
           <a href="/settings">settings</a>
         </nav>
       </header>
 
+      <main id="main-content">
       <section className={styles.mosaicWrap}>
-        <p className={styles.mosaicMeta}>your past sixty days</p>
+        <h1 className={styles.mosaicMeta}>your past sixty days</h1>
         <LogMosaic tiles={tiles} />
         <p className={styles.mosaicCount}>
           {written} {written === 1 ? 'day' : 'days'} written.{' '}
@@ -96,7 +97,7 @@ export default async function LogPage() {
               {formatDisplayDate(recentDate!)}
               {recentDate === today && ' · today'}
             </header>
-            <h1 className={styles.entryPrompt}>{recentPrompt.prompt}</h1>
+            <h2 className={styles.entryPrompt}>{recentPrompt.prompt}</h2>
             <p className={styles.entryTask}>
               <span className={recentEntry.task_done ? styles.entryTaskCheck : undefined} />
               {recentPrompt.task}
@@ -121,6 +122,7 @@ export default async function LogPage() {
           your log is empty. today is a good place to start.
         </p>
       )}
+      </main>
     </div>
   )
 }
