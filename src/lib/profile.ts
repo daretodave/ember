@@ -29,3 +29,26 @@ export async function getProfile(
   }
   return data as ProfileRow | null
 }
+
+/**
+ * Fetch a profile by public username.
+ * Used by the public /u/[username] route; relies on the RLS policy
+ * "public profiles are readable by username".
+ * Returns null if not found or on error.
+ */
+export async function getProfileByUsername(
+  supabase: SupabaseClient,
+  username: string,
+): Promise<ProfileRow | null> {
+  const { data, error } = await supabase
+    .from('profiles')
+    .select('*')
+    .eq('username', username)
+    .maybeSingle()
+
+  if (error) {
+    console.error('getProfileByUsername error:', error.message)
+    return null
+  }
+  return data as ProfileRow | null
+}

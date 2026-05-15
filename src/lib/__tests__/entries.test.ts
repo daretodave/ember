@@ -3,6 +3,9 @@ import {
   formatDisplayDate,
   formatSavedTime,
   formatShortWeekday,
+  getAdjacentPublishedDates,
+  getPublishedEntriesForUser,
+  getPublishedEntryByDate,
   getRecentEntries,
   getTodayEntry,
   offsetDate,
@@ -146,5 +149,156 @@ describe('getRecentEntries', () => {
     // @ts-expect-error partial mock
     const result = await getRecentEntries(mockSupabase, 'user-1', 7)
     expect(result.get('2026-05-13')).toEqual(entry)
+  })
+})
+
+describe('getPublishedEntriesForUser', () => {
+  const mockIn = vi.fn()
+  const mockSupabase = {
+    from: vi.fn().mockReturnThis(),
+    select: vi.fn().mockReturnThis(),
+    eq: vi.fn().mockReturnThis(),
+    in: mockIn,
+  }
+
+  beforeEach(() => {
+    vi.clearAllMocks()
+    mockSupabase.from.mockReturnThis()
+    mockSupabase.select.mockReturnThis()
+    mockSupabase.eq.mockReturnThis()
+    mockSupabase.in = mockIn
+  })
+
+  it('returns empty map on error', async () => {
+    mockIn.mockResolvedValue({ data: null, error: { message: 'db error' } })
+    // @ts-expect-error partial mock
+    const result = await getPublishedEntriesForUser(mockSupabase, 'user-1')
+    expect(result.size).toBe(0)
+  })
+
+  it('returns a map keyed by date for published entries', async () => {
+    const entry = {
+      id: 'pub-1',
+      user_id: 'user-1',
+      date: '2026-05-10',
+      response: 'published text',
+      task_done: true,
+      is_published: true,
+      created_at: '2026-05-10T10:00:00Z',
+      updated_at: '2026-05-10T10:00:00Z',
+    }
+    mockIn.mockResolvedValue({ data: [entry], error: null })
+    // @ts-expect-error partial mock
+    const result = await getPublishedEntriesForUser(mockSupabase, 'user-1')
+    expect(result.get('2026-05-10')).toEqual(entry)
+  })
+})
+
+describe('getPublishedEntryByDate', () => {
+  const maybeSingle = vi.fn()
+  const mockSupabase = {
+    from: vi.fn().mockReturnThis(),
+    select: vi.fn().mockReturnThis(),
+    eq: vi.fn().mockReturnThis(),
+    maybeSingle,
+  }
+
+  beforeEach(() => {
+    vi.clearAllMocks()
+    mockSupabase.from.mockReturnThis()
+    mockSupabase.select.mockReturnThis()
+    mockSupabase.eq.mockReturnThis()
+    mockSupabase.maybeSingle = maybeSingle
+  })
+
+  it('returns null when entry not found', async () => {
+    maybeSingle.mockResolvedValue({ data: null, error: null })
+    // @ts-expect-error partial mock
+    const result = await getPublishedEntryByDate(mockSupabase, 'user-1', '2026-05-10')
+    expect(result).toBeNull()
+  })
+
+  it('returns the entry when found', async () => {
+    const entry = {
+      id: 'pub-1',
+      user_id: 'user-1',
+      date: '2026-05-10',
+      response: 'published text',
+      task_done: false,
+      is_published: true,
+      created_at: '2026-05-10T10:00:00Z',
+      updated_at: '2026-05-10T10:00:00Z',
+    }
+    maybeSingle.mockResolvedValue({ data: entry, error: null })
+    // @ts-expect-error partial mock
+    const result = await getPublishedEntryByDate(mockSupabase, 'user-1', '2026-05-10')
+    expect(result).toEqual(entry)
+  })
+
+  it('returns null on Supabase error', async () => {
+    maybeSingle.mockResolvedValue({ data: null, error: { message: 'db error' } })
+    // @ts-expect-error partial mock
+    const result = await getPublishedEntryByDate(mockSupabase, 'user-1', '2026-05-10')
+    expect(result).toBeNull()
+  })
+})
+
+describe('getAdjacentPublishedDates', () => {
+  const mockOrder = vi.fn()
+  const mockSupabase = {
+    from: vi.fn().mockReturnThis(),
+    select: vi.fn().mockReturnThis(),
+    eq: vi.fn().mockReturnThis(),
+    order: mockOrder,
+  }
+
+  beforeEach(() => {
+    vi.clearAllMocks()
+    mockSupabase.from.mockReturnThis()
+    mockSupabase.select.mockReturnThis()
+    mockSupabase.eq.mockReturnThis()
+    mockSupabase.order = mockOrder
+  })
+
+  it('returns null prev and next on error', async () => {
+    mockOrder.mockResolvedValue({ data: null, error: { message: 'db error' } })
+    // @ts-expect-error partial mock
+    const result = await getAdjacentPublishedDates(mockSupabase, 'user-1', '2026-05-10')
+    expect(result).toEqual({ prev: null, next: null })
+  })
+
+  it('returns null edges when only one entry', async () => {
+    mockOrder.mockResolvedValue({ data: [{ date: '2026-05-10' }], error: null })
+    // @ts-expect-error partial mock
+    const result = await getAdjacentPublishedDates(mockSupabase, 'user-1', '2026-05-10')
+    expect(result).toEqual({ prev: null, next: null })
+  })
+
+  it('returns prev and next for a middle entry', async () => {
+    const dates = [
+      { date: '2026-05-01' },
+      { date: '2026-05-10' },
+      { date: '2026-05-15' },
+    ]
+    mockOrder.mockResolvedValue({ data: dates, error: null })
+    // @ts-expect-error partial mock
+    const result = await getAdjacentPublishedDates(mockSupabase, 'user-1', '2026-05-10')
+    expect(result).toEqual({ prev: '2026-05-01', next: '2026-05-15' })
+  })
+
+  it('returns null next for the most recent entry', async () => {
+    const dates = [{ date: '2026-05-01' }, { date: '2026-05-15' }]
+    mockOrder.mockResolvedValue({ data: dates, error: null })
+    // @ts-expect-error partial mock
+    const result = await getAdjacentPublishedDates(mockSupabase, 'user-1', '2026-05-15')
+    expect(result).toEqual({ prev: '2026-05-01', next: null })
+  })
+
+  it('returns null prev for the oldest entry', async () => {
+    const dates = [{ date: '2026-05-01' }, { date: '2026-05-15' }]
+    mockOrder.mockResolvedValue({ data: dates, error: null })
+    // @ts-expect-error partial mock
+    const result = await getAdjacentPublishedDates(mockSupabase, 'user-1', '2026-05-01')
+    expect(result).toEqual({ prev: null, next: '2026-05-15' })
   })
 })

@@ -174,3 +174,96 @@ export async function getEntryByDate(
   }
   return data as Entry | null
 }
+
+/**
+ * Fetch published entries for a user in the last 60 days.
+ * Used by the public profile mosaic; relies on the
+ * "published entries are publicly readable" RLS policy.
+ */
+export async function getPublishedEntriesForUser(
+  supabase: SupabaseClient,
+  userId: string,
+): Promise<Map<string, Entry>> {
+  const dates: string[] = []
+  const todayMs = Date.UTC(
+    new Date().getUTCFullYear(),
+    new Date().getUTCMonth(),
+    new Date().getUTCDate(),
+  )
+  for (let i = 0; i < 60; i++) {
+    const d = new Date(todayMs - i * 86_400_000)
+    const iso = `${d.getUTCFullYear()}-${String(d.getUTCMonth() + 1).padStart(2, '0')}-${String(d.getUTCDate()).padStart(2, '0')}`
+    dates.push(iso)
+  }
+
+  const { data, error } = await supabase
+    .from('entries')
+    .select('*')
+    .eq('user_id', userId)
+    .eq('is_published', true)
+    .in('date', dates)
+
+  if (error) {
+    console.error('getPublishedEntriesForUser error:', error.message)
+    return new Map()
+  }
+
+  const map = new Map<string, Entry>()
+  for (const row of (data ?? []) as Entry[]) {
+    map.set(row.date, row)
+  }
+  return map
+}
+
+/**
+ * Fetch a single published entry for a user on a specific date.
+ * Returns null if not found, unpublished, or on error.
+ */
+export async function getPublishedEntryByDate(
+  supabase: SupabaseClient,
+  userId: string,
+  date: string,
+): Promise<Entry | null> {
+  const { data, error } = await supabase
+    .from('entries')
+    .select('*')
+    .eq('user_id', userId)
+    .eq('date', date)
+    .eq('is_published', true)
+    .maybeSingle()
+
+  if (error) {
+    console.error('getPublishedEntryByDate error:', error.message)
+    return null
+  }
+  return data as Entry | null
+}
+
+/**
+ * Return the previous and next published entry dates for navigation.
+ * Fetches all published dates for the user (chronological order).
+ */
+export async function getAdjacentPublishedDates(
+  supabase: SupabaseClient,
+  userId: string,
+  currentDate: string,
+): Promise<{ prev: string | null; next: string | null }> {
+  const { data, error } = await supabase
+    .from('entries')
+    .select('date')
+    .eq('user_id', userId)
+    .eq('is_published', true)
+    .order('date', { ascending: true })
+
+  if (error || !data) {
+    return { prev: null, next: null }
+  }
+
+  const dates = (data as { date: string }[]).map((r) => r.date)
+  const idx = dates.indexOf(currentDate)
+
+  return {
+    prev: idx > 0 ? dates[idx - 1] : null,
+    next: idx < dates.length - 1 ? dates[idx + 1] : null,
+  }
+}
