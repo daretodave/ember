@@ -13,7 +13,7 @@
 - [x] Phase 4 — Magic-link auth (Supabase Auth, `/signin`, session middleware) — 08eb4a4
 - [x] Phase 5 — Today + entry write (`/today`, prompt curation, entry model) — 43a4594
 - [x] Phase 6 — Log + mosaic (`/log`, `/log/[date]`, 60-day mosaic component) — 1467ac6
-- [ ] Phase 7 — Settings (`/settings`, timezone, display name, public username)
+- [x] Phase 7 — Settings (`/settings`, timezone, display name, public username) — 863114c
 - [ ] Phase 8 — Public profile (`/u/[username]`, `/u/[username]/[date]`, publish toggle)
 - [ ] Phase 9 — Polish (mobile reflow, empty states, error pages)
 - [ ] Phase 10 — A11y pass (keyboard nav, aria, contrast)
