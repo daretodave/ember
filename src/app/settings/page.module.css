@@ -236,6 +236,25 @@
   cursor: default;
 }
 
+/* ----------- profile link ----------- */
+.profileLink {
+  display: inline-block;
+  margin-top: var(--space-7);
+  font-family: var(--font-sans);
+  font-size: var(--type-14);
+  color: var(--color-ink-muted);
+  text-decoration: none;
+  border-bottom: 1px solid var(--color-border);
+  padding-bottom: 2px;
+  transition: color var(--motion-fade) var(--easing),
+    border-color var(--motion-fade) var(--easing);
+}
+
+.profileLink:hover {
+  color: var(--color-ink);
+  border-bottom-color: var(--color-ink);
+}
+
 /* ----------- responsive ----------- */
 @media (max-width: 480px) {
   .heading {

@@ -174,3 +174,22 @@
   text-align: right;
   margin-left: auto;
 }
+
+/* ----------- responsive ----------- */
+@media (max-width: 480px) {
+  .header {
+    padding: var(--space-5) var(--space-4) var(--space-5);
+  }
+
+  .main {
+    padding: var(--space-6) var(--space-4) var(--space-6);
+  }
+
+  .entryPrompt {
+    font-size: var(--type-20);
+  }
+
+  .entryNav {
+    padding: var(--space-5) var(--space-4) 0;
+  }
+}

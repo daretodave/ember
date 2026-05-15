@@ -191,3 +191,25 @@
   font-size: var(--type-14);
   color: var(--color-ink-muted);
 }
+
+/* ----------- responsive ----------- */
+@media (max-width: 480px) {
+  .header {
+    padding: var(--space-5) var(--space-4) var(--space-5);
+  }
+
+  .main {
+    padding: var(--space-6) var(--space-4) var(--space-6);
+  }
+
+  .entryPrompt {
+    font-size: var(--type-20);
+  }
+
+  .entryFoot {
+    padding: var(--space-5) var(--space-4) var(--space-6);
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-2);
+  }
+}

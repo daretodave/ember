@@ -260,3 +260,46 @@
   color: var(--color-ink-muted);
   font-style: italic;
 }
+
+/* ----------- responsive ----------- */
+@media (max-width: 480px) {
+  .header {
+    padding: var(--space-5) var(--space-4) var(--space-5);
+  }
+
+  .identity {
+    padding: var(--space-6) var(--space-4) var(--space-5);
+  }
+
+  .identityName {
+    font-size: var(--type-24);
+  }
+
+  .mosaicWrap {
+    padding: var(--space-5) var(--space-4) var(--space-6);
+  }
+
+  .privacyNote {
+    padding: 0 var(--space-4);
+  }
+
+  .divider {
+    padding: 0 var(--space-4);
+  }
+
+  .entryView {
+    padding: 0 var(--space-4);
+  }
+
+  .entryPrompt {
+    font-size: var(--type-20);
+  }
+
+  .entryNav {
+    padding: var(--space-5) var(--space-4) 0;
+  }
+
+  .emptyState {
+    padding: 0 var(--space-4) var(--space-7);
+  }
+}

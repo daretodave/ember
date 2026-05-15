@@ -266,3 +266,41 @@
   color: var(--color-ink-muted);
   font-style: italic;
 }
+
+/* ----------- responsive ----------- */
+@media (max-width: 480px) {
+  .header {
+    padding: var(--space-5) var(--space-4) var(--space-5);
+  }
+
+  .mosaicWrap {
+    padding: var(--space-6) var(--space-4) var(--space-6);
+  }
+
+  .mosaicCount {
+    font-size: var(--type-17);
+  }
+
+  .divider {
+    padding: 0 var(--space-4);
+  }
+
+  .entryView {
+    padding: 0 var(--space-4);
+  }
+
+  .entryPrompt {
+    font-size: var(--type-20);
+  }
+
+  .entryFoot {
+    padding: var(--space-5) var(--space-4) var(--space-6);
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-2);
+  }
+
+  .emptyState {
+    padding: var(--space-6) var(--space-4);
+  }
+}

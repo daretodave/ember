@@ -1,0 +1,117 @@
+/* error boundary page — muted card, try again */
+
+.page {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  min-height: 100vh;
+}
+
+/* ----------- header ----------- */
+.header {
+  max-width: 720px;
+  margin: 0 auto;
+  width: 100%;
+  padding: var(--space-7) var(--space-6) var(--space-5);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.lockup {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  text-decoration: none;
+}
+
+.wordmark {
+  font-family: var(--font-serif);
+  font-size: var(--type-24);
+  letter-spacing: var(--tracking-tight);
+  color: var(--color-ink);
+  line-height: 1;
+}
+
+/* ----------- main ----------- */
+.main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-8) var(--space-6);
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-5);
+}
+
+.errorCode {
+  font-family: var(--font-mono);
+  font-size: var(--type-40);
+  color: var(--color-ink-muted);
+  letter-spacing: var(--tracking-mono);
+  margin: 0;
+  line-height: 1;
+}
+
+.errorDetail {
+  font-family: var(--font-serif);
+  font-size: var(--type-16);
+  color: var(--color-ink-muted);
+  margin: 0;
+  font-style: italic;
+  max-width: 400px;
+}
+
+.actions {
+  display: flex;
+  gap: var(--space-4);
+  align-items: center;
+}
+
+.resetBtn {
+  font-family: var(--font-sans);
+  font-size: var(--type-14);
+  font-weight: var(--weight-medium);
+  padding: 8px 16px;
+  background: var(--color-ink);
+  color: var(--color-paper);
+  border: 0;
+  border-radius: var(--radius-1);
+  cursor: pointer;
+  transition: opacity var(--motion-fade) var(--easing);
+}
+
+.resetBtn:hover {
+  opacity: 0.88;
+}
+
+.homeLink {
+  font-family: var(--font-sans);
+  font-size: var(--type-14);
+  color: var(--color-ink-muted);
+  text-decoration: none;
+  transition: color var(--motion-fade) var(--easing);
+}
+
+.homeLink:hover {
+  color: var(--color-ink);
+}
+
+/* ----------- responsive ----------- */
+@media (max-width: 480px) {
+  .header {
+    padding: var(--space-5) var(--space-4) var(--space-5);
+  }
+
+  .main {
+    padding: var(--space-6) var(--space-4);
+  }
+
+  .errorCode {
+    font-size: var(--type-32);
+  }
+}

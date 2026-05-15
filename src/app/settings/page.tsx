@@ -49,6 +49,14 @@ export default async function SettingsPage() {
           timezone={profile?.timezone ?? 'UTC'}
           virgin={virgin}
         />
+        {profile?.username && (
+          <a
+            href={`/u/${profile.username}`}
+            className={styles.profileLink}
+          >
+            view your public profile
+          </a>
+        )}
       </main>
     </div>
   )
