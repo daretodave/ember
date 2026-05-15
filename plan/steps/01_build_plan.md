@@ -16,7 +16,7 @@
 - [x] Phase 7 — Settings (`/settings`, timezone, display name, public username) — 863114c
 - [x] Phase 8 — Public profile (`/u/[username]`, `/u/[username]/[date]`, publish toggle) — fc0ccba
 - [x] Phase 9 — Polish (mobile reflow, empty states, error pages) — e82b631
-- [ ] Phase 10 — A11y pass (keyboard nav, aria, contrast)
+- [x] Phase 10 — A11y pass (keyboard nav, aria, contrast) — 32a8c44
 - [ ] Phase 11 — Perf pass (RSC streaming, image opt, bundle audit)
 - [ ] Phase 12 — Prompt rotation v1.5 (Anthropic-personalized prompts opt-in)
 
