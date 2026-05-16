@@ -6,12 +6,15 @@
 
 ## Pending
 
-### [user-issue #6] [HIGH] entries table missing from Supabase schema cache — POST /api/entries returns 400
+### [user-issue #6] [HIGH] [needs-user-call] entries table missing from Supabase — migrations not applied
 
 - category: external-issue
 - impact: 9
 - ease: 6
-- next: /iterate will investigate whether the `entries` table migration was applied to the connected Supabase project; if the table is absent, apply the migration and reload the PostgREST schema cache. Reference #6 in commit body.
+- issue: #6
+- investigated: 2026-05-16 — confirmed all 4 migrations in supabase/migrations/ were never applied to the connected project. Direct DB is IPv6-only (unreachable from CI runner); Management API requires a PAT that is not provisioned.
+- shipped: scripts/migrate.mjs + pnpm db:migrate (Path B); full SQL posted to issue #6 comment (Path A — paste into Supabase SQL Editor, no tools needed).
+- next: user must apply migrations via one of the two paths in issue #6. Once applied, add SUPABASE_ACCESS_TOKEN to GitHub Actions secrets so the cloud loop can push future migrations automatically.
 
 ## Done
 

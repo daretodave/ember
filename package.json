@@ -18,7 +18,8 @@
     "verify": "pnpm typecheck && pnpm test:run && pnpm build && pnpm --filter @ember/e2e test",
     "deploy:check": "DEPLOY_PROVIDER=vercel node scripts/deploy-check.mjs",
     "bootstrap": "node scripts/bootstrap.mjs",
-    "bootstrap:status": "node scripts/bootstrap.mjs status"
+    "bootstrap:status": "node scripts/bootstrap.mjs status",
+    "db:migrate": "node scripts/migrate.mjs"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.96.0",
