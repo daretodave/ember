@@ -6,7 +6,12 @@
 
 ## Pending
 
-(none)
+### [user-issue #6] [HIGH] entries table missing from Supabase schema cache — POST /api/entries returns 400
+
+- category: external-issue
+- impact: 9
+- ease: 6
+- next: /iterate will investigate whether the `entries` table migration was applied to the connected Supabase project; if the table is absent, apply the migration and reload the PostgREST schema cache. Reference #6 in commit body.
 
 ## Done
 
