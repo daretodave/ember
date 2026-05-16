@@ -86,6 +86,47 @@ jobs:
         run: supabase start
         timeout-minutes: 5
 
+      # Bring the remote Postgres schema in sync with origin/main BEFORE
+      # the agent runs, so a tick never ships against a stale DB. The
+      # direct DB host (db.<ref>.supabase.co) is IPv6-only and not
+      # routable from GitHub Actions, so we go through the IPv4 session
+      # pooler with --db-url. This needs no SUPABASE_ACCESS_TOKEN /
+      # `supabase link` — just the project id + db password (already
+      # secrets). The pooler's AWS shard prefix isn't derivable from the
+      # region, so we try the known candidates and use the first that
+      # connects. Idempotent: re-applying a recorded migration is a
+      # no-op, so this runs every tick regardless of the commit ceiling.
+      - name: Apply Supabase migrations
+        if: hashFiles('supabase/migrations/*.sql') != ''
+        env:
+          SUPABASE_PROJECT_ID:  ${{ secrets.SUPABASE_PROJECT_ID }}
+          SUPABASE_DB_PASSWORD: ${{ secrets.SUPABASE_DB_PASSWORD }}
+          SUPABASE_REGION:      ${{ vars.SUPABASE_REGION }}
+        run: |
+          set -euo pipefail
+          # Pinned, no-Docker CLI install (setup-cli@v1 is gated on
+          # config.toml above and skipped while we have none).
+          curl -fsSL "https://github.com/supabase/cli/releases/download/v2.98.2/supabase_linux_amd64.tar.gz" \
+            | sudo tar -xz -C /usr/local/bin supabase
+          # Password may contain url/shell-special chars (#, etc.).
+          enc_pw=$(node -e 'process.stdout.write(encodeURIComponent(process.env.SUPABASE_DB_PASSWORD))')
+          applied=false
+          for pool in aws-1 aws-0; do
+            host="${pool}-${SUPABASE_REGION}.pooler.supabase.com"
+            url="postgresql://postgres.${SUPABASE_PROJECT_ID}:${enc_pw}@${host}:5432/postgres"
+            echo "Trying ${host} (session pooler)…"
+            if supabase db push --db-url "$url" --yes; then
+              echo "Migrations applied via ${pool} pooler."
+              applied=true
+              break
+            fi
+            echo "  ${pool} pooler did not connect; trying next."
+          done
+          if [ "$applied" != "true" ]; then
+            echo "::error::supabase db push failed on all pooler endpoints"
+            exit 1
+          fi
+
       - name: Daily commit ceiling check
         id: ceiling
         run: |
