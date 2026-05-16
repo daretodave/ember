@@ -1,0 +1,66 @@
+/* Shared loading skeleton — used by route-level loading.tsx files */
+
+.page {
+  min-height: 100vh;
+  background: var(--color-paper);
+}
+
+/* ----------- header ----------- */
+.header {
+  max-width: 720px;
+  margin: 0 auto;
+  width: 100%;
+  padding: var(--space-7) var(--space-6) var(--space-6);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.lockup {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  text-decoration: none;
+}
+
+.wordmark {
+  font-family: var(--font-serif);
+  font-size: var(--type-24);
+  letter-spacing: var(--tracking-tight);
+  color: var(--color-ink);
+  line-height: 1;
+}
+
+.nav {
+  font-family: var(--font-sans);
+  font-size: var(--type-14);
+  display: flex;
+  gap: var(--space-5);
+}
+
+.nav a {
+  color: var(--color-ink-muted);
+  text-decoration: none;
+}
+
+/* ----------- main ----------- */
+.main {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: var(--space-7) var(--space-6);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+/* muted placeholder blocks — no animation per ember's motion budget */
+.placeholder {
+  height: 1.25rem;
+  background: var(--color-border-faint);
+  border-radius: var(--radius-1);
+}
+
+.placeholderNarrow  { width: 30%; }
+.placeholderMedium  { width: 55%; }
+.placeholderWide    { width: 75%; }

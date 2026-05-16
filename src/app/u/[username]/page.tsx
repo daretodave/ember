@@ -8,6 +8,8 @@ import { notFound } from 'next/navigation'
 import { ProfileMosaic } from './ProfileMosaic'
 import styles from './page.module.css'
 
+export const revalidate = 60
+
 type Props = {
   params: Promise<{ username: string }>
 }
@@ -24,14 +26,14 @@ export default async function PublicProfilePage({ params }: Props) {
   const { username } = await params
   const supabase = await createClient()
 
-  const profile = await getProfileByUsername(supabase, username)
+  const [profile, { data: { user } }] = await Promise.all([
+    getProfileByUsername(supabase, username),
+    supabase.auth.getUser(),
+  ])
+
   if (!profile || !profile.username) {
     notFound()
   }
-
-  const {
-    data: { user },
-  } = await supabase.auth.getUser()
 
   const publishedEntries = await getPublishedEntriesForUser(supabase, profile.user_id)
 

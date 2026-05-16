@@ -7,6 +7,8 @@ import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import styles from './page.module.css'
 
+export const revalidate = 60
+
 const ISO_DATE_RE = /^\d{4}-\d{2}-\d{2}$/
 
 type Props = {
