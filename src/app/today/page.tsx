@@ -1,5 +1,7 @@
 import { MosaicGlyph } from '@/components/mosaic/MosaicGlyph'
 import { getRecentEntries, getTodayEntry, todayUtcDate, formatDisplayDate } from '@/lib/entries'
+import { getPersonalizedPrompt } from '@/lib/ai-prompt'
+import { getProfile } from '@/lib/profile'
 import { getSevenDayPreview } from '@/lib/prompts'
 import { createClient } from '@/lib/supabase/server'
 import Link from 'next/link'
@@ -26,14 +28,29 @@ export default async function TodayPage() {
   const date = todayUtcDate()
   const displayDate = formatDisplayDate(date)
 
-  // today's prompt from the deterministic seed list
-  const [todayPreview] = getSevenDayPreview(new Date())
-  const { prompt, task } = todayPreview
-
-  const [todayEntry, recentEntries] = await Promise.all([
+  const [profile, todayEntry, recentEntries] = await Promise.all([
+    getProfile(supabase, user.id),
     getTodayEntry(supabase, user.id, date),
     getRecentEntries(supabase, user.id, 7),
   ])
+
+  // Resolve today's prompt: personalized (opt-in) or deterministic seed
+  let prompt: string
+  let task: string
+  const seedPreview = getSevenDayPreview(new Date())[0]
+
+  if (profile?.use_personalized_prompts) {
+    const recentResponses = Array.from(recentEntries.values())
+      .filter((e) => e.response?.trim())
+      .sort((a, b) => a.date.localeCompare(b.date))
+      .map((e) => e.response)
+    const personalized = await getPersonalizedPrompt(supabase, user.id, date, recentResponses)
+    prompt = personalized?.prompt ?? seedPreview.prompt
+    task = personalized?.task ?? seedPreview.task
+  } else {
+    prompt = seedPreview.prompt
+    task = seedPreview.task
+  }
 
   return (
     <div className={styles.page}>

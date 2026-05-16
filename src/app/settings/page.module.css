@@ -255,6 +255,43 @@
   border-bottom-color: var(--color-ink);
 }
 
+/* ----------- prompt variety radio group ----------- */
+.radioGroup {
+  display: flex;
+  gap: var(--space-5);
+  margin-top: var(--space-1);
+}
+
+.radioInput {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.radioOption {
+  display: inline-flex;
+  align-items: center;
+  gap: 0;
+  font-family: var(--font-sans);
+  font-size: var(--type-14);
+  color: var(--color-ink-muted);
+  cursor: pointer;
+  padding-bottom: var(--space-2);
+  border-bottom: 1px solid transparent;
+  transition: color var(--motion-fade) var(--easing),
+    border-color var(--motion-fade) var(--easing);
+}
+
+.radioOption:hover {
+  color: var(--color-ink);
+}
+
+.radioOptionActive {
+  color: var(--color-ink);
+  border-bottom-color: var(--color-accent);
+}
+
 /* ----------- responsive ----------- */
 @media (max-width: 480px) {
   .heading {

@@ -9,13 +9,15 @@ type Props = {
   displayName: string
   username: string
   timezone: string
+  usePersonalizedPrompts: boolean
   virgin: boolean
 }
 
-export function SettingsForm({ displayName, username, timezone, virgin }: Props) {
+export function SettingsForm({ displayName, username, timezone, usePersonalizedPrompts, virgin }: Props) {
   const [nameVal, setNameVal] = useState(displayName)
   const [usernameVal, setUsernameVal] = useState(username)
   const [tzVal, setTzVal] = useState(timezone)
+  const [personalizedVal, setPersonalizedVal] = useState(usePersonalizedPrompts)
   const [timezones, setTimezones] = useState<string[]>([])
   const [saveState, setSaveState] = useState<SaveState>('idle')
   const [errorMsg, setErrorMsg] = useState('')
@@ -62,6 +64,7 @@ export function SettingsForm({ displayName, username, timezone, virgin }: Props)
           display_name: nameVal,
           username: usernameVal,
           timezone: tzVal,
+          use_personalized_prompts: personalizedVal,
         }),
       })
 
@@ -122,6 +125,37 @@ export function SettingsForm({ displayName, username, timezone, virgin }: Props)
             ))
           )}
         </select>
+      </div>
+
+      <div className={styles.field}>
+        <span className={styles.label}>prompt variety</span>
+        <p className={styles.hint}>
+          standard: same curated prompt for everyone each day. personalized: a unique prompt generated for you by Claude, informed by your recent entries.
+        </p>
+        <div className={styles.radioGroup} role="radiogroup" aria-label="prompt variety">
+          <label className={`${styles.radioOption} ${!personalizedVal ? styles.radioOptionActive : ''}`}>
+            <input
+              type="radio"
+              name="variety"
+              value="standard"
+              checked={!personalizedVal}
+              onChange={() => setPersonalizedVal(false)}
+              className={styles.radioInput}
+            />
+            standard
+          </label>
+          <label className={`${styles.radioOption} ${personalizedVal ? styles.radioOptionActive : ''}`}>
+            <input
+              type="radio"
+              name="variety"
+              value="personalized"
+              checked={personalizedVal}
+              onChange={() => setPersonalizedVal(true)}
+              className={styles.radioInput}
+            />
+            personalized
+          </label>
+        </div>
       </div>
 
       <div className={styles.field}>

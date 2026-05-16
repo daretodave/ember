@@ -5,6 +5,7 @@ export type ProfileRow = {
   display_name: string | null
   username: string | null
   timezone: string
+  use_personalized_prompts: boolean
   created_at: string
   updated_at: string
 }

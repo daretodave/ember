@@ -47,6 +47,7 @@ export default async function SettingsPage() {
           displayName={profile?.display_name ?? ''}
           username={profile?.username ?? ''}
           timezone={profile?.timezone ?? 'UTC'}
+          usePersonalizedPrompts={profile?.use_personalized_prompts ?? false}
           virgin={virgin}
         />
         {profile?.username && (

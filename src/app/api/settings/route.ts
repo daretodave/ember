@@ -7,6 +7,7 @@ type SettingsPayload = {
   display_name?: string | null
   username?: string | null
   timezone?: string
+  use_personalized_prompts?: boolean
 }
 
 export async function POST(request: Request) {
@@ -27,7 +28,7 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: 'invalid json' }, { status: 400 })
   }
 
-  const { display_name, username, timezone } = body
+  const { display_name, username, timezone, use_personalized_prompts } = body
 
   // Validate username if provided (empty string or null → clear it)
   const normalizedUsername =
@@ -52,6 +53,9 @@ export async function POST(request: Request) {
   }
   if (timezone !== undefined && typeof timezone === 'string' && timezone.length > 0) {
     patch.timezone = timezone
+  }
+  if (use_personalized_prompts !== undefined && typeof use_personalized_prompts === 'boolean') {
+    patch.use_personalized_prompts = use_personalized_prompts
   }
 
   const { data, error } = await supabase
