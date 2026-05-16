@@ -17,7 +17,7 @@
 - [x] Phase 8 — Public profile (`/u/[username]`, `/u/[username]/[date]`, publish toggle) — fc0ccba
 - [x] Phase 9 — Polish (mobile reflow, empty states, error pages) — e82b631
 - [x] Phase 10 — A11y pass (keyboard nav, aria, contrast) — 32a8c44
-- [ ] Phase 11 — Perf pass (RSC streaming, image opt, bundle audit)
+- [x] Phase 11 — Perf pass (RSC streaming, image opt, bundle audit) — f9d8859
 - [ ] Phase 12 — Prompt rotation v1.5 (Anthropic-personalized prompts opt-in)
 
 ## Per-phase scope
