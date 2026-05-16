@@ -116,3 +116,11 @@ typographic restraint reads better than capitalization.
 - No shadows. No gradients. No icons. No illustrations. No avatars.
 
 See `design/CLAUDE.md` for the visual law; `design/INDEX.md` for a tour of every screen.
+
+## Plan expansion posture
+
+- Mode: **bold** (default)
+
+`/expand` runs at standard cadence (rate-limited per skill spec). Candidates land
+in `plan/PHASE_CANDIDATES.md`. `/oversight` promotes candidates to the build plan.
+The cloud loop never auto-promotes.
