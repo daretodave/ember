@@ -42,6 +42,47 @@ describe('POST /api/auth/signin', () => {
     )
   })
 
+  it('passes emailRedirectTo using NEXT_PUBLIC_SITE_URL when set', async () => {
+    process.env.NEXT_PUBLIC_SITE_URL = 'https://ember-rust-sigma.vercel.app'
+    signInWithOtp.mockResolvedValueOnce({ error: null })
+    const req = new Request('http://localhost/api/auth/signin', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email: 'test@example.com' }),
+    })
+    const res = await POST(req)
+    expect(res.status).toBe(200)
+    expect(signInWithOtp).toHaveBeenCalledWith(
+      expect.objectContaining({
+        options: expect.objectContaining({
+          emailRedirectTo: 'https://ember-rust-sigma.vercel.app/auth/callback',
+        }),
+      }),
+    )
+    delete process.env.NEXT_PUBLIC_SITE_URL
+  })
+
+  it('falls back to VERCEL_PROJECT_PRODUCTION_URL when NEXT_PUBLIC_SITE_URL is absent', async () => {
+    delete process.env.NEXT_PUBLIC_SITE_URL
+    process.env.VERCEL_PROJECT_PRODUCTION_URL = 'ember-rust-sigma.vercel.app'
+    signInWithOtp.mockResolvedValueOnce({ error: null })
+    const req = new Request('http://localhost/api/auth/signin', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email: 'test@example.com' }),
+    })
+    const res = await POST(req)
+    expect(res.status).toBe(200)
+    expect(signInWithOtp).toHaveBeenCalledWith(
+      expect.objectContaining({
+        options: expect.objectContaining({
+          emailRedirectTo: 'https://ember-rust-sigma.vercel.app/auth/callback',
+        }),
+      }),
+    )
+    delete process.env.VERCEL_PROJECT_PRODUCTION_URL
+  })
+
   it('returns 400 when email is missing', async () => {
     const req = new Request('http://localhost/api/auth/signin', {
       method: 'POST',

@@ -6,14 +6,13 @@
 
 ## Pending
 
+(none)
+
+## Done
+
 ### [user-issue #5] [HIGH] log in bug — magic-link callback redirects to localhost
 
 - category: external-issue
 - impact: 9
 - ease: 7
-- detail: after clicking magic-link email, user lands on localhost:3000/auth/callback instead of the production URL. Supabase is falling back to localhost because the signin code does not pass an explicit `redirectTo` and/or the Supabase project Site URL is not set to production. Code fix: pass `redirectTo: process.env.NEXT_PUBLIC_SITE_URL + '/auth/callback'` in the `signInWithOtp` call. Dashboard fix (user action): set Site URL in Supabase → Authentication → URL Configuration to the production Vercel URL.
-- next: /iterate will audit src/app/signin and ship the redirectTo fix; reference #5 in commit body.
-
-## Done
-
-(none yet)
+- resolution: added `VERCEL_PROJECT_PRODUCTION_URL` as fallback in `src/app/api/auth/signin/route.ts` so the route no longer falls back to `http://localhost:3000` when `NEXT_PUBLIC_SITE_URL` is absent. Added two targeted tests covering the env-var fallback chain. Note: the Supabase Dashboard "Site URL" at Authentication → URL Configuration should also be set to the production Vercel URL — that is a user action in the Supabase console.
