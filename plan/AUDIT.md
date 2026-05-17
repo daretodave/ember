@@ -34,15 +34,16 @@
 - ease: 7
 - resolution: added openGraph (type, siteName, title, description, url) and twitter card (summary) to root layout metadata. Text cards now surface on every social/messaging platform. No OG image for v1. Shipped at 2907586.
 
-### [ ] [4.0] auth/callback route has no unit test
+### [x] [4.0] auth/callback route has no unit test
 
 - category: tests
 - impact: 5
 - ease: 8
+- issue: #8
 - observation: `src/app/auth/callback/route.ts` handles magic-link code exchange but has no collocated unit test. All other API routes have test coverage.
 - evidence: `find src/app/api -name '*.test.ts'` shows entries and settings covered; callback route is at `src/app/auth/callback/` (not under api/) and has no sibling `__tests__/`.
 - suggested fix: add `src/app/auth/callback/__tests__/route.test.ts` with tests for: missing code → redirect to /signin?error=auth; Supabase error → redirect to /signin?error=auth; success → redirect to /today.
-- next: main agent
+- resolution: added `src/app/auth/callback/__tests__/route.test.ts` with 3 tests covering all three branches. Shipped at bef2c0e.
 
 ## Done
 
