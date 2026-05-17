@@ -16,7 +16,7 @@
 - shipped: scripts/migrate.mjs + pnpm db:migrate (Path B); full SQL posted to issue #6 comment (Path A — paste into Supabase SQL Editor, no tools needed).
 - next: user must apply migrations via one of the two paths in issue #6. Once applied, add SUPABASE_ACCESS_TOKEN to GitHub Actions secrets so the cloud loop can push future migrations automatically.
 
-### [ ] [5.4] robots.txt and sitemap.xml absent — site is not crawlable
+### [x] [5.4] robots.txt and sitemap.xml absent — site is not crawlable
 
 - category: seo
 - impact: 6
