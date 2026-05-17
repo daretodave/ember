@@ -6,6 +6,17 @@
 
 ## Pending
 
+### [6.3] stale useCallback closure in SettingsForm silently ignores personalizedVal on save
+
+- category: bug
+- impact: 7
+- ease: 9
+- observation: `src/app/settings/SettingsForm.tsx` `handleSave` useCallback lists `[nameVal, usernameVal, tzVal]` as deps but reads `personalizedVal` inside the body. If a user changes only the "prompt variety" radio and clicks save, the stale closure sends the old value; the toggle appears to save but the preference is silently ignored.
+- evidence: `handleSave` line 55 in SettingsForm.tsx — `personalizedVal` used at line 67 but absent from dep array `[nameVal, usernameVal, tzVal]` (line 82).
+- suggested fix: add `personalizedVal` to the `useCallback` dependency array. One token change.
+- next: fix inline — one-token change, no schema impact
+- issue: #9
+
 ### [user-issue #6] [HIGH] [needs-user-call] entries table missing from Supabase — migrations not applied
 
 - category: external-issue

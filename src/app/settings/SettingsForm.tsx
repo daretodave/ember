@@ -79,7 +79,7 @@ export function SettingsForm({ displayName, username, timezone, usePersonalizedP
       setErrorMsg('network error. try again.')
       setSaveState('error')
     }
-  }, [nameVal, usernameVal, tzVal])
+  }, [nameVal, usernameVal, tzVal, personalizedVal])
 
   return (
     <form
