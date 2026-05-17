@@ -78,5 +78,329 @@
   {
     "prompt": "what's something you'd do more of if no one was watching or counting?",
     "task": "spend five minutes outside without an agenda."
+  },
+  {
+    "prompt": "what sound is present right now that you've been tuning out?",
+    "task": "sit still for two minutes and only listen."
+  },
+  {
+    "prompt": "what's the oldest object you interact with regularly, and where did it come from?",
+    "task": "pick up one object near you and hold it for a moment before putting it back."
+  },
+  {
+    "prompt": "what do you notice about your posture right now, before you adjust it?",
+    "task": "roll your shoulders back three times, slowly."
+  },
+  {
+    "prompt": "when did you last feel genuinely rested, and what was different about that time?",
+    "task": "lie flat on your back for five minutes before bed tonight."
+  },
+  {
+    "prompt": "what's a task you complete every day that you've never really examined?",
+    "task": "do that task today at half the usual speed."
+  },
+  {
+    "prompt": "what's a smell that takes you somewhere specific when you encounter it?",
+    "task": "open a window, even briefly."
+  },
+  {
+    "prompt": "what piece of writing — a sentence, a passage, a line from a song — have you carried with you the longest?",
+    "task": "write that line down somewhere physical today."
+  },
+  {
+    "prompt": "who is someone you think about more than you've told them?",
+    "task": "send that person a message with no ask in it."
+  },
+  {
+    "prompt": "what part of your commute or daily route do you never actually see?",
+    "task": "walk or travel one stretch of your routine without headphones."
+  },
+  {
+    "prompt": "what's something you've been meaning to learn that you keep deferring?",
+    "task": "spend ten minutes on that thing today — just ten."
+  },
+  {
+    "prompt": "what feeling do you reach for when a harder feeling arrives?",
+    "task": "before checking your phone this morning, take three slow breaths."
+  },
+  {
+    "prompt": "what did your childhood bedroom look like — the ceiling, the view from the window, the sounds at night?",
+    "task": "write down three details you remember about a room from your past."
+  },
+  {
+    "prompt": "what's a boundary between work and rest that has blurred for you recently?",
+    "task": "choose a time today when you stop working and keep it."
+  },
+  {
+    "prompt": "what's the last thing you made with your own effort that someone else used or benefited from?",
+    "task": "do one small thing today that is purely for someone else."
+  },
+  {
+    "prompt": "what has your body been trying to tell you this week that you've been too busy to hear?",
+    "task": "take a ten-minute walk without your phone."
+  },
+  {
+    "prompt": "what's a season of your life you rarely let yourself think about?",
+    "task": "find one photograph from that time, or look something up from it."
+  },
+  {
+    "prompt": "what do you know how to do that would surprise most people who know you?",
+    "task": "teach someone — in person or in a message — one small thing you know."
+  },
+  {
+    "prompt": "what's a meal from your past that you haven't tasted since, but could still describe?",
+    "task": "eat lunch away from your desk today."
+  },
+  {
+    "prompt": "what's the most recent thing a stranger did that stayed with you?",
+    "task": "make brief eye contact with one person you pass today and nod."
+  },
+  {
+    "prompt": "when is the last time you let yourself be bored, fully, without filling it?",
+    "task": "let one transition — on the bus, in a queue — pass without looking at your phone."
+  },
+  {
+    "prompt": "what's an assumption you brought into a relationship that turned out to be wrong?",
+    "task": "ask one person a question today that you think you already know the answer to."
+  },
+  {
+    "prompt": "what's a project or goal you quietly gave up on — and what was the actual reason?",
+    "task": "write that reason down in one honest sentence."
+  },
+  {
+    "prompt": "what did you read last year that changed the way you think about something ordinary?",
+    "task": "read five pages of a book before reaching for your phone tomorrow morning."
+  },
+  {
+    "prompt": "what's a gesture or phrase someone close to you uses that you've absorbed without realizing it?",
+    "task": "notice one thing today that you do that you learned from someone else."
+  },
+  {
+    "prompt": "what part of your work are you most likely to rush through, and what does that rushing protect you from?",
+    "task": "slow down on one task today — do it more carefully than necessary."
+  },
+  {
+    "prompt": "what's the earliest memory you have of being proud of something?",
+    "task": "write down three things — however small — you've done well recently."
+  },
+  {
+    "prompt": "what do your evenings look like now versus five years ago?",
+    "task": "do something tonight that you used to do regularly but stopped."
+  },
+  {
+    "prompt": "what's a word in another language that has no direct translation but describes something you know well?",
+    "task": "look up one word today just out of curiosity."
+  },
+  {
+    "prompt": "what's a conversation you've been carrying in your head that you haven't had in real life?",
+    "task": "write the first two sentences of that conversation down, then stop."
+  },
+  {
+    "prompt": "what does the light in your home look like at the time of day you find hardest?",
+    "task": "change the lighting in one room today — open a blind, switch a lamp."
+  },
+  {
+    "prompt": "what's a small ceremony or ritual that structures your week in a way you'd miss if it disappeared?",
+    "task": "do that ritual today with more deliberateness than usual."
+  },
+  {
+    "prompt": "what's the kindest thing you've said to someone this month, and did you mean it?",
+    "task": "say something true and specific to someone today — not a formality."
+  },
+  {
+    "prompt": "what do you notice about how you treat yourself when no one's around to see it?",
+    "task": "make yourself something to eat with a little more care than usual."
+  },
+  {
+    "prompt": "what's the last time you were in a space that changed the way you felt when you entered it?",
+    "task": "tidy the surface you look at most often."
+  },
+  {
+    "prompt": "what have you been reading about lately — not for work, but out of genuine appetite?",
+    "task": "spend fifteen minutes reading something with no productivity justification."
+  },
+  {
+    "prompt": "what's a fear that used to feel large that has quietly shrunk?",
+    "task": "do one small thing today that you avoided before."
+  },
+  {
+    "prompt": "what's an opinion you hold that you've never had to defend out loud?",
+    "task": "write that opinion down in two sentences."
+  },
+  {
+    "prompt": "who taught you something important without knowing they were teaching you anything at all?",
+    "task": "write that person's name down, and one thing you learned."
+  },
+  {
+    "prompt": "what season feels most like you, and what does that mean in practice?",
+    "task": "spend a few minutes outside today, just noticing what season looks like right now."
+  },
+  {
+    "prompt": "what do you find hardest to ask for, even from people who would give it easily?",
+    "task": "ask for one small thing today that you would usually handle alone."
+  },
+  {
+    "prompt": "what would your best working day look like in terms of rhythm — when you think, when you rest, when you create?",
+    "task": "protect one hour of your day today from meetings or messages."
+  },
+  {
+    "prompt": "what's a recurring thought you've been having that you haven't examined yet?",
+    "task": "write that thought down without trying to resolve it."
+  },
+  {
+    "prompt": "what part of your life are you in the middle of that you won't fully understand until later?",
+    "task": "write a few sentences as if you were writing to yourself five years from now."
+  },
+  {
+    "prompt": "what's a texture — fabric, surface, material — that you encounter every day without registering it?",
+    "task": "run your hand slowly across one surface today and actually notice it."
+  },
+  {
+    "prompt": "what's the longest you've gone without speaking to someone, and what was it like?",
+    "task": "spend thirty minutes this evening in deliberate quiet."
+  },
+  {
+    "prompt": "what's a rule you follow that you inherited from someone else and have never questioned?",
+    "task": "write that rule down, and note where it came from."
+  },
+  {
+    "prompt": "what did you want to be when you were young — not the obvious answer, but the true one?",
+    "task": "write down what that version of you spent time doing."
+  },
+  {
+    "prompt": "what part of your day do you look forward to in a quiet, unremarkable way?",
+    "task": "give that part of today a little more room — slow it down."
+  },
+  {
+    "prompt": "what's a piece of advice you've given someone else that you haven't followed yourself?",
+    "task": "apply a small version of that advice to one decision today."
+  },
+  {
+    "prompt": "what's a neighborhood or city you've lived in that you think about more than you'd expect?",
+    "task": "look up one street or building from that place and sit with the memory."
+  },
+  {
+    "prompt": "what's something you do physically every day that requires more skill than you give yourself credit for?",
+    "task": "pause before you do that thing today and notice what it actually takes."
+  },
+  {
+    "prompt": "what are the sounds your home makes — settling, pipes, the refrigerator — that you've stopped hearing?",
+    "task": "sit in a room of your home in silence for three minutes."
+  },
+  {
+    "prompt": "what do you avoid thinking about by staying busy?",
+    "task": "build in one pocket of unscheduled time today and don't fill it."
+  },
+  {
+    "prompt": "what's a friendship that faded not from conflict but from drift — and where do you think it went?",
+    "task": "look up one person you've lost track of — no action required."
+  },
+  {
+    "prompt": "what's the last time you were in water — swimming, bathing, standing in rain — and what did it feel like?",
+    "task": "take a shower today with the specific intention of noticing the temperature."
+  },
+  {
+    "prompt": "what's one thing about your own behavior that you would describe differently to a therapist than to a friend?",
+    "task": "write one sentence about yourself that you wouldn't usually say aloud."
+  },
+  {
+    "prompt": "what does your face do when you're thinking hard about something — do you know?",
+    "task": "notice your physical state during one difficult task today."
+  },
+  {
+    "prompt": "what's something you've read or heard that you initially dismissed and then later found yourself agreeing with?",
+    "task": "let yourself sit with an uncomfortable idea for five minutes without reacting."
+  },
+  {
+    "prompt": "what was the last thing you did for the first time?",
+    "task": "do one small thing today that you've never done before."
+  },
+  {
+    "prompt": "what's a question you've been afraid to ask because the answer might be inconvenient?",
+    "task": "write the question down without answering it yet."
+  },
+  {
+    "prompt": "what do your hands look like right now, and what have they been doing?",
+    "task": "wash your hands deliberately and slowly today."
+  },
+  {
+    "prompt": "what's the last time you sat somewhere long enough for the light to change?",
+    "task": "sit in one place this evening without moving for twenty minutes."
+  },
+  {
+    "prompt": "what's something you've built, grown, repaired, or maintained that no one has commented on?",
+    "task": "spend a few minutes on something today that is quietly worthwhile."
+  },
+  {
+    "prompt": "what's a way you've changed that you wouldn't have predicted about yourself?",
+    "task": "write three sentences about who you are now that you wouldn't have written two years ago."
+  },
+  {
+    "prompt": "what do you know about a neighbor, a regular, or a person you see often but rarely speak to?",
+    "task": "acknowledge one such person by name or with a nod today."
+  },
+  {
+    "prompt": "what's the last time something completely changed your plan for the day, and how did you respond?",
+    "task": "leave a gap in today's schedule where something unexpected could fit."
+  },
+  {
+    "prompt": "what are three things within arm's reach right now, and when did you last really look at them?",
+    "task": "clear one item from your immediate space that doesn't need to be there."
+  },
+  {
+    "prompt": "what's a book, show, or film you've recommended to someone without finishing it yourself?",
+    "task": "open that book or show tonight and give it thirty minutes."
+  },
+  {
+    "prompt": "what does your breathing feel like right now — where in your body, how deep, how fast?",
+    "task": "take five long, deliberate breaths before your next meeting or task."
+  },
+  {
+    "prompt": "what's a piece of music that brings a specific time or place back to you when you hear it?",
+    "task": "listen to one song today without doing anything else at the same time."
+  },
+  {
+    "prompt": "what's a task you approach as if it matters more than it does — and what does that say about you?",
+    "task": "name one obligation this week that you could do at half the intensity."
+  },
+  {
+    "prompt": "what's something you use every day that you couldn't explain how it works?",
+    "task": "spend five minutes today understanding one thing you usually take for granted."
+  },
+  {
+    "prompt": "what's the longest you've ever waited for something, and was it worth it?",
+    "task": "do one thing today without rushing it to completion."
+  },
+  {
+    "prompt": "what's a word you've stopped using that used to feel central to how you described yourself?",
+    "task": "write five words that feel like you right now."
+  },
+  {
+    "prompt": "what's a topic where you notice yourself getting defensive, and what does that tell you?",
+    "task": "listen to someone fully today before forming a response."
+  },
+  {
+    "prompt": "what's something you ate as a child that you haven't thought about in years?",
+    "task": "eat one thing today without rushing or reading."
+  },
+  {
+    "prompt": "what does the sky look like where you are today — not a summary, but a real description?",
+    "task": "go outside once today and look up before looking at anything else."
+  },
+  {
+    "prompt": "what's a small injustice you witnessed recently that you didn't respond to?",
+    "task": "write down what you would have said if you'd known what to say."
+  },
+  {
+    "prompt": "what's a physical threshold — a door, a gate, a hallway — that you cross every day?",
+    "task": "pause at that threshold today before passing through it."
+  },
+  {
+    "prompt": "what would you do differently about yesterday if you had it to run again?",
+    "task": "do that thing — the different version — at some point today."
+  },
+  {
+    "prompt": "what do you miss about a place you've never lived but only visited?",
+    "task": "find one photograph of that place and look at it for a few minutes."
   }
 ]
