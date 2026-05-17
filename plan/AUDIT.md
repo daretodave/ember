@@ -27,15 +27,12 @@
 - suggested fix: add `src/app/robots.ts` (allow /, disallow private routes) and `src/app/sitemap.ts` (list static public URLs) using Next.js 15 App Router file conventions.
 - next: implement via main agent — two small files, no schema changes
 
-### [ ] [4.9] OG / social metadata absent on all pages
+### [x] [4.9] OG / social metadata absent on all pages
 
 - category: seo
 - impact: 7
 - ease: 7
-- observation: every shared ember URL shows a blank preview card on social and messaging platforms. The brand mark that took a full phase to commission is invisible at the key sharing moment.
-- evidence: no `openGraph` or `twitter` fields in any metadata export across src/app/. Root layout metadata has only `title` and `description`.
-- suggested fix: add `openGraph` fields to root layout metadata (title, description, type, url, siteName). Per-page OG can extend it. No image needed for v1 — text cards already beat blank.
-- next: main agent
+- resolution: added openGraph (type, siteName, title, description, url) and twitter card (summary) to root layout metadata. Text cards now surface on every social/messaging platform. No OG image for v1. Shipped at 2907586.
 
 ### [ ] [4.0] auth/callback route has no unit test
 
