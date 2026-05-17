@@ -6,7 +6,7 @@
 
 ## Pending
 
-### [6.3] stale useCallback closure in SettingsForm silently ignores personalizedVal on save
+### [x] [6.3] stale useCallback closure in SettingsForm silently ignores personalizedVal on save
 
 - category: bug
 - impact: 7
