@@ -6,7 +6,7 @@
 
 ## Pending
 
-### [ ] [4.2] content gap — only 20 prompts vs spec target of ~100; rotation repeats every 20 days
+### [x] [4.2] content gap — only 20 prompts vs spec target of ~100; rotation repeats every 20 days
 
 - category: content-gaps
 - impact: 7
@@ -16,6 +16,7 @@
 - suggested fix: expand content/prompts.json to ~100 entries in the established voice. Delegate to prompt-curator sub-agent; no schema or code changes required.
 - next: spawn prompt-curator sub-agent to write ~80 additional prompts + tasks in the established voice
 - issue: #10
+- resolution: expanded content/prompts.json from 20 to 101 entries via prompt-curator sub-agent. Shipped at a6d0d49.
 
 ### [user-issue #6] [HIGH] [needs-user-call] entries table missing from Supabase — migrations not applied
 
