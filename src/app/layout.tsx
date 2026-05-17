@@ -23,9 +23,23 @@ const jetbrainsMono = JetBrains_Mono({
   variable: '--font-jetbrains-mono',
 })
 
+const siteUrl = 'https://ember-rust-sigma.vercel.app'
+
 export const metadata: Metadata = {
   title: 'ember',
   description: 'ten minutes of intention before the day swallows you',
+  openGraph: {
+    type: 'website',
+    siteName: 'ember',
+    title: 'ember',
+    description: 'ten minutes of intention before the day swallows you',
+    url: siteUrl,
+  },
+  twitter: {
+    card: 'summary',
+    title: 'ember',
+    description: 'ten minutes of intention before the day swallows you',
+  },
 }
 
 export default function RootLayout({
