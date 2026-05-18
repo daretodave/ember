@@ -6,6 +6,17 @@
 
 ## Pending
 
+### [x] [4.2] test gap — auth middleware has no unit tests
+
+- category: tests
+- impact: 6
+- ease: 7
+- observation: `src/middleware.ts` had no unit tests despite being the sole auth guard for all protected routes (`/today`, `/log`, `/settings`). It also redirects authenticated users away from `/signin`.
+- evidence: `find src -name "*.test.*" | xargs grep -l "middleware"` returned no results.
+- suggested fix: add `src/__tests__/middleware.test.ts` covering unauthenticated redirects, authenticated pass-through, and /signin-to-/today redirect.
+- issue: #11
+- resolution: added 12 tests in `src/__tests__/middleware.test.ts` using `@vitest-environment node`. Shipped at f5990c2.
+
 ### [x] [4.2] content gap — only 20 prompts vs spec target of ~100; rotation repeats every 20 days
 
 - category: content-gaps
