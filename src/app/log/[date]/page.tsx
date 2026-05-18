@@ -77,9 +77,9 @@ export default async function LogDatePage({ params }: Props) {
 
         <p className={styles.entryTask}>
           {entry?.task_done ? (
-            <span className={styles.entryTaskCheck} />
+            <span className={styles.entryTaskCheck} role="img" aria-label="task done" />
           ) : (
-            <span className={styles.entryTaskUnchecked} />
+            <span className={styles.entryTaskUnchecked} role="img" aria-label="task not done" />
           )}
           {promptData.task}
         </p>

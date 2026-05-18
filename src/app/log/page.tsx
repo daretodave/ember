@@ -101,7 +101,11 @@ export default async function LogPage() {
             </header>
             <h2 className={styles.entryPrompt}>{recentPrompt.prompt}</h2>
             <p className={styles.entryTask}>
-              <span className={recentEntry.task_done ? styles.entryTaskCheck : undefined} />
+              <span
+                className={recentEntry.task_done ? styles.entryTaskCheck : undefined}
+                role="img"
+                aria-label={recentEntry.task_done ? 'task done' : 'task not done'}
+              />
               {recentPrompt.task}
             </p>
             <div className={styles.entryResponse}>
