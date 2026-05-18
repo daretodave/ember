@@ -63,8 +63,9 @@ export function TodayEntry({ date, task, initialEntry }: Props) {
         </p>
       </div>
 
-      <p className={styles.entryLabel}>your response</p>
+      <label htmlFor="today-entry-response" className={styles.entryLabel}>your response</label>
       <textarea
+        id="today-entry-response"
         className={styles.entry}
         value={response}
         onChange={(e) => {
