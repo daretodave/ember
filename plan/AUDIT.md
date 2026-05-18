@@ -6,6 +6,17 @@
 
 ## Pending
 
+### [x] [6.3] a11y — TodayEntry textarea has no programmatic label
+
+- category: a11y
+- impact: 7
+- ease: 9
+- observation: `src/app/today/TodayEntry.tsx` renders a `<p className={styles.entryLabel}>your response</p>` above the textarea, but it is a plain paragraph, not a `<label>` element. The textarea has no `id`, no `htmlFor` association, and no `aria-label`. Screen readers will not announce "your response" when the user focuses the textarea — the core write surface of the app.
+- evidence: `TodayEntry.tsx` lines ~45–52: `<p className={styles.entryLabel}>your response</p>` immediately above `<textarea ... />` with no id, no aria-label, no htmlFor link.
+- suggested fix: change the `<p>` to `<label htmlFor="today-entry-response">`, add `id="today-entry-response"` to the textarea.
+- issue: #12
+- resolution: changed `<p>` to `<label htmlFor="today-entry-response">` and added `id="today-entry-response"` to the textarea. Shipped at 44613b0.
+
 ### [x] [5.6] bug — log mosaic counts wrong on today-tile edge case
 
 - category: bug
