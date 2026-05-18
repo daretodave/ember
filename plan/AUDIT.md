@@ -6,7 +6,7 @@
 
 ## Pending
 
-### [ ] [4.8] a11y — save feedback in TodayEntry has no live region
+### [x] [4.8] a11y — save feedback in TodayEntry has no live region
 
 - category: a11y
 - impact: 6
@@ -15,6 +15,7 @@
 - evidence: `src/app/today/TodayEntry.tsx` line 80: `<span className={styles.lastSaved}>` text updates after save with no aria-live; line 103–105: error `<p>` conditionally rendered with no role="alert"
 - suggested fix: add `aria-live="polite"` to the `lastSaved` span; add `role="alert"` to the error paragraph
 - issue: #14
+- resolution: added `aria-live="polite"` to the lastSaved span and `role="alert"` to the save error paragraph in TodayEntry.tsx. Shipped at 8b41e0a.
 
 ### [x] [5.4] a11y — task-done state not conveyed to screen readers on log views
 
