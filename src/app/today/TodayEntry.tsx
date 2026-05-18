@@ -77,7 +77,7 @@ export function TodayEntry({ date, task, initialEntry }: Props) {
       />
 
       <div className={styles.entryMeta}>
-        <span className={styles.lastSaved}>
+        <span className={styles.lastSaved} aria-live="polite">
           {savedAt ? formatSavedTime(savedAt) : 'not yet saved'}
         </span>
         <div className={styles.entryActions}>
@@ -101,7 +101,7 @@ export function TodayEntry({ date, task, initialEntry }: Props) {
       </div>
 
       {saveState === 'error' && errorMsg && (
-        <p className={styles.saveError}>{errorMsg}</p>
+        <p className={styles.saveError} role="alert">{errorMsg}</p>
       )}
     </>
   )
