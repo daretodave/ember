@@ -6,6 +6,17 @@
 
 ## Pending
 
+### [x] [5.4] a11y — task-done state not conveyed to screen readers on log views
+
+- category: a11y
+- impact: 6
+- ease: 9
+- observation: `log/[date]/page.tsx` renders `<span className={styles.entryTaskCheck} />` and `<span className={styles.entryTaskUnchecked} />` as purely visual indicators. `log/page.tsx` renders `<span className={recentEntry.task_done ? styles.entryTaskCheck : undefined} />`. All three spans are empty — no `aria-label`, no `role`, no text. Screen readers see only the task description with no indication of whether the task was completed.
+- evidence: `src/app/log/[date]/page.tsx` lines 79–84; `src/app/log/page.tsx` line 104.
+- suggested fix: add `role="img"` and `aria-label="task done"` / `aria-label="task not done"` to the task-state spans in both files.
+- issue: #13
+- resolution: added `role="img"` and `aria-label="task done"`/`"task not done"` to task-state spans in both log pages. Shipped at 22c5da5.
+
 ### [x] [6.3] a11y — TodayEntry textarea has no programmatic label
 
 - category: a11y
