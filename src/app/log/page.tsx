@@ -49,10 +49,12 @@ export default async function LogPage() {
     }
   })
 
-  // Counts for the summary line
-  const written = tiles.filter((t) => t.state !== 'empty').length
-  const quiet = tiles.filter((t) => t.state === 'empty').length
-  const published = tiles.filter((t) => t.state === 'published').length
+  // Counts for the summary line — derived from entries map, not tile state,
+  // because today's tile is always state='today' regardless of whether it's
+  // written or published, which causes tile-based counts to be wrong.
+  const written = entries.size
+  const quiet = 60 - entries.size
+  const published = [...entries.values()].filter((e) => e.is_published).length
 
   // Most recent written entry
   const sortedDates = [...entries.keys()].sort().reverse()

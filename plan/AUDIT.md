@@ -6,6 +6,16 @@
 
 ## Pending
 
+### [x] [5.6] bug — log mosaic counts wrong on today-tile edge case
+
+- category: bug
+- impact: 5
+- ease: 9
+- observation: `src/app/log/page.tsx` computed `written`, `quiet`, and `published` by filtering the `tiles` array on `state`. Two faults: (1) today's tile always has `state = 'today'` (set before the `is_published` check), so a published today-entry is never counted in `published`. (2) today's tile has `state = 'today'` even with no entry yet, inflating `written` by 1 for every new user before they've ever written.
+- evidence: tile state machine in `log/page.tsx` sets `state = 'today'` before `is_published` check; `written = tiles.filter(t => t.state !== 'empty').length` always includes today.
+- suggested fix: derive counts from the `entries` map directly (`entries.size`, `60 - entries.size`, `[...entries.values()].filter(e => e.is_published).length`).
+- resolution: fixed in `src/app/log/page.tsx` — counts now derived from the `entries` map. Shipped this tick.
+
 ### [x] [4.2] test gap — auth middleware has no unit tests
 
 - category: tests
