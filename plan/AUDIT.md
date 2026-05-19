@@ -16,7 +16,7 @@
 - suggested fix: add `role="alert"` to the error paragraph.
 - issue: #19
 
-### [ ] [4.5] test — signout route has no unit tests
+### [x] [4.5] test — signout route has no unit tests
 
 - category: tests
 - impact: 5
@@ -24,6 +24,8 @@
 - observation: `src/app/auth/signout/route.ts` exports POST (calls `supabase.auth.signOut()` then redirects to `/`) and GET (returns 405). Neither branch has a test. Every other API route has colocated tests.
 - evidence: `find src -path "*/signout*test*"` returns no results.
 - suggested fix: add `src/app/auth/signout/__tests__/route.test.ts` with 2 tests: POST signs out and redirects to `/`; GET returns 405.
+- issue: #20
+- resolution: added `src/app/auth/signout/__tests__/route.test.ts` with POST and GET tests. Shipped at bbeb643.
 
 ### [ ] [3.6] seo — log/[date] generateMetadata missing description
 
