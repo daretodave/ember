@@ -6,6 +6,17 @@
 
 ## Pending
 
+### [x] [4.8] a11y — LogMosaic tile aria-labels omit entry state
+
+- category: a11y
+- impact: 6
+- ease: 8
+- observation: `LogMosaic.tsx` renders 60 interactive link tiles each with `aria-label={tile.displayDate}`. Screen reader and keyboard users navigating the mosaic hear only the date ("Wed 13 May 2026") with no indication of tile state — whether the day has a written entry, a published entry, or no entry at all.
+- evidence: `src/app/log/LogMosaic.tsx` line 82: `aria-label={tile.displayDate}` on every tile regardless of `tile.state` (`empty` | `filled` | `today` | `published`)
+- suggested fix: append state description to aria-label: "no entry" / "written" / "today" / "published"
+- issue: #15
+- resolution: added `tileStateLabel()` helper in LogMosaic.tsx; aria-label now reads "Wed 13 May 2026 — written" etc. Shipped at c8770e7.
+
 ### [x] [4.8] a11y — save feedback in TodayEntry has no live region
 
 - category: a11y
