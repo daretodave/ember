@@ -6,6 +6,16 @@
 
 ## Pending
 
+### [x] [5.4] a11y — SettingsForm save feedback has no ARIA live regions
+
+- category: a11y
+- impact: 6
+- ease: 9
+- observation: `SettingsForm.tsx` updates the UI dynamically after save — a "saved." confirmation span and error messages — but neither uses ARIA live regions. The `saveStatus` span always renders "saved." in the DOM; only a CSS class toggles visibility (no content change), so screen readers do not announce the confirmation. The `saveError` span and `fieldError` paragraph are conditionally rendered on error but carry no `role="alert"`.
+- evidence: `src/app/settings/SettingsForm.tsx` lines 189–194: `saveStatus` span no `aria-live`; `saveError` span no `role`; line 183–185: `fieldError` paragraph no `role`.
+- suggested fix: add `aria-live="polite"` to `saveStatus` span and render conditional content; add `role="alert"` to `saveError` and `fieldError`.
+- issue: #16
+
 ### [x] [4.8] a11y — LogMosaic tile aria-labels omit entry state
 
 - category: a11y
