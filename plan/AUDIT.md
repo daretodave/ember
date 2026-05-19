@@ -6,7 +6,7 @@
 
 ## Pending
 
-### [ ] [5.4] a11y — SigninPage error message has no role="alert"
+### [x] [5.4] a11y — SigninPage error message has no role="alert"
 
 - category: a11y
 - impact: 6
