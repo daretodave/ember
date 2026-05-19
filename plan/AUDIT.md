@@ -6,6 +6,34 @@
 
 ## Pending
 
+### [ ] [5.4] a11y — SigninPage error message has no role="alert"
+
+- category: a11y
+- impact: 6
+- ease: 9
+- observation: `src/app/signin/page.tsx` renders `<p className={styles.errorMsg}>{errorMsg}</p>` when `state === 'error'`, but the paragraph carries no `role="alert"` and no `aria-live`. When sign-in fails (invalid email, Supabase rate-limit, network error) the error text appears visually but screen readers receive no announcement — identical to the pattern already fixed in TodayEntry and SettingsForm.
+- evidence: `src/app/signin/page.tsx` line 86: `<p className={styles.errorMsg}>{errorMsg}</p>` — no role, no aria-live, dynamically rendered on error.
+- suggested fix: add `role="alert"` to the error paragraph.
+- issue: #19
+
+### [ ] [4.5] test — signout route has no unit tests
+
+- category: tests
+- impact: 5
+- ease: 9
+- observation: `src/app/auth/signout/route.ts` exports POST (calls `supabase.auth.signOut()` then redirects to `/`) and GET (returns 405). Neither branch has a test. Every other API route has colocated tests.
+- evidence: `find src -path "*/signout*test*"` returns no results.
+- suggested fix: add `src/app/auth/signout/__tests__/route.test.ts` with 2 tests: POST signs out and redirects to `/`; GET returns 405.
+
+### [ ] [3.6] seo — log/[date] generateMetadata missing description
+
+- category: seo
+- impact: 4
+- ease: 9
+- observation: `src/app/log/[date]/page.tsx` `generateMetadata` returns only `{ title }` with no `description`. Search engines and social previews fall back to the root layout description ("ten minutes of intention before the day swallows you") for all date-specific log pages.
+- evidence: `src/app/log/[date]/page.tsx` lines 15–20: `return { title: \`ember · log · ${date}\` }` — no description key.
+- suggested fix: add `description: 'your entry for ${date}'` (or similar) to the return object.
+
 ### [x] [5.6] seo — public profile pages missing openGraph and twitter metadata
 
 - category: seo

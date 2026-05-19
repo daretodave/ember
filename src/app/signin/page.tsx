@@ -83,7 +83,7 @@ export default function SigninPage() {
           )}
 
           {state === 'error' && (
-            <p className={styles.errorMsg}>{errorMsg}</p>
+            <p className={styles.errorMsg} role="alert">{errorMsg}</p>
           )}
 
           {state !== 'sent' && (
