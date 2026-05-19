@@ -11,14 +11,30 @@ export const revalidate = 60
 
 const ISO_DATE_RE = /^\d{4}-\d{2}-\d{2}$/
 
+const siteUrl =
+  process.env.NEXT_PUBLIC_SITE_URL ?? 'https://ember-rust-sigma.vercel.app'
+
 type Props = {
   params: Promise<{ username: string; date: string }>
 }
 
 export async function generateMetadata({ params }: Props) {
   const { username, date } = await params
+  const title = `ember · @${username} · ${date}`
+  const description = `a reflection shared publicly on ember by @${username}`
   return {
-    title: `ember · @${username} · ${date}`,
+    title,
+    description,
+    openGraph: {
+      title,
+      description,
+      url: `${siteUrl}/u/${username}/${date}`,
+    },
+    twitter: {
+      card: 'summary' as const,
+      title,
+      description,
+    },
   }
 }
 

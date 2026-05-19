@@ -10,15 +10,30 @@ import styles from './page.module.css'
 
 export const revalidate = 60
 
+const siteUrl =
+  process.env.NEXT_PUBLIC_SITE_URL ?? 'https://ember-rust-sigma.vercel.app'
+
 type Props = {
   params: Promise<{ username: string }>
 }
 
 export async function generateMetadata({ params }: Props) {
   const { username } = await params
+  const title = `ember · @${username}`
+  const description = `${username}'s published practice log on ember`
   return {
-    title: `ember · @${username}`,
-    description: `${username}'s published practice log on ember`,
+    title,
+    description,
+    openGraph: {
+      title,
+      description,
+      url: `${siteUrl}/u/${username}`,
+    },
+    twitter: {
+      card: 'summary' as const,
+      title,
+      description,
+    },
   }
 }
 
