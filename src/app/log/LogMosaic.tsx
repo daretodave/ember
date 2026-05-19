@@ -26,6 +26,13 @@ function tileClass(state: MosaicTileData['state']): string {
   return 'tile'
 }
 
+function tileStateLabel(state: MosaicTileData['state']): string {
+  if (state === 'filled') return 'written'
+  if (state === 'today') return 'today'
+  if (state === 'published') return 'published'
+  return 'no entry'
+}
+
 type Props = {
   tiles: MosaicTileData[]
 }
@@ -79,7 +86,7 @@ export function LogMosaic({ tiles }: Props) {
           href={`/log/${tile.date}`}
           className={`${tileClass(tile.state)} ${styles.mosaicTile}`}
           style={{ animationDelay: `${i * 8}ms` }}
-          aria-label={tile.displayDate}
+          aria-label={`${tile.displayDate} — ${tileStateLabel(tile.state)}`}
           onMouseEnter={(e) => handleEnter(e, tile)}
           onMouseLeave={handleLeave}
           onFocus={(e) => handleFocus(e, tile)}
