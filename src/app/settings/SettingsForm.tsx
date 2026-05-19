@@ -181,16 +181,16 @@ export function SettingsForm({ displayName, username, timezone, usePersonalizedP
           />
         </div>
         {saveState === 'error' && errorMsg && (
-          <p className={styles.fieldError}>{errorMsg}</p>
+          <p className={styles.fieldError} role="alert">{errorMsg}</p>
         )}
       </div>
 
       <div className={styles.formFoot}>
-        <span className={`${styles.saveStatus} ${saveState === 'saved' ? styles.saveStatusVisible : ''}`}>
-          saved.
+        <span aria-live="polite" className={`${styles.saveStatus} ${saveState === 'saved' ? styles.saveStatusVisible : ''}`}>
+          {saveState === 'saved' ? 'saved.' : ''}
         </span>
         {saveState === 'error' && !errorMsg.includes('username') && (
-          <span className={styles.saveError}>{errorMsg}</span>
+          <span role="alert" className={styles.saveError}>{errorMsg}</span>
         )}
         <button
           type="submit"
