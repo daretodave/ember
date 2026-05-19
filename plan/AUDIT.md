@@ -6,6 +6,17 @@
 
 ## Pending
 
+### [x] [5.6] seo — public profile pages missing openGraph and twitter metadata
+
+- category: seo
+- impact: 8
+- ease: 7
+- observation: `/u/[username]/page.tsx` returned only `title` and `description` from `generateMetadata` — no `openGraph` or `twitter`. `/u/[username]/[date]/page.tsx` returned only `title`. Shared links fell back to the generic root layout card.
+- evidence: `src/app/u/[username]/page.tsx` lines 17–23; `src/app/u/[username]/[date]/page.tsx` lines 18–23.
+- suggested fix: add `openGraph` and `twitter` blocks to both routes' `generateMetadata`, using `NEXT_PUBLIC_SITE_URL` for canonical URLs.
+- issue: #17
+- resolution: added `description`, `openGraph`, and `twitter` to both routes. Shipped at 7532c5d.
+
 ### [x] [5.4] a11y — SettingsForm save feedback has no ARIA live regions
 
 - category: a11y
