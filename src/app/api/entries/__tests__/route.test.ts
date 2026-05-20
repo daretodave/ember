@@ -75,6 +75,19 @@ describe('POST /api/entries', () => {
     expect(res.status).toBe(400)
   })
 
+  it('returns 400 for a future date', async () => {
+    mockGetUser.mockResolvedValue({ data: { user: { id: 'user-1' } } })
+    const req = new Request('http://localhost/api/entries', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ date: '9999-12-31', response: 'hi', task_done: false }),
+    })
+    const res = await POST(req)
+    expect(res.status).toBe(400)
+    const body = await res.json()
+    expect(body.error).toContain('future')
+  })
+
   it('returns 400 when response is not a string', async () => {
     mockGetUser.mockResolvedValue({ data: { user: { id: 'user-1' } } })
     const req = new Request('http://localhost/api/entries', {
