@@ -1,7 +1,7 @@
 # Ember — phase candidates
 
-> Last pass: 2026-05-18 at commit 034fe30
-> Pass count: 2
+> Last pass: 2026-05-20 at commit dacf70c
+> Pass count: 3
 
 Candidates proposed by `/expand`. Promotion to `plan/steps/01_build_plan.md`
 happens only via local `/oversight` — never from the cloud loop.
@@ -67,8 +67,32 @@ happens only via local `/oversight` — never from the cloud loop.
 - estimated phases: 1 (but requires a user action to generate the access token)
 - conflicts: none with spec or URL contract; this is infrastructure, not a product feature
 
+### [ ] [score 5.5] Automated a11y regression testing — axe-core integration in Playwright
+
+- proposed: 2026-05-20, expand pass 3
+- source signals:
+  - commit-pattern (Signal G): 10+ a11y `audit:` + `a11y:` commits landed after the dedicated Phase 10 a11y pass, covering TodayEntry, SettingsForm, LogMosaic, log pages, SigninPage, and DayStrip — all found only by manual iterate audit
+  - AUDIT findings (Signal A): plan/AUDIT.md resolved 11 a11y findings post-Phase-10 spanning role="alert", aria-live, aria-label, heading structure, and label association; no automated gate caught any of them before they shipped
+- rationale: Phase 10 was explicitly the a11y pass, yet 11+ issues survived into production and required a manual iterate cycle to surface. Without automated a11y testing, future phases (entry editing, account deletion, etc.) will re-introduce the same classes of violations and catch them only via post-ship audit. Adding `@axe-core/playwright` to the existing e2e suite creates a permanent regression gate that protects the entire a11y investment.
+- proposed scope: 1 phase — add `@axe-core/playwright`; configure axe scans on `/`, `/signin`, `/today`, `/log`, `/settings`; fail on WCAG 2.1 AA violations; test-only addition (no app code changes)
+- estimated phases: 1
+- conflicts: none — extends existing Playwright suite; no new routes; no code changes required
+
+### [ ] [score 4.5] Account self-service — delete account and all associated data
+
+- proposed: 2026-05-20, expand pass 3
+- source signals:
+  - architectural gap: the app accumulates personal user data (text entries, profile, settings) in Supabase with no user-accessible deletion mechanism; users who want to leave can sign out but their data persists indefinitely
+  - spec.md gap: the v1 spec defines all user routes but omits account lifecycle management entirely — neither explicitly deferred to v1.5 nor scoped as a non-goal, which is unusual for a data-collecting app
+- rationale: any production app that collects personal data requires a user-accessible deletion path. GDPR Article 17 (right to erasure) applies. The /settings page is the natural home. Scope is bounded: one new API route + a confirmation UI — no new URL family needed.
+- proposed scope: 1 phase — `DELETE /api/account` route (cascades delete of entries + profile row, then signs out); confirmation dialog on /settings ("delete my account and all my entries"); verify or add `ON DELETE CASCADE` FK constraints in Supabase migrations if absent
+- estimated phases: 1 (may need one minor migration for FK cascade constraints)
+- conflicts: none with spec or URL contract; one new API route; /settings page extension only
+
 ## Considered (below threshold)
 
 - **Entry search** — spec says "Search (defer)"; single signal, moderate complexity (-1), estimated 1–2 phases. Score ~4. Revisit if AUDIT or user issues surface demand.
 - **Magic-link email templates** — design/CLAUDE.md notes "default magic-link email is fine for v1; templated email lands in a later phase if it lands at all." Single signal, polish-only, score ~4. Revisit if brand impression on auth flow becomes a critique finding.
 - **E2e authenticated flow coverage** — all Playwright specs test only the anonymous/redirect state; `today.spec.ts` verifies the redirect to `/signin` but not the actual write flow. Score ~3.0: real gap, but fixing it requires either hermetic Supabase test credentials or mocked auth tokens (complex setup). Revisit if a regression in the authenticated path ships undetected.
+- **Session expiry UX** — Supabase browser client auto-refreshes JWTs; no evidence of a real gap. Score ~2.5: revisit if production reports of silent save failures emerge.
+- **Prompt curation tooling** — the seed list is now 101 entries (a6d0d49); editorial work, not a development phase. Revisit if content quality becomes a critique finding.
