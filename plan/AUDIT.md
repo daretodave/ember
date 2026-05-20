@@ -6,6 +6,17 @@
 
 ## Pending
 
+### [x] [4.0] test — /api/auth/signin route has no unit tests
+
+- category: tests
+- impact: 5
+- ease: 8
+- observation: `src/app/api/auth/signin/route.ts` exports POST (initiates Supabase magic-link OTP) but has no colocated unit tests. Every other API route has colocated tests. Uncovered branches: missing/non-string email → 400; Supabase OTP error → 400; success → 200; three-tier env-var fallback for emailRedirectTo.
+- evidence: `find src/app/api/auth/signin -name "*.test.*"` returned no results.
+- suggested fix: add `src/app/api/auth/signin/__tests__/route.test.ts` with 6 tests.
+- issue: [mirror-failed: 2026-05-20T12:06:00Z]
+- resolution: added `src/app/api/auth/signin/__tests__/route.test.ts` with 6 tests. Shipped at 2dcef41.
+
 ### [x] [3.6] test — settings route missing `use_personalized_prompts` test coverage
 
 - category: tests
