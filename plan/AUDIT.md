@@ -6,7 +6,7 @@
 
 ## Pending
 
-### [ ] [3.6] test — settings route missing `use_personalized_prompts` test coverage
+### [x] [3.6] test — settings route missing `use_personalized_prompts` test coverage
 
 - category: tests
 - impact: 4
