@@ -6,6 +6,16 @@
 
 ## Pending
 
+### [ ] [4.5] perf — site nav uses raw `<a>` tags; full-page reload on every authenticated navigation
+
+- category: perf
+- impact: 5
+- ease: 9
+- observation: all four authenticated page layouts (`today/`, `log/`, `log/[date]/`, `settings/`) render the site nav with raw `<a href="...">` anchors instead of Next.js `<Link>`. Raw anchors trigger full-page reloads; `<Link>` enables client-side transitions and prefetching. `Link` is already imported in all four files.
+- evidence: `src/app/today/page.tsx` lines 63–65; `src/app/log/page.tsx` lines 73–76; `src/app/log/[date]/page.tsx` lines 62–65; `src/app/settings/page.tsx` lines 38–40 and line 54.
+- suggested fix: replace `<a href="...">` with `<Link href="...">` in all four nav blocks and the settings profile link.
+- issue: #23
+
 ### [x] [4.0] bug — entries API accepts future dates; UI rejects them
 
 - category: bug

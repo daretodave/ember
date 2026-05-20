@@ -60,9 +60,9 @@ export default async function TodayPage() {
           <span className={styles.wordmark}>ember</span>
         </Link>
         <nav className={styles.nav} aria-label="site navigation">
-          <a href="/today" className={styles.navCurrent} aria-current="page">today</a>
-          <a href="/log">log</a>
-          <a href="/settings">settings</a>
+          <Link href="/today" className={styles.navCurrent} aria-current="page">today</Link>
+          <Link href="/log">log</Link>
+          <Link href="/settings">settings</Link>
         </nav>
       </header>
 

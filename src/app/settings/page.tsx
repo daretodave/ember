@@ -35,9 +35,9 @@ export default async function SettingsPage() {
           <span className={styles.wordmark}>ember</span>
         </Link>
         <nav className={styles.nav} aria-label="site navigation">
-          <a href="/today">today</a>
-          <a href="/log">log</a>
-          <a href="/settings" className={styles.navCurrent} aria-current="page">settings</a>
+          <Link href="/today">today</Link>
+          <Link href="/log">log</Link>
+          <Link href="/settings" className={styles.navCurrent} aria-current="page">settings</Link>
         </nav>
       </header>
 
@@ -51,12 +51,12 @@ export default async function SettingsPage() {
           virgin={virgin}
         />
         {profile?.username && (
-          <a
+          <Link
             href={`/u/${profile.username}`}
             className={styles.profileLink}
           >
             view your public profile
-          </a>
+          </Link>
         )}
       </main>
     </div>

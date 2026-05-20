@@ -70,9 +70,9 @@ export default async function LogPage() {
           <span className={styles.wordmark}>ember</span>
         </Link>
         <nav className={styles.nav} aria-label="site navigation">
-          <a href="/today">today</a>
-          <a href="/log" className={styles.navCurrent} aria-current="page">log</a>
-          <a href="/settings">settings</a>
+          <Link href="/today">today</Link>
+          <Link href="/log" className={styles.navCurrent} aria-current="page">log</Link>
+          <Link href="/settings">settings</Link>
         </nav>
       </header>
 
