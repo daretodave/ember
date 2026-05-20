@@ -123,4 +123,34 @@ describe('POST /api/settings', () => {
     const body = await res.json()
     expect(body.error).toBe('username taken')
   })
+
+  it('passes use_personalized_prompts through to upsert', async () => {
+    mockGetUser.mockResolvedValue({ data: { user: { id: 'user-1' } } })
+    const req = new Request('http://localhost/api/settings', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ use_personalized_prompts: true }),
+    })
+    const res = await POST(req)
+    expect(res.status).toBe(200)
+    expect(mockUpsert).toHaveBeenCalledWith(
+      expect.objectContaining({ use_personalized_prompts: true }),
+      expect.any(Object),
+    )
+  })
+
+  it('ignores use_personalized_prompts when not a boolean', async () => {
+    mockGetUser.mockResolvedValue({ data: { user: { id: 'user-1' } } })
+    const req = new Request('http://localhost/api/settings', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ use_personalized_prompts: 'yes' }),
+    })
+    const res = await POST(req)
+    expect(res.status).toBe(200)
+    expect(mockUpsert).toHaveBeenCalledWith(
+      expect.not.objectContaining({ use_personalized_prompts: expect.anything() }),
+      expect.any(Object),
+    )
+  })
 })
