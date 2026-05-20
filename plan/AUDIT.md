@@ -6,6 +6,17 @@
 
 ## Pending
 
+### [x] [4.0] bug — entries API accepts future dates; UI rejects them
+
+- category: bug
+- impact: 5
+- ease: 8
+- observation: `POST /api/entries` validates date format (YYYY-MM-DD) but does not check whether the date is in the future. Authenticated users can submit entries for future dates. These rows are stored in the DB but are inaccessible via the UI — `log/[date]/page.tsx` already calls `notFound()` for any date > today. The inconsistency creates phantom rows that violate the product model (one entry per day, written on that day).
+- evidence: `src/app/api/entries/route.ts` lines 31–33: validates format only, no temporal bound. `src/app/log/[date]/page.tsx` lines 26–29: rejects future dates with `notFound()`.
+- suggested fix: derive UTC today as `new Date().toISOString().slice(0, 10)`, check `if (date > today)` and return 400. Add a test for this branch.
+- issue: #22
+- resolution: added today-date guard in `src/app/api/entries/route.ts` and a new test. Shipped at c5ffb03.
+
 ### [x] [5.4] a11y — SigninPage error message has no role="alert"
 
 - category: a11y
