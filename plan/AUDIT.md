@@ -27,7 +27,7 @@
 - issue: #20
 - resolution: added `src/app/auth/signout/__tests__/route.test.ts` with POST and GET tests. Shipped at bbeb643.
 
-### [ ] [3.6] seo — log/[date] generateMetadata missing description
+### [x] [3.6] seo — log/[date] generateMetadata missing description
 
 - category: seo
 - impact: 4
@@ -35,6 +35,8 @@
 - observation: `src/app/log/[date]/page.tsx` `generateMetadata` returns only `{ title }` with no `description`. Search engines and social previews fall back to the root layout description ("ten minutes of intention before the day swallows you") for all date-specific log pages.
 - evidence: `src/app/log/[date]/page.tsx` lines 15–20: `return { title: \`ember · log · ${date}\` }` — no description key.
 - suggested fix: add `description: 'your entry for ${date}'` (or similar) to the return object.
+- issue: #21
+- resolution: added `description: \`your entry for ${date}\`` to generateMetadata return. Shipped at c0fcf1f.
 
 ### [x] [5.6] seo — public profile pages missing openGraph and twitter metadata
 
