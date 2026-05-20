@@ -6,7 +6,7 @@
 
 ## Pending
 
-### [ ] [4.5] perf — site nav uses raw `<a>` tags; full-page reload on every authenticated navigation
+### [x] [4.5] perf — site nav uses raw `<a>` tags; full-page reload on every authenticated navigation
 
 - category: perf
 - impact: 5
