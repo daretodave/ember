@@ -16,6 +16,7 @@ export async function generateMetadata({ params }: Props) {
   const { date } = await params
   return {
     title: `ember · log · ${date}`,
+    description: `your entry for ${date}`,
   }
 }
 
