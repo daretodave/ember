@@ -240,6 +240,40 @@ export async function getPublishedEntryByDate(
 }
 
 /**
+ * Fetch the most recent entry the user wrote on the same month+day (MM-DD)
+ * in a prior year. Returns null if none found or on error.
+ * Checks up to 10 years back.
+ */
+export async function getOnThisDay(
+  supabase: SupabaseClient,
+  userId: string,
+  today: string,
+): Promise<Entry | null> {
+  const mmdd = today.slice(5) // "MM-DD"
+  const thisYear = parseInt(today.slice(0, 4), 10)
+  const candidateDates: string[] = []
+  for (let y = thisYear - 1; y >= thisYear - 10; y--) {
+    candidateDates.push(`${y}-${mmdd}`)
+  }
+
+  const { data, error } = await supabase
+    .from('entries')
+    .select('*')
+    .eq('user_id', userId)
+    .in('date', candidateDates)
+    .order('date', { ascending: false })
+    .limit(1)
+
+  if (error) {
+    console.error('getOnThisDay error:', error.message)
+    return null
+  }
+
+  const rows = (data ?? []) as Entry[]
+  return rows[0] ?? null
+}
+
+/**
  * Return the previous and next published entry dates for navigation.
  * Fetches all published dates for the user (chronological order).
  */

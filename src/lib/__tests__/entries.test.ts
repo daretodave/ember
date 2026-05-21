@@ -4,6 +4,7 @@ import {
   formatSavedTime,
   formatShortWeekday,
   getAdjacentPublishedDates,
+  getOnThisDay,
   getPublishedEntriesForUser,
   getPublishedEntryByDate,
   getRecentEntries,
@@ -240,6 +241,74 @@ describe('getPublishedEntryByDate', () => {
     // @ts-expect-error partial mock
     const result = await getPublishedEntryByDate(mockSupabase, 'user-1', '2026-05-10')
     expect(result).toBeNull()
+  })
+})
+
+describe('getOnThisDay', () => {
+  const mockLimit = vi.fn()
+  const mockSupabase = {
+    from: vi.fn().mockReturnThis(),
+    select: vi.fn().mockReturnThis(),
+    eq: vi.fn().mockReturnThis(),
+    in: vi.fn().mockReturnThis(),
+    order: vi.fn().mockReturnThis(),
+    limit: mockLimit,
+  }
+
+  beforeEach(() => {
+    vi.clearAllMocks()
+    mockSupabase.from.mockReturnThis()
+    mockSupabase.select.mockReturnThis()
+    mockSupabase.eq.mockReturnThis()
+    mockSupabase.in.mockReturnThis()
+    mockSupabase.order.mockReturnThis()
+    mockSupabase.limit = mockLimit
+  })
+
+  it('returns null when no prior same-day entry exists', async () => {
+    mockLimit.mockResolvedValue({ data: [], error: null })
+    // @ts-expect-error partial mock
+    const result = await getOnThisDay(mockSupabase, 'user-1', '2026-05-21')
+    expect(result).toBeNull()
+  })
+
+  it('returns the most recent matching entry', async () => {
+    const entry = {
+      id: 'hist-1',
+      user_id: 'user-1',
+      date: '2025-05-21',
+      response: 'last year entry',
+      task_done: true,
+      is_published: false,
+      created_at: '2025-05-21T08:00:00Z',
+      updated_at: '2025-05-21T08:00:00Z',
+    }
+    mockLimit.mockResolvedValue({ data: [entry], error: null })
+    // @ts-expect-error partial mock
+    const result = await getOnThisDay(mockSupabase, 'user-1', '2026-05-21')
+    expect(result).toEqual(entry)
+  })
+
+  it('returns null on Supabase error', async () => {
+    mockLimit.mockResolvedValue({ data: null, error: { message: 'db error' } })
+    // @ts-expect-error partial mock
+    const result = await getOnThisDay(mockSupabase, 'user-1', '2026-05-21')
+    expect(result).toBeNull()
+  })
+
+  it('queries candidate dates for the correct year offsets', async () => {
+    mockLimit.mockResolvedValue({ data: [], error: null })
+    // @ts-expect-error partial mock
+    await getOnThisDay(mockSupabase, 'user-1', '2026-05-21')
+    // .in() should have been called with the correct date list
+    expect(mockSupabase.in).toHaveBeenCalledWith(
+      'date',
+      expect.arrayContaining(['2025-05-21', '2024-05-21', '2023-05-21']),
+    )
+    const [, dates] = mockSupabase.in.mock.calls[0] as [string, string[]]
+    expect(dates).toHaveLength(10)
+    expect(dates[0]).toBe('2025-05-21')
+    expect(dates[9]).toBe('2016-05-21')
   })
 })
 

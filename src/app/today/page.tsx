@@ -1,5 +1,5 @@
 import { MosaicGlyph } from '@/components/mosaic/MosaicGlyph'
-import { getRecentEntries, getTodayEntry, todayUtcDate, formatDisplayDate } from '@/lib/entries'
+import { getRecentEntries, getTodayEntry, getOnThisDay, todayUtcDate, formatDisplayDate } from '@/lib/entries'
 import { getPersonalizedPrompt } from '@/lib/ai-prompt'
 import { getProfile } from '@/lib/profile'
 import { getSevenDayPreview } from '@/lib/prompts'
@@ -7,6 +7,7 @@ import { createClient } from '@/lib/supabase/server'
 import Link from 'next/link'
 import { redirect } from 'next/navigation'
 import { DayStrip } from './DayStrip'
+import { OnThisDay } from './OnThisDay'
 import { TodayEntry } from './TodayEntry'
 import styles from './page.module.css'
 
@@ -28,10 +29,11 @@ export default async function TodayPage() {
   const date = todayUtcDate()
   const displayDate = formatDisplayDate(date)
 
-  const [profile, todayEntry, recentEntries] = await Promise.all([
+  const [profile, todayEntry, recentEntries, onThisDay] = await Promise.all([
     getProfile(supabase, user.id),
     getTodayEntry(supabase, user.id, date),
     getRecentEntries(supabase, user.id, 7),
+    getOnThisDay(supabase, user.id, date),
   ])
 
   // Resolve today's prompt: personalized (opt-in) or deterministic seed
@@ -72,6 +74,8 @@ export default async function TodayPage() {
         <h1 className={styles.prompt}>{prompt}</h1>
 
         <TodayEntry date={date} initialEntry={todayEntry} task={task} />
+
+        <OnThisDay entry={onThisDay} todayYear={new Date(date + 'T00:00:00Z').getUTCFullYear()} />
       </main>
 
       <DayStrip todayDate={date} entries={recentEntries} />
