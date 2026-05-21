@@ -2,11 +2,17 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
 const mockSignInWithOtp = vi.fn()
+const mockCheckRateLimit = vi.fn()
 
 vi.mock('@/lib/supabase/server', () => ({
   createClient: vi.fn().mockResolvedValue({
     auth: { signInWithOtp: mockSignInWithOtp },
   }),
+}))
+
+vi.mock('@/lib/rate-limit', () => ({
+  checkRateLimit: mockCheckRateLimit,
+  rollingWindow24h: vi.fn().mockReturnValue('2026-05-21T00:00:00.000Z'),
 }))
 
 vi.mock('next/headers', () => ({
@@ -22,6 +28,7 @@ describe('POST /api/auth/signin', () => {
   beforeEach(async () => {
     vi.clearAllMocks()
     mockSignInWithOtp.mockResolvedValue({ error: null })
+    mockCheckRateLimit.mockResolvedValue(true)
     const mod = await import('../route')
     POST = mod.POST
   })
@@ -29,6 +36,20 @@ describe('POST /api/auth/signin', () => {
   afterEach(() => {
     vi.resetModules()
     vi.unstubAllEnvs()
+  })
+
+  it('returns 429 when rate limit is exceeded', async () => {
+    mockCheckRateLimit.mockResolvedValue(false)
+    const req = new Request('http://localhost/api/auth/signin', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email: 'user@example.com' }),
+    })
+    const res = await POST(req)
+    expect(res.status).toBe(429)
+    const body = await res.json()
+    expect(body.error).toBe('rate limit exceeded')
+    expect(mockSignInWithOtp).not.toHaveBeenCalled()
   })
 
   it('returns 400 when email is missing', async () => {

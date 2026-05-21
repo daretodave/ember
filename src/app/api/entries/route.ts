@@ -1,3 +1,4 @@
+import { checkRateLimit, utcDayStart } from '@/lib/rate-limit'
 import { createClient } from '@/lib/supabase/server'
 import { NextResponse } from 'next/server'
 
@@ -37,6 +38,15 @@ export async function POST(request: Request) {
   }
   if (typeof response !== 'string') {
     return NextResponse.json({ error: 'response must be a string' }, { status: 400 })
+  }
+
+  const allowed = await checkRateLimit({
+    key: `entry:${user.id}:${today}`,
+    windowStart: utcDayStart(),
+    max: 10,
+  })
+  if (!allowed) {
+    return NextResponse.json({ error: 'rate limit exceeded' }, { status: 429 })
   }
 
   const { data, error } = await supabase

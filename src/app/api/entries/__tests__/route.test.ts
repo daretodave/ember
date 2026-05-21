@@ -5,12 +5,18 @@ const mockUpsert = vi.fn()
 const mockSelect = vi.fn()
 const mockSingle = vi.fn()
 const mockFrom = vi.fn()
+const mockCheckRateLimit = vi.fn()
 
 vi.mock('@/lib/supabase/server', () => ({
   createClient: vi.fn().mockResolvedValue({
     auth: { getUser: mockGetUser },
     from: mockFrom,
   }),
+}))
+
+vi.mock('@/lib/rate-limit', () => ({
+  checkRateLimit: mockCheckRateLimit,
+  utcDayStart: vi.fn().mockReturnValue('2026-05-21T00:00:00.000Z'),
 }))
 
 vi.mock('next/headers', () => ({
@@ -31,6 +37,7 @@ describe('POST /api/entries', () => {
     mockSelect.mockReturnValue({ single: mockSingle })
     mockUpsert.mockReturnValue({ select: mockSelect })
     mockFrom.mockReturnValue({ upsert: mockUpsert })
+    mockCheckRateLimit.mockResolvedValue(true)
 
     const mod = await import('../route')
     POST = mod.POST
@@ -38,6 +45,21 @@ describe('POST /api/entries', () => {
 
   afterEach(() => {
     vi.resetModules()
+  })
+
+  it('returns 429 when rate limit is exceeded', async () => {
+    mockGetUser.mockResolvedValue({ data: { user: { id: 'user-1' } } })
+    mockCheckRateLimit.mockResolvedValue(false)
+    const req = new Request('http://localhost/api/entries', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ date: '2026-05-13', response: 'hi', task_done: false, is_published: false }),
+    })
+    const res = await POST(req)
+    expect(res.status).toBe(429)
+    const body = await res.json()
+    expect(body.error).toBe('rate limit exceeded')
+    expect(mockUpsert).not.toHaveBeenCalled()
   })
 
   it('returns 401 when not authenticated', async () => {

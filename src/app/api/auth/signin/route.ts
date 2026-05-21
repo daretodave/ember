@@ -1,3 +1,4 @@
+import { checkRateLimit, rollingWindow24h } from '@/lib/rate-limit'
 import { createClient } from '@/lib/supabase/server'
 import { NextResponse } from 'next/server'
 
@@ -7,6 +8,15 @@ export async function POST(request: Request) {
 
   if (!email || typeof email !== 'string') {
     return NextResponse.json({ error: 'email is required' }, { status: 400 })
+  }
+
+  const allowed = await checkRateLimit({
+    key: `signin:${email.toLowerCase()}`,
+    windowStart: rollingWindow24h(),
+    max: 3,
+  })
+  if (!allowed) {
+    return NextResponse.json({ error: 'rate limit exceeded' }, { status: 429 })
   }
 
   const siteUrl =

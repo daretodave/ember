@@ -7,6 +7,11 @@ vi.mock('@/lib/supabase/server', () => ({
   createClient: vi.fn().mockResolvedValue(mockSupabase),
 }))
 
+vi.mock('@/lib/rate-limit', () => ({
+  checkRateLimit: vi.fn().mockResolvedValue(true),
+  rollingWindow24h: vi.fn().mockReturnValue('2026-05-21T00:00:00.000Z'),
+}))
+
 vi.mock('next/headers', () => ({
   cookies: vi.fn().mockResolvedValue({
     getAll: vi.fn().mockReturnValue([]),
