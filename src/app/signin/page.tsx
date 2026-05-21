@@ -51,7 +51,7 @@ export default function SigninPage() {
           <h1 className={styles.title}>sign in.</h1>
 
           {state === 'sent' ? (
-            <p className={styles.confirmation}>
+            <p className={styles.confirmation} role="status">
               check your email. a sign-in link is on its way.{' '}
               <em>no password required.</em>
             </p>
