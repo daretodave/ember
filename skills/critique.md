@@ -27,22 +27,22 @@ read well as a real reader would experience it.
 /critique authenticated      # logged-in pass only (requires Auth: != none)
 ```
 
-**Auth handling.** Read `plan/bearings.md`'s `Auth:` line on
-entry:
+**Auth handling.** `plan/bearings.md` declares
+`Auth: session-cookie`. Default `/critique` runs **two** passes
+in sequence:
 
-- `Auth: none` → single anonymous pass (the default for
-  public sites).
-- `Auth: <other>` → default `/critique` runs **two** passes
-  in sequence: an anonymous pass against the marketing-side
-  URLs, then an authenticated pass against the app-side
-  URLs. Each pass spawns its own `reader` invocation so the
-  bot's session doesn't pollute the anonymous walk.
-- Argument `anonymous` / `authenticated` runs only that
-  pass.
-- `Auth:` field missing → exit with `[needs-user-call]`. Do
-  not guess.
-- See `nexus/customization/auth-aware-critique.md` for
-  patterns and env vars.
+- **Anonymous pass** — no session. Walks the public URLs (`/`,
+  `/signin`, any `/u/<username>` profile) as a first-time
+  visitor.
+- **Authenticated pass** — walks the app URLs (`/today`,
+  `/log`, `/settings`) as the signed-in critique bot. The
+  session is a Supabase cookie minted by
+  `scripts/mint-cookie.mjs` (Step 0) and attached by the
+  Playwright walk (`scripts/critique-walk.mjs`).
+
+Each pass produces its own `reader` invocation so the bot's
+session never pollutes the anonymous walk. Argument
+`anonymous` / `authenticated` runs only that pass.
 
 When invoked from `/march`, conditions are pre-checked.
 
@@ -82,14 +82,32 @@ Skip pages that don't exist yet. Note in pass log.
 ## 4. Delegate to `reader`
 
 The `reader` sub-agent at `.claude/agents/reader.md` is the
-fresh-eyes observer. **Always delegate the visit.** Reasons:
+fresh-eyes observer. **Always delegate the assessment.** Reasons:
 
-- It has browser tools (`mcp__claude-in-chrome__*`) for richer
-  findings than WebFetch.
 - Fresh sub-agent context = genuine first-time-reader perspective.
 - Output is structured JSON; easy to filter and file.
 
-Pass it:
+**Tooling path.** Locally, `reader` uses Path A (Chrome MCP) for
+the anonymous pass. **The authenticated pass — and every pass in
+the cloud loop, where there is no Chrome MCP — uses Path A2: the
+skill runs `scripts/critique-walk.mjs` and hands the resulting
+`captures[]` + mechanical `findings[]` to `reader` for the
+qualitative read.** Path A2 walks in a fresh isolated browser
+context, so the shared-profile false-finding class that kept
+`/critique` local-only cannot occur — that is what makes a cloud
+critique pass trustworthy. Path B (WebFetch) is the last resort.
+
+On Path A2, run the walk once per mode, then spawn `reader` with
+its JSON output:
+
+```bash
+node scripts/critique-walk.mjs --mode anonymous \
+  --base https://ember-rust-sigma.vercel.app --urls /,/signin
+node scripts/critique-walk.mjs --mode authenticated \
+  --base https://ember-rust-sigma.vercel.app --urls /today,/log,/settings
+```
+
+Pass `reader`:
 - The URL list.
 - The **pass mode** (`anonymous` or `authenticated`).
 - Voice cue from `plan/bearings.md`.
@@ -115,11 +133,18 @@ etc.) and the next pass re-runs.
 ```bash
 git pull --ff-only
 pnpm deploy:check
+node scripts/mint-cookie.mjs    # mint/refresh the critique bot session
 ```
 
 If no green deploy: defer. Write a one-line entry to CRITIQUE.md
 "deferred at <date>: no green deploy" and exit 0. **Don't commit
 on no-ops.**
+
+If the mint fails (Supabase unreachable, admin API rejected, the
+bot user banned): file a single `[needs-user-call]` row in
+CRITIQUE.md describing the failure and run **only the anonymous
+pass** this tick. Don't block the whole critique on auth — the
+anonymous pass is still worth filing.
 
 ### Step 1 — Build the page set
 
@@ -216,8 +241,10 @@ Return 3-line summary.
 ## 6. Hard rules
 
 1. **Never modify code, content, or data.** Findings only.
-2. **Always delegate the visit to `reader`.** Don't visit from
-   main agent context.
+2. **Delegate the assessment to `reader`.** On Path A `reader`
+   makes the visit; on Path A2 the skill runs the walk and
+   `reader` assesses the captures. Never form findings in
+   main-agent context without `reader`.
 3. **Self-assess after reader returns.** Don't file raw
    observations.
 4. **Cap at 6 filed findings per pass.** 8 is reader's input

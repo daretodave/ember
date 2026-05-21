@@ -80,6 +80,11 @@ typographic restraint reads better than capitalization.
 
 ## Auth posture
 
+- **Auth:** `session-cookie` — `/critique`'s authenticated pass
+  attaches a Supabase session minted by `scripts/mint-cookie.mjs`
+  (no static cookie secret; the session is short-lived and cached
+  to `.cache/e2e-cookie.json`). Read by `skills/critique.md` and
+  `.claude/agents/reader.md`.
 - **Identity:** Supabase Auth (magic-link only, no
   social, no password)
 - **Anonymous read:** allowed on `/`, `/u/<username>`,

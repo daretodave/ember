@@ -43,7 +43,7 @@ rationale lives in `nexus/customization/auth-aware-critique.md`.
 |---|---|
 | `none` | Mode mismatch — exit with finding `{ "category": "infra", "severity": "high", "observation": "auth pass requested but bearings declares Auth: none" }` |
 | `test-user` | Read `CRITIQUE_AUTH_*` env vars; navigate to `CRITIQUE_AUTH_LOGIN_URL`; fill `CRITIQUE_AUTH_USERNAME`/`CRITIQUE_AUTH_PASSWORD` into the configured selectors; submit; wait for `CRITIQUE_AUTH_SUCCESS_SELECTOR` to appear |
-| `session-cookie` | Read `CRITIQUE_SESSION_COOKIE`; inject as the `Cookie` header on every request (browser tools: set via `document.cookie =` or the navigation request; WebFetch: pass as a header) |
+| `session-cookie` | The authenticated pass runs through Path A2 (`scripts/critique-walk.mjs`), which attaches the minted Supabase session from `.cache/e2e-cookie.json` in a fresh browser context. You do not inject cookies by hand. If you have only Chrome MCP and no Playwright walk available, exit with an `auth-failed` finding rather than guessing — ember's session is a chunked, http-only Supabase cookie that cannot be set from `document.cookie`. |
 | `bearer-token` | Read `CRITIQUE_BEARER_TOKEN`; inject as `Authorization: Bearer <token>` on every request |
 | `shared-secret` | Read `CRITIQUE_BOT_HEADER` + `CRITIQUE_BOT_SECRET`; inject the header on every request |
 | `preview-env` | Replace `https://ember-rust-sigma.vercel.app` in the page set with `CRITIQUE_PREVIEW_URL`; if the preview itself has basic auth, also inject those creds |
@@ -92,6 +92,35 @@ Use `mcp__claude-in-chrome__*` when available. You can:
 - `read_network_requests` for slow resources, asset 404s.
 
 Always check both viewports. Always read the console.
+
+### Path A2 — Playwright walk captures (CI / cloud loop)
+
+When the Chrome MCP tools are not available — the cloud loop on a
+GitHub Actions runner — you do not drive a browser. The `/critique`
+skill runs `scripts/critique-walk.mjs` itself (the runner has the
+headless chromium the e2e leg already cached) and hands you its
+output: `{ meta, captures[], findings[] }`.
+
+- `findings[]` are the mechanically-detectable defects — HTTP
+  status, blank render, missing `<h1>`, 375px horizontal scroll,
+  console errors, failed first-party requests, missing SEO tags,
+  and (authenticated pass) a redirect back to `/signin`. They are
+  already in the finding format below, each carrying `auth_state`
+  and `source: "browser"`. Pass them through unchanged.
+- `captures[]` carry each page's rendered `text`, `title`,
+  metadata, and reflow metrics. Do the qualitative pass —
+  comprehension, voice fidelity, navigation honesty — by reading
+  `captures[].text`. That is the judgment a script cannot make.
+
+You do not exec anything on this path; you receive the captures
+and assess them. The walk runs in a fresh isolated browser
+context, so there is no operator profile to clear — the Step 0
+cookie dance does not apply. `--mode anonymous` attaches no
+session; `--mode authenticated` attaches the Supabase session
+minted into `.cache/e2e-cookie.json`. If that cache is missing or
+stale the walk emits a single `auth-failed` finding and walks
+nothing (Step 0 hard rule 1 — no silent fallback to anonymous);
+surface it as-is.
 
 ### Path B — WebFetch fallback
 

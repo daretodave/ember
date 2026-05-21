@@ -17,3 +17,6 @@ supabase/.temp/
 # Playwright artifacts
 apps/e2e/test-results/
 apps/e2e/playwright-report/
+
+# Minted critique session cookie — holds a live Supabase session
+.cache/

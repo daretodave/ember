@@ -179,7 +179,7 @@ jobs:
             Cloud-mode adjustments on top of agents.md:
 
             1. Skip /oversight entirely. It is interactive and never runs in cloud.
-            2. Skip /critique. The reader sub-agent depends on a Chrome MCP that is not available on the runner. /critique stays a local-only ritual.
+            2. /critique may run. It no longer needs the Chrome MCP: the /critique skill runs `node scripts/critique-walk.mjs` (reader.md Path A2 — it drives the headless chromium already cached for the e2e leg) and hands the captures to the reader sub-agent for the qualitative read. The authenticated pass needs a Supabase session cookie — /critique Step 0 mints it at runtime with `node scripts/mint-cookie.mjs` from the SUPABASE_* secrets already in this job's env (service-role key + url + anon key); the cookie is short-lived and cached to .cache/e2e-cookie.json, so there is NO static cookie secret. If the mint fails, run the anonymous pass only — do not skip critique entirely. Dispatch /critique only when its gate opens (skills/critique.md §9); do not relax that gate. /critique never mutates code — it only files rows to plan/CRITIQUE.md.
             3. /expand may run; candidates land in plan/PHASE_CANDIDATES.md. Promotion happens only via local /oversight — do not promote candidates from cloud.
             4. The verify gate (`pnpm verify`) and deploy gate (`pnpm deploy:check`) are non-negotiable. Same as local. NEVER --no-verify. Run the gate FOREGROUND and wait for it — never `run_in_background`. Backgrounding the gate is the one thing that wedges this loop: the SDK ends your turn while the gate is still alive, the resume notification is unreliable here, and the run hangs with no commit. If the gate is too slow for one foreground call, run it as sequential foreground legs (each its own blocking call); do not background it.
             5. Commit author is David Rehmat <me@dave.blue> via GIT_AUTHOR_* / GIT_COMMITTER_* env vars (already configured by the workflow). Do not run `git config user.*` to change it — the env vars take precedence anyway, but explicit overrides muddy the log.
@@ -192,7 +192,7 @@ jobs:
                - exit cleanly with a one-line note in the action log explaining why no work shipped this tick, or
                - if there is a real failure to surface, open a GitHub issue with `gh issue create --title "Cloud march failed: <iso-date>" --body "<context + run URL>"` and exit. Do not pass `--label` — the issue lands unlabeled and the next scheduled tick's /triage classifies and labels it appropriately.
 
-            The dispatch order is the standard /march order from skills/march.md: triage → critique (skipped) → ship-a-phase → ship-data → expand → iterate.
+            The dispatch order is the standard /march order from skills/march.md: triage → critique → ship-a-phase → ship-data → expand → iterate.
 
             Note: ember is at phase 0 (bootstrap just landed). Phase 1 (Next.js substrate) is the first /ship-a-phase target. There is no app code yet; the verify gate's typecheck/build legs will fail until phase 1 ships them.
 
@@ -213,6 +213,10 @@ jobs:
           SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
           SUPABASE_PROJECT_ID: ${{ secrets.SUPABASE_PROJECT_ID }}
           SUPABASE_DB_PASSWORD: ${{ secrets.SUPABASE_DB_PASSWORD }}
+          # Critique bot — /critique Step 0 mints a Supabase session
+          # for this user via scripts/mint-cookie.mjs (Path A2 authed
+          # pass). The mint also self-provisions the user if absent.
+          E2E_USER_EMAIL: ${{ secrets.E2E_USER_EMAIL }}
           # OpenAI (in-product use; available for any phase that
           # needs it — moderation pre-filter, prompt fallback,
           # /iterate research). Available but not yet consumed.
