@@ -377,6 +377,86 @@
   color: var(--color-accent-2);
 }
 
+/* ----------- focus mode ----------- */
+.focusTrigger {
+  font-family: var(--font-sans);
+  font-size: var(--type-12);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-ink-muted);
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  transition: color var(--motion-fade) var(--easing);
+}
+
+.focusTrigger:hover {
+  color: var(--color-ink);
+}
+
+.focusOverlay {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  background: var(--color-paper);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow-y: auto;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--motion-fade) var(--easing);
+}
+
+.focusOverlayActive {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.focusContent {
+  max-width: 720px;
+  width: 100%;
+  padding: var(--space-8) var(--space-6) var(--space-7);
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.focusPrompt {
+  font-family: var(--font-serif);
+  font-size: var(--type-32);
+  line-height: 1.25;
+  letter-spacing: var(--tracking-tight);
+  color: var(--color-ink);
+  margin: 0 0 var(--space-6);
+  max-width: 600px;
+  font-weight: var(--weight-regular);
+}
+
+.focusDoneRow {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: var(--space-5);
+}
+
+.focusDone {
+  font-family: var(--font-sans);
+  font-size: var(--type-12);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-ink-muted);
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  transition: color var(--motion-fade) var(--easing);
+}
+
+.focusDone:hover {
+  color: var(--color-ink);
+}
+
 /* ----------- responsive ----------- */
 @media (max-width: 480px) {
   .prompt {
@@ -393,5 +473,13 @@
 
   .strip {
     padding: var(--space-6) var(--space-4);
+  }
+
+  .focusPrompt {
+    font-size: var(--type-24);
+  }
+
+  .focusContent {
+    padding: var(--space-6) var(--space-4) var(--space-6);
   }
 }

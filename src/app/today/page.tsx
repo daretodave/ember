@@ -73,7 +73,7 @@ export default async function TodayPage() {
 
         <h1 className={styles.prompt}>{prompt}</h1>
 
-        <TodayEntry date={date} initialEntry={todayEntry} task={task} />
+        <TodayEntry date={date} initialEntry={todayEntry} task={task} prompt={prompt} />
 
         <OnThisDay entry={onThisDay} todayYear={new Date(date + 'T00:00:00Z').getUTCFullYear()} />
       </main>
