@@ -27,6 +27,17 @@
 - suggested fix: add a test that sends `{ use_personalized_prompts: true }` and asserts `mockUpsert` was called with `expect.objectContaining({ use_personalized_prompts: true })`.
 - issue: [mirror-failed: 2026-05-20T00:00:00Z]
 
+### [x] [3.6] perf — landing page sign-in links are raw `<a>` anchors
+
+- category: perf
+- impact: 4
+- ease: 9
+- observation: `src/app/page.tsx` had two raw `<a href="/signin">` anchors — header nav (line 17) and CTA button (line 91). Both are the primary conversion path for all unauthenticated visitors, causing full-page reloads instead of client-side navigation with prefetching. The nav-link audit (finding [4.5]) fixed authenticated nav links but missed the anonymous landing page.
+- evidence: `src/app/page.tsx` line 17: `<a href="/signin">sign in</a>` in `<nav>`; line 91: `<a className={styles.ctaBtn} href="/signin">sign in to start</a>` in CTA.
+- suggested fix: import `Link` from 'next/link'; replace both `<a href="/signin">` with `<Link href="/signin">`.
+- issue: [mirror-failed: 2026-05-21T00:00:00Z]
+- resolution: replaced both raw anchors with `<Link>` in src/app/page.tsx. Shipped at a313cd3.
+
 ### [ ] [2.7] perf — DayStrip "see all sixty" link is a raw `<a>` anchor
 
 - category: perf
