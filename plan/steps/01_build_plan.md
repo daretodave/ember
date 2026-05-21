@@ -25,7 +25,7 @@
      experiments (the user asked for "some cool features"). Briefs can
      be refined per-phase with /plan-a-phase before each ships. -->
 - [x] Phase 13 — Entry editing (edit past entries from `/log/[date]`) — 50c69ea
-- [ ] Phase 14 — Brand assets (favicon, OG image, social card, manifest)
+- [x] Phase 14 — Brand assets (favicon, OG image, social card, manifest) — 08c5b37
 - [ ] Phase 15 — A11y regression gate (axe-core in the Playwright suite)
 - [ ] Phase 16 — Rate limiting (magic-link send + entry write guards)
 - [ ] Phase 17 — On this day (echo a past entry on `/today`)
