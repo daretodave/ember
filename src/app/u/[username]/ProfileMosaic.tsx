@@ -28,7 +28,7 @@ export function ProfileMosaic({ tiles, username }: Props) {
               href={`/u/${username}/${tile.date}`}
               className={`tile tile--published ${styles.publishedTile}`}
               style={{ animationDelay: `${i * 8}ms` }}
-              aria-label={tile.displayDate}
+              aria-label={`${tile.displayDate} — published entry`}
             />
           )
         }
