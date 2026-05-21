@@ -1,12 +1,30 @@
 # External-observer findings — Ember
 
-> Last pass: 2026-05-21 at commit c69173d
-> Pass count: 1
+> Last pass: 2026-05-21 at commit 1ade924
+> Pass count: 2
 
 > Written by `/critique` after walking the live site as a
 > fresh-eyes visitor. Drained by `/iterate`.
 
 ## Pending
+
+### [HIGH] / — "THE BRAND IS THE PRACTICE RENDERED" is internal design copy surfaced to users
+- pass: 2 (commit 1ade924)
+- viewport: both
+- category: voice
+- observation: the phrase "THE BRAND IS THE PRACTICE RENDERED" appears in full uppercase between the intro copy and the 7-day prompt preview. it reads as an internal design-system label or brand-strategy fragment rather than user-facing content, and breaks the lower-case typographic register of every other element on the page.
+- evidence: captured body text: "THE BRAND IS THE PRACTICE RENDERED / the next seven days. / read-only preview"
+- suggested fix: remove the line entirely. if it anchors a section structurally, replace with a semantically appropriate hidden label or a visible heading in sentence case.
+- source: browser
+
+### [HIGH] /today — focus-mode overlay DOM duplication exposes duplicate controls to screen readers
+- pass: 2 (commit 1ade924)
+- viewport: both
+- category: a11y
+- observation: the focus-mode overlay contains a second full copy of the prompt, "YOUR RESPONSE" heading, save-state indicator, and publish/save controls. both copies are in the DOM simultaneously; without aria-hidden on the inactive overlay, screen readers encounter every interactive control twice.
+- evidence: body text contains two sequential blocks ending with "FOCUS / save" and "save / DONE" respectively, each with its own "not yet saved / publish" section.
+- suggested fix: add aria-hidden="true" to the focus-mode overlay container when focus mode is not active, removing the duplicated controls from the accessibility tree.
+- source: browser
 
 ### [HIGH] /settings — timezone selector is effectively unusable on mobile
 - pass: 1 (commit c69173d)
@@ -47,6 +65,42 @@
 - observation: the save-state label "not yet saved" is visible in the response section before any text is entered. if this indicator is not wrapped in an `aria-live` region, screen reader users will not be notified when the state changes to "saved" or an error.
 - evidence: captured text: "YOUR RESPONSE / not yet saved / publish / save" — save-state appears as static text with no live-region context visible.
 - suggested fix: wrap the save-state label in `aria-live="polite"` so state changes are announced without requiring the user to move focus.
+
+### [MED] /settings — field labels DISPLAY NAME and TIMEZONE are full uppercase
+- pass: 2 (commit 1ade924)
+- viewport: both
+- category: voice
+- observation: the settings page renders "DISPLAY NAME" and "TIMEZONE" as all-caps labels, extending the same typographic-voice violation already filed for /today to a second page. the stated voice favours lower-case where restraint reads better.
+- evidence: captured body text: "settings / DISPLAY NAME / TIMEZONE / Africa/Abidjan..."
+- suggested fix: apply the same case correction planned for /today to /settings field labels (sentence case or CSS-driven small-caps treatment).
+- source: browser
+
+### [MED] /log — H1 "YOUR PAST SIXTY DAYS" is all-caps
+- pass: 2 (commit 1ade924)
+- viewport: both
+- category: voice
+- observation: the page H1 is rendered in full uppercase, extending the all-caps pattern to a third page. this is consistent with the /today finding already in queue and should be corrected together.
+- evidence: captured body text: "YOUR PAST SIXTY DAYS / 0 days written. 60 quiet. 0 published."
+- suggested fix: apply sentence case (or CSS text-transform with lowercase source text) to the /log H1 as part of the broader caps-normalisation fix.
+- source: browser
+
+### [MED] /today — FOCUS button has no accessible label
+- pass: 2 (commit 1ade924)
+- viewport: both
+- category: a11y
+- observation: the button that activates focus mode is labelled only with the word "FOCUS". a screen reader user cannot determine whether this toggles a view, opens a modal, or changes a setting from the label alone.
+- evidence: captured body text: "not yet saved / publish / FOCUS / save" — no surrounding descriptive context.
+- suggested fix: add aria-label="enter focus mode" to the FOCUS button so its purpose is unambiguous in the accessibility tree.
+- source: browser
+
+### [MED] / — page title is a bare product name with no descriptive suffix
+- pass: 2 (commit 1ade924)
+- viewport: both
+- category: seo
+- observation: the homepage title is simply "ember" with no description of what the product does. this provides no keyword signal and gives the browser tab no context for a returning user who has multiple tabs open.
+- evidence: capture metadata: title: "ember"
+- suggested fix: change the root layout title to "ember — a daily writing ritual" (or equivalent from the tagline) to carry both brand identity and product purpose.
+- source: browser
 
 ### [LOW] /signin — no link-expiry or next-step copy after submission
 - pass: 1 (commit c69173d)
