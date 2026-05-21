@@ -6,7 +6,7 @@
 
 ## Pending
 
-### [ ] [7.2] / — internal design copy "the brand is the practice rendered" surfaced to users
+### [x] [7.2] / — internal design copy "the brand is the practice rendered" surfaced to users
 - category: external-critique
 - impact: 8
 - ease: 9
@@ -15,6 +15,7 @@
 - suggested fix: remove the `<span>` and its inner text entirely; the MosaicPreview is self-explanatory and the section needs no visible label.
 - source: /critique pass 2 (commit 1ade924)
 - issue: [mirror-failed: 2026-05-21T00:00:00Z]
+- resolution: removed the `previewMarkLabel` span from src/app/page.tsx. Shipped at 0c1d673.
 
 ### [ ] [5.6] /today — focus-mode overlay DOM duplication exposes duplicate controls to screen readers
 - category: external-critique

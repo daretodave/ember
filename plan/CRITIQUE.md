@@ -8,15 +8,6 @@
 
 ## Pending
 
-### [HIGH] / — "THE BRAND IS THE PRACTICE RENDERED" is internal design copy surfaced to users
-- pass: 2 (commit 1ade924)
-- viewport: both
-- category: voice
-- observation: the phrase "THE BRAND IS THE PRACTICE RENDERED" appears in full uppercase between the intro copy and the 7-day prompt preview. it reads as an internal design-system label or brand-strategy fragment rather than user-facing content, and breaks the lower-case typographic register of every other element on the page.
-- evidence: captured body text: "THE BRAND IS THE PRACTICE RENDERED / the next seven days. / read-only preview"
-- suggested fix: remove the line entirely. if it anchors a section structurally, replace with a semantically appropriate hidden label or a visible heading in sentence case.
-- source: browser
-
 ### [HIGH] /today — focus-mode overlay DOM duplication exposes duplicate controls to screen readers
 - pass: 2 (commit 1ade924)
 - viewport: both
@@ -112,4 +103,12 @@
 
 ## Done
 
-(none yet)
+### [HIGH] / — "THE BRAND IS THE PRACTICE RENDERED" is internal design copy surfaced to users
+- pass: 2 (commit 1ade924)
+- viewport: both
+- category: voice
+- observation: the phrase "THE BRAND IS THE PRACTICE RENDERED" appears in full uppercase between the intro copy and the 7-day prompt preview. it reads as an internal design-system label or brand-strategy fragment rather than user-facing content, and breaks the lower-case typographic register of every other element on the page.
+- evidence: captured body text: "THE BRAND IS THE PRACTICE RENDERED / the next seven days. / read-only preview"
+- suggested fix: remove the line entirely. if it anchors a section structurally, replace with a semantically appropriate hidden label or a visible heading in sentence case.
+- source: browser
+- resolution: removed the `previewMarkLabel` span from src/app/page.tsx. Shipped at 0c1d673.
