@@ -28,7 +28,7 @@
 - [x] Phase 14 — Brand assets (favicon, OG image, social card, manifest) — 08c5b37
 - [x] Phase 15 — A11y regression gate (axe-core in the Playwright suite) — 479866b
 - [x] Phase 16 — Rate limiting (magic-link send + entry write guards) — 42a8f96
-- [ ] Phase 17 — On this day (echo a past entry on `/today`)
+- [x] Phase 17 — On this day (echo a past entry on `/today`) — ff5435a
 - [ ] Phase 18 — Focus mode (distraction-free writing surface on `/today`)
 - [ ] Phase 19 — Installable PWA + offline draft persistence
 
