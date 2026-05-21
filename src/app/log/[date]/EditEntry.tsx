@@ -1,0 +1,183 @@
+'use client'
+
+import { useCallback, useState } from 'react'
+import type { Entry } from '@/lib/entries'
+import { formatSavedTime } from '@/lib/entries'
+import styles from './page.module.css'
+
+type SaveState = 'idle' | 'saving' | 'saved' | 'error'
+
+type Props = {
+  date: string
+  task: string
+  initialEntry: Entry
+}
+
+export function EditEntry({ date, task, initialEntry }: Props) {
+  // Committed display state — updated after each successful save
+  const [response, setResponse] = useState(initialEntry.response)
+  const [taskDone, setTaskDone] = useState(initialEntry.task_done)
+  const [isPublished, setIsPublished] = useState(initialEntry.is_published)
+  const [savedAt, setSavedAt] = useState<string | null>(initialEntry.updated_at)
+
+  // Edit-mode working copy
+  const [isEditing, setIsEditing] = useState(false)
+  const [editResponse, setEditResponse] = useState('')
+  const [editTaskDone, setEditTaskDone] = useState(false)
+  const [editIsPublished, setEditIsPublished] = useState(false)
+  const [saveState, setSaveState] = useState<SaveState>('idle')
+  const [errorMsg, setErrorMsg] = useState('')
+
+  const enterEdit = useCallback(() => {
+    setEditResponse(response)
+    setEditTaskDone(taskDone)
+    setEditIsPublished(isPublished)
+    setSaveState('idle')
+    setErrorMsg('')
+    setIsEditing(true)
+  }, [response, taskDone, isPublished])
+
+  const cancelEdit = useCallback(() => {
+    setIsEditing(false)
+    setSaveState('idle')
+    setErrorMsg('')
+  }, [])
+
+  const handleSave = useCallback(async () => {
+    setSaveState('saving')
+    setErrorMsg('')
+
+    try {
+      const res = await fetch('/api/entries', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          date,
+          response: editResponse,
+          task_done: editTaskDone,
+          is_published: editIsPublished,
+        }),
+      })
+
+      if (res.ok) {
+        const data = (await res.json()) as Entry
+        setResponse(data.response)
+        setTaskDone(data.task_done)
+        setIsPublished(data.is_published)
+        setSavedAt(data.updated_at)
+        setSaveState('saved')
+        setIsEditing(false)
+      } else {
+        const data = (await res.json().catch(() => ({}))) as { error?: string }
+        setErrorMsg(data.error ?? 'something went wrong. try again.')
+        setSaveState('error')
+      }
+    } catch {
+      setErrorMsg('network error. try again.')
+      setSaveState('error')
+    }
+  }, [date, editResponse, editTaskDone, editIsPublished])
+
+  if (isEditing) {
+    return (
+      <>
+        <div className={styles.task}>
+          <button
+            type="button"
+            className={`${styles.taskCheck}${editTaskDone ? ` ${styles.done}` : ''}`}
+            aria-pressed={editTaskDone}
+            aria-label={editTaskDone ? 'mark task not done' : 'mark task done'}
+            onClick={() => setEditTaskDone((v) => !v)}
+          />
+          <p className={styles.taskBody}>
+            <span className={styles.taskMuted}>{task}</span>
+          </p>
+        </div>
+
+        <label htmlFor="edit-entry-response" className={styles.entryLabel}>your response</label>
+        <textarea
+          id="edit-entry-response"
+          className={styles.entry}
+          value={editResponse}
+          onChange={(e) => {
+            setEditResponse(e.target.value)
+            if (saveState === 'saved') setSaveState('idle')
+          }}
+          placeholder="take your time."
+          rows={8}
+          // biome-ignore lint/a11y/noAutofocus: intentional — entering edit mode is an explicit user action
+          autoFocus
+        />
+
+        <div className={styles.entryMeta}>
+          <span className={styles.lastSaved} aria-live="polite">
+            {savedAt ? formatSavedTime(savedAt) : 'not yet saved'}
+          </span>
+          <div className={styles.entryActions}>
+            <label className={styles.publishToggle}>
+              <input
+                type="checkbox"
+                checked={editIsPublished}
+                onChange={(e) => setEditIsPublished(e.target.checked)}
+              />
+              publish
+            </label>
+            <button
+              type="button"
+              className={styles.cancelBtn}
+              onClick={cancelEdit}
+            >
+              cancel
+            </button>
+            <button
+              type="button"
+              className={styles.saveBtn}
+              disabled={saveState === 'saving'}
+              onClick={handleSave}
+            >
+              {saveState === 'saving' ? 'saving...' : 'save'}
+            </button>
+          </div>
+        </div>
+
+        {saveState === 'error' && errorMsg && (
+          <p className={styles.saveError} role="alert">{errorMsg}</p>
+        )}
+      </>
+    )
+  }
+
+  return (
+    <>
+      <p className={styles.entryTask}>
+        {taskDone ? (
+          <span className={styles.entryTaskCheck} role="img" aria-label="task done" />
+        ) : (
+          <span className={styles.entryTaskUnchecked} role="img" aria-label="task not done" />
+        )}
+        {task}
+      </p>
+
+      {response ? (
+        <div className={styles.entryResponse}>
+          {response.split('\n\n').filter(Boolean).map((para, i) => (
+            <p key={i}>{para}</p>
+          ))}
+        </div>
+      ) : (
+        <p className={styles.noEntry}>no entry body yet.</p>
+      )}
+
+      <footer className={styles.entryFoot}>
+        <span>{isPublished ? 'published' : 'private'}</span>
+        <button
+          type="button"
+          className={styles.editBtn}
+          onClick={enterEdit}
+        >
+          edit
+        </button>
+      </footer>
+    </>
+  )
+}

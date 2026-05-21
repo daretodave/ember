@@ -180,9 +180,6 @@
 
 /* ----------- entry footer ----------- */
 .entryFoot {
-  max-width: 720px;
-  margin: var(--space-7) auto 0;
-  padding: var(--space-5) var(--space-6) var(--space-8);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -190,6 +187,228 @@
   font-family: var(--font-sans);
   font-size: var(--type-14);
   color: var(--color-ink-muted);
+  margin-top: var(--space-7);
+  padding-top: var(--space-5);
+  padding-bottom: var(--space-8);
+}
+
+.editBtn {
+  font-family: var(--font-sans);
+  font-size: var(--type-14);
+  color: var(--color-ink-muted);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  border-bottom: 1px solid var(--color-border);
+  padding-bottom: 1px;
+  transition: color var(--motion-fade) var(--easing),
+    border-color var(--motion-fade) var(--easing);
+}
+
+.editBtn:hover {
+  color: var(--color-ink);
+  border-bottom-color: var(--color-ink);
+}
+
+/* ----------- edit mode ----------- */
+.task {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  padding: var(--space-4) 0;
+  border-top: 1px solid var(--color-border-faint);
+  border-bottom: 1px solid var(--color-border-faint);
+  margin-bottom: var(--space-7);
+}
+
+.taskCheck {
+  width: 18px;
+  height: 18px;
+  border: 1px solid var(--color-ink-muted);
+  border-radius: var(--radius-1);
+  flex-shrink: 0;
+  cursor: pointer;
+  position: relative;
+  background: transparent;
+  transition: border-color var(--motion-fade) var(--easing),
+    background var(--motion-fade) var(--easing);
+  margin-top: 4px;
+  padding: 0;
+}
+
+.taskCheck.done {
+  background: var(--color-ink);
+  border-color: var(--color-ink);
+}
+
+.taskCheck.done::after {
+  content: '';
+  position: absolute;
+  left: 5px;
+  top: 2px;
+  width: 4px;
+  height: 9px;
+  border: solid var(--color-paper);
+  border-width: 0 1.5px 1.5px 0;
+  transform: rotate(45deg);
+}
+
+.taskBody {
+  font-family: var(--font-serif);
+  font-size: var(--type-16);
+  line-height: var(--leading-snug);
+  color: var(--color-ink);
+  margin: 0;
+}
+
+.taskMuted {
+  color: var(--color-ink-muted);
+}
+
+.entryLabel {
+  font-family: var(--font-sans);
+  font-size: var(--type-12);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-ink-muted);
+  margin: 0 0 var(--space-3);
+  display: block;
+}
+
+.entry {
+  font-family: var(--font-serif);
+  font-size: var(--type-17);
+  line-height: var(--leading-prose);
+  color: var(--color-ink);
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid var(--color-border);
+  padding: 0 0 var(--space-4);
+  width: 100%;
+  resize: vertical;
+  min-height: 220px;
+  outline: none;
+  transition: border-color var(--motion-fade) var(--easing);
+}
+
+.entry:focus {
+  border-bottom-color: var(--color-accent);
+}
+
+.entry::placeholder {
+  color: var(--color-ink-faint);
+  font-style: italic;
+}
+
+.entryMeta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: var(--space-4);
+}
+
+.lastSaved {
+  font-family: var(--font-mono);
+  font-size: var(--type-12);
+  color: var(--color-ink-muted);
+}
+
+.entryActions {
+  display: flex;
+  gap: var(--space-3);
+  align-items: center;
+}
+
+.publishToggle {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-family: var(--font-sans);
+  font-size: var(--type-14);
+  color: var(--color-ink-muted);
+  cursor: pointer;
+}
+
+.publishToggle input {
+  appearance: none;
+  width: 32px;
+  height: 18px;
+  background: var(--color-border);
+  border-radius: 999px;
+  position: relative;
+  cursor: pointer;
+  transition: background var(--motion-fade) var(--easing);
+  margin: 0;
+  flex-shrink: 0;
+}
+
+.publishToggle input::after {
+  content: '';
+  position: absolute;
+  left: 2px;
+  top: 2px;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--color-paper);
+  transition: left var(--motion-fade) var(--easing);
+}
+
+.publishToggle input:checked {
+  background: var(--color-accent);
+}
+
+.publishToggle input:checked::after {
+  left: 16px;
+}
+
+.cancelBtn {
+  font-family: var(--font-sans);
+  font-size: var(--type-14);
+  font-weight: var(--weight-medium);
+  padding: 8px 16px;
+  background: transparent;
+  color: var(--color-ink-muted);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-1);
+  cursor: pointer;
+  transition: color var(--motion-fade) var(--easing),
+    border-color var(--motion-fade) var(--easing);
+}
+
+.cancelBtn:hover {
+  color: var(--color-ink);
+  border-color: var(--color-ink-muted);
+}
+
+.saveBtn {
+  font-family: var(--font-sans);
+  font-size: var(--type-14);
+  font-weight: var(--weight-medium);
+  padding: 8px 16px;
+  background: var(--color-ink);
+  color: var(--color-paper);
+  border: 0;
+  border-radius: var(--radius-1);
+  cursor: pointer;
+  transition: opacity var(--motion-fade) var(--easing);
+}
+
+.saveBtn:hover:not(:disabled) {
+  opacity: 0.88;
+}
+
+.saveBtn:disabled {
+  opacity: 0.55;
+  cursor: default;
+}
+
+.saveError {
+  font-family: var(--font-sans);
+  font-size: var(--type-12);
+  color: var(--color-signal-error);
+  margin-top: var(--space-2);
 }
 
 /* ----------- responsive ----------- */

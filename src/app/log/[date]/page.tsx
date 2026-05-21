@@ -4,6 +4,7 @@ import { getPromptForDate } from '@/lib/prompts'
 import { createClient } from '@/lib/supabase/server'
 import Link from 'next/link'
 import { notFound, redirect } from 'next/navigation'
+import { EditEntry } from './EditEntry'
 import styles from './page.module.css'
 
 const ISO_DATE_RE = /^\d{4}-\d{2}-\d{2}$/
@@ -76,32 +77,18 @@ export default async function LogDatePage({ params }: Props) {
 
         <h1 className={styles.entryPrompt}>{promptData.prompt}</h1>
 
-        <p className={styles.entryTask}>
-          {entry?.task_done ? (
-            <span className={styles.entryTaskCheck} role="img" aria-label="task done" />
-          ) : (
-            <span className={styles.entryTaskUnchecked} role="img" aria-label="task not done" />
-          )}
-          {promptData.task}
-        </p>
-
-        {entry?.response ? (
-          <div className={styles.entryResponse}>
-            {entry.response.split('\n\n').filter(Boolean).map((para, i) => (
-              <p key={i}>{para}</p>
-            ))}
-          </div>
+        {entry ? (
+          <EditEntry date={date} task={promptData.task} initialEntry={entry} />
         ) : (
-          <p className={styles.noEntry}>no entry for this day.</p>
+          <>
+            <p className={styles.entryTask}>
+              <span className={styles.entryTaskUnchecked} role="img" aria-label="task not done" />
+              {promptData.task}
+            </p>
+            <p className={styles.noEntry}>no entry for this day.</p>
+          </>
         )}
       </main>
-
-      {entry && (
-        <footer className={styles.entryFoot}>
-          <span>{displayDate}</span>
-          <span>{entry.is_published ? 'published' : 'private'}</span>
-        </footer>
-      )}
     </div>
   )
 }

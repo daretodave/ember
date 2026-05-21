@@ -8,6 +8,7 @@ export default defineConfig({
     environment: 'jsdom',
     include: ['src/**/*.test.{ts,tsx}'],
     passWithNoTests: true,
+    setupFiles: ['./src/test-setup.ts'],
   },
   resolve: {
     alias: {
