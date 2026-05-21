@@ -138,11 +138,12 @@ jobs:
           since="$(date -u -d '24 hours ago' '+%Y-%m-%d %H:%M:%S')"
           count=$(git log --since="$since" --grep='Cloud-Run:' --oneline | wc -l | tr -d ' ')
           echo "Cloud-shipped commits in last 24h: $count"
-          # Ceiling: 12/day — paired with the every-2h cron (~12
-          # ticks/day) so cadence + ceiling line up. Bump when the
-          # loop matures.
-          if [ "$count" -ge 12 ]; then
-            echo "Cloud ceiling reached (12 cloud-shipped commits / 24h). Exiting cleanly — no work this tick."
+          # Ceiling: 60 cloud-shipped commits / 24h — a runaway
+          # guard, not a pacing knob. The scheduled cadence sits
+          # well under it; the ceiling only ever fires if a tick
+          # (or a manual-dispatch storm) goes haywire.
+          if [ "$count" -ge 60 ]; then
+            echo "Cloud ceiling reached (60 cloud-shipped commits / 24h). Exiting cleanly — no work this tick."
             echo "skip=true" >> "$GITHUB_OUTPUT"
           else
             echo "skip=false" >> "$GITHUB_OUTPUT"
