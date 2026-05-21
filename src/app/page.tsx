@@ -32,9 +32,6 @@ export default function LandingPage() {
         </section>
 
         <section className={styles.previewMark}>
-          <span className={styles.previewMarkLabel}>
-            the brand is the practice rendered
-          </span>
           <MosaicPreview />
         </section>
 

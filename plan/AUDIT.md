@@ -6,9 +6,51 @@
 
 ## Pending
 
-(empty — `/iterate` has drained the backlog. 22 resolved findings
-were archived to Done via `/oversight` 2026-05-21. New audit findings
-land here as `/iterate` and `/critique` surface them.)
+### [ ] [7.2] / — internal design copy "the brand is the practice rendered" surfaced to users
+- category: external-critique
+- impact: 8
+- ease: 9
+- observation: `src/app/page.tsx` line 36 contains `<span className={styles.previewMarkLabel}>the brand is the practice rendered</span>`. CSS `text-transform: uppercase` in `.previewMarkLabel` renders this as "THE BRAND IS THE PRACTICE RENDERED" — internal design-system language exposed on the primary conversion surface. Breaks voice and confuses first-time visitors.
+- evidence: `src/app/page.tsx:36` + `src/app/page.module.css:96`
+- suggested fix: remove the `<span>` and its inner text entirely; the MosaicPreview is self-explanatory and the section needs no visible label.
+- source: /critique pass 2 (commit 1ade924)
+- issue: [mirror-failed: 2026-05-21T00:00:00Z]
+
+### [ ] [5.6] /today — focus-mode overlay DOM duplication exposes duplicate controls to screen readers
+- category: external-critique
+- impact: 8
+- ease: 7
+- observation: the focus-mode overlay contains a second full copy of the prompt, "YOUR RESPONSE" heading, save-state indicator, and publish/save controls. Both copies are in the DOM simultaneously; without `aria-hidden` on the inactive overlay, screen readers encounter every interactive control twice.
+- evidence: both copies live in DOM at once with no aria-hidden on the inactive one.
+- suggested fix: add `aria-hidden="true"` to the focus-mode overlay container when focus mode is not active.
+- source: /critique pass 2 (commit 1ade924)
+
+### [ ] [5.4] /today — section header caps conflict with stated typographic voice
+- category: external-critique
+- impact: 6
+- ease: 9
+- observation: "YOUR RESPONSE" and "YOUR LAST SEVEN DAYS" are rendered in full uppercase while every other label uses sentence or lower case, violating the `bearings.md` voice rule "lower-case where typographic restraint reads better".
+- evidence: `src/app/today/page.module.css` multiple `text-transform: uppercase` rules
+- suggested fix: remove `text-transform: uppercase` from `.entryLabel` and `.stripLabel` selectors (or equivalent), leaving source text already lower-case.
+- source: /critique pass 1 (commit c69173d)
+
+### [ ] [4.5] / — page title is a bare product name with no description
+- category: external-critique
+- impact: 5
+- ease: 9
+- observation: the homepage `<title>` is simply "ember" — no description, no keyword signal, no context for returning users with multiple tabs.
+- evidence: root layout metadata title = "ember"
+- suggested fix: change root layout title to "ember — a daily writing ritual" (or from the tagline).
+- source: /critique pass 2 (commit 1ade924)
+
+### [ ] [4.5] /today — FOCUS button has no accessible label
+- category: external-critique
+- impact: 5
+- ease: 9
+- observation: the focus-mode toggle button is labelled only with "FOCUS" — no `aria-label`. Screen readers cannot determine whether this toggles a view, opens a modal, or changes a setting.
+- evidence: FOCUS button in TodayEntry component.
+- suggested fix: add `aria-label="enter focus mode"` (or dynamic `aria-label` for pressed state) to the FOCUS button.
+- source: /critique pass 2 (commit 1ade924)
 
 ## Done
 
