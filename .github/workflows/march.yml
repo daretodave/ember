@@ -9,14 +9,13 @@ name: march
 
 on:
   schedule:
-    # Every 2h, off-peak UTC. Adjust to your timezone — GH cron always
-    # runs in UTC. Conservative starting cadence for a brand-new repo;
-    # bump to hourly once the loop has run cleanly for a few days.
-    # Bounded downstream by:
-    #   - the daily commit ceiling (12 cloud-shipped / 24h)
-    #   - the concurrency group `march`
+    # Every 40 min UTC. Cron */40 fires at :00 and :40 each hour, so
+    # the gap alternates 40min/20min — ≈48 scheduled ticks/day. GH
+    # cron always runs in UTC. Bounded downstream by:
+    #   - the daily commit ceiling (60 cloud-shipped / 24h)
+    #   - the concurrency group `march` (serializes overlapping ticks)
     #   - the 5h timeout per tick.
-    - cron: '0 1,3,5,7,9,11,23 * * *'
+    - cron: '*/40 * * * *'
   workflow_dispatch:
 
 concurrency:
