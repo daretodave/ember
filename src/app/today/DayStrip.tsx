@@ -1,5 +1,6 @@
 import type { Entry } from '@/lib/entries'
 import { formatShortWeekday, offsetDate } from '@/lib/entries'
+import Link from 'next/link'
 import styles from './page.module.css'
 
 type TileState = 'empty' | 'filled' | 'today' | 'published'
@@ -38,10 +39,10 @@ export function DayStrip({ todayDate, entries }: Props) {
   return (
     <section className={styles.strip}>
       <div className={styles.stripHead}>
-        <span className={styles.stripLabel}>your last seven days</span>
-        <a href="/log" className={styles.stripLink}>
+        <h2 className={styles.stripLabel}>your last seven days</h2>
+        <Link href="/log" className={styles.stripLink}>
           see all sixty
-        </a>
+        </Link>
       </div>
       <div className={styles.stripRow}>
         {days.map(({ date, isToday, state, label }) => (

@@ -38,7 +38,7 @@
 - issue: [mirror-failed: 2026-05-21T00:00:00Z]
 - resolution: replaced both raw anchors with `<Link>` in src/app/page.tsx. Shipped at a313cd3.
 
-### [ ] [2.7] perf — DayStrip "see all sixty" link is a raw `<a>` anchor
+### [x] [2.7] perf — DayStrip "see all sixty" link is a raw `<a>` anchor
 
 - category: perf
 - impact: 3
@@ -46,8 +46,9 @@
 - observation: `src/app/today/DayStrip.tsx` renders `<a href="/log" className={styles.stripLink}>see all sixty</a>`, causing a full-page reload when clicked. The nav-link audit (finding [4.5]) fixed all nav anchors but missed this content link in DayStrip.
 - evidence: `src/app/today/DayStrip.tsx` line ~46: raw `<a href="/log">`.
 - suggested fix: import `Link` from `next/link` in DayStrip.tsx and replace `<a href="/log">` with `<Link href="/log">`.
+- resolution: replaced raw `<a>` with `<Link>` and imported `Link` from `next/link` in DayStrip.tsx.
 
-### [ ] [2.7] a11y — DayStrip section has no accessible heading
+### [x] [2.7] a11y — DayStrip section has no accessible heading
 
 - category: a11y
 - impact: 3
@@ -55,6 +56,7 @@
 - observation: `<section className={styles.strip}>` in `DayStrip.tsx` uses a `<span>` for its visible label "your last seven days". Screen reader users navigating by headings skip straight from the page `<h1>` (today's prompt) to nothing inside DayStrip. Unlabeled sections are not exposed as named landmarks.
 - evidence: `src/app/today/DayStrip.tsx` line ~41: `<span className={styles.stripLabel}>your last seven days</span>` — plain span, not a heading.
 - suggested fix: change `<span className={styles.stripLabel}>` to `<h2 className={styles.stripLabel}>` to add the section to heading navigation.
+- resolution: changed `<span className={styles.stripLabel}>` to `<h2 className={styles.stripLabel}>` in DayStrip.tsx.
 
 ### [x] [4.5] perf — site nav uses raw `<a>` tags; full-page reload on every authenticated navigation
 
