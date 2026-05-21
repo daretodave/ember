@@ -3,9 +3,10 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import type { Entry } from '@/lib/entries'
 import { formatSavedTime } from '@/lib/entries'
+import { clearDraft, getDraft, saveDraft } from '@/lib/draft-store'
 import styles from './page.module.css'
 
-type SaveState = 'idle' | 'saving' | 'saved' | 'error'
+type SaveState = 'idle' | 'saving' | 'saved' | 'error' | 'draft'
 
 type Props = {
   date: string
@@ -22,12 +23,39 @@ export function TodayEntry({ date, task, prompt, initialEntry }: Props) {
   const [savedAt, setSavedAt] = useState<string | null>(initialEntry?.updated_at ?? null)
   const [errorMsg, setErrorMsg] = useState('')
   const [isFocus, setIsFocus] = useState(false)
+  const [isOnline, setIsOnline] = useState(true)
 
   const focusTriggerRef = useRef<HTMLButtonElement>(null)
   const focusTextareaRef = useRef<HTMLTextAreaElement>(null)
+  const draftTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
 
   const enterFocus = useCallback(() => setIsFocus(true), [])
   const exitFocus = useCallback(() => setIsFocus(false), [])
+
+  // Seed navigator.onLine once on mount (avoids SSR mismatch)
+  useEffect(() => {
+    setIsOnline(navigator.onLine)
+    const onOnline = () => setIsOnline(true)
+    const onOffline = () => setIsOnline(false)
+    window.addEventListener('online', onOnline)
+    window.addEventListener('offline', onOffline)
+    return () => {
+      window.removeEventListener('online', onOnline)
+      window.removeEventListener('offline', onOffline)
+    }
+  }, [])
+
+  // Load draft from IndexedDB when there is no server-confirmed entry
+  useEffect(() => {
+    if (initialEntry !== null) return
+    getDraft(date).then((draft) => {
+      if (draft) {
+        setResponse(draft.response)
+        setTaskDone(draft.taskDone)
+        setSaveState('draft')
+      }
+    })
+  }, [date, initialEntry])
 
   useEffect(() => {
     if (isFocus) {
@@ -62,6 +90,7 @@ export function TodayEntry({ date, task, prompt, initialEntry }: Props) {
         const data = (await res.json()) as Entry
         setSavedAt(data.updated_at)
         setSaveState('saved')
+        clearDraft(date)
       } else {
         const data = (await res.json().catch(() => ({}))) as { error?: string }
         setErrorMsg(data.error ?? 'something went wrong. try again.')
@@ -73,10 +102,34 @@ export function TodayEntry({ date, task, prompt, initialEntry }: Props) {
     }
   }, [date, response, taskDone, isPublished])
 
+  // Auto-retry save on reconnect if there is unsaved content
+  useEffect(() => {
+    if (!isOnline) return
+    if (response && saveState !== 'saved') {
+      handleSave()
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isOnline])
+
   const handleResponseChange = useCallback((e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setResponse(e.target.value)
+    const value = e.target.value
+    setResponse(value)
     if (saveState === 'saved') setSaveState('idle')
-  }, [saveState])
+
+    // Debounce-save to IndexedDB
+    if (draftTimerRef.current) clearTimeout(draftTimerRef.current)
+    draftTimerRef.current = setTimeout(() => {
+      saveDraft(date, { response: value, taskDone })
+    }, 500)
+  }, [date, saveState, taskDone])
+
+  function saveIndicatorText() {
+    if (saveState === 'saving') return 'saving...'
+    if (!isOnline && saveState !== 'saved') return 'saved locally — will sync'
+    if (saveState === 'saved' && savedAt) return formatSavedTime(savedAt)
+    if (saveState === 'draft') return 'draft restored'
+    return 'not yet saved'
+  }
 
   return (
     <>
@@ -106,7 +159,7 @@ export function TodayEntry({ date, task, prompt, initialEntry }: Props) {
 
       <div className={styles.entryMeta}>
         <span className={styles.lastSaved} aria-live="polite">
-          {savedAt ? formatSavedTime(savedAt) : 'not yet saved'}
+          {saveIndicatorText()}
         </span>
         <div className={styles.entryActions}>
           <label className={styles.publishToggle}>
@@ -166,7 +219,7 @@ export function TodayEntry({ date, task, prompt, initialEntry }: Props) {
 
           <div className={styles.entryMeta}>
             <span className={styles.lastSaved} aria-live="polite">
-              {savedAt ? formatSavedTime(savedAt) : 'not yet saved'}
+              {saveIndicatorText()}
             </span>
             <div className={styles.entryActions}>
               <label className={styles.publishToggle}>
