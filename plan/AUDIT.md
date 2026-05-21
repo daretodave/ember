@@ -6,6 +6,17 @@
 
 ## Pending
 
+### [x] [4.5] a11y — sign-in confirmation message has no ARIA live region
+
+- category: a11y
+- impact: 5
+- ease: 9
+- observation: `src/app/signin/page.tsx` shows a `<p className={styles.confirmation}>` when `state === 'sent'`, but this paragraph carries no `role="status"` or `aria-live`. Screen readers will not announce that the magic-link email was sent. The error state already has `role="alert"` (line 86), but the success state was missed — the same class of gap that was fixed in TodayEntry (lastSaved aria-live), SettingsForm (saveStatus aria-live), and SigninPage error (role="alert").
+- evidence: `src/app/signin/page.tsx` line 54: `<p className={styles.confirmation}>check your email...` — no role, no aria-live, rendered only when `state === 'sent'`.
+- suggested fix: add `role="status"` to the confirmation `<p>` so screen readers politely announce the success state.
+- issue: [mirror-failed: 2026-05-21T00:00:00Z]
+- resolution: added `role="status"` to the confirmation `<p>` in signin/page.tsx. Shipped at d5d2f20.
+
 ### [x] [3.6] a11y — ProfileMosaic published tile links missing entry state label
 
 - category: a11y
