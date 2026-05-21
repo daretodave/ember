@@ -29,7 +29,7 @@
 - [x] Phase 15 — A11y regression gate (axe-core in the Playwright suite) — 479866b
 - [x] Phase 16 — Rate limiting (magic-link send + entry write guards) — 42a8f96
 - [x] Phase 17 — On this day (echo a past entry on `/today`) — ff5435a
-- [ ] Phase 18 — Focus mode (distraction-free writing surface on `/today`)
+- [x] Phase 18 — Focus mode (distraction-free writing surface on `/today`) — 77398f5
 - [ ] Phase 19 — Installable PWA + offline draft persistence
 
 ## Per-phase scope
