@@ -6,6 +6,12 @@
 
 ## Pending
 
+(empty — `/iterate` has drained the backlog. 22 resolved findings
+were archived to Done via `/oversight` 2026-05-21. New audit findings
+land here as `/iterate` and `/critique` surface them.)
+
+## Done
+
 ### [x] [4.5] a11y — sign-in confirmation message has no ARIA live region
 
 - category: a11y
@@ -242,17 +248,14 @@
 - issue: #10
 - resolution: expanded content/prompts.json from 20 to 101 entries via prompt-curator sub-agent. Shipped at a6d0d49.
 
-### [user-issue #6] [HIGH] [needs-user-call] entries table missing from Supabase — migrations not applied
+### [x] [user-issue #6] [HIGH] entries table missing from Supabase — migrations not applied
 
 - category: external-issue
 - impact: 9
 - ease: 6
 - issue: #6
-- investigated: 2026-05-16 — confirmed all 4 migrations in supabase/migrations/ were never applied to the connected project. Direct DB is IPv6-only (unreachable from CI runner); Management API requires a PAT that is not provisioned.
-- shipped: scripts/migrate.mjs + pnpm db:migrate (Path B); full SQL posted to issue #6 comment (Path A — paste into Supabase SQL Editor, no tools needed).
-- next: user must apply migrations via one of the two paths in issue #6. Once applied, add SUPABASE_ACCESS_TOKEN to GitHub Actions secrets so the cloud loop can push future migrations automatically.
-
-## Done
+- investigated: 2026-05-16 — at the time, confirmed all 4 migrations in supabase/migrations/ had not been applied to the connected project.
+- resolution: superseded. The `march.yml` cloud-loop workflow gained an "Apply Supabase migrations" step that pushes pending migrations every tick via the IPv4 session pooler — using `SUPABASE_PROJECT_ID` + `SUPABASE_DB_PASSWORD` (already GitHub secrets) and the `SUPABASE_REGION` variable; no `SUPABASE_ACCESS_TOKEN` required. Verified via `/oversight` 2026-05-21: a REST probe of `/rest/v1/entries` returned HTTP 200, confirming the table exists in production. No user action required; GitHub issue #6 can be closed.
 
 ### [x] [6.3] stale useCallback closure in SettingsForm silently ignores personalizedVal on save
 
