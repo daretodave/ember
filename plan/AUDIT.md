@@ -17,7 +17,7 @@
 - issue: [mirror-failed: 2026-05-21T00:00:00Z]
 - resolution: changed `aria-label={tile.displayDate}` to `` aria-label={`${tile.displayDate} — published entry`} `` in ProfileMosaic.tsx. Shipped at 22f9659.
 
-### [ ] [3.6] a11y — TodayEntry task button aria-label is static regardless of pressed state
+### [x] [3.6] a11y — TodayEntry task button aria-label is static regardless of pressed state
 
 - category: a11y
 - impact: 4
@@ -25,6 +25,8 @@
 - observation: `TodayEntry.tsx` uses `aria-pressed={taskDone}` correctly to convey toggle state, but `aria-label="mark task done"` is static and never changes. When `taskDone=true`, screen readers announce "mark task done, toggle button, pressed" — the label describes the forward action but not the reverse. A user hearing this cannot tell that clicking will unmark the task. Dynamically updating the label removes the ambiguity.
 - evidence: `src/app/today/TodayEntry.tsx` line 57: `aria-label="mark task done"` — hardcoded string with no dependency on `taskDone`.
 - suggested fix: change to `aria-label={taskDone ? 'mark task not done' : 'mark task done'}`.
+- issue: #24
+- resolution: changed to `aria-label={taskDone ? 'mark task not done' : 'mark task done'}` in TodayEntry.tsx. Shipped at a8db48d.
 
 ### [x] [4.0] test — /api/auth/signin route has no unit tests
 
