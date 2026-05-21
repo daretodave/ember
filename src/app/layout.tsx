@@ -23,22 +23,34 @@ const jetbrainsMono = JetBrains_Mono({
   variable: '--font-jetbrains-mono',
 })
 
-const siteUrl = 'https://ember-rust-sigma.vercel.app'
+const siteUrl =
+  process.env.NEXT_PUBLIC_SITE_URL ??
+  (process.env.VERCEL_PROJECT_PRODUCTION_URL
+    ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
+    : 'https://ember-rust-sigma.vercel.app')
 
 export const metadata: Metadata = {
+  metadataBase: new URL(siteUrl),
   title: 'ember',
   description: 'ten minutes of intention before the day swallows you',
+  manifest: '/manifest.webmanifest',
+  icons: {
+    icon: '/icon.svg',
+    apple: '/apple-icon',
+  },
   openGraph: {
     type: 'website',
     siteName: 'ember',
     title: 'ember',
     description: 'ten minutes of intention before the day swallows you',
     url: siteUrl,
+    images: [{ url: '/opengraph-image', width: 1200, height: 630, alt: 'ember' }],
   },
   twitter: {
-    card: 'summary',
+    card: 'summary_large_image',
     title: 'ember',
     description: 'ten minutes of intention before the day swallows you',
+    images: ['/opengraph-image'],
   },
 }
 
