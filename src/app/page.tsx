@@ -1,6 +1,7 @@
 import { MosaicGlyph } from '@/components/mosaic/MosaicGlyph'
 import { MosaicPreview } from '@/components/mosaic/MosaicPreview'
 import { getSevenDayPreview } from '@/lib/prompts'
+import Link from 'next/link'
 import styles from './page.module.css'
 
 export default function LandingPage() {
@@ -14,7 +15,7 @@ export default function LandingPage() {
           <span className={styles.wordmark}>ember</span>
         </div>
         <nav className={styles.headerNav} aria-label="site navigation">
-          <a href="/signin">sign in</a>
+          <Link href="/signin">sign in</Link>
         </nav>
       </header>
 
@@ -88,9 +89,9 @@ export default function LandingPage() {
             a sign-in link is the only thing you&apos;ll receive.{' '}
             <span>no password, no spam.</span>
           </p>
-          <a className={styles.ctaBtn} href="/signin">
+          <Link className={styles.ctaBtn} href="/signin">
             sign in to start
-          </a>
+          </Link>
         </div>
       </div>
     </div>
