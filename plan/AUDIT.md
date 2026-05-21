@@ -6,6 +6,26 @@
 
 ## Pending
 
+### [x] [3.6] a11y — ProfileMosaic published tile links missing entry state label
+
+- category: a11y
+- impact: 4
+- ease: 9
+- observation: `ProfileMosaic.tsx` renders published tiles as Link elements with `aria-label={tile.displayDate}`. The label announces only the date ("Mon 12 May 2026") with no indication the tile links to a published entry. Screen reader users navigating the public profile mosaic hear only a date — no context about what they are navigating to. This is the same gap that was fixed in LogMosaic (finding [4.8]), but was not applied to the parallel ProfileMosaic component.
+- evidence: `src/app/u/[username]/ProfileMosaic.tsx` line 31: `aria-label={tile.displayDate}` — bare date, no state context. LogMosaic fix at c8770e7 added `tileStateLabel()` to make labels like "Wed 13 May 2026 — published"; ProfileMosaic still uses bare date.
+- suggested fix: change `aria-label={tile.displayDate}` to `` aria-label={`${tile.displayDate} — published entry`} `` — all clickable tiles in ProfileMosaic are by definition published.
+- issue: [mirror-failed: 2026-05-21T00:00:00Z]
+- resolution: changed `aria-label={tile.displayDate}` to `` aria-label={`${tile.displayDate} — published entry`} `` in ProfileMosaic.tsx. Shipped at 22f9659.
+
+### [ ] [3.6] a11y — TodayEntry task button aria-label is static regardless of pressed state
+
+- category: a11y
+- impact: 4
+- ease: 9
+- observation: `TodayEntry.tsx` uses `aria-pressed={taskDone}` correctly to convey toggle state, but `aria-label="mark task done"` is static and never changes. When `taskDone=true`, screen readers announce "mark task done, toggle button, pressed" — the label describes the forward action but not the reverse. A user hearing this cannot tell that clicking will unmark the task. Dynamically updating the label removes the ambiguity.
+- evidence: `src/app/today/TodayEntry.tsx` line 57: `aria-label="mark task done"` — hardcoded string with no dependency on `taskDone`.
+- suggested fix: change to `aria-label={taskDone ? 'mark task not done' : 'mark task done'}`.
+
 ### [x] [4.0] test — /api/auth/signin route has no unit tests
 
 - category: tests
