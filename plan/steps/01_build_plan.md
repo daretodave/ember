@@ -26,7 +26,7 @@
      be refined per-phase with /plan-a-phase before each ships. -->
 - [x] Phase 13 — Entry editing (edit past entries from `/log/[date]`) — 50c69ea
 - [x] Phase 14 — Brand assets (favicon, OG image, social card, manifest) — 08c5b37
-- [ ] Phase 15 — A11y regression gate (axe-core in the Playwright suite)
+- [x] Phase 15 — A11y regression gate (axe-core in the Playwright suite) — 479866b
 - [ ] Phase 16 — Rate limiting (magic-link send + entry write guards)
 - [ ] Phase 17 — On this day (echo a past entry on `/today`)
 - [ ] Phase 18 — Focus mode (distraction-free writing surface on `/today`)
