@@ -78,6 +78,7 @@ export function LogMosaic({ tiles }: Props) {
       className={`mosaic mosaic--lg ${styles.logMosaic}`}
       ref={mosaicRef}
       style={{ position: 'relative' }}
+      role="group"
       aria-label="sixty-day practice mosaic"
     >
       {tiles.map((tile, i) => (

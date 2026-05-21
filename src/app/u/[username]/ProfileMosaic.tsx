@@ -18,6 +18,7 @@ export function ProfileMosaic({ tiles, username }: Props) {
   return (
     <div
       className={`mosaic mosaic--lg ${styles.profileMosaic}`}
+      role="group"
       aria-label="sixty-day practice mosaic"
     >
       {tiles.map((tile, i) => {

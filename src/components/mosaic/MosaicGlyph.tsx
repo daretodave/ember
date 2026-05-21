@@ -24,7 +24,7 @@ function tileClass(state: TileState): string {
 
 export function MosaicGlyph() {
   return (
-    <div className={styles.glyph} aria-label="ember">
+    <div className={styles.glyph} role="img" aria-label="ember">
       {GLYPH_PATTERN.map((state, i) => (
         <div key={i} className={tileClass(state)} aria-hidden="true" />
       ))}

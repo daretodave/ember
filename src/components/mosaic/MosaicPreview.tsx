@@ -23,7 +23,7 @@ function tileClass(state: TileState): string {
 
 export function MosaicPreview() {
   return (
-    <div className="mosaic mosaic--md" aria-label="sixty days of practice">
+    <div className="mosaic mosaic--md" role="img" aria-label="sixty days of practice">
       {PREVIEW_PATTERN.map((state, i) => (
         <div
           key={i}
