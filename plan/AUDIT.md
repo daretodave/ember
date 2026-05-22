@@ -6,6 +6,26 @@
 
 ## Pending
 
+### [x] [3.6] /signin — "back" link has no visible destination
+- category: external-critique
+- impact: 4
+- ease: 9
+- observation: the sign-in page header shows a "back" link with no destination label. a visitor who arrived at /signin directly (via bookmark, shared link, or search) cannot tell where "back" leads without clicking it.
+- evidence: `src/app/signin/page.tsx` line 44–46: `<Link href="/" className={styles.backLink}>back</Link>` — single word, no aria-label, no destination hint.
+- suggested fix: change link text to "back to home" so the destination is explicit without needing a tooltip. optionally also add `aria-label="back to home"` for consistency with other nav links.
+- source: /critique pass 5 (commit 4552045)
+- issue: [mirror-failed: 2026-05-22T00:00:00Z]
+- resolution: changed "back" to "back to home" and added aria-label="back to home" in src/app/signin/page.tsx. Shipped at 51977f7.
+
+### [ ] [1.8] /log — H1 "your past sixty days" uses word form while stat line uses numeral "60"
+- category: external-critique
+- impact: 2
+- ease: 9
+- observation: the /log page H1 reads "your past sixty days" while the stat line immediately below reads "0 days written. 60 days quiet." — two forms of the same number on the same screen.
+- evidence: `src/app/log/page.tsx` line 81: `your past sixty days`; stat line uses numeral "60".
+- suggested fix: change H1 and metadata description to "your past 60 days" to match numeral form used throughout the stat line.
+- source: /critique pass 5 (commit 4552045)
+
 ### [x] [3.6] /signin — "magic-link via supabase" vendor name in footer
 - category: external-critique
 - impact: 4

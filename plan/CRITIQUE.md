@@ -27,7 +27,7 @@
 - suggested fix: change the H1 to "your past 60 days" to match the numeral form used throughout the stat line.
 - source: browser
 
-### [LOW] /signin — "back" link has no visible destination
+### [x] [LOW] /signin — "back" link has no visible destination
 - pass: 5 (commit 4552045)
 - viewport: both
 - category: comprehension
@@ -35,6 +35,7 @@
 - evidence: captured text: "ember / back / sign in." — "back" with no destination label
 - suggested fix: change the link text to "back to home" or add aria-label="back to home" so the destination is explicit.
 - source: browser
+- resolution: changed "back" to "back to home" and added aria-label="back to home". Shipped at 51977f7.
 
 ### [LOW] /today — "see all sixty" uses word form inconsistent with numeral "60" elsewhere
 - pass: 4 (commit 8b806b8)
