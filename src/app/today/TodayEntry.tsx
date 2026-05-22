@@ -162,7 +162,7 @@ export function TodayEntry({ date, task, prompt, initialEntry }: Props) {
           {saveIndicatorText()}
         </span>
         <div className={styles.entryActions}>
-          <label className={styles.publishToggle}>
+          <label className={styles.publishToggle} title="make this entry visible on your public profile.">
             <input
               type="checkbox"
               checked={isPublished}
@@ -222,7 +222,7 @@ export function TodayEntry({ date, task, prompt, initialEntry }: Props) {
               {saveIndicatorText()}
             </span>
             <div className={styles.entryActions}>
-              <label className={styles.publishToggle}>
+              <label className={styles.publishToggle} title="make this entry visible on your public profile.">
                 <input
                   type="checkbox"
                   checked={isPublished}
