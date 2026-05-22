@@ -41,8 +41,8 @@ export default function SigninPage() {
           <MosaicGlyph />
           <span className={styles.wordmark}>ember</span>
         </Link>
-        <Link href="/" className={styles.backLink}>
-          back
+        <Link href="/" className={styles.backLink} aria-label="back to home">
+          back to home
         </Link>
       </header>
 
