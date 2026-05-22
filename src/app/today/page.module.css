@@ -80,7 +80,6 @@
   font-size: var(--type-12);
   color: var(--color-ink-muted);
   letter-spacing: 0.08em;
-  text-transform: uppercase;
   margin: 0 0 var(--space-7);
 }
 
@@ -380,7 +379,6 @@
   font-family: var(--font-sans);
   font-size: var(--type-12);
   letter-spacing: 0.08em;
-  text-transform: uppercase;
   color: var(--color-ink-muted);
   background: none;
   border: none;
@@ -442,7 +440,6 @@
   font-family: var(--font-sans);
   font-size: var(--type-12);
   letter-spacing: 0.08em;
-  text-transform: uppercase;
   color: var(--color-ink-muted);
   background: none;
   border: none;
