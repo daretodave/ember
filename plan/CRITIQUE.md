@@ -1,14 +1,21 @@
 # External-observer findings — Ember
 
-> Last pass: 2026-05-22 at commit ae936e3
-> Pass count: 3
+> Last pass: 2026-05-22 at commit 8b806b8
+> Pass count: 4
 
 > Written by `/critique` after walking the live site as a
 > fresh-eyes visitor. Drained by `/iterate`.
 
 ## Pending
 
-
+### [MED] /today — publish button has no affordance explaining what publishing does
+- pass: 4 (commit 8b806b8)
+- viewport: both
+- category: comprehension
+- observation: the publish button appears on /today alongside save and focus but there is no surrounding copy, tooltip, or label explaining what publishing does or who can see a published entry. a user encountering this button for the first time has no basis for deciding whether to use it.
+- evidence: captured text: "publish / focus / save" — no explanatory context visible in the DOM text.
+- suggested fix: add a short descriptor near the publish button, e.g. a tooltip or inline note reading "make this entry visible on your public profile."
+- source: browser
 
 ### [MED] / (mobile) — footer trust copy absent at 375px
 - pass: 1 (commit c69173d)
@@ -19,12 +26,48 @@
 - suggested fix: audit the mobile layout to confirm this copy is present and visible at 375px, or surface it directly above the "sign in to start" CTA.
 
 
-### [LOW] /signin — page title is bare "ember" with no descriptive suffix
-- pass: 3 (commit ae936e3)
+### [LOW] /signin — "magic-link via supabase" vendor name appears in footer copy
+- pass: 4 (commit 8b806b8)
+- viewport: both
+- category: voice
+- observation: the /signin page footer reads "magic-link via supabase." supabase is an infrastructure vendor name meaningless to most users and at odds with ember's calm, minimal tone. it reads as an implementation detail that surfaced into production copy.
+- evidence: captured text: "we email you a sign-in link. no password, no spam. / ember / magic-link via supabase"
+- suggested fix: remove the vendor attribution or replace with copy describing the user experience, e.g. "sign-in links expire after 24 hours and are sent to the address you provide."
+- source: browser
+
+### [LOW] / — task label prefix is inconsistent across 7-day preview
+- pass: 4 (commit 8b806b8)
+- viewport: both
+- category: voice
+- observation: in the 7-day preview on the landing page, the first day's task uses the prefix "today's tiny task —" while all subsequent days use "tiny task —" without the possessive prefix. within a single preview block the inconsistency is jarring.
+- evidence: captured text: "today's tiny task — notice one thing today..." followed by "tiny task — slow down on one task today..."
+- suggested fix: standardize to "tiny task —" across all seven rows (dropping the "today's" prefix), matching the recurring-days pattern.
+- source: browser
+
+### [LOW] /today — "see all sixty" uses word form inconsistent with numeral "60" elsewhere
+- pass: 4 (commit 8b806b8)
+- viewport: both
+- category: voice
+- observation: the seven-day strip on /today links to /log with the label "see all sixty" (word form), while /log itself uses the numeral "60" throughout ("60 days quiet", "your past sixty days" h1 aside). the inconsistency is minor but noticeable within the same session.
+- evidence: "/today" text: "see all sixty" vs "/log" text: "0 days written. 60 days quiet. 0 published."
+- suggested fix: change "see all sixty" to "see all 60" to match the numeral form used on /log.
+- source: browser
+
+### [LOW] /today — "done" button in seven-day strip lacks an accessible label
+- pass: 4 (commit 8b806b8)
+- viewport: both
+- category: a11y
+- observation: the "done" button for marking today's task complete appears in the DOM after the day-label strip (Sat, Sun, Mon, Tue, Wed, Thu, today) with no aria-label. a screen reader encountering "done" at that position lacks context for what action it confirms.
+- evidence: captured text: "Sat Sun Mon Tue Wed Thu today" followed by "done" with no intervening label.
+- suggested fix: add aria-label="mark today's task done" to the done button element.
+- source: browser
+
+### [LOW] /signin — page title is identical to landing page, no signin-specific suffix
+- pass: 3 (commit ae936e3); evidence updated pass 4
 - viewport: both
 - category: seo
-- observation: the /signin page title is "ember" — identical to the landing page title. all other authenticated-side pages carry descriptive suffixes ("ember · today", "ember · log", "ember · settings"). a user with both the landing page and the sign-in page open cannot distinguish them by tab title.
-- evidence: captured title: "ember" (vs. "ember · today" on /today, "ember · log" on /log)
+- observation: the /signin page title is "ember — a daily writing ritual" — identical to the landing page (the root layout default). all other app pages carry descriptive suffixes ("ember · today", "ember · log", "ember · settings"). a user with both the landing page and the sign-in page open cannot distinguish them by tab title.
+- evidence: captured title: "ember — a daily writing ritual" on both / and /signin (vs. "ember · today" on /today, "ember · log" on /log)
 - suggested fix: set the /signin page title to "ember · sign in" to match the established pattern.
 - source: browser
 
