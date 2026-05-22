@@ -96,7 +96,7 @@ export default function SigninPage() {
 
       <footer className={styles.footer}>
         <span>ember</span>
-        <span>magic-link via supabase</span>
+        <span>sign-in links expire after 24 hours.</span>
       </footer>
     </div>
   )
