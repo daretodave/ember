@@ -29,11 +29,13 @@ export async function generateMetadata({ params }: Props) {
       title,
       description,
       url: `${siteUrl}/u/${username}/${date}`,
+      images: [{ url: '/opengraph-image', width: 1200, height: 630, alt: 'ember' }],
     },
     twitter: {
-      card: 'summary' as const,
+      card: 'summary_large_image' as const,
       title,
       description,
+      images: ['/opengraph-image'],
     },
   }
 }
