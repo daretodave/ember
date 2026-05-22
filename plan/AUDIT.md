@@ -38,7 +38,7 @@
 - issue: #25
 - resolution: removed `text-transform: uppercase` from `.entryLabel` and `.stripLabel` (today/page.module.css), `.label` (settings/page.module.css), and `.mosaicMeta` (log/page.module.css). Closes the /today, /settings, and /log uppercase-label cluster from critique passes 1 and 2. Shipped at cdcd1ff.
 
-### [ ] [7.2] /settings — timezone selector is effectively unusable on mobile
+### [x] [7.2] /settings — timezone selector is effectively unusable on mobile
 - category: external-critique
 - impact: 9
 - ease: 8
@@ -47,6 +47,7 @@
 - suggested fix: group timezones with `<optgroup>` by region prefix (Africa, America, Asia, Europe, etc.).
 - source: /critique pass 1 (commit c69173d)
 - issue: #26
+- resolution: added groupTimezones() helper in SettingsForm.tsx; timezone <select> now renders <optgroup> per region. Shipped at 8d43d1b.
 
 ### [ ] [5.4] /today — save-state indicator may not be in an aria-live region
 - category: external-critique

@@ -8,15 +8,6 @@
 
 ## Pending
 
-### [HIGH] /settings — timezone selector is effectively unusable on mobile
-- pass: 1 (commit c69173d)
-- viewport: both
-- category: a11y
-- observation: the timezone selector is a flat unfiltered list of 200+ timezone strings in a single `<select>` element with no optgroup grouping and no search. a user on mobile must scroll through hundreds of raw tz database names (e.g. `Africa/Abidjan`, `America/Indiana/Knox`) with no shortcut.
-- evidence: settings page body text is almost entirely composed of raw timezone names in alphabetical sequence; no region groupings visible in the text capture.
-- suggested fix: group timezones with `<optgroup>` by region, or replace with a searchable combobox so users can type to filter.
-- issue: #26
-
 ### [MED] / (mobile) — footer trust copy absent at 375px
 - pass: 1 (commit c69173d)
 - viewport: mobile
@@ -59,6 +50,16 @@
 - suggested fix: add one line such as "the link is valid for 24 hours and drops you straight into today's page" to reduce post-submit uncertainty.
 
 ## Done
+
+### [HIGH] /settings — timezone selector is effectively unusable on mobile
+- pass: 1 (commit c69173d)
+- viewport: both
+- category: a11y
+- observation: the timezone selector is a flat unfiltered list of 200+ timezone strings in a single `<select>` element with no optgroup grouping and no search. a user on mobile must scroll through hundreds of raw tz database names (e.g. `Africa/Abidjan`, `America/Indiana/Knox`) with no shortcut.
+- evidence: settings page body text is almost entirely composed of raw timezone names in alphabetical sequence; no region groupings visible in the text capture.
+- suggested fix: group timezones with `<optgroup>` by region, or replace with a searchable combobox so users can type to filter.
+- issue: #26
+- resolution: added groupTimezones() helper in SettingsForm.tsx; timezone <select> now renders <optgroup> per region prefix. Shipped at 8d43d1b.
 
 ### [HIGH] /today — focus-mode overlay DOM duplication exposes duplicate controls to screen readers
 - pass: 2 (commit 1ade924)
