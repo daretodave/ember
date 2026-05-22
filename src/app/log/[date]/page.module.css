@@ -269,7 +269,6 @@
   font-family: var(--font-sans);
   font-size: var(--type-12);
   letter-spacing: 0.08em;
-  text-transform: uppercase;
   color: var(--color-ink-muted);
   margin: 0 0 var(--space-3);
   display: block;
