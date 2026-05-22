@@ -6,7 +6,17 @@
 
 ## Pending
 
-### [x] [3.6] /signin — "back" link has no visible destination
+### [x] [5.4] /u/[username]/[date] — public entry pages missing OG image in social metadata
+- category: seo
+- impact: 6
+- ease: 9
+- observation: `/u/[username]/[date]` is the primary share target when a user publishes an entry and shares the link. its `generateMetadata` returns `openGraph` without an `images` field and sets `twitter.card: 'summary'` with no images. the sibling `/u/[username]` profile page correctly includes `images: [{ url: '/opengraph-image', width: 1200, height: 630, alt: 'ember' }]` and `twitter.card: 'summary_large_image'`. because Next.js App Router metadata performs a shallow merge on the `openGraph` object, a child route that omits `images` replaces the parent's `openGraph` entirely — the OG image from the root layout does not cascade through.
+- evidence: `src/app/u/[username]/[date]/page.tsx` `generateMetadata`: `openGraph: { title, description, url }` — no images; `twitter: { card: 'summary' }` — no images. contrast with `src/app/u/[username]/page.tsx`: `openGraph: { ..., images: [{ url: '/opengraph-image', ... }] }`, `twitter: { card: 'summary_large_image', images: ['/opengraph-image'] }`.
+- suggested fix: add `images: [{ url: '/opengraph-image', width: 1200, height: 630, alt: 'ember' }]` to the `openGraph` block and change `twitter.card` to `'summary_large_image'` with `images: ['/opengraph-image']`.
+- issue: [mirror-failed: 2026-05-22T00:00:00Z]
+- resolution: added images to openGraph and upgraded twitter.card to 'summary_large_image' in src/app/u/[username]/[date]/page.tsx. Shipped at e2b9a06.
+
+### [ ] [1.8] /log — H1 "your past sixty days" uses word form while stat line uses numeral "60"
 - category: external-critique
 - impact: 4
 - ease: 9
