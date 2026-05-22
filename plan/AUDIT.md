@@ -28,7 +28,7 @@
 - issue: [mirror-failed: 2026-05-22T04:09:00Z]
 - resolution: removed `text-transform: uppercase` from `.focusTrigger` and `.focusDone` in today/page.module.css. Shipped at d419779.
 
-### [ ] [4.9] / — "read-only preview" label gives state but not purpose
+### [x] [4.9] / — "read-only preview" label gives state but not purpose
 - category: external-critique
 - impact: 7
 - ease: 7
@@ -36,6 +36,8 @@
 - evidence: captured text: "the next seven days. / read-only preview / today / Fri 22 May"
 - suggested fix: add a short explanatory subtitle beneath "the next seven days." — e.g. "this is what arrives each morning." — so the preview's purpose is clear without requiring the visitor to infer it.
 - source: /critique pass 3 (commit ae936e3)
+- issue: [mirror-failed: 2026-05-22T08:00:00Z]
+- resolution: replaced "read-only preview" with "this is what arrives each morning." in the sevenMeta span in src/app/page.tsx. Shipped at 757f4a7.
 
 ### [ ] [4.5] /signin — email field label is all-caps "EMAIL"
 - category: external-critique
@@ -46,7 +48,7 @@
 - suggested fix: remove `text-transform: uppercase` from `.fieldLabel` in signin/page.module.css.
 - source: /critique pass 3 (commit ae936e3)
 
-### [ ] [4.5] / — page title is a bare product name with no description
+### [x] [4.5] / — page title is a bare product name with no description
 - category: external-critique
 - impact: 8
 - ease: 9

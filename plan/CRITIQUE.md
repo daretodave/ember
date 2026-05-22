@@ -17,14 +17,6 @@
 - suggested fix: remove text-transform: uppercase (or equivalent) from the email label in the sign-in form so it reads "email" in lower-case, consistent with the rest of the app.
 - source: browser
 
-### [MED] / — "read-only preview" label gives state but not purpose
-- pass: 3 (commit ae936e3)
-- viewport: desktop
-- category: comprehension
-- observation: the 7-day preview section is introduced with "the next seven days." followed by a terse "read-only preview" label. the label communicates the interaction state but not why the visitor is seeing this content before signing in. a first-time visitor may miss that this is an illustrative sample of what they will receive daily.
-- evidence: captured text: "the next seven days. / read-only preview / today / Fri 22 May"
-- suggested fix: add a short explanatory subtitle beneath "the next seven days." — e.g. "this is what arrives each morning." — so the preview's purpose is clear without requiring the visitor to infer it.
-- source: browser
 
 ### [MED] / (mobile) — footer trust copy absent at 375px
 - pass: 1 (commit c69173d)
@@ -69,6 +61,16 @@
 - suggested fix: add one line such as "the link is valid for 24 hours and drops you straight into today's page" to reduce post-submit uncertainty.
 
 ## Done
+
+### [MED] / — "read-only preview" label gives state but not purpose
+- pass: 3 (commit ae936e3)
+- viewport: desktop
+- category: comprehension
+- observation: the 7-day preview section is introduced with "the next seven days." followed by a terse "read-only preview" label. the label communicates the interaction state but not why the visitor is seeing this content before signing in. a first-time visitor may miss that this is an illustrative sample of what they will receive daily.
+- evidence: captured text: "the next seven days. / read-only preview / today / Fri 22 May"
+- suggested fix: add a short explanatory subtitle beneath "the next seven days." — e.g. "this is what arrives each morning." — so the preview's purpose is clear without requiring the visitor to infer it.
+- source: browser
+- resolution: replaced "read-only preview" with "this is what arrives each morning." in src/app/page.tsx. Shipped at 757f4a7.
 
 ### [MED] / — page title is a bare product name with no descriptive suffix
 - pass: 2 (commit 1ade924)
