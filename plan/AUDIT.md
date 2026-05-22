@@ -125,6 +125,17 @@
 - issue: [mirror-failed: 2026-05-22T09:19:00Z]
 - resolution: changed `{quiet} quiet.` to `{quiet} {quiet === 1 ? 'day' : 'days'} quiet.` in log/page.tsx. Shipped at ccafa00.
 
+### [x] [4.5] /log, /log/[date], /u/[username]/[date], /u/[username] — uppercase date/meta labels
+- category: voice
+- impact: 5
+- ease: 9
+- observation: `text-transform: uppercase` persists on four selectors after the cdcd1ff and d419779 passes fixed today/page.module.css but left the log and public-profile pages untouched: `.entryDate` in log/page.module.css, `.entryDate` in log/[date]/page.module.css, `.entryDate` in u/[username]/[date]/page.module.css, and `.mosaicMeta` in u/[username]/page.module.css. The log `.entryDate` shows a date like "FRI 22 MAY"; the profile `.mosaicMeta` shows "PUBLISHED IN THE LAST SIXTY DAYS" — both violate the voice rule.
+- evidence: log/page.module.css:173, log/[date]/page.module.css:96, u/[username]/[date]/page.module.css:76, u/[username]/page.module.css:91
+- suggested fix: remove `text-transform: uppercase` from all four selectors (same mechanical fix as d419779 applied to today/page.module.css).
+- source: /iterate audit 2026-05-22
+- issue: #27
+- resolution: removed `text-transform: uppercase` from all four selectors. Shipped at 1cfcd07.
+
 ### [ ] [4.2] / (mobile) — footer trust copy absent at 375px
 - category: external-critique
 - impact: 6
@@ -133,6 +144,15 @@
 - evidence: desktop capture includes the privacy reassurance; mobile capture ends with "sign in to start" with no privacy copy.
 - suggested fix: audit the mobile layout to confirm this copy is visible at 375px, or surface it directly above the "sign in to start" CTA.
 - source: /critique pass 1 (commit c69173d)
+
+### [ ] [3.6] /signin — page title not distinctive (inherits root layout title)
+- category: seo
+- impact: 4
+- ease: 9
+- observation: /signin is a 'use client' component with no exported metadata; it inherits the root layout title "ember — a daily writing ritual". all other authenticated pages carry descriptive suffixes ("ember · today", "ember · log", "ember · settings"). a user with both the landing page and the sign-in page open cannot distinguish them by tab title.
+- evidence: /signin/page.tsx has no metadata export; root layout title is "ember — a daily writing ritual" (changed from bare "ember" at 99aa554 but still not sign-in-specific).
+- suggested fix: add src/app/signin/layout.tsx with `export const metadata = { title: 'ember · sign in' }`.
+- source: /critique pass 3 (commit ae936e3)
 
 ### [ ] [2.4] /signin — no link-expiry or next-step copy after submission
 - category: external-critique
