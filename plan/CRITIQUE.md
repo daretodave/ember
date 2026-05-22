@@ -8,7 +8,7 @@
 
 ## Pending
 
-### [LOW] / — task label prefix is inconsistent across 7-day preview
+### [x] [LOW] / — task label prefix is inconsistent across 7-day preview
 - pass: 4 (commit 8b806b8)
 - viewport: both
 - category: voice
@@ -16,6 +16,7 @@
 - evidence: captured text: "today's tiny task — notice one thing today..." followed by "tiny task — slow down on one task today..."
 - suggested fix: standardize to "tiny task —" across all seven rows (dropping the "today's" prefix), matching the recurring-days pattern.
 - source: browser
+- resolution: removed the isToday ternary in src/app/page.tsx; all seven rows now render "tiny task —". Shipped at 92a4995.
 
 ### [LOW] /today — "see all sixty" uses word form inconsistent with numeral "60" elsewhere
 - pass: 4 (commit 8b806b8)
@@ -26,7 +27,7 @@
 - suggested fix: change "see all sixty" to "see all 60" to match the numeral form used on /log.
 - source: browser
 
-### [LOW] /today — "done" button in seven-day strip lacks an accessible label
+### [x] [LOW] /today — "done" button in seven-day strip lacks an accessible label
 - pass: 4 (commit 8b806b8)
 - viewport: both
 - category: a11y
@@ -34,15 +35,17 @@
 - evidence: captured text: "Sat Sun Mon Tue Wed Thu today" followed by "done" with no intervening label.
 - suggested fix: add aria-label="mark today's task done" to the done button element.
 - source: browser
+- resolution: false positive — text capture shows visible text only. TodayEntry.tsx task button already has `aria-label={taskDone ? 'mark task not done' : 'mark task done'}` (shipped at a8db48d); focus-mode exit button has `aria-label="exit focus mode"` (TodayEntry.tsx:254). No code change required.
 
 
-### [LOW] /signin — no link-expiry or next-step copy after submission
+### [x] [LOW] /signin — no link-expiry or next-step copy after submission
 - pass: 1 (commit c69173d)
 - viewport: both
 - category: comprehension
 - observation: the sign-in page says "we email you a sign-in link. no password, no spam." but gives no indication of where the link lands or how long it is valid. a first-time visitor who closes the tab before the email arrives may be uncertain whether the link has expired.
 - evidence: captured text: "we email you a sign-in link. no password, no spam." — no expiry or destination copy.
 - suggested fix: add one line such as "the link is valid for 24 hours and drops you straight into today's page" to reduce post-submit uncertainty.
+- resolution: footer now reads "sign-in links expire after 24 hours." — added at dfe1ae4 when the vendor attribution was replaced. Expiry concern addressed.
 
 ## Done
 

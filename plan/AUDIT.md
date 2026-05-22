@@ -17,7 +17,7 @@
 - issue: #28
 - resolution: replaced `magic-link via supabase` with `sign-in links expire after 24 hours.` in the /signin footer. Shipped at dfe1ae4.
 
-### [ ] [2.7] / — task label prefix inconsistent across 7-day preview
+### [x] [2.7] / — task label prefix inconsistent across 7-day preview
 - category: external-critique
 - impact: 3
 - ease: 9
@@ -25,6 +25,8 @@
 - evidence: `src/app/page.tsx` line 57: `{day.isToday ? "today's tiny task" : 'tiny task'} — {day.task}`. the ternary produces two distinct prefixes in the same list.
 - suggested fix: standardize to "tiny task —" across all seven rows by replacing the ternary with a static string literal `'tiny task'`.
 - source: /critique pass 4 (commit b1aa4e9)
+- issue: [mirror-failed: 2026-05-22T00:00:00Z]
+- resolution: removed the isToday ternary; all seven rows now render "tiny task —". Shipped at 92a4995.
 
 ### [ ] [1.8] /today — "see all sixty" uses word form inconsistent with numeral "60" elsewhere
 - category: external-critique
@@ -209,7 +211,7 @@
 - issue: [mirror-failed: 2026-05-22T17:42:00Z]
 - resolution: added src/app/signin/layout.tsx exporting metadata { title: 'ember · sign in' }. Shipped at 6413cfb.
 
-### [ ] [2.4] /signin — no link-expiry or next-step copy after submission
+### [x] [2.4] /signin — no link-expiry or next-step copy after submission
 - category: external-critique
 - impact: 3
 - ease: 8
@@ -217,6 +219,7 @@
 - evidence: captured text: "we email you a sign-in link. no password, no spam." — no expiry or destination copy.
 - suggested fix: add one line such as "the link is valid for 24 hours and drops you straight into today's page".
 - source: /critique pass 1 (commit c69173d)
+- resolution: footer now reads "sign-in links expire after 24 hours." — added as part of the dfe1ae4 vendor-attribution fix. Expiry concern addressed.
 
 ### [x] [4.5] /today — FOCUS button has no accessible label
 - category: external-critique
