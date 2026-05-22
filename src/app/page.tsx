@@ -54,7 +54,7 @@ export default function LandingPage() {
               <div className={styles.dayBody}>
                 <p className={styles.dayPrompt}>{day.prompt}</p>
                 <p className={styles.dayTask}>
-                  {day.isToday ? "today's tiny task" : 'tiny task'} — {day.task}
+                  tiny task — {day.task}
                 </p>
               </div>
             </div>
