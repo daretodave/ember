@@ -17,24 +17,6 @@
 - suggested fix: remove text-transform: uppercase (or equivalent) from the email label in the sign-in form so it reads "email" in lower-case, consistent with the rest of the app.
 - source: browser
 
-### [MED] /today — date heading renders as all-caps "FRI 22 MAY 2026"
-- pass: 3 (commit ae936e3)
-- viewport: both
-- category: voice
-- observation: the date heading on /today is displayed in full uppercase ("FRI 22 MAY 2026") while all other page copy uses lower-case. the cdcd1ff fix addressed `.entryLabel` and `.stripLabel` but did not cover the date heading class.
-- evidence: captured text: "FRI 22 MAY 2026"
-- suggested fix: remove the uppercase rule from the date heading element on /today so it renders as "Fri 22 May 2026".
-- source: browser
-
-### [MED] /today — FOCUS and DONE button labels are all-caps
-- pass: 3 (commit ae936e3)
-- viewport: both
-- category: voice
-- observation: the focus-mode toggle and task-done button render their labels as "FOCUS" and "DONE" in full uppercase. the cdcd1ff fix covered section labels but not button labels.
-- evidence: captured text: "FOCUS" and "DONE" amid otherwise lower-case copy
-- suggested fix: render these button labels in sentence case ("Focus", "Done") via removing any text-transform: uppercase rule on the button elements; use CSS for stylistic treatment only if needed.
-- source: browser
-
 ### [MED] / — "read-only preview" label gives state but not purpose
 - pass: 3 (commit ae936e3)
 - viewport: desktop
@@ -95,6 +77,26 @@
 - suggested fix: add one line such as "the link is valid for 24 hours and drops you straight into today's page" to reduce post-submit uncertainty.
 
 ## Done
+
+### [MED] /today — date heading renders as all-caps "FRI 22 MAY 2026"
+- pass: 3 (commit ae936e3)
+- viewport: both
+- category: voice
+- observation: the date heading on /today is displayed in full uppercase ("FRI 22 MAY 2026") while all other page copy uses lower-case. the cdcd1ff fix addressed `.entryLabel` and `.stripLabel` but did not cover the date heading class.
+- evidence: captured text: "FRI 22 MAY 2026"
+- suggested fix: remove the uppercase rule from the date heading element on /today so it renders as "Fri 22 May 2026".
+- source: browser
+- resolution: removed `text-transform: uppercase` from `.dateStamp` in today/page.module.css. Shipped at d419779.
+
+### [MED] /today — FOCUS and DONE button labels are all-caps
+- pass: 3 (commit ae936e3)
+- viewport: both
+- category: voice
+- observation: the focus-mode toggle and task-done button render their labels as "FOCUS" and "DONE" in full uppercase. the cdcd1ff fix covered section labels but not button labels.
+- evidence: captured text: "FOCUS" and "DONE" amid otherwise lower-case copy
+- suggested fix: render these button labels in sentence case ("Focus", "Done") via removing any text-transform: uppercase rule on the button elements; use CSS for stylistic treatment only if needed.
+- source: browser
+- resolution: removed `text-transform: uppercase` from `.focusTrigger` and `.focusDone` in today/page.module.css. Shipped at d419779.
 
 ### [HIGH] /settings — timezone selector is effectively unusable on mobile
 - pass: 1 (commit c69173d)

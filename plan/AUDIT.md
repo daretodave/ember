@@ -6,7 +6,47 @@
 
 ## Pending
 
-### [x] [7.2] / — internal design copy "the brand is the practice rendered" surfaced to users
+### [x] [5.4] /today — date heading renders as all-caps "FRI 22 MAY 2026"
+- category: external-critique
+- impact: 6
+- ease: 9
+- observation: the date heading on /today is displayed in full uppercase ("FRI 22 MAY 2026") via `text-transform: uppercase` on `.dateStamp` in today/page.module.css. `formatDisplayDate` already returns mixed-case ("Fri 22 May 2026"); the CSS is overriding it. the cdcd1ff fix addressed `.entryLabel` and `.stripLabel` but did not cover `.dateStamp`.
+- evidence: `today/page.module.css:83` — `.dateStamp { text-transform: uppercase; }`
+- suggested fix: remove `text-transform: uppercase` from `.dateStamp`.
+- source: /critique pass 3 (commit ae936e3)
+- issue: [mirror-failed: 2026-05-22T04:09:00Z]
+- resolution: removed `text-transform: uppercase` from `.dateStamp` in today/page.module.css. Shipped at d419779.
+
+### [x] [5.4] /today — FOCUS and DONE button labels are all-caps
+- category: external-critique
+- impact: 6
+- ease: 9
+- observation: the focus-mode toggle ("FOCUS") and exit ("DONE") buttons render in full uppercase via `text-transform: uppercase` on `.focusTrigger` and `.focusDone`. button text in source is already lower-case ("focus", "done"); the CSS is inflating it.
+- evidence: `today/page.module.css:383` `.focusTrigger { text-transform: uppercase; }`; line 445 `.focusDone { text-transform: uppercase; }`
+- suggested fix: remove `text-transform: uppercase` from `.focusTrigger` and `.focusDone`.
+- source: /critique pass 3 (commit ae936e3)
+- issue: [mirror-failed: 2026-05-22T04:09:00Z]
+- resolution: removed `text-transform: uppercase` from `.focusTrigger` and `.focusDone` in today/page.module.css. Shipped at d419779.
+
+### [ ] [4.9] / — "read-only preview" label gives state but not purpose
+- category: external-critique
+- impact: 7
+- ease: 7
+- observation: the 7-day preview section is introduced with "the next seven days." followed by a terse "read-only preview" label. the label communicates the interaction state but not why the visitor is seeing this content. a first-time visitor may miss that this is an illustrative sample of what they will receive daily.
+- evidence: captured text: "the next seven days. / read-only preview / today / Fri 22 May"
+- suggested fix: add a short explanatory subtitle beneath "the next seven days." — e.g. "this is what arrives each morning." — so the preview's purpose is clear without requiring the visitor to infer it.
+- source: /critique pass 3 (commit ae936e3)
+
+### [ ] [4.5] /signin — email field label is all-caps "EMAIL"
+- category: external-critique
+- impact: 5
+- ease: 9
+- observation: the email input label renders as "EMAIL" in full uppercase via `text-transform: uppercase` on `.fieldLabel` in signin/page.module.css. the cdcd1ff typography pass removed uppercase from labels in /settings and /today but the /signin label was not included.
+- evidence: `signin/page.module.css:91` — `.fieldLabel { text-transform: uppercase; }`
+- suggested fix: remove `text-transform: uppercase` from `.fieldLabel` in signin/page.module.css.
+- source: /critique pass 3 (commit ae936e3)
+
+### [ ] [4.5] / — page title is a bare product name with no description
 - category: external-critique
 - impact: 8
 - ease: 9
@@ -49,7 +89,7 @@
 - issue: #26
 - resolution: added groupTimezones() helper in SettingsForm.tsx; timezone <select> now renders <optgroup> per region. Shipped at 8d43d1b.
 
-### [ ] [5.4] /today — save-state indicator may not be in an aria-live region
+### [x] [5.4] /today — save-state indicator may not be in an aria-live region
 - category: external-critique
 - impact: 6
 - ease: 9
@@ -57,6 +97,7 @@
 - evidence: captured text shows save-state as static text with no live-region context visible.
 - suggested fix: verify `aria-live="polite"` on the save-state element; add if absent.
 - source: /critique pass 1 (commit c69173d)
+- resolution: `aria-live="polite"` confirmed present on `.lastSaved` span in TodayEntry.tsx (both normal and focus-overlay copies). Already fixed as part of [4.8] in the Done section (shipped at 8b41e0a). Duplicate finding; closed without separate commit.
 
 ### [ ] [4.5] / — page title is a bare product name with no description
 - category: external-critique
