@@ -6,6 +6,35 @@
 
 ## Pending
 
+### [x] [3.6] /signin — "magic-link via supabase" vendor name in footer
+- category: external-critique
+- impact: 4
+- ease: 9
+- observation: the /signin page footer renders `magic-link via supabase` as a permanent attribution. supabase is a backend vendor name with no meaning to end users and at odds with ember's calm, minimal voice. every visitor to the signin page sees it before and after submitting.
+- evidence: `src/app/signin/page.tsx` line 99: `<span>magic-link via supabase</span>` in `<footer>`.
+- suggested fix: replace with copy describing the user experience — e.g. "sign-in links expire after 24 hours." — removing the vendor name and adding useful information.
+- source: /critique pass 4 (commit b1aa4e9)
+- issue: #28
+- resolution: replaced `magic-link via supabase` with `sign-in links expire after 24 hours.` in the /signin footer. Shipped at dfe1ae4.
+
+### [ ] [2.7] / — task label prefix inconsistent across 7-day preview
+- category: external-critique
+- impact: 3
+- ease: 9
+- observation: in the 7-day preview on the landing page, the first day's task uses "today's tiny task —" while all subsequent days use "tiny task —". the inconsistency is jarring within a single preview block.
+- evidence: `src/app/page.tsx` line 57: `{day.isToday ? "today's tiny task" : 'tiny task'} — {day.task}`. the ternary produces two distinct prefixes in the same list.
+- suggested fix: standardize to "tiny task —" across all seven rows by replacing the ternary with a static string literal `'tiny task'`.
+- source: /critique pass 4 (commit b1aa4e9)
+
+### [ ] [1.8] /today — "see all sixty" uses word form inconsistent with numeral "60" elsewhere
+- category: external-critique
+- impact: 2
+- ease: 9
+- observation: DayStrip renders `see all sixty` (word form) while /log uses the numeral "60" throughout. the inconsistency is minor but noticeable in a single session.
+- evidence: `src/app/today/DayStrip.tsx` line 43: `see all sixty`. `/log` page: "0 days written. 60 days quiet."
+- suggested fix: change `see all sixty` to `see all 60` to match the numeral form used on /log.
+- source: /critique pass 4 (commit b1aa4e9)
+
 ### [x] [4.5] /u/[username], /log/[date] — text-transform: uppercase on date header and edit label
 - category: voice
 - impact: 5

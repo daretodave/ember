@@ -8,15 +8,6 @@
 
 ## Pending
 
-### [LOW] /signin — "magic-link via supabase" vendor name appears in footer copy
-- pass: 4 (commit 8b806b8)
-- viewport: both
-- category: voice
-- observation: the /signin page footer reads "magic-link via supabase." supabase is an infrastructure vendor name meaningless to most users and at odds with ember's calm, minimal tone. it reads as an implementation detail that surfaced into production copy.
-- evidence: captured text: "we email you a sign-in link. no password, no spam. / ember / magic-link via supabase"
-- suggested fix: remove the vendor attribution or replace with copy describing the user experience, e.g. "sign-in links expire after 24 hours and are sent to the address you provide."
-- source: browser
-
 ### [LOW] / — task label prefix is inconsistent across 7-day preview
 - pass: 4 (commit 8b806b8)
 - viewport: both
@@ -54,6 +45,14 @@
 - suggested fix: add one line such as "the link is valid for 24 hours and drops you straight into today's page" to reduce post-submit uncertainty.
 
 ## Done
+
+### [x] [LOW] /signin — "magic-link via supabase" vendor name in footer
+- pass: 4 (commit 8b806b8)
+- viewport: both
+- category: voice
+- observation: the /signin page footer read "magic-link via supabase." — a vendor name with no user meaning, at odds with ember's calm voice.
+- evidence: `src/app/signin/page.tsx` line 99: `<span>magic-link via supabase</span>` in `<footer>`
+- resolution: replaced with "sign-in links expire after 24 hours." — removes vendor attribution, adds useful expiry info. Shipped at dfe1ae4.
 
 ### [LOW] /signin — page title is identical to landing page, no signin-specific suffix
 - pass: 3 (commit ae936e3); evidence updated pass 4
