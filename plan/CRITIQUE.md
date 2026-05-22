@@ -1,12 +1,48 @@
 # External-observer findings — Ember
 
-> Last pass: 2026-05-21 at commit 1ade924
-> Pass count: 2
+> Last pass: 2026-05-22 at commit ae936e3
+> Pass count: 3
 
 > Written by `/critique` after walking the live site as a
 > fresh-eyes visitor. Drained by `/iterate`.
 
 ## Pending
+
+### [MED] /signin — email field label is all-caps "EMAIL"
+- pass: 3 (commit ae936e3)
+- viewport: both
+- category: voice
+- observation: the email input label renders as "EMAIL" in full uppercase. the cdcd1ff typography pass removed uppercase from labels in /settings and /today but the /signin label was not included.
+- evidence: captured text: "EMAIL / send the link"
+- suggested fix: remove text-transform: uppercase (or equivalent) from the email label in the sign-in form so it reads "email" in lower-case, consistent with the rest of the app.
+- source: browser
+
+### [MED] /today — date heading renders as all-caps "FRI 22 MAY 2026"
+- pass: 3 (commit ae936e3)
+- viewport: both
+- category: voice
+- observation: the date heading on /today is displayed in full uppercase ("FRI 22 MAY 2026") while all other page copy uses lower-case. the cdcd1ff fix addressed `.entryLabel` and `.stripLabel` but did not cover the date heading class.
+- evidence: captured text: "FRI 22 MAY 2026"
+- suggested fix: remove the uppercase rule from the date heading element on /today so it renders as "Fri 22 May 2026".
+- source: browser
+
+### [MED] /today — FOCUS and DONE button labels are all-caps
+- pass: 3 (commit ae936e3)
+- viewport: both
+- category: voice
+- observation: the focus-mode toggle and task-done button render their labels as "FOCUS" and "DONE" in full uppercase. the cdcd1ff fix covered section labels but not button labels.
+- evidence: captured text: "FOCUS" and "DONE" amid otherwise lower-case copy
+- suggested fix: render these button labels in sentence case ("Focus", "Done") via removing any text-transform: uppercase rule on the button elements; use CSS for stylistic treatment only if needed.
+- source: browser
+
+### [MED] / — "read-only preview" label gives state but not purpose
+- pass: 3 (commit ae936e3)
+- viewport: desktop
+- category: comprehension
+- observation: the 7-day preview section is introduced with "the next seven days." followed by a terse "read-only preview" label. the label communicates the interaction state but not why the visitor is seeing this content before signing in. a first-time visitor may miss that this is an illustrative sample of what they will receive daily.
+- evidence: captured text: "the next seven days. / read-only preview / today / Fri 22 May"
+- suggested fix: add a short explanatory subtitle beneath "the next seven days." — e.g. "this is what arrives each morning." — so the preview's purpose is clear without requiring the visitor to infer it.
+- source: browser
 
 ### [MED] / (mobile) — footer trust copy absent at 375px
 - pass: 1 (commit c69173d)
@@ -39,6 +75,15 @@
 - observation: the homepage title is simply "ember" with no description of what the product does. this provides no keyword signal and gives the browser tab no context for a returning user who has multiple tabs open.
 - evidence: capture metadata: title: "ember"
 - suggested fix: change the root layout title to "ember — a daily writing ritual" (or equivalent from the tagline) to carry both brand identity and product purpose.
+- source: browser
+
+### [LOW] /signin — page title is bare "ember" with no descriptive suffix
+- pass: 3 (commit ae936e3)
+- viewport: both
+- category: seo
+- observation: the /signin page title is "ember" — identical to the landing page title. all other authenticated-side pages carry descriptive suffixes ("ember · today", "ember · log", "ember · settings"). a user with both the landing page and the sign-in page open cannot distinguish them by tab title.
+- evidence: captured title: "ember" (vs. "ember · today" on /today, "ember · log" on /log)
+- suggested fix: set the /signin page title to "ember · sign in" to match the established pattern.
 - source: browser
 
 ### [LOW] /signin — no link-expiry or next-step copy after submission
