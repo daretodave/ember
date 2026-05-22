@@ -44,14 +44,6 @@
 - suggested fix: add aria-label="mark today's task done" to the done button element.
 - source: browser
 
-### [LOW] /signin — page title is identical to landing page, no signin-specific suffix
-- pass: 3 (commit ae936e3); evidence updated pass 4
-- viewport: both
-- category: seo
-- observation: the /signin page title is "ember — a daily writing ritual" — identical to the landing page (the root layout default). all other app pages carry descriptive suffixes ("ember · today", "ember · log", "ember · settings"). a user with both the landing page and the sign-in page open cannot distinguish them by tab title.
-- evidence: captured title: "ember — a daily writing ritual" on both / and /signin (vs. "ember · today" on /today, "ember · log" on /log)
-- suggested fix: set the /signin page title to "ember · sign in" to match the established pattern.
-- source: browser
 
 ### [LOW] /signin — no link-expiry or next-step copy after submission
 - pass: 1 (commit c69173d)
@@ -62,6 +54,15 @@
 - suggested fix: add one line such as "the link is valid for 24 hours and drops you straight into today's page" to reduce post-submit uncertainty.
 
 ## Done
+
+### [LOW] /signin — page title is identical to landing page, no signin-specific suffix
+- pass: 3 (commit ae936e3); evidence updated pass 4
+- viewport: both
+- category: seo
+- observation: the /signin page title is "ember — a daily writing ritual" — identical to the landing page (the root layout default). all other app pages carry descriptive suffixes ("ember · today", "ember · log", "ember · settings"). a user with both the landing page and the sign-in page open cannot distinguish them by tab title.
+- evidence: captured title: "ember — a daily writing ritual" on both / and /signin (vs. "ember · today" on /today, "ember · log" on /log)
+- suggested fix: set the /signin page title to "ember · sign in" to match the established pattern.
+- resolution: added src/app/signin/layout.tsx exporting metadata { title: 'ember · sign in' }. Shipped at 6413cfb.
 
 ### [MED] / (mobile) — footer trust copy absent at 375px
 - pass: 1 (commit c69173d)

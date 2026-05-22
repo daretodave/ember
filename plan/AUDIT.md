@@ -169,7 +169,7 @@
 - issue: [mirror-failed: 2026-05-22T15:44:00Z]
 - resolution: removed `.ctaCopy { display: none }` at ≤480px; set font-size to var(--type-14) so copy stacks above the CTA button in column layout; increased page padding-bottom to 160px on mobile. Shipped at a018b8d.
 
-### [ ] [3.6] /signin — page title not distinctive (inherits root layout title)
+### [x] [3.6] /signin — page title not distinctive (inherits root layout title)
 - category: seo
 - impact: 4
 - ease: 9
@@ -177,6 +177,8 @@
 - evidence: /signin/page.tsx has no metadata export; root layout title is "ember — a daily writing ritual" (changed from bare "ember" at 99aa554 but still not sign-in-specific).
 - suggested fix: add src/app/signin/layout.tsx with `export const metadata = { title: 'ember · sign in' }`.
 - source: /critique pass 3 (commit ae936e3)
+- issue: [mirror-failed: 2026-05-22T17:42:00Z]
+- resolution: added src/app/signin/layout.tsx exporting metadata { title: 'ember · sign in' }. Shipped at 6413cfb.
 
 ### [ ] [2.4] /signin — no link-expiry or next-step copy after submission
 - category: external-critique
