@@ -8,15 +8,6 @@
 
 ## Pending
 
-### [HIGH] /today — focus-mode overlay DOM duplication exposes duplicate controls to screen readers
-- pass: 2 (commit 1ade924)
-- viewport: both
-- category: a11y
-- observation: the focus-mode overlay contains a second full copy of the prompt, "YOUR RESPONSE" heading, save-state indicator, and publish/save controls. both copies are in the DOM simultaneously; without aria-hidden on the inactive overlay, screen readers encounter every interactive control twice.
-- evidence: body text contains two sequential blocks ending with "FOCUS / save" and "save / DONE" respectively, each with its own "not yet saved / publish" section.
-- suggested fix: add aria-hidden="true" to the focus-mode overlay container when focus mode is not active, removing the duplicated controls from the accessibility tree.
-- source: browser
-
 ### [HIGH] /settings — timezone selector is effectively unusable on mobile
 - pass: 1 (commit c69173d)
 - viewport: both
@@ -24,14 +15,6 @@
 - observation: the timezone selector is a flat unfiltered list of 200+ timezone strings in a single `<select>` element with no optgroup grouping and no search. a user on mobile must scroll through hundreds of raw tz database names (e.g. `Africa/Abidjan`, `America/Indiana/Knox`) with no shortcut.
 - evidence: settings page body text is almost entirely composed of raw timezone names in alphabetical sequence; no region groupings visible in the text capture.
 - suggested fix: group timezones with `<optgroup>` by region, or replace with a searchable combobox so users can type to filter.
-
-### [MED] /today — section header caps conflict with stated typographic voice
-- pass: 1 (commit c69173d)
-- viewport: both
-- category: voice
-- observation: "YOUR RESPONSE" and "YOUR LAST SEVEN DAYS" are rendered in full uppercase, while every other label and body copy on the page uses sentence or lower case. this violates the "lower-case where typographic restraint reads better" voice rule.
-- evidence: captured text: "YOUR RESPONSE / not yet saved / publish / save / YOUR LAST SEVEN DAYS / see all sixty"
-- suggested fix: change these labels to lower case ("your response", "your last seven days") to match the voice pattern used across the rest of the page.
 
 ### [MED] / (mobile) — footer trust copy absent at 375px
 - pass: 1 (commit c69173d)
@@ -57,33 +40,6 @@
 - evidence: captured text: "YOUR RESPONSE / not yet saved / publish / save" — save-state appears as static text with no live-region context visible.
 - suggested fix: wrap the save-state label in `aria-live="polite"` so state changes are announced without requiring the user to move focus.
 
-### [MED] /settings — field labels DISPLAY NAME and TIMEZONE are full uppercase
-- pass: 2 (commit 1ade924)
-- viewport: both
-- category: voice
-- observation: the settings page renders "DISPLAY NAME" and "TIMEZONE" as all-caps labels, extending the same typographic-voice violation already filed for /today to a second page. the stated voice favours lower-case where restraint reads better.
-- evidence: captured body text: "settings / DISPLAY NAME / TIMEZONE / Africa/Abidjan..."
-- suggested fix: apply the same case correction planned for /today to /settings field labels (sentence case or CSS-driven small-caps treatment).
-- source: browser
-
-### [MED] /log — H1 "YOUR PAST SIXTY DAYS" is all-caps
-- pass: 2 (commit 1ade924)
-- viewport: both
-- category: voice
-- observation: the page H1 is rendered in full uppercase, extending the all-caps pattern to a third page. this is consistent with the /today finding already in queue and should be corrected together.
-- evidence: captured body text: "YOUR PAST SIXTY DAYS / 0 days written. 60 quiet. 0 published."
-- suggested fix: apply sentence case (or CSS text-transform with lowercase source text) to the /log H1 as part of the broader caps-normalisation fix.
-- source: browser
-
-### [MED] /today — FOCUS button has no accessible label
-- pass: 2 (commit 1ade924)
-- viewport: both
-- category: a11y
-- observation: the button that activates focus mode is labelled only with the word "FOCUS". a screen reader user cannot determine whether this toggles a view, opens a modal, or changes a setting from the label alone.
-- evidence: captured body text: "not yet saved / publish / FOCUS / save" — no surrounding descriptive context.
-- suggested fix: add aria-label="enter focus mode" to the FOCUS button so its purpose is unambiguous in the accessibility tree.
-- source: browser
-
 ### [MED] / — page title is a bare product name with no descriptive suffix
 - pass: 2 (commit 1ade924)
 - viewport: both
@@ -102,6 +58,26 @@
 - suggested fix: add one line such as "the link is valid for 24 hours and drops you straight into today's page" to reduce post-submit uncertainty.
 
 ## Done
+
+### [HIGH] /today — focus-mode overlay DOM duplication exposes duplicate controls to screen readers
+- pass: 2 (commit 1ade924)
+- resolution: `aria-hidden={!isFocus}`, `aria-modal={isFocus}`, and `tabIndex={isFocus ? 0 : -1}` on overlay interactive elements added to TodayEntry.tsx as part of phase 19. Shipped at a9e1729.
+
+### [MED] /today — section header caps conflict with stated typographic voice
+- pass: 1 (commit c69173d)
+- resolution: removed `text-transform: uppercase` from `.entryLabel` and `.stripLabel` in today/page.module.css. Shipped at cdcd1ff.
+
+### [MED] /settings — field labels DISPLAY NAME and TIMEZONE are full uppercase
+- pass: 2 (commit 1ade924)
+- resolution: removed `text-transform: uppercase` from `.label` in settings/page.module.css. Shipped at cdcd1ff.
+
+### [MED] /log — H1 "YOUR PAST SIXTY DAYS" is all-caps
+- pass: 2 (commit 1ade924)
+- resolution: removed `text-transform: uppercase` from `.mosaicMeta` in log/page.module.css. Shipped at cdcd1ff.
+
+### [MED] /today — FOCUS button has no accessible label
+- pass: 2 (commit 1ade924)
+- resolution: `aria-label="enter focus mode"` added to the focusTrigger button in TodayEntry.tsx as part of phase 19. Shipped at a9e1729.
 
 ### [HIGH] / — "THE BRAND IS THE PRACTICE RENDERED" is internal design copy surfaced to users
 - pass: 2 (commit 1ade924)

@@ -17,7 +17,7 @@
 - issue: [mirror-failed: 2026-05-21T00:00:00Z]
 - resolution: removed the `previewMarkLabel` span from src/app/page.tsx. Shipped at 0c1d673.
 
-### [ ] [5.6] /today — focus-mode overlay DOM duplication exposes duplicate controls to screen readers
+### [x] [5.6] /today — focus-mode overlay DOM duplication exposes duplicate controls to screen readers
 - category: external-critique
 - impact: 8
 - ease: 7
@@ -25,8 +25,9 @@
 - evidence: both copies live in DOM at once with no aria-hidden on the inactive one.
 - suggested fix: add `aria-hidden="true"` to the focus-mode overlay container when focus mode is not active.
 - source: /critique pass 2 (commit 1ade924)
+- resolution: `aria-hidden={!isFocus}` added to the focus overlay div, along with `aria-modal={isFocus}` and `tabIndex={isFocus ? 0 : -1}` on overlay interactive elements. Shipped as part of phase 19 (a9e1729).
 
-### [ ] [5.4] /today — section header caps conflict with stated typographic voice
+### [x] [5.4] /today — section header caps conflict with stated typographic voice
 - category: external-critique
 - impact: 6
 - ease: 9
@@ -34,6 +35,8 @@
 - evidence: `src/app/today/page.module.css` multiple `text-transform: uppercase` rules
 - suggested fix: remove `text-transform: uppercase` from `.entryLabel` and `.stripLabel` selectors (or equivalent), leaving source text already lower-case.
 - source: /critique pass 1 (commit c69173d)
+- issue: #25
+- resolution: removed `text-transform: uppercase` from `.entryLabel` and `.stripLabel` (today/page.module.css), `.label` (settings/page.module.css), and `.mosaicMeta` (log/page.module.css). Closes the /today, /settings, and /log uppercase-label cluster from critique passes 1 and 2. Shipped at cdcd1ff.
 
 ### [ ] [4.5] / — page title is a bare product name with no description
 - category: external-critique
@@ -44,7 +47,7 @@
 - suggested fix: change root layout title to "ember — a daily writing ritual" (or from the tagline).
 - source: /critique pass 2 (commit 1ade924)
 
-### [ ] [4.5] /today — FOCUS button has no accessible label
+### [x] [4.5] /today — FOCUS button has no accessible label
 - category: external-critique
 - impact: 5
 - ease: 9
@@ -52,6 +55,7 @@
 - evidence: FOCUS button in TodayEntry component.
 - suggested fix: add `aria-label="enter focus mode"` (or dynamic `aria-label` for pressed state) to the FOCUS button.
 - source: /critique pass 2 (commit 1ade924)
+- resolution: `aria-label="enter focus mode"` added to the focusTrigger button in TodayEntry.tsx as part of phase 19 (a9e1729).
 
 ## Done
 
