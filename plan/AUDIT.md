@@ -6,6 +6,17 @@
 
 ## Pending
 
+### [x] [4.5] /u/[username], /log/[date] — text-transform: uppercase on date header and edit label
+- category: voice
+- impact: 5
+- ease: 9
+- observation: two active selectors still carry `text-transform: uppercase` after the cdcd1ff and 1cfcd07 passes. `.entryDate` in `u/[username]/page.module.css` renders the date header as "FRI 22 MAY 2026 · PUBLISHED" on the public profile. `.entryLabel` in `log/[date]/page.module.css` renders the "your response" label in uppercase in EditEntry.tsx. Both violate the bearings.md voice rule. A third instance, `.previewMarkLabel` in `page.module.css`, is an orphaned selector (element removed at 0c1d673) and can be cleaned up.
+- evidence: `grep -rn "text-transform.*uppercase" src/` returns `page.module.css:96`, `u/[username]/page.module.css:150`, `log/[date]/page.module.css:272`; `u/[username]/page.tsx:121` uses `.entryDate`; `log/[date]/EditEntry.tsx:97` uses `.entryLabel`; `.previewMarkLabel` has no references in component files.
+- suggested fix: remove `text-transform: uppercase` from `.entryDate` (u/[username]/page.module.css) and `.entryLabel` (log/[date]/page.module.css); also remove the orphaned `.previewMarkLabel` `text-transform` rule in page.module.css.
+- source: /iterate audit 2026-05-22
+- issue: [mirror-failed: 2026-05-22T00:00:00Z]
+- resolution: removed `text-transform: uppercase` from `.entryDate` (u/[username]/page.module.css), `.entryLabel` (log/[date]/page.module.css), and orphaned `.previewMarkLabel` (page.module.css). Shipped at 3795494.
+
 ### [x] [6.3] /today — publish toggle has no affordance explaining what publishing does
 - category: external-critique
 - impact: 7
