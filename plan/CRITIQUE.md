@@ -8,16 +8,6 @@
 
 ## Pending
 
-
-### [MED] / (mobile) — footer trust copy absent at 375px
-- pass: 1 (commit c69173d)
-- viewport: mobile
-- category: comprehension
-- observation: on desktop the footer includes "a sign-in link is the only thing you'll receive. no password, no spam." which is the primary objection-handler for a skeptical first-time visitor. this line does not appear in the mobile capture (375px), removing a meaningful trust signal before the sign-in CTA.
-- evidence: desktop capture includes the privacy reassurance; mobile capture ends with "made for adults who want a low-friction ritual. / sign in to start" — no privacy copy.
-- suggested fix: audit the mobile layout to confirm this copy is present and visible at 375px, or surface it directly above the "sign in to start" CTA.
-
-
 ### [LOW] /signin — "magic-link via supabase" vendor name appears in footer copy
 - pass: 4 (commit 8b806b8)
 - viewport: both
@@ -72,6 +62,15 @@
 - suggested fix: add one line such as "the link is valid for 24 hours and drops you straight into today's page" to reduce post-submit uncertainty.
 
 ## Done
+
+### [MED] / (mobile) — footer trust copy absent at 375px
+- pass: 1 (commit c69173d)
+- viewport: mobile
+- category: comprehension
+- observation: on desktop the footer includes "a sign-in link is the only thing you'll receive. no password, no spam." which is the primary objection-handler for a skeptical first-time visitor. this line does not appear in the mobile capture (375px), removing a meaningful trust signal before the sign-in CTA.
+- evidence: desktop capture includes the privacy reassurance; mobile capture ends with "made for adults who want a low-friction ritual. / sign in to start" — no privacy copy.
+- suggested fix: audit the mobile layout to confirm this copy is present and visible at 375px, or surface it directly above the "sign in to start" CTA.
+- resolution: removed `.ctaCopy { display: none }` from the ≤480px breakpoint; set `font-size: var(--type-14)` so the copy stacks above the CTA button in column layout; increased `.page { padding-bottom }` to 160px on mobile. Shipped at a018b8d.
 
 ### [MED] /today — publish button has no affordance explaining what publishing does
 - pass: 4 (commit 8b806b8)

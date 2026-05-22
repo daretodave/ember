@@ -147,7 +147,7 @@
 - issue: #27
 - resolution: removed `text-transform: uppercase` from all four selectors. Shipped at 1cfcd07.
 
-### [ ] [4.2] / (mobile) — footer trust copy absent at 375px
+### [x] [4.2] / (mobile) — footer trust copy absent at 375px
 - category: external-critique
 - impact: 6
 - ease: 7
@@ -155,6 +155,8 @@
 - evidence: desktop capture includes the privacy reassurance; mobile capture ends with "sign in to start" with no privacy copy.
 - suggested fix: audit the mobile layout to confirm this copy is visible at 375px, or surface it directly above the "sign in to start" CTA.
 - source: /critique pass 1 (commit c69173d)
+- issue: [mirror-failed: 2026-05-22T15:44:00Z]
+- resolution: removed `.ctaCopy { display: none }` at ≤480px; set font-size to var(--type-14) so copy stacks above the CTA button in column layout; increased page padding-bottom to 160px on mobile. Shipped at a018b8d.
 
 ### [ ] [3.6] /signin — page title not distinctive (inherits root layout title)
 - category: seo
