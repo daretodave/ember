@@ -39,7 +39,7 @@
 - issue: [mirror-failed: 2026-05-22T08:00:00Z]
 - resolution: replaced "read-only preview" with "this is what arrives each morning." in the sevenMeta span in src/app/page.tsx. Shipped at 757f4a7.
 
-### [ ] [4.5] /signin — email field label is all-caps "EMAIL"
+### [x] [4.5] /signin — email field label is all-caps "EMAIL"
 - category: external-critique
 - impact: 5
 - ease: 9
@@ -47,6 +47,8 @@
 - evidence: `signin/page.module.css:91` — `.fieldLabel { text-transform: uppercase; }`
 - suggested fix: remove `text-transform: uppercase` from `.fieldLabel` in signin/page.module.css.
 - source: /critique pass 3 (commit ae936e3)
+- issue: [mirror-failed: 2026-05-22T10:40:00Z]
+- resolution: removed `text-transform: uppercase` from `.fieldLabel` in signin/page.module.css. Shipped at 055c339.
 
 ### [x] [4.5] / — page title is a bare product name with no description
 - category: external-critique

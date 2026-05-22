@@ -8,14 +8,6 @@
 
 ## Pending
 
-### [MED] /signin — email field label is all-caps "EMAIL"
-- pass: 3 (commit ae936e3)
-- viewport: both
-- category: voice
-- observation: the email input label renders as "EMAIL" in full uppercase. the cdcd1ff typography pass removed uppercase from labels in /settings and /today but the /signin label was not included.
-- evidence: captured text: "EMAIL / send the link"
-- suggested fix: remove text-transform: uppercase (or equivalent) from the email label in the sign-in form so it reads "email" in lower-case, consistent with the rest of the app.
-- source: browser
 
 
 ### [MED] / (mobile) — footer trust copy absent at 375px
@@ -25,14 +17,6 @@
 - observation: on desktop the footer includes "a sign-in link is the only thing you'll receive. no password, no spam." which is the primary objection-handler for a skeptical first-time visitor. this line does not appear in the mobile capture (375px), removing a meaningful trust signal before the sign-in CTA.
 - evidence: desktop capture includes the privacy reassurance; mobile capture ends with "made for adults who want a low-friction ritual. / sign in to start" — no privacy copy.
 - suggested fix: audit the mobile layout to confirm this copy is present and visible at 375px, or surface it directly above the "sign in to start" CTA.
-
-### [MED] /today — save-state indicator may not be a live region
-- pass: 1 (commit c69173d)
-- viewport: both
-- category: a11y
-- observation: the save-state label "not yet saved" is visible in the response section before any text is entered. if this indicator is not wrapped in an `aria-live` region, screen reader users will not be notified when the state changes to "saved" or an error.
-- evidence: captured text: "YOUR RESPONSE / not yet saved / publish / save" — save-state appears as static text with no live-region context visible.
-- suggested fix: wrap the save-state label in `aria-live="polite"` so state changes are announced without requiring the user to move focus.
 
 
 ### [LOW] /signin — page title is bare "ember" with no descriptive suffix
@@ -53,6 +37,24 @@
 - suggested fix: add one line such as "the link is valid for 24 hours and drops you straight into today's page" to reduce post-submit uncertainty.
 
 ## Done
+
+### [MED] /signin — email field label is all-caps "EMAIL"
+- pass: 3 (commit ae936e3)
+- viewport: both
+- category: voice
+- observation: the email input label renders as "EMAIL" in full uppercase. the cdcd1ff typography pass removed uppercase from labels in /settings and /today but the /signin label was not included.
+- evidence: captured text: "EMAIL / send the link"
+- suggested fix: remove text-transform: uppercase from the email label in the sign-in form so it reads "email" in lower-case, consistent with the rest of the app.
+- resolution: removed `text-transform: uppercase` from `.fieldLabel` in signin/page.module.css. Shipped at 055c339.
+
+### [MED] /today — save-state indicator may not be a live region
+- pass: 1 (commit c69173d)
+- viewport: both
+- category: a11y
+- observation: the save-state label "not yet saved" may not be in an aria-live region; screen reader users would not be notified when the state changes.
+- evidence: captured text: "YOUR RESPONSE / not yet saved / publish / save" — save-state appears as static text with no live-region context visible.
+- suggested fix: wrap the save-state label in `aria-live="polite"`.
+- resolution: `aria-live="polite"` confirmed present on `.lastSaved` span in TodayEntry.tsx. Already fixed as part of audit finding [4.8] (shipped at 8b41e0a). Duplicate finding; closed without separate commit.
 
 ### [MED] /log — "60 quiet" in the empty-state stat line is ambiguous
 - pass: 1 (commit c69173d)
