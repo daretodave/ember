@@ -142,7 +142,7 @@ export function TodayEntry({ date, task, prompt, initialEntry }: Props) {
           onClick={() => setTaskDone((v) => !v)}
         />
         <p className={styles.taskBody}>
-          today&apos;s tiny task{' '}
+          tiny task{' '}
           <span className={styles.taskMuted}>— {task}</span>
         </p>
       </div>
