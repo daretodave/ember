@@ -5,6 +5,18 @@ import styles from './page.module.css'
 
 type SaveState = 'idle' | 'saving' | 'saved' | 'error'
 
+function groupTimezones(timezones: string[]): Map<string, string[]> {
+  const groups = new Map<string, string[]>()
+  for (const tz of timezones) {
+    const slash = tz.indexOf('/')
+    const region = slash === -1 ? 'Other' : tz.slice(0, slash)
+    const list = groups.get(region) ?? []
+    list.push(tz)
+    groups.set(region, list)
+  }
+  return groups
+}
+
 type Props = {
   displayName: string
   username: string
@@ -118,11 +130,15 @@ export function SettingsForm({ displayName, username, timezone, usePersonalizedP
           {timezones.length === 0 ? (
             <option value={tzVal}>{tzVal}</option>
           ) : (
-            timezones.map((tz) => (
-              <option key={tz} value={tz}>
-                {tz}
-              </option>
-            ))
+            Array.from(groupTimezones(timezones).entries())
+              .sort(([a], [b]) => a.localeCompare(b))
+              .map(([region, zones]) => (
+                <optgroup key={region} label={region}>
+                  {zones.map((tz) => (
+                    <option key={tz} value={tz}>{tz}</option>
+                  ))}
+                </optgroup>
+              ))
           )}
         </select>
       </div>

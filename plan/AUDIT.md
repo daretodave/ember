@@ -38,6 +38,25 @@
 - issue: #25
 - resolution: removed `text-transform: uppercase` from `.entryLabel` and `.stripLabel` (today/page.module.css), `.label` (settings/page.module.css), and `.mosaicMeta` (log/page.module.css). Closes the /today, /settings, and /log uppercase-label cluster from critique passes 1 and 2. Shipped at cdcd1ff.
 
+### [ ] [7.2] /settings — timezone selector is effectively unusable on mobile
+- category: external-critique
+- impact: 9
+- ease: 8
+- observation: the timezone selector is a flat unfiltered list of 200+ timezone strings in a single `<select>` with no `<optgroup>` grouping and no search. mobile users must scroll hundreds of raw IANA tz names.
+- evidence: settings page body text is almost entirely composed of raw timezone names in alphabetical sequence.
+- suggested fix: group timezones with `<optgroup>` by region prefix (Africa, America, Asia, Europe, etc.).
+- source: /critique pass 1 (commit c69173d)
+- issue: #26
+
+### [ ] [5.4] /today — save-state indicator may not be in an aria-live region
+- category: external-critique
+- impact: 6
+- ease: 9
+- observation: the "not yet saved" / "saved" indicator on /today may not be wrapped in an `aria-live` region; screen reader users may not be notified when save state changes.
+- evidence: captured text shows save-state as static text with no live-region context visible.
+- suggested fix: verify `aria-live="polite"` on the save-state element; add if absent.
+- source: /critique pass 1 (commit c69173d)
+
 ### [ ] [4.5] / — page title is a bare product name with no description
 - category: external-critique
 - impact: 5
@@ -46,6 +65,33 @@
 - evidence: root layout metadata title = "ember"
 - suggested fix: change root layout title to "ember — a daily writing ritual" (or from the tagline).
 - source: /critique pass 2 (commit 1ade924)
+
+### [ ] [4.5] /log — "60 quiet" in the empty-state stat line is ambiguous
+- category: external-critique
+- impact: 5
+- ease: 9
+- observation: "0 days written. 60 quiet. 0 published." — the word "quiet" means days with no entry but a first-time visitor cannot parse this without explanation.
+- evidence: captured text: "0 days written. 60 quiet. 0 published."
+- suggested fix: add a gloss — "60 quiet days." — or a visible label beneath the stat row explaining what each figure counts.
+- source: /critique pass 1 (commit c69173d)
+
+### [ ] [4.2] / (mobile) — footer trust copy absent at 375px
+- category: external-critique
+- impact: 6
+- ease: 7
+- observation: desktop footer includes "a sign-in link is the only thing you'll receive. no password, no spam." — a key trust signal for skeptical first-time visitors. this copy does not appear in the mobile (375px) capture, removing the objection-handler before the sign-in CTA.
+- evidence: desktop capture includes the privacy reassurance; mobile capture ends with "sign in to start" with no privacy copy.
+- suggested fix: audit the mobile layout to confirm this copy is visible at 375px, or surface it directly above the "sign in to start" CTA.
+- source: /critique pass 1 (commit c69173d)
+
+### [ ] [2.4] /signin — no link-expiry or next-step copy after submission
+- category: external-critique
+- impact: 3
+- ease: 8
+- observation: no indication of how long the magic-link is valid or where it lands; users who close the tab before the email arrives are left uncertain.
+- evidence: captured text: "we email you a sign-in link. no password, no spam." — no expiry or destination copy.
+- suggested fix: add one line such as "the link is valid for 24 hours and drops you straight into today's page".
+- source: /critique pass 1 (commit c69173d)
 
 ### [x] [4.5] /today — FOCUS button has no accessible label
 - category: external-critique
