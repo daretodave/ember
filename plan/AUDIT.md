@@ -99,7 +99,7 @@
 - source: /critique pass 1 (commit c69173d)
 - resolution: `aria-live="polite"` confirmed present on `.lastSaved` span in TodayEntry.tsx (both normal and focus-overlay copies). Already fixed as part of [4.8] in the Done section (shipped at 8b41e0a). Duplicate finding; closed without separate commit.
 
-### [ ] [4.5] / — page title is a bare product name with no description
+### [x] [4.5] / — page title is a bare product name with no description
 - category: external-critique
 - impact: 5
 - ease: 9
@@ -107,6 +107,8 @@
 - evidence: root layout metadata title = "ember"
 - suggested fix: change root layout title to "ember — a daily writing ritual" (or from the tagline).
 - source: /critique pass 2 (commit 1ade924)
+- issue: [mirror-failed: 2026-05-22T06:08:00Z]
+- resolution: changed root layout title, OG title, and twitter title to "ember — a daily writing ritual". Shipped at 99aa554.
 
 ### [ ] [4.5] /log — "60 quiet" in the empty-state stat line is ambiguous
 - category: external-critique

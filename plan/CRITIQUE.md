@@ -50,14 +50,6 @@
 - evidence: captured text: "YOUR RESPONSE / not yet saved / publish / save" — save-state appears as static text with no live-region context visible.
 - suggested fix: wrap the save-state label in `aria-live="polite"` so state changes are announced without requiring the user to move focus.
 
-### [MED] / — page title is a bare product name with no descriptive suffix
-- pass: 2 (commit 1ade924)
-- viewport: both
-- category: seo
-- observation: the homepage title is simply "ember" with no description of what the product does. this provides no keyword signal and gives the browser tab no context for a returning user who has multiple tabs open.
-- evidence: capture metadata: title: "ember"
-- suggested fix: change the root layout title to "ember — a daily writing ritual" (or equivalent from the tagline) to carry both brand identity and product purpose.
-- source: browser
 
 ### [LOW] /signin — page title is bare "ember" with no descriptive suffix
 - pass: 3 (commit ae936e3)
@@ -77,6 +69,16 @@
 - suggested fix: add one line such as "the link is valid for 24 hours and drops you straight into today's page" to reduce post-submit uncertainty.
 
 ## Done
+
+### [MED] / — page title is a bare product name with no descriptive suffix
+- pass: 2 (commit 1ade924)
+- viewport: both
+- category: seo
+- observation: the homepage title is simply "ember" with no description of what the product does. this provides no keyword signal and gives the browser tab no context for a returning user who has multiple tabs open.
+- evidence: capture metadata: title: "ember"
+- suggested fix: change the root layout title to "ember — a daily writing ritual" (or equivalent from the tagline) to carry both brand identity and product purpose.
+- source: browser
+- resolution: changed root layout title, OG title, and twitter title to "ember — a daily writing ritual" in src/app/layout.tsx. Shipped at 99aa554.
 
 ### [MED] /today — date heading renders as all-caps "FRI 22 MAY 2026"
 - pass: 3 (commit ae936e3)
