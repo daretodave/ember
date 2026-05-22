@@ -8,14 +8,6 @@
 
 ## Pending
 
-### [MED] /today — publish button has no affordance explaining what publishing does
-- pass: 4 (commit 8b806b8)
-- viewport: both
-- category: comprehension
-- observation: the publish button appears on /today alongside save and focus but there is no surrounding copy, tooltip, or label explaining what publishing does or who can see a published entry. a user encountering this button for the first time has no basis for deciding whether to use it.
-- evidence: captured text: "publish / focus / save" — no explanatory context visible in the DOM text.
-- suggested fix: add a short descriptor near the publish button, e.g. a tooltip or inline note reading "make this entry visible on your public profile."
-- source: browser
 
 ### [MED] / (mobile) — footer trust copy absent at 375px
 - pass: 1 (commit c69173d)
@@ -80,6 +72,15 @@
 - suggested fix: add one line such as "the link is valid for 24 hours and drops you straight into today's page" to reduce post-submit uncertainty.
 
 ## Done
+
+### [MED] /today — publish button has no affordance explaining what publishing does
+- pass: 4 (commit 8b806b8)
+- viewport: both
+- category: comprehension
+- observation: the publish button appears on /today alongside save and focus but there is no surrounding copy, tooltip, or label explaining what publishing does or who can see a published entry.
+- evidence: captured text: "publish / focus / save" — no explanatory context visible in the DOM text.
+- suggested fix: add a short descriptor near the publish button.
+- resolution: added `title="make this entry visible on your public profile."` to both publish toggle `<label>` elements in TodayEntry.tsx. Shipped at 7fe5ba6.
 
 ### [MED] /signin — email field label is all-caps "EMAIL"
 - pass: 3 (commit ae936e3)

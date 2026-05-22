@@ -6,6 +6,17 @@
 
 ## Pending
 
+### [x] [6.3] /today — publish toggle has no affordance explaining what publishing does
+- category: external-critique
+- impact: 7
+- ease: 9
+- observation: the publish checkbox on /today appears with no surrounding copy, tooltip, or description explaining what publishing does or who can see a published entry. a user encountering this control for the first time has no basis for deciding whether to use it.
+- evidence: critique pass 4 — captured text: "publish / focus / save" with no explanatory context visible in DOM text.
+- suggested fix: add `title="make this entry visible on your public profile."` to the publish toggle label (both normal and focus-overlay copies). Follows the bearings rule: "Hover/tooltip copy is a complete sentence with a period."
+- source: /critique pass 4 (commit b1aa4e9)
+- issue: [mirror-failed: 2026-05-22T00:00:00Z]
+- resolution: added `title="make this entry visible on your public profile."` to both publish toggle `<label>` elements in TodayEntry.tsx. Shipped at 7fe5ba6.
+
 ### [x] [5.4] /today — date heading renders as all-caps "FRI 22 MAY 2026"
 - category: external-critique
 - impact: 6
