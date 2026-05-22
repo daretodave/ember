@@ -18,15 +18,6 @@
 - source: browser
 - resolution: removed the isToday ternary in src/app/page.tsx; all seven rows now render "tiny task —". Shipped at 92a4995.
 
-### [LOW] /today — task label "today's tiny task —" differs from anonymous preview "tiny task —"
-- pass: 5 (commit 4552045)
-- viewport: both
-- category: voice
-- observation: the authenticated /today page renders the task label as "today's tiny task —" while the landing-page 7-day preview (fixed at 92a4995) now uniformly uses "tiny task —" for all days including today. a visitor who reads the landing page before signing in sees the label change between surfaces.
-- evidence: /today capture: "today's tiny task — notice one thing today that you do that you learned from someone else." vs / capture: "tiny task — notice one thing today that you do that you learned from someone else."
-- suggested fix: remove the "today's" prefix from the task label on /today so it reads "tiny task —", matching the anonymous preview.
-- source: browser
-
 ### [LOW] /log — H1 "your past sixty days" uses word form while stat line uses numeral "60"
 - pass: 5 (commit 4552045)
 - viewport: both
@@ -75,6 +66,14 @@
 - resolution: footer now reads "sign-in links expire after 24 hours." — added at dfe1ae4 when the vendor attribution was replaced. Expiry concern addressed.
 
 ## Done
+
+### [x] [LOW] /today — task label "today's tiny task —" differs from anonymous preview "tiny task —"
+- pass: 5 (commit 4552045)
+- viewport: both
+- category: voice
+- observation: the authenticated /today page rendered "today's tiny task —" while the landing-page 7-day preview (standardized at 92a4995) uniformly uses "tiny task —". a visitor who read the landing page before signing in saw the label change between surfaces.
+- evidence: `src/app/today/TodayEntry.tsx` line 145: `today&apos;s tiny task{' '}` — hardcoded prefix persisted after the landing-page fix.
+- resolution: removed the "today's" prefix in TodayEntry.tsx. Both surfaces now render "tiny task —". Shipped at 0c3165d.
 
 ### [x] [LOW] /signin — "magic-link via supabase" vendor name in footer
 - pass: 4 (commit 8b806b8)

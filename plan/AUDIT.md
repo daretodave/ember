@@ -28,6 +28,17 @@
 - issue: [mirror-failed: 2026-05-22T00:00:00Z]
 - resolution: removed the isToday ternary; all seven rows now render "tiny task —". Shipped at 92a4995.
 
+### [x] [3.6] /today — task label "today's tiny task" differs from anonymous preview "tiny task"
+- category: external-critique
+- impact: 4
+- ease: 9
+- observation: authenticated /today rendered "today's tiny task —" while the landing-page 7-day preview (standardized at 92a4995) uniformly uses "tiny task —". a visitor who previewed the landing before signing in saw the label change between surfaces.
+- evidence: `src/app/today/TodayEntry.tsx` line 145: `today&apos;s tiny task{' '}` — the hardcoded prefix persisted after the landing-page fix.
+- suggested fix: remove the "today's" prefix so both surfaces use "tiny task —".
+- source: /critique pass 5 (commit 4552045)
+- issue: [mirror-failed: 2026-05-22T21:12:00Z]
+- resolution: removed the "today's" prefix in TodayEntry.tsx. Shipped at 0c3165d.
+
 ### [ ] [1.8] /today — "see all sixty" uses word form inconsistent with numeral "60" elsewhere
 - category: external-critique
 - impact: 2
