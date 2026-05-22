@@ -32,7 +32,7 @@ const siteUrl =
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
-  title: 'ember',
+  title: 'ember — a daily writing ritual',
   description: 'ten minutes of intention before the day swallows you',
   manifest: '/manifest.webmanifest',
   icons: {
@@ -42,14 +42,14 @@ export const metadata: Metadata = {
   openGraph: {
     type: 'website',
     siteName: 'ember',
-    title: 'ember',
+    title: 'ember — a daily writing ritual',
     description: 'ten minutes of intention before the day swallows you',
     url: siteUrl,
     images: [{ url: '/opengraph-image', width: 1200, height: 630, alt: 'ember' }],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'ember',
+    title: 'ember — a daily writing ritual',
     description: 'ten minutes of intention before the day swallows you',
     images: ['/opengraph-image'],
   },
