@@ -1,7 +1,7 @@
 # External-observer findings — Ember
 
-> Last pass: 2026-05-22 at commit 8b806b8
-> Pass count: 4
+> Last pass: 2026-05-22 at commit 4552045
+> Pass count: 5
 
 > Written by `/critique` after walking the live site as a
 > fresh-eyes visitor. Drained by `/iterate`.
@@ -17,6 +17,33 @@
 - suggested fix: standardize to "tiny task —" across all seven rows (dropping the "today's" prefix), matching the recurring-days pattern.
 - source: browser
 - resolution: removed the isToday ternary in src/app/page.tsx; all seven rows now render "tiny task —". Shipped at 92a4995.
+
+### [LOW] /today — task label "today's tiny task —" differs from anonymous preview "tiny task —"
+- pass: 5 (commit 4552045)
+- viewport: both
+- category: voice
+- observation: the authenticated /today page renders the task label as "today's tiny task —" while the landing-page 7-day preview (fixed at 92a4995) now uniformly uses "tiny task —" for all days including today. a visitor who reads the landing page before signing in sees the label change between surfaces.
+- evidence: /today capture: "today's tiny task — notice one thing today that you do that you learned from someone else." vs / capture: "tiny task — notice one thing today that you do that you learned from someone else."
+- suggested fix: remove the "today's" prefix from the task label on /today so it reads "tiny task —", matching the anonymous preview.
+- source: browser
+
+### [LOW] /log — H1 "your past sixty days" uses word form while stat line uses numeral "60"
+- pass: 5 (commit 4552045)
+- viewport: both
+- category: voice
+- observation: the /log page H1 reads "your past sixty days" (word form) while the stat line immediately below it reads "0 days written. 60 days quiet. 0 published." (numeral). two forms of the same number appear within a few lines of each other on the same page.
+- evidence: "your past sixty days" (H1) directly above "0 days written. 60 days quiet. 0 published." on /log
+- suggested fix: change the H1 to "your past 60 days" to match the numeral form used throughout the stat line.
+- source: browser
+
+### [LOW] /signin — "back" link has no visible destination
+- pass: 5 (commit 4552045)
+- viewport: both
+- category: comprehension
+- observation: the sign-in page shows a "back" link immediately after the wordmark. a visitor who arrived at /signin directly (e.g. via a shared link or bookmark) has no indication of where "back" leads.
+- evidence: captured text: "ember / back / sign in." — "back" with no destination label
+- suggested fix: change the link text to "back to home" or add aria-label="back to home" so the destination is explicit.
+- source: browser
 
 ### [LOW] /today — "see all sixty" uses word form inconsistent with numeral "60" elsewhere
 - pass: 4 (commit 8b806b8)
