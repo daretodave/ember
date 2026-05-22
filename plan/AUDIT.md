@@ -112,7 +112,7 @@
 - issue: [mirror-failed: 2026-05-22T06:08:00Z]
 - resolution: changed root layout title, OG title, and twitter title to "ember — a daily writing ritual". Shipped at 99aa554.
 
-### [ ] [4.5] /log — "60 quiet" in the empty-state stat line is ambiguous
+### [x] [4.5] /log — "60 quiet" in the empty-state stat line is ambiguous
 - category: external-critique
 - impact: 5
 - ease: 9
@@ -120,6 +120,8 @@
 - evidence: captured text: "0 days written. 60 quiet. 0 published."
 - suggested fix: add a gloss — "60 quiet days." — or a visible label beneath the stat row explaining what each figure counts.
 - source: /critique pass 1 (commit c69173d)
+- issue: [mirror-failed: 2026-05-22T09:19:00Z]
+- resolution: changed `{quiet} quiet.` to `{quiet} {quiet === 1 ? 'day' : 'days'} quiet.` in log/page.tsx. Shipped at ccafa00.
 
 ### [ ] [4.2] / (mobile) — footer trust copy absent at 375px
 - category: external-critique

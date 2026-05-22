@@ -26,14 +26,6 @@
 - evidence: desktop capture includes the privacy reassurance; mobile capture ends with "made for adults who want a low-friction ritual. / sign in to start" — no privacy copy.
 - suggested fix: audit the mobile layout to confirm this copy is present and visible at 375px, or surface it directly above the "sign in to start" CTA.
 
-### [MED] /log — "60 quiet" in the empty-state stat line is ambiguous
-- pass: 1 (commit c69173d)
-- viewport: both
-- category: comprehension
-- observation: the empty-state stat line reads "0 days written. 60 quiet. 0 published." the word "quiet" is doing non-obvious work — it means days with no entry — but a first-time visitor is unlikely to parse this without an explanation.
-- evidence: captured text: "0 days written. 60 quiet. 0 published."
-- suggested fix: add a brief gloss — e.g. "0 days written. 60 quiet days. 0 published." — or a visible label beneath the stat row explaining what each figure counts.
-
 ### [MED] /today — save-state indicator may not be a live region
 - pass: 1 (commit c69173d)
 - viewport: both
@@ -61,6 +53,15 @@
 - suggested fix: add one line such as "the link is valid for 24 hours and drops you straight into today's page" to reduce post-submit uncertainty.
 
 ## Done
+
+### [MED] /log — "60 quiet" in the empty-state stat line is ambiguous
+- pass: 1 (commit c69173d)
+- viewport: both
+- category: comprehension
+- observation: the empty-state stat line reads "0 days written. 60 quiet. 0 published." the word "quiet" is doing non-obvious work — it means days with no entry — but a first-time visitor is unlikely to parse this without an explanation.
+- evidence: captured text: "0 days written. 60 quiet. 0 published."
+- suggested fix: add a brief gloss — e.g. "0 days written. 60 quiet days. 0 published." — or a visible label beneath the stat row explaining what each figure counts.
+- resolution: changed `{quiet} quiet.` to `{quiet} days quiet.` in log/page.tsx. Shipped at ccafa00.
 
 ### [MED] / — "read-only preview" label gives state but not purpose
 - pass: 3 (commit ae936e3)
