@@ -1,36 +1,24 @@
 # Ember — phase candidates
 
-> Last pass: 2026-05-23 at commit 26a7712
-> Pass count: 8
+> Last pass: 2026-05-23 at commit f6a58f6
+> Pass count: 9
 
 Candidates proposed by `/expand`. Promotion to `plan/steps/01_build_plan.md`
 happens only via local `/oversight` — never from the cloud loop.
 
 ## Pending
 
-### [ ] [score 4.5] Voice coherence audit pass — address pending copy inconsistencies and document voice rules
+### [ ] [score 5.0] Voice coherence audit pass — address pending copy inconsistencies and document voice rules
 
-- proposed: 2026-05-23, expand pass 8
+- proposed: 2026-05-23, expand pass 8; signals updated pass 9
 - source signals:
   - critique pass 7 (commit 69def1e): 4 pending LOW voice/copy findings across 4 pages — "not yet saved" reads as error before typing (/today), heading register inconsistency between noun phrase and declarative sentence (/), coaching tone in empty-state copy (/log), no destination context after email submission (/signin)
-  - iterate pattern: all 4 pending findings score 2.7–2.8 in AUDIT.md, below the 3.0 iterate threshold; they will consume 4+ cloud ticks shipping individually with no documentation preventing recurrence
-- rationale: the 4 pending critique findings share a root — the product's copy voice is inconsistent across pages in small but accumulated ways. fixing them individually via iterate is feasible but slow (4 ticks at 2.7–2.8 each) and leaves no documentation preventing new page authors from repeating the same patterns. a single focused phase ships all 4 fixes and writes a voice reference section in design/CLAUDE.md capturing the specific rules (register consistency, "here is something to attend to" framing, no coaching imperatives, idle state shows nothing) — the same structural closure the CSS lint gate provides for typography.
-- proposed scope: 1 phase — (1) /today idle save-state: show nothing or em-dash until first keystroke; (2) / heading register: align "the next seven days." and "this is what arrives each morning." to the same syntactic form; (3) /log empty-state: replace "today is a good place to start." with observation framing; (4) /signin: add one post-submit sentence with destination context ("the link opens today's prompt."); (5) add a "Copy and voice rules" section to design/CLAUDE.md documenting register, framing, and idle-state conventions
+  - critique pass 8 (commit 5abb81e): 3 additional pending LOW voice/copy findings — stat line drops unit noun for published count (/log), footer "made for adults" frames by exclusion (/), display name placeholder uses second-person "you" (/settings)
+  - iterate pattern: all 7 pending findings score 2.7–2.8 in AUDIT.md, below the 3.0 iterate threshold; they will consume 7+ cloud ticks shipping individually with no documentation preventing recurrence; 3 items survived two full critique passes without being addressed by iterate
+- rationale: the 7 pending critique findings share a root — the product's copy voice is inconsistent across pages in small but accumulated ways. two critique passes have surfaced findings in this category and the signal cluster is growing (4 → 7 findings). fixing them individually via iterate is feasible but slow and leaves no documentation preventing new page authors from repeating the same patterns. a single focused phase ships all 7 fixes and writes a voice reference section in design/CLAUDE.md capturing the specific rules (register consistency, "here is something to attend to" framing, no coaching imperatives, idle state shows nothing, unit-noun consistency, value-first audience framing) — the same structural closure the CSS lint gate provides for typography.
+- proposed scope: 1 phase — (1) /today idle save-state: show nothing or em-dash until first keystroke; (2) / heading register: align "the next seven days." and "this is what arrives each morning." to the same syntactic form; (3) /log empty-state: replace "today is a good place to start." with observation framing; (4) /signin: add one post-submit sentence with destination context ("the link opens today's prompt."); (5) /log stat line: change "0 published." to "0 days published." for unit-noun consistency; (6) / footer: reframe "made for adults who want a low-friction ritual." as a value statement; (7) /settings display name placeholder: replace "how you appear on your public profile" with neutral "visible name on your public profile"; (8) add a "Copy and voice rules" section to design/CLAUDE.md documenting register, framing, unit-noun, idle-state, and audience-framing conventions
 - estimated phases: 1
 - conflicts: none — copy-only changes plus documentation; no new routes, no schema changes
-
-### [ ] [score 7.0] CSS typography lint gate — prevent text-transform:uppercase regressions
-
-- proposed: 2026-05-22, expand pass 5
-- source signals:
-  - commit pattern: 8 of 20 commits since expand pass 4 are audit/fix pairs removing `text-transform: uppercase` from CSS modules (cdcd1ff, d419779, 055c339, 1cfcd07, and audit commits for each); 25% of recent iterate capacity spent on the same mechanical pattern
-  - critique pattern: typography-voice findings appeared in all 3 critique passes (pass 1: /today section headers; pass 2: /settings, /log, /; pass 3: /today date heading, FOCUS/DONE buttons, /signin email label) — the pattern keeps recurring across new CSS modules
-  - active instances: `grep -rn "text-transform.*uppercase" src/` today returns 3 hits — `page.module.css:.previewMarkLabel` (orphaned selector, element removed at 0c1d673), `u/[username]/page.module.css:.entryDate`, `log/[date]/page.module.css:.entryLabel` — confirming the fix passes addressed specific named selectors but not all instances in those files
-- rationale: the loop's iterate cycle has been spending significant capacity on the same mechanical fix (remove text-transform: uppercase from CSS module) page by page. Each fix is correct but leaves no guard. 3 instances remain today despite multiple dedicated passes. A one-phase lint gate closes the cycle permanently: no new CSS module can silently reintroduce the pattern. Cost is one phase; benefit is elimination of an ongoing iterate overhead category.
-- note (2026-05-23): all 3 previously active instances (`.previewMarkLabel`, `.entryDate`, `.entryLabel`) have been removed by iterate between expand passes 5 and 6 (commits 055c339, 3795494). `grep -rn "text-transform.*uppercase" src/` now returns 0 hits. Proposed scope reduced to: (1) add the grep lint step to the verify gate; (2) document the ban in `design/CLAUDE.md`. The cleanup component of the original scope is done.
-- proposed scope: 1 phase — (1) add a `grep -rn "text-transform.*uppercase" src/` step to the verify gate that exits non-zero if any match is found; (2) document the ban in `design/CLAUDE.md` so new page authors know not to use it
-- estimated phases: 1
-- conflicts: none — enforces an existing voice constraint; no new design decision required
 
 ### [ ] [score 5.0] Data export — download entries as JSON or Markdown
 
@@ -57,6 +45,7 @@ happens only via local `/oversight` — never from the cloud loop.
 
 - proposed: 2026-05-21, expand pass 4 (re-evaluated from "Considered below threshold", was score 3.0)
 - note (2026-05-22): phases 17–19 have now shipped, adding substantial uncovered surface: on-this-day rendering logic (/today), focus-mode overlay DOM manipulation and Esc key handling (/today), and PWA offline draft persistence (IndexedDB, service-worker intercept, sync-on-reconnect). Risk surface has grown since this candidate was filed; score should be treated as 4.5–5.0.
+- note (2026-05-23): phase 20 (searchable timezone combobox) also shipped with no new authenticated e2e coverage — the combobox open/filter/select flow is untested in e2e. Risk surface continues to grow.
 - source signals:
   - commit pattern: 19 phases shipped; all Playwright specs still test only anonymous/redirect state — `today.spec.ts` verifies redirect to `/signin` but never the actual write flow
   - phase 19 (PWA + offline): added service-worker path and IndexedDB draft persistence; these paths have zero e2e coverage
@@ -65,17 +54,6 @@ happens only via local `/oversight` — never from the cloud loop.
 - estimated phases: 1 (may require provisioning a test-user seed in the CI environment)
 - conflicts: none — test-only addition
 
-
-### [ ] [score 6.0] SEO completeness for public profiles — canonical URL tags and dynamic sitemap
-
-- proposed: 2026-05-23, expand pass 7
-- source signals:
-  - iterate audit 2026-05-23: `/u/[username]` and `/u/[username]/[date]` generateMetadata functions set openGraph.url but omit `alternates.canonical` — Next.js emits no `<link rel="canonical">` for the primary share targets
-  - iterate audit 2026-05-23: `src/app/sitemap.ts` returns a static array covering only `/` and `/signin`; public profiles are the main externally-linked content and are absent from the sitemap entirely
-- rationale: public profiles and published entries are the primary sharing surface — the only pages ember users send to others. both SEO gaps (no canonical, absent from sitemap) affect these pages specifically. individually each fix scores below the iterate 3.0 threshold (canonical: 2.7; sitemap: 2.5), but they address the same surface, have the same owner, and are best shipped together. the sitemap item in particular requires a Supabase query at build time — more than a one-line fix. bundled into one small phase, they close the SEO gap for the public-facing layer with minimal scope.
-- proposed scope: 1 phase — (1) add `alternates: { canonical: url }` to `generateMetadata` in `src/app/u/[username]/page.tsx` and `src/app/u/[username]/[date]/page.tsx`; (2) make `sitemap.ts` async, query Supabase `profiles` table for rows with non-null `username`, add `/u/${username}` for each (and optionally published entries); add error handling so a DB failure falls back to the static list gracefully
-- estimated phases: 1
-- conflicts: none — metadata-only change for (1); sitemap is already a Next.js App Router route file for (2); no new URL family required
 
 ## Promoted
 
@@ -92,6 +70,16 @@ happens only via local `/oversight` — never from the cloud loop.
 - [score 7.0] Settings UX — searchable timezone combobox → **Phase 20** (promoted via `/oversight` 2026-05-23)
 
 ## Resolved
+
+### [score 6.0] SEO completeness for public profiles — resolved via iterate
+
+- proposed: 2026-05-23, expand pass 7
+- resolution: both scope items addressed by iterate before a dedicated phase was needed. (1) `alternates.canonical` added to `/u/[username]` and `/u/[username]/[date]` `generateMetadata` (8d7d49a); (2) `sitemap.ts` made async, queries Supabase `profiles` table for non-null `username` rows, adds `/u/${username}` entries with fallback to static list on DB error (57d1cc2). No dedicated phase required.
+
+### [score 7.0] CSS typography lint gate — resolved via iterate
+
+- proposed: 2026-05-22, expand pass 5
+- resolution: both scope items in the reduced scope (2026-05-23 note) addressed by iterate at f3ca66d — `lint:no-uppercase-css` script added to `package.json` and prepended to the verify chain; ban documented in `design/CLAUDE.md` "CSS rule bans" section. No dedicated phase required.
 
 ### [score 4.5] Sign-in page experience polish — resolved via iterate
 
