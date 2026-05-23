@@ -19,7 +19,7 @@ export function TodayEntry({ date, task, prompt, initialEntry }: Props) {
   const [response, setResponse] = useState(initialEntry?.response ?? '')
   const [taskDone, setTaskDone] = useState(initialEntry?.task_done ?? false)
   const [isPublished, setIsPublished] = useState(initialEntry?.is_published ?? false)
-  const [saveState, setSaveState] = useState<SaveState>('idle')
+  const [saveState, setSaveState] = useState<SaveState>(initialEntry !== null ? 'saved' : 'idle')
   const [savedAt, setSavedAt] = useState<string | null>(initialEntry?.updated_at ?? null)
   const [errorMsg, setErrorMsg] = useState('')
   const [isFocus, setIsFocus] = useState(false)
