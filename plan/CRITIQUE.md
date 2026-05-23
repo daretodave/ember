@@ -1,7 +1,7 @@
 # External-observer findings — Ember
 
-> Last pass: 2026-05-23 at commit be41cf9
-> Pass count: 6
+> Last pass: 2026-05-23 at commit 69def1e
+> Pass count: 7
 
 > Written by `/critique` after walking the live site as a
 > fresh-eyes visitor. Drained by `/iterate`.
@@ -47,6 +47,51 @@
 - suggested fix: wrap "today" in a Link to /today, or rephrase as "head to today to write your first entry." with "today" linked.
 - source: browser
 - resolution: wrapped "today" in `<Link href="/today">` in src/app/log/page.tsx. Shipped at ff7dd43.
+
+### [MED] /today — "see all 60" link label implies a backlog for users with no entries
+- pass: 7 (commit 69def1e)
+- viewport: both
+- category: comprehension
+- observation: the seven-day strip shows seven days all marked "no entry" and the log link still reads "see all 60". for a brand-new user who has written nothing, the number 60 implies a backlog that does not exist. 60 is the mosaic window size, but that framing is invisible to a new user.
+- evidence: "see all 60" immediately followed by seven strip days all labeled "no entry"
+- suggested fix: change the link text to "open log" (no count) so it reads as a navigation affordance rather than a count of existing content.
+- source: browser
+
+### [LOW] /today — "not yet saved" status reads as an error state before any typing
+- pass: 7 (commit 69def1e)
+- viewport: both
+- category: comprehension
+- observation: the save-state indicator reads "not yet saved" on first load, before the user has typed a single character. for a first-time visitor this lands as an error or warning rather than an idle placeholder — the word "yet" implies something was expected and is missing.
+- evidence: "your response\nnot yet saved\npublish\nfocus\nsave" — appears immediately on page load with empty textarea
+- suggested fix: show no save-state label until the user begins typing, or replace the idle text with a neutral em-dash or nothing.
+- source: browser
+
+### [LOW] / — heading register inconsistency between "the next seven days." and "this is what arrives each morning."
+- pass: 7 (commit 69def1e)
+- viewport: both
+- category: voice
+- observation: the two adjacent section labels use different syntactic registers. "the next seven days." is a noun phrase ending in a period, functioning as a section heading. "this is what arrives each morning." is a full declarative sentence. on a page that exercises careful typographic restraint, the inconsistency creates a small tonal wobble.
+- evidence: "the next seven days.\nthis is what arrives each morning."
+- suggested fix: align the labels to the same register — either "the next seven days" (no period, noun phrase) or "here is what arrives each morning." (full sentence, consistent with the stated voice posture).
+- source: browser
+
+### [LOW] /log — "today is a good place to start" edges toward coaching tone
+- pass: 7 (commit 69def1e)
+- viewport: both
+- category: voice
+- observation: the empty-state line "today is a good place to start" nudges the user toward an action in a way that conflicts with the stated voice posture of "prefer 'here is something to attend to' framing" and the site's deliberate avoidance of motivational copy. it reads as mild encouragement rather than a calm observation.
+- evidence: "your log is empty. today is a good place to start."
+- suggested fix: reframe as an observation: "your log is empty. today's entry will appear here." — describes what will happen without coaching.
+- source: browser
+
+### [LOW] /signin — sign-in page gives no destination context after email submission
+- pass: 7 (commit 69def1e)
+- viewport: both
+- category: comprehension
+- observation: the sign-in page confirms an email link will be sent and notes "sign-in links expire after 24 hours." but never tells the user where that link takes them. a first-time visitor has no frame of reference for what the logged-in experience looks like before clicking.
+- evidence: "we email you a sign-in link. no password, no spam." / "sign-in links expire after 24 hours." — no destination copy
+- suggested fix: add one sentence to the footer, e.g. "the link opens your daily prompt directly." — closes the post-submit loop.
+- source: browser
 
 ### [LOW] /settings — "Claude" vendor name appears in personalized prompt hint
 - pass: 6 (commit be41cf9)
