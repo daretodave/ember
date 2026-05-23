@@ -41,7 +41,7 @@ export function DayStrip({ todayDate, entries }: Props) {
       <div className={styles.stripHead}>
         <h2 className={styles.stripLabel}>your last seven days</h2>
         <Link href="/log" className={styles.stripLink}>
-          see all sixty
+          see all 60
         </Link>
       </div>
       <div className={styles.stripRow}>

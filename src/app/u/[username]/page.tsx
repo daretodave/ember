@@ -102,7 +102,7 @@ export default async function PublicProfilePage({ params }: Props) {
         </section>
 
         <section className={styles.mosaicWrap}>
-          <p className={styles.mosaicMeta}>published in the last sixty days</p>
+          <p className={styles.mosaicMeta}>published in the last 60 days</p>
           <ProfileMosaic tiles={tiles} username={profile.username} />
         </section>
 

@@ -10,7 +10,7 @@ import styles from './page.module.css'
 
 export const metadata = {
   title: 'ember · log',
-  description: 'your past sixty days',
+  description: 'your past 60 days',
 }
 
 export default async function LogPage() {
@@ -78,7 +78,7 @@ export default async function LogPage() {
 
       <main id="main-content">
       <section className={styles.mosaicWrap}>
-        <h1 className={styles.mosaicMeta}>your past sixty days</h1>
+        <h1 className={styles.mosaicMeta}>your past 60 days</h1>
         <LogMosaic tiles={tiles} />
         <p className={styles.mosaicCount}>
           {written} {written === 1 ? 'day' : 'days'} written.{' '}

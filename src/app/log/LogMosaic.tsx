@@ -79,7 +79,7 @@ export function LogMosaic({ tiles }: Props) {
       ref={mosaicRef}
       style={{ position: 'relative' }}
       role="group"
-      aria-label="sixty-day practice mosaic"
+      aria-label="60-day practice mosaic"
     >
       {tiles.map((tile, i) => (
         <Link
