@@ -1,21 +1,10 @@
 'use client'
 
 import { useCallback, useEffect, useState } from 'react'
+import { TimezoneCombobox } from '@/components/timezone/TimezoneCombobox'
 import styles from './page.module.css'
 
 type SaveState = 'idle' | 'saving' | 'saved' | 'error'
-
-function groupTimezones(timezones: string[]): Map<string, string[]> {
-  const groups = new Map<string, string[]>()
-  for (const tz of timezones) {
-    const slash = tz.indexOf('/')
-    const region = slash === -1 ? 'Other' : tz.slice(0, slash)
-    const list = groups.get(region) ?? []
-    list.push(tz)
-    groups.set(region, list)
-  }
-  return groups
-}
 
 type Props = {
   displayName: string
@@ -120,27 +109,12 @@ export function SettingsForm({ displayName, username, timezone, usePersonalizedP
         <label className={styles.label} htmlFor="timezone">
           timezone
         </label>
-        <select
+        <TimezoneCombobox
           id="timezone"
-          className={styles.select}
           value={tzVal}
-          onChange={(e) => setTzVal(e.target.value)}
-        >
-          {/* Always include the current value even if timezones list hasn't loaded */}
-          {timezones.length === 0 ? (
-            <option value={tzVal}>{tzVal}</option>
-          ) : (
-            Array.from(groupTimezones(timezones).entries())
-              .sort(([a], [b]) => a.localeCompare(b))
-              .map(([region, zones]) => (
-                <optgroup key={region} label={region}>
-                  {zones.map((tz) => (
-                    <option key={tz} value={tz}>{tz}</option>
-                  ))}
-                </optgroup>
-              ))
-          )}
-        </select>
+          timezones={timezones}
+          onChange={setTzVal}
+        />
       </div>
 
       <div className={styles.field}>
