@@ -18,7 +18,7 @@
 - source: browser
 - resolution: removed the isToday ternary in src/app/page.tsx; all seven rows now render "tiny task —". Shipped at 92a4995.
 
-### [LOW] /log — H1 "your past sixty days" uses word form while stat line uses numeral "60"
+### [x] [LOW] /log — H1 "your past sixty days" uses word form while stat line uses numeral "60"
 - pass: 5 (commit 4552045)
 - viewport: both
 - category: voice
@@ -26,6 +26,7 @@
 - evidence: "your past sixty days" (H1) directly above "0 days written. 60 days quiet. 0 published." on /log
 - suggested fix: change the H1 to "your past 60 days" to match the numeral form used throughout the stat line.
 - source: browser
+- resolution: changed H1 and metadata description to "your past 60 days". Bundled with six other "sixty"→"60" fixes. Shipped at 2573c76.
 
 ### [x] [LOW] /signin — "back" link has no visible destination
 - pass: 5 (commit 4552045)
@@ -37,7 +38,7 @@
 - source: browser
 - resolution: changed "back" to "back to home" and added aria-label="back to home". Shipped at 51977f7.
 
-### [LOW] /today — "see all sixty" uses word form inconsistent with numeral "60" elsewhere
+### [x] [LOW] /today — "see all sixty" uses word form inconsistent with numeral "60" elsewhere
 - pass: 4 (commit 8b806b8)
 - viewport: both
 - category: voice
@@ -45,6 +46,7 @@
 - evidence: "/today" text: "see all sixty" vs "/log" text: "0 days written. 60 days quiet. 0 published."
 - suggested fix: change "see all sixty" to "see all 60" to match the numeral form used on /log.
 - source: browser
+- resolution: changed "see all sixty" to "see all 60" in DayStrip.tsx. Shipped at 2573c76.
 
 ### [x] [LOW] /today — "done" button in seven-day strip lacks an accessible label
 - pass: 4 (commit 8b806b8)

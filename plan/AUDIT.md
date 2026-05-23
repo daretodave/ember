@@ -16,7 +16,7 @@
 - issue: [mirror-failed: 2026-05-22T00:00:00Z]
 - resolution: added images to openGraph and upgraded twitter.card to 'summary_large_image' in src/app/u/[username]/[date]/page.tsx. Shipped at e2b9a06.
 
-### [ ] [1.8] /log — H1 "your past sixty days" uses word form while stat line uses numeral "60"
+### [x] [1.8] /signin — "back" link has no visible destination
 - category: external-critique
 - impact: 4
 - ease: 9
@@ -27,7 +27,7 @@
 - issue: [mirror-failed: 2026-05-22T00:00:00Z]
 - resolution: changed "back" to "back to home" and added aria-label="back to home" in src/app/signin/page.tsx. Shipped at 51977f7.
 
-### [ ] [1.8] /log — H1 "your past sixty days" uses word form while stat line uses numeral "60"
+### [x] [1.8] /log — H1 "your past sixty days" uses word form while stat line uses numeral "60"
 - category: external-critique
 - impact: 2
 - ease: 9
@@ -35,6 +35,8 @@
 - evidence: `src/app/log/page.tsx` line 81: `your past sixty days`; stat line uses numeral "60".
 - suggested fix: change H1 and metadata description to "your past 60 days" to match numeral form used throughout the stat line.
 - source: /critique pass 5 (commit 4552045)
+- issue: [mirror-failed: 2026-05-23T01:26:00Z]
+- resolution: changed H1 and metadata description to "your past 60 days". Also fixed "see all sixty" (DayStrip), "published in the last sixty days" (/u/[username]), and three aria-labels in the same commit. Shipped at 2573c76.
 
 ### [x] [3.6] /signin — "magic-link via supabase" vendor name in footer
 - category: external-critique
@@ -69,7 +71,7 @@
 - issue: [mirror-failed: 2026-05-22T21:12:00Z]
 - resolution: removed the "today's" prefix in TodayEntry.tsx. Shipped at 0c3165d.
 
-### [ ] [1.8] /today — "see all sixty" uses word form inconsistent with numeral "60" elsewhere
+### [x] [1.8] /today — "see all sixty" uses word form inconsistent with numeral "60" elsewhere
 - category: external-critique
 - impact: 2
 - ease: 9
@@ -77,6 +79,7 @@
 - evidence: `src/app/today/DayStrip.tsx` line 43: `see all sixty`. `/log` page: "0 days written. 60 days quiet."
 - suggested fix: change `see all sixty` to `see all 60` to match the numeral form used on /log.
 - source: /critique pass 4 (commit b1aa4e9)
+- resolution: changed "see all sixty" to "see all 60" in DayStrip.tsx. Shipped at 2573c76 (bundled with /log H1 fix and five other "sixty" occurrences).
 
 ### [x] [4.5] /u/[username], /log/[date] — text-transform: uppercase on date header and edit label
 - category: voice
