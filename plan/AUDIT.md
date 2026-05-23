@@ -28,7 +28,7 @@
 - issue: [mirror-failed: 2026-05-23T05:55:00Z]
 - resolution: changed ctaCopy primary text to "today's prompt is waiting." and moved privacy copy to the muted span. Shipped at 0e37545.
 
-### [ ] [3.6] /today — day-strip tiles are aria-hidden with no AT-accessible state
+### [x] [3.6] /today — day-strip tiles are aria-hidden with no AT-accessible state
 - category: external-critique
 - impact: 6
 - ease: 6
@@ -36,6 +36,8 @@
 - evidence: captured text: "Sun Mon Tue Wed Thu Fri today" — state encoded only in CSS class names (tile--filled, tile--published).
 - suggested fix: add a visually-hidden span inside each stripDay with the date and state, e.g. "Mon — written" or "Tue — no entry".
 - source: /critique pass 6 (commit be41cf9)
+- issue: [mirror-failed: 2026-05-23T07:07:00Z]
+- resolution: added tileStateLabel() helper in DayStrip.tsx; visually-hidden span provides full date + state per tile ("Mon 19 May 2026 — written", etc.); visible date span gets aria-hidden="true" to prevent double-announcement. Shipped at 9b1e99f.
 
 ### [ ] [2.7] /log — "today" in empty-state message is plain text, not a link
 - category: external-critique

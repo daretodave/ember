@@ -18,7 +18,7 @@
 - source: browser
 - resolution: changed ctaCopy primary text to "today's prompt is waiting." and moved privacy copy to the muted span. Shipped at 0e37545.
 
-### [MED] /today — day-strip tiles are aria-hidden with no AT-accessible state
+### [x] [MED] /today — day-strip tiles are aria-hidden with no AT-accessible state
 - pass: 6 (commit be41cf9)
 - viewport: both
 - category: a11y
@@ -26,6 +26,7 @@
 - evidence: captured text: "Sun Mon Tue Wed Thu Fri today" — state (written/quiet/published) is encoded in CSS class names (tile--filled, tile--published) but those elements are removed from the AT tree.
 - suggested fix: add a visually-hidden span inside each stripDay with the date and state, e.g. "Mon — written" or "Tue — no entry", so keyboard/AT users understand the strip's meaning.
 - source: browser
+- resolution: added tileStateLabel() helper in DayStrip.tsx; each stripDay now includes a visually-hidden span with the full date and state ("Mon 19 May 2026 — written", "Thu 21 May 2026 — no entry", "today"); visible date span is aria-hidden to prevent double-announcement. Shipped at 9b1e99f.
 
 ### [x] [MED] /settings — prompt variety radio group has no focus-visible style
 - pass: 6 (commit be41cf9)
