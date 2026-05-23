@@ -1,12 +1,23 @@
 # Ember — phase candidates
 
-> Last pass: 2026-05-23 at commit 5250734
-> Pass count: 7
+> Last pass: 2026-05-23 at commit 26a7712
+> Pass count: 8
 
 Candidates proposed by `/expand`. Promotion to `plan/steps/01_build_plan.md`
 happens only via local `/oversight` — never from the cloud loop.
 
 ## Pending
+
+### [ ] [score 4.5] Voice coherence audit pass — address pending copy inconsistencies and document voice rules
+
+- proposed: 2026-05-23, expand pass 8
+- source signals:
+  - critique pass 7 (commit 69def1e): 4 pending LOW voice/copy findings across 4 pages — "not yet saved" reads as error before typing (/today), heading register inconsistency between noun phrase and declarative sentence (/), coaching tone in empty-state copy (/log), no destination context after email submission (/signin)
+  - iterate pattern: all 4 pending findings score 2.7–2.8 in AUDIT.md, below the 3.0 iterate threshold; they will consume 4+ cloud ticks shipping individually with no documentation preventing recurrence
+- rationale: the 4 pending critique findings share a root — the product's copy voice is inconsistent across pages in small but accumulated ways. fixing them individually via iterate is feasible but slow (4 ticks at 2.7–2.8 each) and leaves no documentation preventing new page authors from repeating the same patterns. a single focused phase ships all 4 fixes and writes a voice reference section in design/CLAUDE.md capturing the specific rules (register consistency, "here is something to attend to" framing, no coaching imperatives, idle state shows nothing) — the same structural closure the CSS lint gate provides for typography.
+- proposed scope: 1 phase — (1) /today idle save-state: show nothing or em-dash until first keystroke; (2) / heading register: align "the next seven days." and "this is what arrives each morning." to the same syntactic form; (3) /log empty-state: replace "today is a good place to start." with observation framing; (4) /signin: add one post-submit sentence with destination context ("the link opens today's prompt."); (5) add a "Copy and voice rules" section to design/CLAUDE.md documenting register, framing, and idle-state conventions
+- estimated phases: 1
+- conflicts: none — copy-only changes plus documentation; no new routes, no schema changes
 
 ### [ ] [score 7.0] CSS typography lint gate — prevent text-transform:uppercase regressions
 
