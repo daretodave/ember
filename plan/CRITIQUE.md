@@ -38,7 +38,7 @@
 - source: browser
 - resolution: added `.radioOption:has(:focus-visible) { outline: 2px solid var(--color-accent); outline-offset: 2px; }` to settings/page.module.css. Shipped at 2af17d5.
 
-### [LOW] /log — "today" in empty-state message is plain text, not a link
+### [x] [LOW] /log — "today" in empty-state message is plain text, not a link
 - pass: 6 (commit be41cf9)
 - viewport: both
 - category: comprehension
@@ -46,6 +46,7 @@
 - evidence: captured text: "your log is empty. today is a good place to start." — no link affordance visible.
 - suggested fix: wrap "today" in a Link to /today, or rephrase as "head to today to write your first entry." with "today" linked.
 - source: browser
+- resolution: wrapped "today" in `<Link href="/today">` in src/app/log/page.tsx. Shipped at ff7dd43.
 
 ### [LOW] /settings — "Claude" vendor name appears in personalized prompt hint
 - pass: 6 (commit be41cf9)
