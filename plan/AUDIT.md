@@ -6,6 +6,17 @@
 
 ## Pending
 
+### [x] [3.6] sitemap.ts — public profile pages absent from sitemap
+- category: seo
+- impact: 6
+- ease: 6
+- observation: `sitemap.ts` returns a static two-entry array covering only `/` and `/signin`. Public profile pages (`/u/[username]`) are the primary externally-shared surface but are entirely absent. Search engines cannot discover them through the sitemap.
+- evidence: `src/app/sitemap.ts` returns a static array with two entries; `robots.ts` points crawlers at `/sitemap.xml`; `/u/[username]` paths are allowed by robots but not enumerated in the sitemap.
+- suggested fix: make `sitemap()` async; query Supabase `profiles` table (anon key, no cookies needed — `username is not null` RLS policy allows public read) for all rows with non-null `username`; add `/u/${username}` entry per row; fall back to the static list if the query fails.
+- source: /iterate audit 2026-05-23
+- issue: [mirror-failed: 2026-05-23T00:00:00Z]
+- resolution: made sitemap() async; queries profiles table for non-null username rows; adds /u/${username} entries with weekly changeFrequency. Falls back to static list on DB error. Shipped at 57d1cc2.
+
 ### [x] [4.5] /u/[username], /u/[username]/[date] — generateMetadata missing alternates.canonical
 - category: seo
 - impact: 5
