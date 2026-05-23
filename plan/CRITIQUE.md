@@ -68,7 +68,7 @@
 - source: browser
 - resolution: added <form action="/auth/signout" method="POST"> with muted "sign out" button in settings page footer. Shipped at 8a9ceb6.
 
-### [MED] /settings — username hint hardcodes the Vercel preview domain
+### [x] [MED] /settings — username hint hardcodes the Vercel preview domain
 - pass: 8 (commit 5abb81e)
 - viewport: both
 - category: voice
@@ -76,6 +76,7 @@
 - evidence: captured text: "your public profile lives at ember-rust-sigma.vercel.app/u/username. leave blank to stay private."
 - suggested fix: replace the hardcoded origin with window.location.host (client-side) or an env var, or simplify to a relative form: "your public profile lives at /u/your-handle. leave blank to stay private."
 - source: browser
+- resolution: changed hint to "your public profile lives at /u/your-handle. leave blank to stay private." in SettingsForm.tsx. Shipped at 3508ef7.
 
 ### [MED] /today — publish toggle description conveyed only via `title` attribute
 - pass: 8 (commit 5abb81e)
