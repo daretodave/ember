@@ -17,7 +17,7 @@
 - issue: [mirror-failed: 2026-05-23T00:00:00Z]
 - resolution: changed "see all 60" to "open log" in DayStrip.tsx. Shipped at 831dc54.
 
-### [ ] [5.6] verify gate — no lint guard against text-transform:uppercase in src/
+### [x] [5.6] verify gate — no lint guard against text-transform:uppercase in src/
 - category: tests
 - impact: 7
 - ease: 8
@@ -26,6 +26,7 @@
 - suggested fix: (1) add a `lint:no-uppercase-css` script to package.json that exits non-zero if any match found; (2) prepend it to the verify chain; (3) add a "CSS rule bans" section to design/CLAUDE.md documenting the ban.
 - source: /iterate audit 2026-05-23
 - issue: [mirror-failed: 2026-05-23T00:00:00Z]
+- resolution: added `lint:no-uppercase-css` to package.json and prepended to verify chain; documented ban in design/CLAUDE.md "CSS rule bans" section. Shipped at f3ca66d.
 
 ### [ ] [2.8] /today — "not yet saved" status reads as an error state before any typing
 - category: external-critique
