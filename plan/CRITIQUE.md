@@ -1,12 +1,66 @@
 # External-observer findings — Ember
 
-> Last pass: 2026-05-22 at commit 4552045
-> Pass count: 5
+> Last pass: 2026-05-23 at commit be41cf9
+> Pass count: 6
 
 > Written by `/critique` after walking the live site as a
 > fresh-eyes visitor. Drained by `/iterate`.
 
 ## Pending
+
+### [MED] / — CTA "sign in to start" names the action but not the destination
+- pass: 6 (commit be41cf9)
+- viewport: both
+- category: comprehension
+- observation: the landing page CTA reads "sign in to start" with no indication of where the link lands. the body copy describes prompts accumulating into "a quiet personal log" but never tells a first-time visitor what happens immediately after signing in — that they land on today's prompt page. the post-auth path is unanchored.
+- evidence: captured CTA text: "sign in to start" — no adjacent copy explaining what the first logged-in experience looks like.
+- suggested fix: add a brief phrase near the CTA such as "today's prompt is waiting." so the destination is concrete.
+- source: browser
+
+### [MED] /today — day-strip tiles are aria-hidden with no AT-accessible state
+- pass: 6 (commit be41cf9)
+- viewport: both
+- category: a11y
+- observation: the seven-day strip renders each tile with aria-hidden="true", so screen readers receive no information about which days have entries. the visible sibling span only carries the weekday abbreviation (Sun, Mon, etc.) — not whether that day was written, published, or quiet.
+- evidence: captured text: "Sun Mon Tue Wed Thu Fri today" — state (written/quiet/published) is encoded in CSS class names (tile--filled, tile--published) but those elements are removed from the AT tree.
+- suggested fix: add a visually-hidden span inside each stripDay with the date and state, e.g. "Mon — written" or "Tue — no entry", so keyboard/AT users understand the strip's meaning.
+- source: browser
+
+### [MED] /settings — prompt variety radio group has no focus-visible style
+- pass: 6 (commit be41cf9)
+- viewport: both
+- category: a11y
+- observation: the "standard / personalized" prompt variety selector uses visually-hidden radio inputs (opacity: 0; width: 0; height: 0) with styled label elements, but no :focus-visible rule on the label or container. keyboard users tabbing through the radio group receive no visible focus indicator.
+- evidence: settings/page.module.css: `.radioInput { position: absolute; opacity: 0; width: 0; height: 0; }` — no corresponding `:focus-visible` sibling or parent rule exists for `.radioOption`.
+- suggested fix: add `.radioOption:has(:focus-visible) { outline: 2px solid var(--color-accent); outline-offset: 2px; }` to settings/page.module.css.
+- source: browser
+
+### [LOW] /log — "today" in empty-state message is plain text, not a link
+- pass: 6 (commit be41cf9)
+- viewport: both
+- category: comprehension
+- observation: the empty-state message reads "your log is empty. today is a good place to start." — the word "today" names the sibling page but is rendered as plain text. a user who has just signed up will expect to click it.
+- evidence: captured text: "your log is empty. today is a good place to start." — no link affordance visible.
+- suggested fix: wrap "today" in a Link to /today, or rephrase as "head to today to write your first entry." with "today" linked.
+- source: browser
+
+### [LOW] /settings — "Claude" vendor name appears in personalized prompt hint
+- pass: 6 (commit be41cf9)
+- viewport: both
+- category: voice
+- observation: the hint text for the prompt variety field reads "personalized: a unique prompt generated for you by Claude, informed by your recent entries." naming the AI vendor is inconsistent with ember's attributionless voice — the same pattern as the prior Supabase attribution on /signin (fixed at dfe1ae4).
+- evidence: SettingsForm.tsx: `personalized: a unique prompt generated for you by Claude, informed by your recent entries.`
+- suggested fix: replace "generated for you by Claude" with "generated from your recent entries" — describes the behavior without naming the vendor.
+- source: browser
+
+### [LOW] / — "that's deliberate." reads as a defensive aside
+- pass: 6 (commit be41cf9)
+- viewport: both
+- category: voice
+- observation: the closing section uses "that's deliberate." as a parenthetical justification between two declarative statements. the voice guide prefers settled statements of value over pre-emptive rebuttals to imagined objections.
+- evidence: captured text: "the same prompt and task arrive for everyone on a given day. that's deliberate. ember does not personalize your morning."
+- suggested fix: remove "that's deliberate." and let "ember does not personalize your morning." carry the point on its own.
+- source: browser
 
 ### [x] [LOW] / — task label prefix is inconsistent across 7-day preview
 - pass: 4 (commit 8b806b8)
