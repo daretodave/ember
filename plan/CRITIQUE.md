@@ -56,7 +56,7 @@
 - suggested fix: replace "generated for you by Claude" with "generated from your recent entries" — describes the behavior without naming the vendor.
 - source: browser
 
-### [LOW] / — "that's deliberate." reads as a defensive aside
+### [x] [LOW] / — "that's deliberate." reads as a defensive aside (pass 6; addressed at a44a3a6)
 - pass: 6 (commit be41cf9)
 - viewport: both
 - category: voice
@@ -64,6 +64,7 @@
 - evidence: captured text: "the same prompt and task arrive for everyone on a given day. that's deliberate. ember does not personalize your morning."
 - suggested fix: remove "that's deliberate." and let "ember does not personalize your morning." carry the point on its own.
 - source: browser
+- resolution: removed "that's deliberate." from src/app/page.tsx closing paragraph. Shipped at a44a3a6.
 
 ### [x] [LOW] / — task label prefix is inconsistent across 7-day preview
 - pass: 4 (commit 8b806b8)

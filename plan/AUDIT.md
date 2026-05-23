@@ -6,6 +6,17 @@
 
 ## Pending
 
+### [x] [3.6] / — "that's deliberate." reads as a defensive aside
+- category: external-critique
+- impact: 4
+- ease: 9
+- observation: the closing section on the landing page reads "the same prompt and task arrive for everyone on a given day. that's deliberate. ember does not personalize your morning." the phrase "that's deliberate." is a pre-emptive rebuttal to an imagined objection — inconsistent with the voice guide's preference for settled statements over defensive asides.
+- evidence: `src/app/page.tsx` line 66–68: `that&apos;s deliberate.{' '}` sandwiched between two declarative sentences.
+- suggested fix: remove "that's deliberate." — the sentence "ember does not personalize your morning." already carries the point without the defensive aside.
+- source: /critique pass 6 (commit be41cf9)
+- issue: [mirror-failed: 2026-05-23T00:00:00Z]
+- resolution: removed "that's deliberate." from the closing paragraph in src/app/page.tsx. Shipped at a44a3a6.
+
 ### [x] [5.4] /settings — prompt variety radio group has no focus-visible style
 - category: external-critique
 - impact: 6
