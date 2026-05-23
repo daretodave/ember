@@ -26,7 +26,7 @@
 - suggested fix: add a visually-hidden span inside each stripDay with the date and state, e.g. "Mon — written" or "Tue — no entry", so keyboard/AT users understand the strip's meaning.
 - source: browser
 
-### [MED] /settings — prompt variety radio group has no focus-visible style
+### [x] [MED] /settings — prompt variety radio group has no focus-visible style
 - pass: 6 (commit be41cf9)
 - viewport: both
 - category: a11y
@@ -34,6 +34,7 @@
 - evidence: settings/page.module.css: `.radioInput { position: absolute; opacity: 0; width: 0; height: 0; }` — no corresponding `:focus-visible` sibling or parent rule exists for `.radioOption`.
 - suggested fix: add `.radioOption:has(:focus-visible) { outline: 2px solid var(--color-accent); outline-offset: 2px; }` to settings/page.module.css.
 - source: browser
+- resolution: added `.radioOption:has(:focus-visible) { outline: 2px solid var(--color-accent); outline-offset: 2px; }` to settings/page.module.css. Shipped at 2af17d5.
 
 ### [LOW] /log — "today" in empty-state message is plain text, not a link
 - pass: 6 (commit be41cf9)

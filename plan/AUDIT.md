@@ -6,6 +6,53 @@
 
 ## Pending
 
+### [x] [5.4] /settings — prompt variety radio group has no focus-visible style
+- category: external-critique
+- impact: 6
+- ease: 9
+- observation: the "standard / personalized" radio group uses visually-hidden inputs (opacity: 0; width: 0; height: 0) with styled label elements, but no `:focus-visible` rule exists on `.radioOption` or its container. keyboard users tabbing through the radio group receive no visible focus indicator.
+- evidence: `settings/page.module.css`: `.radioInput { position: absolute; opacity: 0; width: 0; height: 0; }` — no `:focus-visible` sibling or parent rule for `.radioOption`.
+- suggested fix: add `.radioOption:has(:focus-visible) { outline: 2px solid var(--color-accent); outline-offset: 2px; }` to settings/page.module.css.
+- source: /critique pass 6 (commit be41cf9)
+- issue: [mirror-failed: 2026-05-23T00:00:00Z]
+- resolution: added `.radioOption:has(:focus-visible)` outline rule in settings/page.module.css. Shipped at 2af17d5.
+
+### [ ] [4.5] / — CTA "sign in to start" names the action but not the destination
+- category: external-critique
+- impact: 5
+- ease: 9
+- observation: the landing page CTA reads "sign in to start" with no indication of what the first logged-in experience looks like — that the user lands on today's prompt page. the post-auth path is unanchored.
+- evidence: captured CTA text: "sign in to start" — no adjacent copy explaining what follows.
+- suggested fix: add a brief phrase near the CTA such as "today's prompt is waiting." so the destination is concrete.
+- source: /critique pass 6 (commit be41cf9)
+
+### [ ] [3.6] /today — day-strip tiles are aria-hidden with no AT-accessible state
+- category: external-critique
+- impact: 6
+- ease: 6
+- observation: the seven-day strip renders each tile with aria-hidden="true", so screen readers receive no information about which days have entries. state (written/quiet/published) is encoded in CSS class names but those elements are removed from the AT tree.
+- evidence: captured text: "Sun Mon Tue Wed Thu Fri today" — state encoded only in CSS class names (tile--filled, tile--published).
+- suggested fix: add a visually-hidden span inside each stripDay with the date and state, e.g. "Mon — written" or "Tue — no entry".
+- source: /critique pass 6 (commit be41cf9)
+
+### [ ] [2.7] /log — "today" in empty-state message is plain text, not a link
+- category: external-critique
+- impact: 3
+- ease: 9
+- observation: the empty-state message reads "your log is empty. today is a good place to start." — the word "today" names the sibling page but is rendered as plain text. a new user who has just signed up will expect to click it.
+- evidence: captured text: "your log is empty. today is a good place to start." — no link affordance visible.
+- suggested fix: wrap "today" in a Link to /today.
+- source: /critique pass 6 (commit be41cf9)
+
+### [ ] [2.7] /settings — "Claude" vendor name appears in personalized prompt hint
+- category: external-critique
+- impact: 3
+- ease: 9
+- observation: the hint text for the prompt variety field reads "personalized: a unique prompt generated for you by Claude, informed by your recent entries." naming the AI vendor is inconsistent with ember's attributionless voice.
+- evidence: SettingsForm.tsx: `personalized: a unique prompt generated for you by Claude, informed by your recent entries.`
+- suggested fix: replace "generated for you by Claude" with "generated from your recent entries".
+- source: /critique pass 6 (commit be41cf9)
+
 ### [x] [5.4] /u/[username]/[date] — public entry pages missing OG image in social metadata
 - category: seo
 - impact: 6
