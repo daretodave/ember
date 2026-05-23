@@ -6,6 +6,17 @@
 
 ## Pending
 
+### [x] [5.4] /today — save indicator shows "not yet saved" for existing entries on load
+- category: bug
+- impact: 6
+- ease: 9
+- observation: `TodayEntry` initializes `saveState` to `'idle'` unconditionally. `saveIndicatorText()` only returns a formatted saved-time when `saveState === 'saved' && savedAt`. A returning user with an existing entry has `savedAt` set from `initialEntry.updated_at` but `saveState` is still `'idle'`, so the indicator reads "not yet saved" even though the entry exists and is displayed pre-filled.
+- evidence: `src/app/today/TodayEntry.tsx` line 22: `useState<SaveState>('idle')` — no initialEntry check. Line 129: `if (saveState === 'saved' && savedAt)` never matches on load for an existing entry.
+- suggested fix: initialize `saveState` from `initialEntry`: `useState<SaveState>(initialEntry !== null ? 'saved' : 'idle')`. `handleResponseChange` already resets to `'idle'` on first edit, so the state machine stays correct.
+- source: /iterate audit 2026-05-23
+- issue: [mirror-failed: 2026-05-23T00:00:00Z]
+- resolution: initialized saveState to 'saved' when initialEntry !== null in TodayEntry.tsx. Shipped at c1eec87.
+
 ### [x] [5.4] /today — "see all 60" link label implies a backlog for users with no entries
 - category: external-critique
 - impact: 6
