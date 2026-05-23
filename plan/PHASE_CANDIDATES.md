@@ -1,7 +1,7 @@
 # Ember — phase candidates
 
-> Last pass: 2026-05-22 at commit c9a0e55
-> Pass count: 5
+> Last pass: 2026-05-23 at commit 9d12eac
+> Pass count: 6
 
 Candidates proposed by `/expand`. Promotion to `plan/steps/01_build_plan.md`
 happens only via local `/oversight` — never from the cloud loop.
@@ -16,7 +16,8 @@ happens only via local `/oversight` — never from the cloud loop.
   - critique pattern: typography-voice findings appeared in all 3 critique passes (pass 1: /today section headers; pass 2: /settings, /log, /; pass 3: /today date heading, FOCUS/DONE buttons, /signin email label) — the pattern keeps recurring across new CSS modules
   - active instances: `grep -rn "text-transform.*uppercase" src/` today returns 3 hits — `page.module.css:.previewMarkLabel` (orphaned selector, element removed at 0c1d673), `u/[username]/page.module.css:.entryDate`, `log/[date]/page.module.css:.entryLabel` — confirming the fix passes addressed specific named selectors but not all instances in those files
 - rationale: the loop's iterate cycle has been spending significant capacity on the same mechanical fix (remove text-transform: uppercase from CSS module) page by page. Each fix is correct but leaves no guard. 3 instances remain today despite multiple dedicated passes. A one-phase lint gate closes the cycle permanently: no new CSS module can silently reintroduce the pattern. Cost is one phase; benefit is elimination of an ongoing iterate overhead category.
-- proposed scope: 1 phase — (1) remove the 3 remaining `text-transform: uppercase` instances (2 active, 1 orphaned CSS rule); (2) add a `grep -rn "text-transform.*uppercase" src/` step to the verify gate that exits non-zero if any match is found; (3) document the ban in `design/CLAUDE.md` so new page authors know not to use it
+- note (2026-05-23): all 3 previously active instances (`.previewMarkLabel`, `.entryDate`, `.entryLabel`) have been removed by iterate between expand passes 5 and 6 (commits 055c339, 3795494). `grep -rn "text-transform.*uppercase" src/` now returns 0 hits. Proposed scope reduced to: (1) add the grep lint step to the verify gate; (2) document the ban in `design/CLAUDE.md`. The cleanup component of the original scope is done.
+- proposed scope: 1 phase — (1) add a `grep -rn "text-transform.*uppercase" src/` step to the verify gate that exits non-zero if any match is found; (2) document the ban in `design/CLAUDE.md` so new page authors know not to use it
 - estimated phases: 1
 - conflicts: none — enforces an existing voice constraint; no new design decision required
 
@@ -64,18 +65,6 @@ happens only via local `/oversight` — never from the cloud loop.
 - estimated phases: 1 (may require provisioning a test-user seed in the CI environment)
 - conflicts: none — test-only addition
 
-### [ ] [score 4.5] Sign-in page experience polish
-
-- proposed: 2026-05-22, expand pass 5
-- source signals:
-  - CRITIQUE.md pass 1 (commit c69173d): [LOW] /signin — no link-expiry or next-step copy after submission; the confirmation state says "we email you a sign-in link. no password, no spam." but gives no indication of where the link lands or how long it is valid
-  - CRITIQUE.md pass 3 (commit ae936e3): [LOW] /signin — page title is bare "ember · a daily writing ritual" with no sign-in-specific suffix; all other pages carry descriptive suffixes ("ember · today", "ember · log", "ember · settings"); a user with both the landing page and the sign-in page open cannot distinguish them by tab title
-  - AUDIT.md [3.6]: /signin page title not distinctive — /signin/page.tsx has no metadata export; inherits root layout title
-  - AUDIT.md [2.4]: /signin — no link-expiry copy after submission
-- rationale: 4 independent findings on the same URL surface (/signin) have persisted across 3 critique passes and 2 audit cycles without being resolved by iterate (iterate prioritised higher-scoring typography fixes). The sign-in page is the auth bottleneck for all new users; friction here directly affects activation. The bundle is 2 small changes: (1) add `src/app/signin/layout.tsx` with `export const metadata = { title: 'ember · sign in' }`, (2) add one line of confirmation copy ("the link is valid for 24 hours and drops you straight into today's page"). Neither change requires a schema change or new route.
-- proposed scope: 1 phase (or heavy iterate tick) — add /signin layout.tsx with descriptive page title; add link-expiry copy to the confirmation state; optionally audit the /signin page for any other first-impression gaps
-- estimated phases: 1 (small — could be a single iterate tick if the loop gets to it)
-- conflicts: none — alignment with established page-title pattern; no new URL or auth change
 
 ## Promoted
 
@@ -91,6 +80,11 @@ happens only via local `/oversight` — never from the cloud loop.
 - Installable PWA + offline drafts → **Phase 19** — oversight-authored experiment
 
 ## Resolved
+
+### [score 4.5] Sign-in page experience polish — resolved via iterate
+
+- proposed: 2026-05-22, expand pass 5
+- resolution: all 4 source signals addressed by iterate between expand passes 5 and 6. (1) `/signin/layout.tsx` added with `title: 'ember · sign in'`; (2) "sign-in links expire after 24 hours." added to footer (replacing vendor attribution); (3) back link changed to "back to home" (51977f7); (4) vendor attribution removed (dfe1ae4). No dedicated phase required — the bundle shipped as iterate fixes.
 
 ### [score 8.5] Voice + typography normalisation pass — resolved via iterate
 
