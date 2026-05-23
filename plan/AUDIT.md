@@ -6,7 +6,7 @@
 
 ## Pending
 
-### [ ] [4.8] /settings — no sign-out affordance in authenticated UI
+### [x] [4.8] /settings — no sign-out affordance in authenticated UI
 - category: external-critique
 - impact: 6
 - ease: 8
@@ -15,6 +15,7 @@
 - suggested fix: add a "sign out" form (POST to /auth/signout) in the settings page footer — lower-case, consistent with voice posture.
 - source: /critique pass 8 (commit 5abb81e)
 - issue: [mirror-failed: 2026-05-23T00:00:00Z]
+- resolution: added <form action="/auth/signout" method="POST"> with muted "sign out" button in settings page footer. Shipped at 8a9ceb6.
 
 ### [ ] [4.0] /settings — username hint hardcodes the Vercel preview domain
 - category: external-critique

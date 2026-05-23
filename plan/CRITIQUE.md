@@ -58,7 +58,7 @@
 - source: browser
 - resolution: changed "see all 60" to "open log" in DayStrip.tsx. Shipped at 831dc54.
 
-### [MED] /settings — no sign-out affordance in the authenticated UI
+### [x] [MED] /settings — no sign-out affordance in the authenticated UI
 - pass: 8 (commit 5abb81e)
 - viewport: both
 - category: navigation
@@ -66,6 +66,7 @@
 - evidence: nav text on /today, /log, /settings: "today log settings" — no sign-out control. /auth/signout route exists at src/app/auth/signout/route.ts but is not linked from any page.
 - suggested fix: add a "sign out" link to /auth/signout in the settings page footer or as a muted nav item (lower-case, consistent with voice posture).
 - source: browser
+- resolution: added <form action="/auth/signout" method="POST"> with muted "sign out" button in settings page footer. Shipped at 8a9ceb6.
 
 ### [MED] /settings — username hint hardcodes the Vercel preview domain
 - pass: 8 (commit 5abb81e)
