@@ -1,7 +1,7 @@
 # Ember — phase candidates
 
-> Last pass: 2026-05-23 at commit 9d12eac
-> Pass count: 6
+> Last pass: 2026-05-23 at commit 5250734
+> Pass count: 7
 
 Candidates proposed by `/expand`. Promotion to `plan/steps/01_build_plan.md`
 happens only via local `/oversight` — never from the cloud loop.
@@ -65,6 +65,17 @@ happens only via local `/oversight` — never from the cloud loop.
 - estimated phases: 1 (may require provisioning a test-user seed in the CI environment)
 - conflicts: none — test-only addition
 
+
+### [ ] [score 6.0] SEO completeness for public profiles — canonical URL tags and dynamic sitemap
+
+- proposed: 2026-05-23, expand pass 7
+- source signals:
+  - iterate audit 2026-05-23: `/u/[username]` and `/u/[username]/[date]` generateMetadata functions set openGraph.url but omit `alternates.canonical` — Next.js emits no `<link rel="canonical">` for the primary share targets
+  - iterate audit 2026-05-23: `src/app/sitemap.ts` returns a static array covering only `/` and `/signin`; public profiles are the main externally-linked content and are absent from the sitemap entirely
+- rationale: public profiles and published entries are the primary sharing surface — the only pages ember users send to others. both SEO gaps (no canonical, absent from sitemap) affect these pages specifically. individually each fix scores below the iterate 3.0 threshold (canonical: 2.7; sitemap: 2.5), but they address the same surface, have the same owner, and are best shipped together. the sitemap item in particular requires a Supabase query at build time — more than a one-line fix. bundled into one small phase, they close the SEO gap for the public-facing layer with minimal scope.
+- proposed scope: 1 phase — (1) add `alternates: { canonical: url }` to `generateMetadata` in `src/app/u/[username]/page.tsx` and `src/app/u/[username]/[date]/page.tsx`; (2) make `sitemap.ts` async, query Supabase `profiles` table for rows with non-null `username`, add `/u/${username}` for each (and optionally published entries); add error handling so a DB failure falls back to the static list gracefully
+- estimated phases: 1
+- conflicts: none — metadata-only change for (1); sitemap is already a Next.js App Router route file for (2); no new URL family required
 
 ## Promoted
 
