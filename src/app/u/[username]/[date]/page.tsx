@@ -22,13 +22,15 @@ export async function generateMetadata({ params }: Props) {
   const { username, date } = await params
   const title = `ember · @${username} · ${date}`
   const description = `a reflection shared publicly on ember by @${username}`
+  const url = `${siteUrl}/u/${username}/${date}`
   return {
     title,
     description,
+    alternates: { canonical: url },
     openGraph: {
       title,
       description,
-      url: `${siteUrl}/u/${username}/${date}`,
+      url,
       images: [{ url: '/opengraph-image', width: 1200, height: 630, alt: 'ember' }],
     },
     twitter: {
