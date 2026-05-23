@@ -48,7 +48,7 @@
 - source: browser
 - resolution: wrapped "today" in `<Link href="/today">` in src/app/log/page.tsx. Shipped at ff7dd43.
 
-### [MED] /today — "see all 60" link label implies a backlog for users with no entries
+### [x] [MED] /today — "see all 60" link label implies a backlog for users with no entries
 - pass: 7 (commit 69def1e)
 - viewport: both
 - category: comprehension
@@ -56,6 +56,7 @@
 - evidence: "see all 60" immediately followed by seven strip days all labeled "no entry"
 - suggested fix: change the link text to "open log" (no count) so it reads as a navigation affordance rather than a count of existing content.
 - source: browser
+- resolution: changed "see all 60" to "open log" in DayStrip.tsx. Shipped at 831dc54.
 
 ### [LOW] /today — "not yet saved" status reads as an error state before any typing
 - pass: 7 (commit 69def1e)
