@@ -17,7 +17,7 @@
 - issue: [mirror-failed: 2026-05-23T00:00:00Z]
 - resolution: added `.radioOption:has(:focus-visible)` outline rule in settings/page.module.css. Shipped at 2af17d5.
 
-### [ ] [4.5] / — CTA "sign in to start" names the action but not the destination
+### [x] [4.5] / — CTA "sign in to start" names the action but not the destination
 - category: external-critique
 - impact: 5
 - ease: 9
@@ -25,6 +25,8 @@
 - evidence: captured CTA text: "sign in to start" — no adjacent copy explaining what follows.
 - suggested fix: add a brief phrase near the CTA such as "today's prompt is waiting." so the destination is concrete.
 - source: /critique pass 6 (commit be41cf9)
+- issue: [mirror-failed: 2026-05-23T05:55:00Z]
+- resolution: changed ctaCopy primary text to "today's prompt is waiting." and moved privacy copy to the muted span. Shipped at 0e37545.
 
 ### [ ] [3.6] /today — day-strip tiles are aria-hidden with no AT-accessible state
 - category: external-critique

@@ -8,7 +8,7 @@
 
 ## Pending
 
-### [MED] / — CTA "sign in to start" names the action but not the destination
+### [x] [MED] / — CTA "sign in to start" names the action but not the destination
 - pass: 6 (commit be41cf9)
 - viewport: both
 - category: comprehension
@@ -16,6 +16,7 @@
 - evidence: captured CTA text: "sign in to start" — no adjacent copy explaining what the first logged-in experience looks like.
 - suggested fix: add a brief phrase near the CTA such as "today's prompt is waiting." so the destination is concrete.
 - source: browser
+- resolution: changed ctaCopy primary text to "today's prompt is waiting." and moved privacy copy to the muted span. Shipped at 0e37545.
 
 ### [MED] /today — day-strip tiles are aria-hidden with no AT-accessible state
 - pass: 6 (commit be41cf9)
