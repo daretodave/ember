@@ -286,6 +286,11 @@
   color: var(--color-ink);
 }
 
+.radioOption:has(:focus-visible) {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
 .radioOptionActive {
   color: var(--color-ink);
   border-bottom-color: var(--color-accent);
