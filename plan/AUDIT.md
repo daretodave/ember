@@ -6,6 +6,34 @@
 
 ## Pending
 
+### [ ] [4.8] /settings — no sign-out affordance in authenticated UI
+- category: external-critique
+- impact: 6
+- ease: 8
+- observation: the authenticated nav shows "today / log / settings" only. the settings page has no sign-out link or button anywhere. a user who wants to sign out must navigate directly to /auth/signout by typing the URL — the route handler exists but is unreachable from the UI.
+- evidence: nav text on /today, /log, /settings: "today log settings" — no sign-out control. /auth/signout route exists at src/app/auth/signout/route.ts but is not linked from any page.
+- suggested fix: add a "sign out" form (POST to /auth/signout) in the settings page footer — lower-case, consistent with voice posture.
+- source: /critique pass 8 (commit 5abb81e)
+- issue: [mirror-failed: 2026-05-23T00:00:00Z]
+
+### [ ] [4.0] /settings — username hint hardcodes the Vercel preview domain
+- category: external-critique
+- impact: 5
+- ease: 8
+- observation: the public username hint reads "your public profile lives at ember-rust-sigma.vercel.app/u/username. leave blank to stay private." — the domain is the internal Vercel preview URL, not a canonical product domain. it exposes infra naming to users and will silently break if the project is moved to a custom domain.
+- evidence: hint text in SettingsForm.tsx hardcodes "ember-rust-sigma.vercel.app".
+- suggested fix: replace the hardcoded origin with window.location.origin (client-side) or simplify to a relative form: "your public profile lives at /u/your-handle. leave blank to stay private."
+- source: /critique pass 8 (commit 5abb81e)
+
+### [ ] [3.5] /today — publish toggle description conveyed only via `title` attribute
+- category: external-critique
+- impact: 5
+- ease: 7
+- observation: the publish toggle wraps a checkbox in a `<label title="make this entry visible on your public profile.">`. the `title` attribute is not reliably announced by screen readers and is invisible on touch devices. no `aria-describedby` links the description to the checkbox input.
+- evidence: TodayEntry.tsx: `<label className={styles.publishToggle} title="...">` — the nested checkbox has no aria-describedby.
+- suggested fix: add a visually-hidden `<span id="publish-desc">make this entry visible on your public profile.</span>` and set `aria-describedby="publish-desc"` on both checkbox inputs (main and focus-overlay variants).
+- source: /critique pass 8 (commit 5abb81e)
+
 ### [x] [5.4] /today — save indicator shows "not yet saved" for existing entries on load
 - category: bug
 - impact: 6
@@ -66,6 +94,24 @@
 - suggested fix: reframe as an observation: "your log is empty. today's entry will appear here." — describes what will happen without coaching.
 - source: /critique pass 7 (commit 69def1e)
 
+### [ ] [2.7] /log — stat line drops unit noun for published count
+- category: external-critique
+- impact: 3
+- ease: 9
+- observation: the stat line reads "0 days written. 60 days quiet. 0 published." — the first two clauses carry the unit noun "days" but the third drops it, producing a grammatically inconsistent series.
+- evidence: "0 days written. 60 days quiet. 0 published."
+- suggested fix: change to "0 days published." matching the unit-noun pattern of the preceding clauses, pluralizing conditionally for singular counts.
+- source: /critique pass 8 (commit 5abb81e)
+
+### [ ] [2.7] / — footer "made for adults" frames product by exclusion
+- category: external-critique
+- impact: 3
+- ease: 9
+- observation: the footer reads "made for adults who want a low-friction ritual." the phrase "made for adults" positions the product by who it excludes rather than who it serves. the voice guide prefers settled statements of value.
+- evidence: "ember · v1\nmade for adults who want a low-friction ritual."
+- suggested fix: reframe around the value rather than the audience boundary: "a daily writing ritual for people who want less noise." or remove the qualifier entirely.
+- source: /critique pass 8 (commit 5abb81e)
+
 ### [ ] [2.4] /signin — sign-in page gives no destination context after email submission
 - category: external-critique
 - impact: 3
@@ -74,6 +120,15 @@
 - evidence: "we email you a sign-in link. no password, no spam." / "sign-in links expire after 24 hours." — no destination copy
 - suggested fix: add one sentence to the footer, e.g. "the link opens your daily prompt directly." — closes the post-submit loop.
 - source: /critique pass 7 (commit 69def1e)
+
+### [ ] [1.8] /settings — display name placeholder uses second-person "you"
+- category: external-critique
+- impact: 2
+- ease: 9
+- observation: the display name input shows placeholder text "how you appear on your public profile" — the voice guide discourages second-person copy.
+- evidence: SettingsForm.tsx display name field placeholder "how you appear on your public profile".
+- suggested fix: replace with a neutral descriptor: "visible name on your public profile" or a sample value such as "Ada Lovelace".
+- source: /critique pass 8 (commit 5abb81e)
 
 ### [x] [3.6] / — "that's deliberate." reads as a defensive aside
 - category: external-critique

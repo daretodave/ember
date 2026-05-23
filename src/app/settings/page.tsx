@@ -59,6 +59,11 @@ export default async function SettingsPage() {
           </Link>
         )}
       </main>
+      <footer className={styles.footer}>
+        <form action="/auth/signout" method="POST">
+          <button type="submit" className={styles.signOutBtn}>sign out</button>
+        </form>
+      </footer>
     </div>
   )
 }
