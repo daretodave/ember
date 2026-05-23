@@ -50,14 +50,15 @@
 - issue: [mirror-failed: 2026-05-23T07:07:00Z]
 - resolution: added tileStateLabel() helper in DayStrip.tsx; visually-hidden span provides full date + state per tile ("Mon 19 May 2026 — written", etc.); visible date span gets aria-hidden="true" to prevent double-announcement. Shipped at 9b1e99f.
 
-### [ ] [2.7] /log — "today" in empty-state message is plain text, not a link
+### [ ] [3.6] /log — "today" in empty-state message is plain text, not a link
 - category: external-critique
-- impact: 3
+- impact: 4
 - ease: 9
-- observation: the empty-state message reads "your log is empty. today is a good place to start." — the word "today" names the sibling page but is rendered as plain text. a new user who has just signed up will expect to click it.
+- observation: the empty-state message reads "your log is empty. today is a good place to start." — the word "today" names the sibling page but is rendered as plain text. a new user who has just signed up will expect to click it but cannot; they must find another navigation path, which breaks the first-time experience.
 - evidence: captured text: "your log is empty. today is a good place to start." — no link affordance visible.
 - suggested fix: wrap "today" in a Link to /today.
 - source: /critique pass 6 (commit be41cf9)
+- issue: [mirror-failed: 2026-05-23T00:00:00Z]
 
 ### [ ] [2.7] /settings — "Claude" vendor name appears in personalized prompt hint
 - category: external-critique
