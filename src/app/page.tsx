@@ -63,8 +63,7 @@ export default function LandingPage() {
 
         <section className={styles.closing}>
           <p>
-            the same prompt and task arrive for everyone on a given day.
-            that&apos;s deliberate.{' '}
+            the same prompt and task arrive for everyone on a given day.{' '}
             <em>ember does not personalize your morning.</em>
           </p>
           <p>
