@@ -35,7 +35,7 @@
 <!-- Phase 20 promoted via /oversight 2026-05-23 from
      plan/PHASE_CANDIDATES.md [score 7.0]. Build plan was exhausted at
      phase 19; user chose to drain the top-scored pending candidate. -->
-- [ ] Phase 20 — Searchable timezone combobox on `/settings`
+- [x] Phase 20 — Searchable timezone combobox on `/settings` — b1656b7
 
 ## Per-phase scope
 
