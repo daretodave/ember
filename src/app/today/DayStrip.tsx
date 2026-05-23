@@ -1,5 +1,5 @@
 import type { Entry } from '@/lib/entries'
-import { formatShortWeekday, offsetDate } from '@/lib/entries'
+import { formatDisplayDate, formatShortWeekday, offsetDate } from '@/lib/entries'
 import Link from 'next/link'
 import styles from './page.module.css'
 
@@ -10,6 +10,14 @@ function tileClass(state: TileState): string {
   if (state === 'today') return 'tile tile--today'
   if (state === 'published') return 'tile tile--published'
   return 'tile'
+}
+
+function tileStateLabel(date: string, state: TileState): string {
+  if (state === 'today') return 'today'
+  const displayDate = formatDisplayDate(date)
+  if (state === 'filled') return `${displayDate} — written`
+  if (state === 'published') return `${displayDate} — published`
+  return `${displayDate} — no entry`
 }
 
 type Props = {
@@ -48,9 +56,13 @@ export function DayStrip({ todayDate, entries }: Props) {
         {days.map(({ date, isToday, state, label }) => (
           <div key={date} className={styles.stripDay}>
             <div className={tileClass(state)} aria-hidden="true" />
-            <span className={`${styles.stripDate}${isToday ? ` ${styles.stripDateToday}` : ''}`}>
+            <span
+              className={`${styles.stripDate}${isToday ? ` ${styles.stripDateToday}` : ''}`}
+              aria-hidden="true"
+            >
               {isToday ? 'today' : label}
             </span>
+            <span className={styles.srOnly}>{tileStateLabel(date, state)}</span>
           </div>
         ))}
       </div>
