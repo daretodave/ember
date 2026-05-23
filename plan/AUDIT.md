@@ -61,32 +61,12 @@
 - issue: [mirror-failed: 2026-05-23T00:00:00Z]
 - resolution: wrapped "today" in `<Link href="/today">` in src/app/log/page.tsx. Shipped at ff7dd43.
 
-### [ ] [2.7] /u/[username], /u/[username]/[date] — generateMetadata missing alternates.canonical
-- category: seo
-- impact: 3
-- ease: 9
-- observation: both public profile generateMetadata functions set openGraph.url correctly but omit alternates.canonical — so Next.js emits no <link rel="canonical"> for these pages. without a canonical hint, search engines must infer the canonical URL; this is usually handled correctly for unique pages but explicit canonical tags are SEO hygiene and matter more if the site is ever proxied or mirrored.
-- evidence: src/app/u/[username]/page.tsx generateMetadata: has openGraph.url, no alternates key. src/app/u/[username]/[date]/page.tsx: same pattern.
-- suggested fix: add alternates: { canonical: `${siteUrl}/u/${username}` } to /u/[username]/page.tsx generateMetadata, and alternates: { canonical: `${siteUrl}/u/${username}/${date}` } to /u/[username]/[date]/page.tsx generateMetadata.
-- source: /iterate audit 2026-05-23
-
-### [ ] [2.5] sitemap — only covers static routes; public profiles not included
-- category: seo
-- impact: 5
-- ease: 5
-- observation: src/app/sitemap.ts returns a static array with only two URLs (/ and /signin). public profiles (/u/[username]) and published entries — the primary public-facing content — are absent. search engines cannot discover these pages via the sitemap.
-- evidence: src/app/sitemap.ts: returns static array with siteUrl and siteUrl/signin only — no dynamic profile or entry URLs.
-- suggested fix: make sitemap() async; query Supabase profiles table for rows with non-null username; include /u/[username] for each. optionally include published /u/[username]/[date] entries.
-- source: /iterate audit 2026-05-23
-
-### [ ] [2.7] /settings — "Claude" vendor name appears in personalized prompt hint
-- category: external-critique
-- impact: 3
-- ease: 9
-- observation: the hint text for the prompt variety field reads "personalized: a unique prompt generated for you by Claude, informed by your recent entries." naming the AI vendor is inconsistent with ember's attributionless voice.
-- evidence: SettingsForm.tsx: `personalized: a unique prompt generated for you by Claude, informed by your recent entries.`
-- suggested fix: replace "generated for you by Claude" with "generated from your recent entries".
-- source: /critique pass 6 (commit be41cf9)
+<!-- 3 pending findings pruned via /oversight 2026-05-23.
+     Two SEO items (canonical, sitemap) — score 2.5/2.7, below the iterate
+     3.0 threshold, and were already filed as a bundled candidate (SEO
+     public-profile completeness 6.0). Vendor-name finding (2.7, "Claude" in
+     /settings hint) pruned alongside as voice nit; if it matters it will
+     resurface via /critique. -->
 
 ### [x] [5.4] /u/[username]/[date] — public entry pages missing OG image in social metadata
 - category: seo

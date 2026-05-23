@@ -21,17 +21,6 @@ happens only via local `/oversight` — never from the cloud loop.
 - estimated phases: 1
 - conflicts: none — enforces an existing voice constraint; no new design decision required
 
-### [ ] [score 7.0] Settings UX — searchable timezone combobox
-
-- proposed: 2026-05-21, expand pass 4
-- note (2026-05-22): `<optgroup>` grouping by region was added at 8d43d1b (iterate), addressing the minimum viable fix. The full combobox (type-to-filter) was not shipped. Candidate remains valid; urgency reduced slightly since the worst-case mobile UX is improved.
-- source signals:
-  - CRITIQUE.md pass 1 (commit c69173d): [HIGH] /settings — timezone selector is a flat unfiltered list of 200+ tz strings; effectively unusable on mobile
-- rationale: a flat `<select>` with 200+ raw tz database names (Africa/Abidjan, America/Indiana/Knox…) is a known UX anti-pattern on mobile. This is the single highest-friction point in the settings flow — users who need to set their timezone correctly (critical for prompt date alignment) face a scroll-through-hundreds experience with no shortcut. Replacing with a searchable combobox (type to filter, grouped by region or country) makes the field usable on mobile and faster on desktop. Scope is bounded to one settings field; no schema changes required.
-- proposed scope: 1 phase — replace the `<select>` timezone field in SettingsForm with a searchable combobox component; group entries by region with `<optgroup>` as a minimum, or implement a type-to-filter combobox; keep the underlying value format (IANA tz string) unchanged
-- estimated phases: 1 (may need a small third-party combobox library or a bespoke accessible component)
-- conflicts: none with spec or URL contract; /settings page extension only; no new route
-
 ### [ ] [score 5.0] Data export — download entries as JSON or Markdown
 
 - proposed: 2026-05-16, expand pass 1
@@ -89,6 +78,7 @@ happens only via local `/oversight` — never from the cloud loop.
 - On this day (echo a past entry on `/today`) → **Phase 17** — oversight-authored experiment, not an `/expand` candidate
 - Focus mode (distraction-free writing on `/today`) → **Phase 18** — oversight-authored experiment
 - Installable PWA + offline drafts → **Phase 19** — oversight-authored experiment
+- [score 7.0] Settings UX — searchable timezone combobox → **Phase 20** (promoted via `/oversight` 2026-05-23)
 
 ## Resolved
 

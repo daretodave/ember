@@ -32,6 +32,11 @@
 - [x] Phase 18 — Focus mode (distraction-free writing surface on `/today`) — 77398f5
 - [x] Phase 19 — Installable PWA + offline draft persistence — a9e1729
 
+<!-- Phase 20 promoted via /oversight 2026-05-23 from
+     plan/PHASE_CANDIDATES.md [score 7.0]. Build plan was exhausted at
+     phase 19; user chose to drain the top-scored pending candidate. -->
+- [ ] Phase 20 — Searchable timezone combobox on `/settings`
+
 ## Per-phase scope
 
 ### Phase 0 — Bootstrap
@@ -176,3 +181,18 @@ the save retries on reconnect, the save indicator reflecting
 "saved locally — will sync". No change to the server model.
 Depends on Phase 14's manifest. Experimental — flag if the
 offline path proves fragile.
+
+### Phase 20 — Searchable timezone combobox
+
+Replace the flat `<select>` on `/settings` (200+ raw IANA
+tz strings, currently grouped by region via `<optgroup>` at
+8d43d1b) with a searchable combobox. Type to filter; keyboard-
+navigable; ARIA combobox role + listbox semantics; honors the
+existing optgroup region structure when no query is entered.
+The underlying value format (IANA tz string) is unchanged so
+the API contract and stored data are untouched — UI swap only.
+Mobile is the priority surface; the type-to-filter affordance
+removes the scroll-through-hundreds anti-pattern. Bias toward
+a bespoke accessible component over a heavy library; if a
+library is needed, prefer headless (Radix / Downshift) and
+keep the dependency narrow. No new URL family.
