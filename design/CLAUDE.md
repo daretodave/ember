@@ -89,6 +89,16 @@ If a new screen is needed that the design folder doesn't include, the path is: (
 
 ---
 
+## CSS rule bans
+
+These rules are enforced by the `lint:no-uppercase-css` step in the verify gate (`pnpm verify`). A violation fails the gate.
+
+| Banned rule | Why | Enforced by |
+|---|---|---|
+| `text-transform: uppercase` in `src/` | Ember's voice is lower-case where typographic restraint reads better. All-caps labels conflict with this across every page. The source text is already lower-case; CSS must not inflate it. | `grep -rn 'text-transform.*uppercase' src/` — must return no matches |
+
+---
+
 ## What the design folder does NOT cover
 
 - **Favicon, OG image, social cards.** These are the demand-pull asset layer. A future `/ship-asset` slice renders them against the mosaic primitive, but they don't ship in v1.
