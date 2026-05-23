@@ -28,7 +28,7 @@
 - issue: [mirror-failed: 2026-05-23T19:07:00Z]
 - resolution: changed hint to "your public profile lives at /u/your-handle. leave blank to stay private." in SettingsForm.tsx. Shipped at 3508ef7.
 
-### [ ] [3.5] /today — publish toggle description conveyed only via `title` attribute
+### [x] [3.5] /today — publish toggle description conveyed only via `title` attribute
 - category: external-critique
 - impact: 5
 - ease: 7
@@ -36,6 +36,8 @@
 - evidence: TodayEntry.tsx: `<label className={styles.publishToggle} title="...">` — the nested checkbox has no aria-describedby.
 - suggested fix: add a visually-hidden `<span id="publish-desc">make this entry visible on your public profile.</span>` and set `aria-describedby="publish-desc"` on both checkbox inputs (main and focus-overlay variants).
 - source: /critique pass 8 (commit 5abb81e)
+- issue: [mirror-failed: 2026-05-23T20:07:00Z]
+- resolution: added visually-hidden span + aria-describedby on both checkbox inputs (id="publish-desc" main; id="publish-desc-focus" focus overlay). Shipped at 31de186.
 
 ### [x] [5.4] /today — save indicator shows "not yet saved" for existing entries on load
 - category: bug
