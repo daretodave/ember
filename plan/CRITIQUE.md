@@ -1,7 +1,7 @@
 # External-observer findings — Ember
 
-> Last pass: 2026-05-23 at commit 69def1e
-> Pass count: 7
+> Last pass: 2026-05-23 at commit 5abb81e
+> Pass count: 8
 
 > Written by `/critique` after walking the live site as a
 > fresh-eyes visitor. Drained by `/iterate`.
@@ -57,6 +57,60 @@
 - suggested fix: change the link text to "open log" (no count) so it reads as a navigation affordance rather than a count of existing content.
 - source: browser
 - resolution: changed "see all 60" to "open log" in DayStrip.tsx. Shipped at 831dc54.
+
+### [MED] /settings — no sign-out affordance in the authenticated UI
+- pass: 8 (commit 5abb81e)
+- viewport: both
+- category: navigation
+- observation: the authenticated nav shows "today / log / settings" only. the settings page has no sign-out link or button anywhere. a user who wants to sign out must navigate directly to /auth/signout by typing the URL — the route handler exists but is unreachable from the UI.
+- evidence: nav text on /today, /log, /settings: "today log settings" — no sign-out control. /auth/signout route exists at src/app/auth/signout/route.ts but is not linked from any page.
+- suggested fix: add a "sign out" link to /auth/signout in the settings page footer or as a muted nav item (lower-case, consistent with voice posture).
+- source: browser
+
+### [MED] /settings — username hint hardcodes the Vercel preview domain
+- pass: 8 (commit 5abb81e)
+- viewport: both
+- category: voice
+- observation: the public username hint reads "your public profile lives at ember-rust-sigma.vercel.app/u/username. leave blank to stay private." — the domain is the internal Vercel preview URL, not a canonical product domain. it exposes infra naming to users and will silently break if the project is moved to a custom domain.
+- evidence: captured text: "your public profile lives at ember-rust-sigma.vercel.app/u/username. leave blank to stay private."
+- suggested fix: replace the hardcoded origin with window.location.host (client-side) or an env var, or simplify to a relative form: "your public profile lives at /u/your-handle. leave blank to stay private."
+- source: browser
+
+### [MED] /today — publish toggle description conveyed only via `title` attribute
+- pass: 8 (commit 5abb81e)
+- viewport: both
+- category: a11y
+- observation: the publish toggle wraps a checkbox in a `<label title="make this entry visible on your public profile.">`. the `title` attribute is not reliably announced by screen readers and is invisible on touch devices. no `aria-describedby` links the description to the checkbox input.
+- evidence: TodayEntry.tsx: `<label className={styles.publishToggle} title="make this entry visible on your public profile.">` — the nested checkbox has no aria-describedby.
+- suggested fix: add a visually-hidden `<span id="publish-desc">make this entry visible on your public profile.</span>` and set `aria-describedby="publish-desc"` on both checkbox inputs (main and focus-overlay variants).
+- source: browser
+
+### [LOW] /log — stat line drops unit noun for published count
+- pass: 8 (commit 5abb81e)
+- viewport: both
+- category: voice
+- observation: the stat line reads "0 days written. 60 days quiet. 0 published." — the first two clauses carry the unit noun "days" but the third drops it, producing a grammatically inconsistent series.
+- evidence: "0 days written. 60 days quiet. 0 published."
+- suggested fix: change to "0 days published." matching the unit-noun pattern of the preceding clauses (pluralize conditionally as needed for singular counts).
+- source: browser
+
+### [LOW] / — footer "made for adults" frames product by exclusion
+- pass: 8 (commit 5abb81e)
+- viewport: both
+- category: voice
+- observation: the footer reads "made for adults who want a low-friction ritual." the phrase "made for adults" positions the product by who it excludes rather than who it serves. the voice guide prefers settled statements of value.
+- evidence: "ember · v1\nmade for adults who want a low-friction ritual."
+- suggested fix: reframe around the value rather than the audience boundary: "a daily writing ritual for people who want less noise." or remove the qualifier entirely and let the body copy carry the framing.
+- source: browser
+
+### [LOW] /settings — display name placeholder uses second-person "you"
+- pass: 8 (commit 5abb81e)
+- viewport: both
+- category: voice
+- observation: the display name input shows placeholder text "how you appear on your public profile" — the voice guide discourages second-person copy. while not imperative, the placeholder addresses the user as "you" in a way the rest of the settings page avoids.
+- evidence: settings page: display name field placeholder "how you appear on your public profile" per SettingsForm.tsx.
+- suggested fix: replace with a neutral descriptor: "visible name on your public profile" or a sample value such as "Ada Lovelace".
+- source: browser
 
 ### [LOW] /today — "not yet saved" status reads as an error state before any typing
 - pass: 7 (commit 69def1e)
