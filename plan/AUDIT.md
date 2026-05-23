@@ -6,6 +6,17 @@
 
 ## Pending
 
+### [x] [4.5] /u/[username], /u/[username]/[date] — generateMetadata missing alternates.canonical
+- category: seo
+- impact: 5
+- ease: 9
+- observation: public profile and entry pages set openGraph.url but emit no `<link rel="canonical">`. Next.js only generates a canonical tag when alternates.canonical is explicitly set in the Metadata object. These are the primary sharing pages — the canonical tag matters most here.
+- evidence: src/app/u/[username]/page.tsx generateMetadata returns openGraph.url with no alternates field. Same in src/app/u/[username]/[date]/page.tsx.
+- suggested fix: add `alternates: { canonical: \`${siteUrl}/u/${username}\` }` to /u/[username] generateMetadata and `alternates: { canonical: \`${siteUrl}/u/${username}/${date}\` }` to /u/[username]/[date] generateMetadata.
+- source: /iterate audit 2026-05-23
+- issue: [mirror-failed: 2026-05-23T00:00:00Z]
+- resolution: added alternates.canonical to both generateMetadata functions. Shipped at 8d7d49a.
+
 ### [x] [4.8] /settings — no sign-out affordance in authenticated UI
 - category: external-critique
 - impact: 6
