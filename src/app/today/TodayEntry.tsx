@@ -178,6 +178,7 @@ export function TodayEntry({ date, task, prompt, initialEntry }: Props) {
             type="button"
             className={styles.focusTrigger}
             aria-label="enter focus mode"
+            title="enters a distraction-free writing view."
             onClick={enterFocus}
           >
             focus
