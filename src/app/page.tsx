@@ -70,7 +70,7 @@ export default function LandingPage() {
           </p>
           <p>
             there are no streaks to break, no reminders to dismiss, no
-            notifications to mute. forgetting a day is fine. the mosaic shows what
+            notifications to mute. forgetting a day is fine. your log shows what
             is, not what isn&apos;t.
           </p>
         </section>
