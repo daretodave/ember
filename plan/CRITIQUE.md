@@ -108,7 +108,7 @@
 - source: browser
 - resolution: extended tileStateLabel to accept optional Entry; today tile now returns e.g. "today, Sun 24 May 2026 — no entry" (reflecting actual entry state). Shipped at 103b865.
 
-### [LOW] /today — focus button has no hover tooltip while adjacent publish button does
+### [x] [LOW] /today — focus button has no hover tooltip while adjacent publish button does
 - pass: 9 (commit 8c8a92d)
 - viewport: desktop
 - category: comprehension
@@ -116,6 +116,7 @@
 - evidence: `src/app/today/TodayEntry.tsx` focusTrigger button: no title attribute; publish toggle label: `title="make this entry visible on your public profile."` is present.
 - suggested fix: add `title="enters a distraction-free writing view."` to the focusTrigger button in TodayEntry.tsx.
 - source: browser
+- resolution: added `title="enters a distraction-free writing view."` to the focusTrigger button in TodayEntry.tsx. Shipped at 7a90a47.
 
 ### [LOW] /settings — timezone combobox shows no value for accounts with no saved timezone
 - pass: 9 (commit 8c8a92d)

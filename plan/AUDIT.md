@@ -175,7 +175,7 @@
 - suggested fix: reframe around the value rather than the audience boundary: "a daily writing ritual for people who want less noise." or remove the qualifier entirely.
 - source: /critique pass 8 (commit 5abb81e)
 
-### [ ] [2.7] /today — focus button has no hover tooltip while adjacent publish button does
+### [x] [2.7] /today — focus button has no hover tooltip while adjacent publish button does
 - category: external-critique
 - impact: 3
 - ease: 9
@@ -183,6 +183,35 @@
 - evidence: `src/app/today/TodayEntry.tsx` focusTrigger button: no title attribute; publish toggle label: `title="make this entry visible on your public profile."` is present.
 - suggested fix: add `title="enters a distraction-free writing view."` to the focusTrigger button in TodayEntry.tsx.
 - source: /critique pass 9 (commit 8c8a92d)
+- issue: #30
+- resolution: added `title="enters a distraction-free writing view."` to the focusTrigger button in TodayEntry.tsx. Shipped at 7a90a47.
+
+### [ ] [2.7] /today — publish toggle tooltip uses imperative form
+- category: external-critique
+- impact: 3
+- ease: 9
+- observation: the publish toggle carries `title="make this entry visible on your public profile."` — the imperative construction "make this entry visible" is a direct second-person instruction, which the voice guide prohibits outside quoted text. tooltip copy should read as a state description, not a command.
+- evidence: `"publish\nmake this entry visible on your public profile."` — captured in both primary view and focus-mode overlay.
+- suggested fix: reframe as declarative: "this entry will appear on your public profile."
+- source: /critique pass 10 (commit 84e0c49)
+
+### [ ] [2.7] /settings — "/u/your-handle" literal string in username hint reads as unfinished
+- category: external-critique
+- impact: 3
+- ease: 9
+- observation: the public username field hint renders the literal hyphenated string "your-handle" in a URL example: "your public profile lives at /u/your-handle." before a username is set, this reads as placeholder copy accidentally left in rather than a generic illustrative example.
+- evidence: `"your public profile lives at /u/your-handle. leave blank to stay private."`
+- suggested fix: replace with a clearly-generic placeholder token, e.g. "/u/username" or "/u/your-username".
+- source: /critique pass 10 (commit 84e0c49)
+
+### [ ] [2.1] /settings — personalized prompt gives no fallback signal for users with no entries
+- category: external-critique
+- impact: 3
+- ease: 7
+- observation: the personalized variety option reads "informed by your recent entries" with no indication of what happens when a new user with zero entries selects it. there is no signal about whether the feature activates immediately, requires a minimum, or gracefully falls back to a standard prompt.
+- evidence: `"personalized: a unique prompt generated for you by Claude, informed by your recent entries."` — no fallback copy follows.
+- suggested fix: add a brief qualifier after the existing description, e.g. "falls back to a standard prompt until entries exist."
+- source: /critique pass 10 (commit 84e0c49)
 
 ### [ ] [2.4] /signin — sign-in page gives no destination context after email submission
 - category: external-critique
