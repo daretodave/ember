@@ -94,6 +94,17 @@
 - issue: [mirror-failed: 2026-05-23T00:00:00Z]
 - resolution: added `lint:no-uppercase-css` to package.json and prepended to verify chain; documented ban in design/CLAUDE.md "CSS rule bans" section. Shipped at f3ca66d.
 
+### [x] [6.3] / — landing page 7-day preview shows stale build-date as "today"
+- category: external-critique
+- impact: 7
+- ease: 9
+- observation: homepage `LandingPage` calls `getSevenDayPreview(new Date())` as a Next.js RSC with no `export const dynamic` override. Next.js 15 statically renders this at build time, so `new Date()` resolves to the build date. A visitor after midnight UTC sees the build date labelled "today" — mismatched against the authenticated `/today` page.
+- evidence: anonymous capture (00:05 UTC 2026-05-24) shows "today / Sat 23 May" while authenticated /today shows "Sun 24 May 2026".
+- suggested fix: add `export const dynamic = 'force-dynamic'` to `src/app/page.tsx`
+- source: /critique pass 9 (commit 8c8a92d)
+- issue: [mirror-failed: 2026-05-24T01:29:00Z]
+- resolution: added `export const dynamic = 'force-dynamic'` to src/app/page.tsx. Shipped at f97b216.
+
 ### [ ] [2.8] /today — "not yet saved" status reads as an error state before any typing
 - category: external-critique
 - impact: 4

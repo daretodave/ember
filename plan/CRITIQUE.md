@@ -88,7 +88,7 @@
 - source: browser
 - resolution: added visually-hidden span + aria-describedby on both checkbox inputs. Shipped at 31de186.
 
-### [MED] / — landing page 7-day preview shows stale build-date as "today"
+### [x] [MED] / — landing page 7-day preview shows stale build-date as "today"
 - pass: 9 (commit 8c8a92d)
 - viewport: both
 - category: comprehension
@@ -96,6 +96,7 @@
 - evidence: anonymous capture (00:05 UTC 2026-05-24) shows "today / Sat 23 May" while authenticated /today shows "Sun 24 May 2026"; last build was from commit 8c8a92d (2026-05-23).
 - suggested fix: add `export const dynamic = 'force-dynamic'` to `src/app/page.tsx` so the landing page renders per-request and `new Date()` always reflects the current date.
 - source: browser
+- resolution: added `export const dynamic = 'force-dynamic'` to src/app/page.tsx. Shipped at f97b216.
 
 ### [MED] /today — today tile in day strip omits date and entry state from accessible label
 - pass: 9 (commit 8c8a92d)
