@@ -161,6 +161,15 @@
 - suggested fix: reframe around the value rather than the audience boundary: "a daily writing ritual for people who want less noise." or remove the qualifier entirely.
 - source: /critique pass 8 (commit 5abb81e)
 
+### [ ] [2.7] /today — focus button has no hover tooltip while adjacent publish button does
+- category: external-critique
+- impact: 3
+- ease: 9
+- observation: the publish toggle carries `title="make this entry visible on your public profile."` per the voice guide ("hover/tooltip copy is a complete sentence with a period"). the adjacent focus button has `aria-label="enter focus mode"` but no `title` attribute. a first-time sighted user hovering over "focus" receives no explanation of what the control does.
+- evidence: `src/app/today/TodayEntry.tsx` focusTrigger button: no title attribute; publish toggle label: `title="make this entry visible on your public profile."` is present.
+- suggested fix: add `title="enters a distraction-free writing view."` to the focusTrigger button in TodayEntry.tsx.
+- source: /critique pass 9 (commit 8c8a92d)
+
 ### [ ] [2.4] /signin — sign-in page gives no destination context after email submission
 - category: external-critique
 - impact: 3
@@ -169,6 +178,15 @@
 - evidence: "we email you a sign-in link. no password, no spam." / "sign-in links expire after 24 hours." — no destination copy
 - suggested fix: add one sentence to the footer, e.g. "the link opens your daily prompt directly." — closes the post-submit loop.
 - source: /critique pass 7 (commit 69def1e)
+
+### [ ] [2.1] /settings — timezone combobox shows no value for accounts with no saved timezone
+- category: external-critique
+- impact: 3
+- ease: 7
+- observation: `SettingsForm` initializes `tzVal` from the profile's saved timezone string. for existing accounts that never set a timezone, `timezone` is an empty string, so the combobox renders blank. the virgin-profile auto-detection only fires when `virgin === true`; existing profiles with an empty timezone get no detected default. a user who skipped the timezone field on first setup returns to a blank combobox with no indication of what to enter.
+- evidence: settings capture: "timezone" label with no adjacent value; `src/app/settings/SettingsForm.tsx`: auto-detection skipped for non-virgin profiles.
+- suggested fix: expand the timezone auto-detection to run whenever `tzVal === ''` (not only on virgin profiles) so the combobox always shows a detected default rather than blank.
+- source: /critique pass 9 (commit 8c8a92d)
 
 ### [ ] [1.8] /settings — display name placeholder uses second-person "you"
 - category: external-critique
