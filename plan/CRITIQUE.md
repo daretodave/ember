@@ -98,7 +98,7 @@
 - source: browser
 - resolution: added `export const dynamic = 'force-dynamic'` to src/app/page.tsx. Shipped at f97b216.
 
-### [MED] /today — today tile in day strip omits date and entry state from accessible label
+### [x] [MED] /today — today tile in day strip omits date and entry state from accessible label
 - pass: 9 (commit 8c8a92d)
 - viewport: both
 - category: a11y
@@ -106,6 +106,7 @@
 - evidence: capture: "today / today" versus "Mon / Mon 18 May 2026 — no entry" for adjacent tiles; `src/app/today/DayStrip.tsx` line 16: `if (state === 'today') return 'today'`.
 - suggested fix: extend `tileStateLabel` to include the full date and entry state for the today tile, e.g. `if (state === 'today') return \`today, ${formatDisplayDate(date)} — no entry\`` (substituting actual entry state); make the visible "today" span aria-hidden to prevent double-announcement.
 - source: browser
+- resolution: extended tileStateLabel to accept optional Entry; today tile now returns e.g. "today, Sun 24 May 2026 — no entry" (reflecting actual entry state). Shipped at 103b865.
 
 ### [LOW] /today — focus button has no hover tooltip while adjacent publish button does
 - pass: 9 (commit 8c8a92d)

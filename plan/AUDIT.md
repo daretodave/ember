@@ -105,6 +105,17 @@
 - issue: [mirror-failed: 2026-05-24T01:29:00Z]
 - resolution: added `export const dynamic = 'force-dynamic'` to src/app/page.tsx. Shipped at f97b216.
 
+### [x] [5.4] /today — today tile in day strip omits date and entry state from accessible label
+- category: external-critique
+- impact: 6
+- ease: 9
+- observation: `DayStrip.tsx` `tileStateLabel()` returns `'today'` when `state === 'today'`, while all adjacent tiles return the full date and entry state (e.g. "Mon 18 May 2026 — no entry"). A screen reader user navigating the strip hears "today" twice (the visible text is also "today") with no date and no indication of whether an entry has been written.
+- evidence: `src/app/today/DayStrip.tsx` line 16: `if (state === 'today') return 'today'`; adjacent tiles return e.g. "Mon 18 May 2026 — no entry".
+- suggested fix: extend `tileStateLabel` to include the full date and entry state for the today tile; pass entry to the function so the label can reflect whether an entry exists.
+- source: /critique pass 9 (commit 8c8a92d)
+- issue: [mirror-failed: 2026-05-24T00:00:00Z]
+- resolution: extended tileStateLabel to accept optional Entry; today tile now returns e.g. "today, Sun 24 May 2026 — no entry" (reflecting actual entry state). Shipped at 103b865.
+
 ### [ ] [2.8] /today — "not yet saved" status reads as an error state before any typing
 - category: external-critique
 - impact: 4
