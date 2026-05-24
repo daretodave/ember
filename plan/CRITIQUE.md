@@ -127,7 +127,7 @@
 - suggested fix: expand the timezone auto-detection to run whenever `tzVal === ''` (not only on virgin profiles) so the combobox always shows a detected default rather than blank.
 - source: browser
 
-### [LOW] /log — stat line drops unit noun for published count
+### [x] [LOW] /log — stat line drops unit noun for published count
 - pass: 8 (commit 5abb81e)
 - viewport: both
 - category: voice
@@ -135,6 +135,7 @@
 - evidence: "0 days written. 60 days quiet. 0 published."
 - suggested fix: change to "0 days published." matching the unit-noun pattern of the preceding clauses (pluralize conditionally as needed for singular counts).
 - source: browser
+- resolution: added conditional "day/days" to published count in log/page.tsx. Shipped at 2ebac0d.
 
 ### [LOW] / — footer "made for adults" frames product by exclusion
 - pass: 8 (commit 5abb81e)

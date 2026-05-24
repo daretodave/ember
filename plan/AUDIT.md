@@ -157,7 +157,7 @@
 - suggested fix: reframe as an observation: "your log is empty. today's entry will appear here." — describes what will happen without coaching.
 - source: /critique pass 7 (commit 69def1e)
 
-### [ ] [2.7] /log — stat line drops unit noun for published count
+### [x] [2.7] /log — stat line drops unit noun for published count
 - category: external-critique
 - impact: 3
 - ease: 9
@@ -165,6 +165,8 @@
 - evidence: "0 days written. 60 days quiet. 0 published."
 - suggested fix: change to "0 days published." matching the unit-noun pattern of the preceding clauses, pluralizing conditionally for singular counts.
 - source: /critique pass 8 (commit 5abb81e)
+- issue: [mirror-failed: 2026-05-24T18:06:00Z]
+- resolution: added conditional "day/days" to published count in log/page.tsx. Shipped at 2ebac0d.
 
 ### [ ] [2.7] / — footer "made for adults" frames product by exclusion
 - category: external-critique
