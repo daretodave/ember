@@ -1,7 +1,7 @@
 # External-observer findings — Ember
 
-> Last pass: 2026-05-24 at commit 8c8a92d
-> Pass count: 9
+> Last pass: 2026-05-24 at commit 51b2c7c
+> Pass count: 10
 
 > Written by `/critique` after walking the live site as a
 > fresh-eyes visitor. Drained by `/iterate`.
@@ -197,6 +197,33 @@
 - observation: the hint text for the prompt variety field reads "personalized: a unique prompt generated for you by Claude, informed by your recent entries." naming the AI vendor is inconsistent with ember's attributionless voice — the same pattern as the prior Supabase attribution on /signin (fixed at dfe1ae4).
 - evidence: SettingsForm.tsx: `personalized: a unique prompt generated for you by Claude, informed by your recent entries.`
 - suggested fix: replace "generated for you by Claude" with "generated from your recent entries" — describes the behavior without naming the vendor.
+- source: browser
+
+### [LOW] /today — publish toggle tooltip uses imperative form "make this entry visible"
+- pass: 10 (commit 51b2c7c)
+- viewport: both
+- category: voice
+- observation: the publish toggle carries `title="make this entry visible on your public profile."` — the imperative construction "make this entry visible" is a direct second-person instruction, which the voice guide prohibits outside quoted text. tooltip copy should read as a state description, not a command.
+- evidence: `"publish\nmake this entry visible on your public profile."` — captured in both primary view and focus-mode overlay
+- suggested fix: reframe as declarative: "this entry will appear on your public profile." or "entry will be visible on your public profile."
+- source: browser
+
+### [LOW] /settings — "/u/your-handle" literal string in username hint reads as unfinished
+- pass: 10 (commit 51b2c7c)
+- viewport: both
+- category: comprehension
+- observation: the public username field hint renders the literal hyphenated string "your-handle" in a URL example: "your public profile lives at /u/your-handle." before a username is set, this reads as placeholder copy accidentally left in rather than a generic illustrative example. a first-time user may attempt to navigate to /u/your-handle.
+- evidence: `"your public profile lives at /u/your-handle. leave blank to stay private."`
+- suggested fix: replace the literal "-handle" with a clearly-generic placeholder token, e.g. "/u/username" or "/u/your-username", so the example reads as illustrative rather than instructional.
+- source: browser
+
+### [LOW] /settings — personalized prompt gives no fallback signal for users with no entries
+- pass: 10 (commit 51b2c7c)
+- viewport: both
+- category: comprehension
+- observation: the personalized variety option reads "informed by your recent entries" with no indication of what happens when a new user with zero entries selects it. there is no signal about whether the feature activates immediately, requires a minimum, or gracefully falls back to a standard prompt.
+- evidence: `"personalized: a unique prompt generated for you by Claude, informed by your recent entries."` — no fallback copy follows.
+- suggested fix: add a brief qualifier after the existing description, e.g. "falls back to a standard prompt until entries exist." so a new user knows the selection is safe to make.
 - source: browser
 
 ### [x] [LOW] / — "that's deliberate." reads as a defensive aside (pass 6; addressed at a44a3a6)
