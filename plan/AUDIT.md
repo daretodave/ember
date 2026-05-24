@@ -17,7 +17,18 @@
 - issue: [mirror-failed: 2026-05-24T00:00:00Z]
 - resolution: changed "the mosaic shows what is, not what isn't." to "your log shows what is, not what isn't." in src/app/page.tsx. Shipped at 2de843e.
 
-### [ ] [4.8] /settings — public username input has no persistent accessible label
+### [x] [4.5] /today — DayStrip tileStateLabel has no tests; a11y-critical function fixed twice
+- category: tests
+- impact: 5
+- ease: 9
+- observation: `DayStrip.tsx` exports a `tileStateLabel()` function that determines what screen readers announce for each of the 7 day-strip tiles. it has been fixed twice in the loop (once to add full date + state to non-today tiles at 9b1e99f; once to extend the today-tile label to include the full date and entry state at 103b865). no test file exists for `DayStrip.tsx`. if `tileStateLabel()` regresses, the a11y fix silently breaks with no test signal.
+- evidence: `find src -path "*/today/__tests__/DayStrip*"` returns nothing; `grep -r "DayStrip\|tileStateLabel" src --include="*.test.*"` returns nothing; both iterate fixes (9b1e99f, 103b865) changed this function with no accompanying tests.
+- suggested fix: add `src/app/today/__tests__/DayStrip.test.tsx` covering all 4 tile states (empty, filled, published, today) × the 3 today sub-states (no entry, written, published); assert srOnly span text content.
+- source: /iterate audit 2026-05-24
+- issue: [mirror-failed: 2026-05-24T00:00:00Z]
+- resolution: added src/app/today/__tests__/DayStrip.test.tsx with 9 tests across all tile states. Shipped at a91e2b4.
+
+### [x] [4.8] /settings — public username input has no persistent accessible label
 - category: external-critique
 - impact: 6
 - ease: 8
@@ -25,6 +36,7 @@
 - evidence: settings capture: "public username\n\nyour public profile lives at /u/your-handle. leave blank to stay private.\n\n@\nsave" — the input appears after "@" with no adjacent label element visible in the text capture.
 - suggested fix: associate the "public username" label with the input via a `<label for="...">` / `id` pair, or add `aria-label="public username"` to the input element itself.
 - source: /critique pass 11 (commit 2b4efe6)
+- resolution: false positive — SettingsForm.tsx already has `<label htmlFor="username">public username</label>` with matching `id="username"` on the input. The critique's text-capture could not see HTML attributes; the for/id association is correct in the current code. No code change required.
 
 ### [ ] [2.7] / — "sign in to start" button label conflicts with "today's prompt is waiting" framing
 - category: external-critique

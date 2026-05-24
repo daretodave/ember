@@ -18,7 +18,7 @@
 - source: browser
 - resolution: changed "the mosaic shows what is, not what isn't." to "your log shows what is, not what isn't." in src/app/page.tsx. Shipped at 2de843e.
 
-### [MED] /settings — public username input has no persistent accessible label
+### [x] [MED] /settings — public username input has no persistent accessible label
 - pass: 11 (commit 2b4efe6)
 - viewport: both
 - category: a11y
@@ -26,6 +26,7 @@
 - evidence: settings capture: "public username\n\nyour public profile lives at /u/your-handle. leave blank to stay private.\n\n@\nsave" — the input appears after "@" with no adjacent label element visible in the text capture.
 - suggested fix: associate the "public username" label with the input via a `<label for="...">` / `id` pair, or add `aria-label="public username"` to the input element itself.
 - source: browser
+- resolution: false positive — SettingsForm.tsx already has `<label htmlFor="username">public username</label>` with matching `id="username"` on the input. The text-capture reader cannot see HTML attributes; the for/id association is correct in the current code. No code change required.
 
 ### [LOW] / — "sign in to start" button label conflicts with "today's prompt is waiting" framing
 - pass: 11 (commit 2b4efe6)
