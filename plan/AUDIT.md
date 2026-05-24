@@ -6,6 +6,16 @@
 
 ## Pending
 
+### [ ] [4.5] /today — saveIndicatorText has no regression tests for its two recently-fixed branches
+- category: tests
+- impact: 5
+- ease: 9
+- observation: `TodayEntry.tsx` `saveIndicatorText()` was fixed twice in quick succession — c1eec87 (initialize `saveState` to `'saved'` when `initialEntry !== null` so returning users see "last saved · HH:MM" instead of nothing) and a044cd0 (add early return `''` when `saveState === 'idle' && response === ''` so new users see no indicator on first load). Neither fix is covered by the existing test suite. FocusMode, OfflineDraft, and OnThisDay tests render `TodayEntry` but none assert on the save indicator text in these two edge cases.
+- evidence: `src/app/today/__tests__/` contains `FocusMode.test.tsx`, `OfflineDraft.test.tsx`, `OnThisDay.test.tsx` — none query the `aria-live="polite"` span for idle-empty or loaded-entry states. `src/app/today/TodayEntry.tsx` lines 127–131: `saveIndicatorText()` has five cases; only `'draft restored'` is asserted anywhere.
+- suggested fix: add `src/app/today/__tests__/SaveIndicator.test.tsx` with three tests: (1) indicator is empty string on initial load with no entry and empty textarea; (2) indicator shows "last saved · HH:MM" on load when `initialEntry` is provided; (3) "not yet saved" text never appears.
+- source: /iterate audit 2026-05-24
+- issue: [mirror-failed: 2026-05-24T00:00:00Z]
+
 ### [x] [3.6] sitemap.ts — public profile pages absent from sitemap
 - category: seo
 - impact: 6
