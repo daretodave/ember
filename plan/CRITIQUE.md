@@ -1,7 +1,7 @@
 # External-observer findings — Ember
 
-> Last pass: 2026-05-23 at commit 5abb81e
-> Pass count: 8
+> Last pass: 2026-05-24 at commit 8c8a92d
+> Pass count: 9
 
 > Written by `/critique` after walking the live site as a
 > fresh-eyes visitor. Drained by `/iterate`.
@@ -87,6 +87,42 @@
 - suggested fix: add a visually-hidden `<span id="publish-desc">make this entry visible on your public profile.</span>` and set `aria-describedby="publish-desc"` on both checkbox inputs (main and focus-overlay variants).
 - source: browser
 - resolution: added visually-hidden span + aria-describedby on both checkbox inputs. Shipped at 31de186.
+
+### [MED] / — landing page 7-day preview shows stale build-date as "today"
+- pass: 9 (commit 8c8a92d)
+- viewport: both
+- category: comprehension
+- observation: the homepage `LandingPage` component calls `getSevenDayPreview(new Date())` as a Next.js RSC with no `export const dynamic` or `export const revalidate` override. Next.js 15 statically renders this page at build time, so `new Date()` resolves to the build date, not the request date. a user visiting the site after midnight UTC will see the build date labelled "today" rather than the current date. the authenticated /today page is dynamic (auth-gated) and shows the correct current date, creating a visible mismatch between the preview and the app.
+- evidence: anonymous capture (00:05 UTC 2026-05-24) shows "today / Sat 23 May" while authenticated /today shows "Sun 24 May 2026"; last build was from commit 8c8a92d (2026-05-23).
+- suggested fix: add `export const dynamic = 'force-dynamic'` to `src/app/page.tsx` so the landing page renders per-request and `new Date()` always reflects the current date.
+- source: browser
+
+### [MED] /today — today tile in day strip omits date and entry state from accessible label
+- pass: 9 (commit 8c8a92d)
+- viewport: both
+- category: a11y
+- observation: `DayStrip.tsx` `tileStateLabel()` returns the string `'today'` when `state === 'today'`, while all adjacent tiles return the full date and entry state (e.g. "Mon 18 May 2026 — no entry"). a screen reader user navigating the seven-day strip hears the full date and state for every tile except the current one — where they hear only "today" twice (the visible text is also "today") with no date and no indication of whether an entry has been written.
+- evidence: capture: "today / today" versus "Mon / Mon 18 May 2026 — no entry" for adjacent tiles; `src/app/today/DayStrip.tsx` line 16: `if (state === 'today') return 'today'`.
+- suggested fix: extend `tileStateLabel` to include the full date and entry state for the today tile, e.g. `if (state === 'today') return \`today, ${formatDisplayDate(date)} — no entry\`` (substituting actual entry state); make the visible "today" span aria-hidden to prevent double-announcement.
+- source: browser
+
+### [LOW] /today — focus button has no hover tooltip while adjacent publish button does
+- pass: 9 (commit 8c8a92d)
+- viewport: desktop
+- category: comprehension
+- observation: the publish toggle carries `title="make this entry visible on your public profile."` per the voice guide ("hover/tooltip copy is a complete sentence with a period"). the adjacent focus button has `aria-label="enter focus mode"` but no `title` attribute. a first-time sighted user hovering over "focus" receives no explanation of what the control does.
+- evidence: `src/app/today/TodayEntry.tsx` focusTrigger button: no title attribute; publish toggle label: `title="make this entry visible on your public profile."` is present.
+- suggested fix: add `title="enters a distraction-free writing view."` to the focusTrigger button in TodayEntry.tsx.
+- source: browser
+
+### [LOW] /settings — timezone combobox shows no value for accounts with no saved timezone
+- pass: 9 (commit 8c8a92d)
+- viewport: both
+- category: comprehension
+- observation: `SettingsForm` initializes `tzVal` from the profile's saved timezone string. for existing accounts that never set a timezone, `timezone` is an empty string, so the combobox renders blank. the virgin-profile auto-detection only fires when `virgin === true`; existing profiles with an empty timezone get no detected default. a user who skipped the timezone field on first setup returns to a blank combobox with no indication of what to enter.
+- evidence: settings capture: "timezone" label with no adjacent value; `src/app/settings/SettingsForm.tsx` lines 37–47: auto-detection skipped for non-virgin profiles.
+- suggested fix: expand the timezone auto-detection to run whenever `tzVal === ''` (not only on virgin profiles) so the combobox always shows a detected default rather than blank.
+- source: browser
 
 ### [LOW] /log — stat line drops unit noun for published count
 - pass: 8 (commit 5abb81e)
