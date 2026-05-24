@@ -153,7 +153,7 @@
 - suggested fix: replace with a neutral descriptor: "visible name on your public profile" or a sample value such as "Ada Lovelace".
 - source: browser
 
-### [LOW] /today — "not yet saved" status reads as an error state before any typing
+### [x] [LOW] /today — "not yet saved" status reads as an error state before any typing
 - pass: 7 (commit 69def1e)
 - viewport: both
 - category: comprehension
@@ -161,6 +161,7 @@
 - evidence: "your response\nnot yet saved\npublish\nfocus\nsave" — appears immediately on page load with empty textarea
 - suggested fix: show no save-state label until the user begins typing, or replace the idle text with a neutral em-dash or nothing.
 - source: browser
+- resolution: added `if (saveState === 'idle' && response === '') return ''` to saveIndicatorText() in TodayEntry.tsx. Shipped at a044cd0.
 
 ### [LOW] / — heading register inconsistency between "the next seven days." and "this is what arrives each morning."
 - pass: 7 (commit 69def1e)

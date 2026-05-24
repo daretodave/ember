@@ -116,14 +116,17 @@
 - issue: [mirror-failed: 2026-05-24T00:00:00Z]
 - resolution: extended tileStateLabel to accept optional Entry; today tile now returns e.g. "today, Sun 24 May 2026 — no entry" (reflecting actual entry state). Shipped at 103b865.
 
-### [ ] [2.8] /today — "not yet saved" status reads as an error state before any typing
+### [x] [3.6] /today — "not yet saved" status reads as an error state before any typing
 - category: external-critique
 - impact: 4
-- ease: 7
+- ease: 9
+- note: re-scored 2026-05-24 — ease raised from 7 to 9; simpler fix is `response === ''` check in saveIndicatorText(), no new state variable needed
 - observation: the save-state indicator reads "not yet saved" on first load, before the user has typed a single character. for a first-time visitor this lands as an error or warning rather than an idle placeholder — the word "yet" implies something was expected and is missing.
 - evidence: "your response\nnot yet saved\npublish\nfocus\nsave" — appears immediately on page load with empty textarea
-- suggested fix: show no save-state label until the user begins typing, or replace the idle text with a neutral em-dash or nothing.
+- suggested fix: add `if (saveState === 'idle' && response === '') return ''` before the fallback in saveIndicatorText() — response is already tracked state; no new boolean needed.
 - source: /critique pass 7 (commit 69def1e)
+- issue: [mirror-failed: 2026-05-24T00:00:00Z]
+- resolution: added `if (saveState === 'idle' && response === '') return ''` to saveIndicatorText() in TodayEntry.tsx. Shipped at a044cd0.
 
 ### [ ] [2.7] / — heading register inconsistency between "the next seven days." and "this is what arrives each morning."
 - category: external-critique
@@ -187,6 +190,16 @@
 - evidence: settings capture: "timezone" label with no adjacent value; `src/app/settings/SettingsForm.tsx`: auto-detection skipped for non-virgin profiles.
 - suggested fix: expand the timezone auto-detection to run whenever `tzVal === ''` (not only on virgin profiles) so the combobox always shows a detected default rather than blank.
 - source: /critique pass 9 (commit 8c8a92d)
+
+### [ ] [2.7] /settings — "Claude" vendor name in personalized prompt hint
+- category: external-critique
+- impact: 3
+- ease: 9
+- observation: the hint text for the prompt variety field reads "personalized: a unique prompt generated for you by Claude, informed by your recent entries." naming the AI vendor is inconsistent with ember's attributionless voice — the same pattern as the prior Supabase attribution on /signin (fixed at dfe1ae4).
+- evidence: `src/app/settings/SettingsForm.tsx:123`: hint string contains "generated for you by Claude".
+- suggested fix: replace "generated for you by Claude" with "generated from your recent entries" — describes the behavior without naming the vendor.
+- source: /critique pass 6 (commit be41cf9)
+- issue: [mirror-failed: 2026-05-24T00:00:00Z]
 
 ### [ ] [1.8] /settings — display name placeholder uses second-person "you"
 - category: external-critique
