@@ -128,6 +128,7 @@ export function TodayEntry({ date, task, prompt, initialEntry }: Props) {
     if (!isOnline && saveState !== 'saved') return 'saved locally — will sync'
     if (saveState === 'saved' && savedAt) return formatSavedTime(savedAt)
     if (saveState === 'draft') return 'draft restored'
+    if (saveState === 'idle' && response === '') return ''
     return 'not yet saved'
   }
 
