@@ -6,6 +6,53 @@
 
 ## Pending
 
+### [x] [5.4] / — "the mosaic" is undefined jargon for a first-time visitor
+- category: external-critique
+- impact: 6
+- ease: 9
+- observation: the landing page copy reads "the mosaic shows what is, not what isn't" — the word "mosaic" is introduced as a named product concept with no prior explanation. a first-time visitor has no referent; they don't know whether the mosaic is a visual, a data structure, or a metaphor. the sentence reads as self-referential insider language.
+- evidence: body text: "the mosaic shows what is, not what isn't." — "mosaic" appears once in this context with no definition or earlier introduction on the page.
+- suggested fix: replace "the mosaic" with a self-explanatory noun, e.g. "your log shows what is, not what isn't." — the authenticated app uses "log" consistently, and that term travels.
+- source: /critique pass 11 (commit 2b4efe6)
+- issue: [mirror-failed: 2026-05-24T00:00:00Z]
+- resolution: changed "the mosaic shows what is, not what isn't." to "your log shows what is, not what isn't." in src/app/page.tsx. Shipped at 2de843e.
+
+### [ ] [4.8] /settings — public username input has no persistent accessible label
+- category: external-critique
+- impact: 6
+- ease: 8
+- observation: the public username field is preceded by an "@" prefix character and a section-level heading "public username", but if the heading is not programmatically associated with the input (via aria-labelledby or a for/id pair), the input has no accessible name. the "@" symbol alone is not a label.
+- evidence: settings capture: "public username\n\nyour public profile lives at /u/your-handle. leave blank to stay private.\n\n@\nsave" — the input appears after "@" with no adjacent label element visible in the text capture.
+- suggested fix: associate the "public username" label with the input via a `<label for="...">` / `id` pair, or add `aria-label="public username"` to the input element itself.
+- source: /critique pass 11 (commit 2b4efe6)
+
+### [ ] [2.7] / — "sign in to start" button label conflicts with "today's prompt is waiting" framing
+- category: external-critique
+- impact: 3
+- ease: 9
+- observation: the footer block positions ember as an already-present ritual ("today's prompt is waiting") but the CTA button reads "sign in to start." the word "start" implies the practice begins at sign-up, undercutting the sense that something is already here and waiting. the nav bar shows only "sign in" — the inconsistency between the two labels compounds the tonal mismatch.
+- evidence: body text: "today's prompt is waiting. a sign-in link is the only thing you'll receive. no password, no spam.\nsign in to start"
+- suggested fix: change the button label to "sign in" to match the nav, removing the implication of a new beginning.
+- source: /critique pass 11 (commit 2b4efe6)
+
+### [ ] [2.7] /signin — meta description is identical to the landing page
+- category: external-critique
+- impact: 3
+- ease: 9
+- observation: /signin shares the same meta description as / — "ten minutes of intention before the day swallows you." a search engine or link preview surfacing /signin would show product-pitch copy rather than copy that describes the sign-in action. the page title ("ember · sign in") is correctly differentiated, but the description is not.
+- evidence: / description: "ten minutes of intention before the day swallows you"; /signin description: "ten minutes of intention before the day swallows you"
+- suggested fix: give /signin its own description, e.g. "sign in to ember with a link sent to your email — no password required."
+- source: /critique pass 11 (commit 2b4efe6)
+
+### [ ] [2.7] /settings — page meta description omits the "prompt variety" section
+- category: external-critique
+- impact: 3
+- ease: 9
+- observation: the /settings page description reads "display name, timezone, public username" but the page also includes a "prompt variety" section (standard vs. personalized prompts). a user arriving from a bookmark or share link with this description would not know prompt settings live here.
+- evidence: description field: "display name, timezone, public username"; captured text includes "prompt variety" as a distinct labeled section with two radio options.
+- suggested fix: update the description to "display name, timezone, prompt variety, public username" or a condensed equivalent.
+- source: /critique pass 11 (commit 2b4efe6)
+
 ### [x] [4.5] /today — saveIndicatorText has no regression tests for its two recently-fixed branches
 - category: tests
 - impact: 5

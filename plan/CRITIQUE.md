@@ -8,7 +8,7 @@
 
 ## Pending
 
-### [MED] / — "the mosaic" is undefined jargon for a first-time visitor
+### [x] [MED] / — "the mosaic" is undefined jargon for a first-time visitor
 - pass: 11 (commit 2b4efe6)
 - viewport: both
 - category: comprehension
@@ -16,6 +16,7 @@
 - evidence: body text: "the mosaic shows what is, not what isn't." — "mosaic" appears once in this context with no definition or earlier introduction on the page.
 - suggested fix: replace "the mosaic" with a self-explanatory noun, e.g. "your log shows what is, not what isn't." — the authenticated app uses "log" consistently, and that term travels.
 - source: browser
+- resolution: changed "the mosaic shows what is, not what isn't." to "your log shows what is, not what isn't." in src/app/page.tsx. Shipped at 2de843e.
 
 ### [MED] /settings — public username input has no persistent accessible label
 - pass: 11 (commit 2b4efe6)
