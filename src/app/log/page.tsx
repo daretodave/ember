@@ -83,7 +83,8 @@ export default async function LogPage() {
         <p className={styles.mosaicCount}>
           {written} {written === 1 ? 'day' : 'days'} written.{' '}
           <span>
-            {quiet} {quiet === 1 ? 'day' : 'days'} quiet. {published} published.
+            {quiet} {quiet === 1 ? 'day' : 'days'} quiet.{' '}
+            {published} {published === 1 ? 'day' : 'days'} published.
           </span>
         </p>
       </section>
