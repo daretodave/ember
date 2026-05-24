@@ -163,7 +163,7 @@ export function TodayEntry({ date, task, prompt, initialEntry }: Props) {
           {saveIndicatorText()}
         </span>
         <div className={styles.entryActions}>
-          <label className={styles.publishToggle} title="make this entry visible on your public profile.">
+          <label className={styles.publishToggle} title="this entry will appear on your public profile.">
             <input
               type="checkbox"
               checked={isPublished}
@@ -171,7 +171,7 @@ export function TodayEntry({ date, task, prompt, initialEntry }: Props) {
               aria-describedby="publish-desc"
             />
             publish
-            <span id="publish-desc" className={styles.srOnly}>make this entry visible on your public profile.</span>
+            <span id="publish-desc" className={styles.srOnly}>this entry will appear on your public profile.</span>
           </label>
           <button
             ref={focusTriggerRef}
@@ -226,7 +226,7 @@ export function TodayEntry({ date, task, prompt, initialEntry }: Props) {
               {saveIndicatorText()}
             </span>
             <div className={styles.entryActions}>
-              <label className={styles.publishToggle} title="make this entry visible on your public profile.">
+              <label className={styles.publishToggle} title="this entry will appear on your public profile.">
                 <input
                   type="checkbox"
                   checked={isPublished}
@@ -235,7 +235,7 @@ export function TodayEntry({ date, task, prompt, initialEntry }: Props) {
                   aria-describedby="publish-desc-focus"
                 />
                 publish
-                <span id="publish-desc-focus" className={styles.srOnly}>make this entry visible on your public profile.</span>
+                <span id="publish-desc-focus" className={styles.srOnly}>this entry will appear on your public profile.</span>
               </label>
               <button
                 type="button"
