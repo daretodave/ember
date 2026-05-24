@@ -12,9 +12,12 @@ function tileClass(state: TileState): string {
   return 'tile'
 }
 
-function tileStateLabel(date: string, state: TileState): string {
-  if (state === 'today') return 'today'
+function tileStateLabel(date: string, state: TileState, entry?: Entry): string {
   const displayDate = formatDisplayDate(date)
+  if (state === 'today') {
+    const entryState = entry?.is_published ? 'published' : entry ? 'written' : 'no entry'
+    return `today, ${displayDate} — ${entryState}`
+  }
   if (state === 'filled') return `${displayDate} — written`
   if (state === 'published') return `${displayDate} — published`
   return `${displayDate} — no entry`
@@ -41,7 +44,7 @@ export function DayStrip({ todayDate, entries }: Props) {
       state = 'filled'
     }
 
-    return { date, isToday, state, label: formatShortWeekday(date) }
+    return { date, isToday, state, label: formatShortWeekday(date), entry }
   })
 
   return (
@@ -53,7 +56,7 @@ export function DayStrip({ todayDate, entries }: Props) {
         </Link>
       </div>
       <div className={styles.stripRow}>
-        {days.map(({ date, isToday, state, label }) => (
+        {days.map(({ date, isToday, state, label, entry }) => (
           <div key={date} className={styles.stripDay}>
             <div className={tileClass(state)} aria-hidden="true" />
             <span
@@ -62,7 +65,7 @@ export function DayStrip({ todayDate, entries }: Props) {
             >
               {isToday ? 'today' : label}
             </span>
-            <span className={styles.srOnly}>{tileStateLabel(date, state)}</span>
+            <span className={styles.srOnly}>{tileStateLabel(date, state, entry)}</span>
           </div>
         ))}
       </div>
