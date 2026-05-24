@@ -191,7 +191,7 @@
 - suggested fix: add one sentence to the footer, e.g. "the link opens your daily prompt directly." — closes the post-submit loop.
 - source: browser
 
-### [LOW] /settings — "Claude" vendor name appears in personalized prompt hint
+### [x] [LOW] /settings — "Claude" vendor name appears in personalized prompt hint
 - pass: 6 (commit be41cf9)
 - viewport: both
 - category: voice
@@ -199,6 +199,7 @@
 - evidence: SettingsForm.tsx: `personalized: a unique prompt generated for you by Claude, informed by your recent entries.`
 - suggested fix: replace "generated for you by Claude" with "generated from your recent entries" — describes the behavior without naming the vendor.
 - source: browser
+- resolution: replaced "generated for you by Claude" with "generated from your recent entries" in SettingsForm.tsx. Shipped at 73ce8ed.
 
 ### [LOW] /today — publish toggle tooltip uses imperative form "make this entry visible"
 - pass: 10 (commit 51b2c7c)

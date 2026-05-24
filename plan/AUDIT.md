@@ -231,7 +231,7 @@
 - suggested fix: expand the timezone auto-detection to run whenever `tzVal === ''` (not only on virgin profiles) so the combobox always shows a detected default rather than blank.
 - source: /critique pass 9 (commit 8c8a92d)
 
-### [ ] [2.7] /settings — "Claude" vendor name in personalized prompt hint
+### [x] [2.7] /settings — "Claude" vendor name in personalized prompt hint
 - category: external-critique
 - impact: 3
 - ease: 9
@@ -240,6 +240,7 @@
 - suggested fix: replace "generated for you by Claude" with "generated from your recent entries" — describes the behavior without naming the vendor.
 - source: /critique pass 6 (commit be41cf9)
 - issue: [mirror-failed: 2026-05-24T00:00:00Z]
+- resolution: replaced "generated for you by Claude" with "generated from your recent entries" in SettingsForm.tsx. Shipped at 73ce8ed.
 
 ### [ ] [1.8] /settings — display name placeholder uses second-person "you"
 - category: external-critique
