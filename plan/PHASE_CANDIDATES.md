@@ -1,7 +1,7 @@
 # Ember — phase candidates
 
-> Last pass: 2026-05-24 at commit 7a33d26
-> Pass count: 10
+> Last pass: 2026-05-24 at commit 6b1aa21
+> Pass count: 11
 
 Candidates proposed by `/expand`. Promotion to `plan/steps/01_build_plan.md`
 happens only via local `/oversight` — never from the cloud loop.
@@ -10,14 +10,15 @@ happens only via local `/oversight` — never from the cloud loop.
 
 ### [ ] [score 5.0] Voice coherence audit pass — address pending copy inconsistencies and document voice rules
 
-- proposed: 2026-05-23, expand pass 8; signals updated pass 9; signals updated pass 10
+- proposed: 2026-05-23, expand pass 8; signals updated pass 9; signals updated pass 10; scope item 1 resolved pass 11
 - source signals:
   - critique pass 7 (commit 69def1e): 4 pending LOW voice/copy findings across 4 pages — "not yet saved" reads as error before typing (/today), heading register inconsistency between noun phrase and declarative sentence (/), coaching tone in empty-state copy (/log), no destination context after email submission (/signin)
   - critique pass 8 (commit 5abb81e): 3 additional pending LOW voice/copy findings — stat line drops unit noun for published count (/log), footer "made for adults" frames by exclusion (/), display name placeholder uses second-person "you" (/settings)
   - critique pass 9 (commit 8c8a92d): 1 additional pending LOW voice/consistency finding — focus button has no title attribute while adjacent publish button does (/today); violates the voice guide rule "hover/tooltip copy is a complete sentence with a period"
-  - iterate pattern: all 8 pending findings score 2.7–2.8 in AUDIT.md, below the 3.0 iterate threshold; they will consume 8+ cloud ticks shipping individually with no documentation preventing recurrence; the cluster has grown across 3 consecutive critique passes
-- rationale: the 8 pending critique findings share a root — the product's copy voice is inconsistent across pages in small but accumulated ways. three critique passes have surfaced findings in this category and the signal cluster is growing (4 → 7 → 8 findings). fixing them individually via iterate is feasible but slow and leaves no documentation preventing new page authors from repeating the same patterns. a single focused phase ships all 8 fixes and writes a voice reference section in design/CLAUDE.md capturing the specific rules (register consistency, "here is something to attend to" framing, no coaching imperatives, idle state shows nothing, unit-noun consistency, value-first audience framing, tooltip completeness) — the same structural closure the CSS lint gate provides for typography.
-- proposed scope: 1 phase — (1) /today idle save-state: show nothing or em-dash until first keystroke; (2) / heading register: align "the next seven days." and "this is what arrives each morning." to the same syntactic form; (3) /log empty-state: replace "today is a good place to start." with observation framing; (4) /signin: add one post-submit sentence with destination context ("the link opens today's prompt."); (5) /log stat line: change "0 published." to "0 days published." for unit-noun consistency; (6) / footer: reframe "made for adults who want a low-friction ritual." as a value statement; (7) /settings display name placeholder: replace "how you appear on your public profile" with neutral "visible name on your public profile"; (8) /today focus button: add `title="enters a distraction-free writing view."` for tooltip consistency with the adjacent publish toggle; (9) add a "Copy and voice rules" section to design/CLAUDE.md documenting register, framing, unit-noun, idle-state, tooltip-completeness, and audience-framing conventions
+  - iterate pattern: all 7 remaining pending findings score 2.7 in AUDIT.md, below the 3.0 iterate threshold; they will consume 7+ cloud ticks shipping individually with no documentation preventing recurrence; the cluster has grown across 3 consecutive critique passes
+- rationale: the 7 remaining pending critique findings share a root — the product's copy voice is inconsistent across pages in small but accumulated ways. three critique passes have surfaced findings in this category and the signal cluster is growing (4 → 7 → 8 → 7 after one resolved). fixing them individually via iterate is feasible but slow and leaves no documentation preventing new page authors from repeating the same patterns. a single focused phase ships all remaining fixes and writes a voice reference section in design/CLAUDE.md capturing the specific rules (register consistency, "here is something to attend to" framing, no coaching imperatives, unit-noun consistency, value-first audience framing, tooltip completeness) — the same structural closure the CSS lint gate provides for typography.
+- proposed scope: 1 phase — (1) / heading register: align "the next seven days." and "this is what arrives each morning." to the same syntactic form; (2) /log empty-state: replace "today is a good place to start." with observation framing; (3) /signin: add one post-submit sentence with destination context ("the link opens today's prompt."); (4) /log stat line: change "0 published." to "0 days published." for unit-noun consistency; (5) / footer: reframe "made for adults who want a low-friction ritual." as a value statement; (6) /settings display name placeholder: replace "how you appear on your public profile" with neutral "visible name on your public profile"; (7) /settings "Claude" vendor name: replace "generated for you by Claude" with "generated from your recent entries"; (8) /today focus button: add `title="enters a distraction-free writing view."` for tooltip consistency with the adjacent publish toggle; (9) add a "Copy and voice rules" section to design/CLAUDE.md documenting register, framing, unit-noun, tooltip-completeness, and audience-framing conventions
+- note: scope item "/today idle save-state" resolved via iterate (a044cd0, 2026-05-24) before phase promotion
 - estimated phases: 1
 - conflicts: none — copy-only changes plus documentation; no new routes, no schema changes
 
@@ -47,7 +48,7 @@ happens only via local `/oversight` — never from the cloud loop.
 - proposed: 2026-05-21, expand pass 4 (re-evaluated from "Considered below threshold", was score 3.0)
 - note (2026-05-22): phases 17–19 have now shipped, adding substantial uncovered surface: on-this-day rendering logic (/today), focus-mode overlay DOM manipulation and Esc key handling (/today), and PWA offline draft persistence (IndexedDB, service-worker intercept, sync-on-reconnect). Risk surface has grown since this candidate was filed; score should be treated as 4.5–5.0.
 - note (2026-05-23): phase 20 (searchable timezone combobox) also shipped with no new authenticated e2e coverage — the combobox open/filter/select flow is untested in e2e. Risk surface continues to grow.
-- note (2026-05-24): 4 additional a11y and force-dynamic fixes shipped since phase 20; no new e2e specs added. A regression in the authenticated surfaces (write flow, focus mode, offline draft, timezone combobox) would go undetected through all gates.
+- note (2026-05-24): 6 additional iterate fixes shipped since phase 20 (a11y, force-dynamic, save indicator); no new e2e specs added. A regression in the authenticated surfaces (write flow, focus mode, offline draft, timezone combobox) would go undetected through all gates.
 - source signals:
   - commit pattern: 19 phases shipped; all Playwright specs still test only anonymous/redirect state — `today.spec.ts` verifies redirect to `/signin` but never the actual write flow
   - phase 19 (PWA + offline): added service-worker path and IndexedDB draft persistence; these paths have zero e2e coverage
