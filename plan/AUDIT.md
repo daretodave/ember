@@ -6,7 +6,7 @@
 
 ## Pending
 
-### [ ] [4.5] /today — saveIndicatorText has no regression tests for its two recently-fixed branches
+### [x] [4.5] /today — saveIndicatorText has no regression tests for its two recently-fixed branches
 - category: tests
 - impact: 5
 - ease: 9
@@ -15,6 +15,7 @@
 - suggested fix: add `src/app/today/__tests__/SaveIndicator.test.tsx` with three tests: (1) indicator is empty string on initial load with no entry and empty textarea; (2) indicator shows "last saved · HH:MM" on load when `initialEntry` is provided; (3) "not yet saved" text never appears.
 - source: /iterate audit 2026-05-24
 - issue: [mirror-failed: 2026-05-24T00:00:00Z]
+- resolution: added SaveIndicator.test.tsx with 4 tests covering idle-empty and loaded-entry states. Shipped at f336224.
 
 ### [x] [3.6] sitemap.ts — public profile pages absent from sitemap
 - category: seo
