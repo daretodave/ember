@@ -201,7 +201,7 @@
 - source: browser
 - resolution: replaced "generated for you by Claude" with "generated from your recent entries" in SettingsForm.tsx. Shipped at 73ce8ed.
 
-### [LOW] /today — publish toggle tooltip uses imperative form "make this entry visible"
+### [x] [LOW] /today — publish toggle tooltip uses imperative form "make this entry visible"
 - pass: 10 (commit 51b2c7c)
 - viewport: both
 - category: voice
@@ -209,6 +209,7 @@
 - evidence: `"publish\nmake this entry visible on your public profile."` — captured in both primary view and focus-mode overlay
 - suggested fix: reframe as declarative: "this entry will appear on your public profile." or "entry will be visible on your public profile."
 - source: browser
+- resolution: changed title and aria-describedby span text to "this entry will appear on your public profile." in both main and focus-overlay copies. Shipped at 1ec04e5.
 
 ### [LOW] /settings — "/u/your-handle" literal string in username hint reads as unfinished
 - pass: 10 (commit 51b2c7c)

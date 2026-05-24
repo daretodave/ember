@@ -186,7 +186,7 @@
 - issue: #30
 - resolution: added `title="enters a distraction-free writing view."` to the focusTrigger button in TodayEntry.tsx. Shipped at 7a90a47.
 
-### [ ] [2.7] /today — publish toggle tooltip uses imperative form
+### [x] [2.7] /today — publish toggle tooltip uses imperative form
 - category: external-critique
 - impact: 3
 - ease: 9
@@ -194,6 +194,8 @@
 - evidence: `"publish\nmake this entry visible on your public profile."` — captured in both primary view and focus-mode overlay.
 - suggested fix: reframe as declarative: "this entry will appear on your public profile."
 - source: /critique pass 10 (commit 84e0c49)
+- issue: [mirror-failed: 2026-05-24T16:08:00Z]
+- resolution: changed title and aria-describedby span text to "this entry will appear on your public profile." in both main and focus-overlay copies of the publish toggle. Shipped at 1ec04e5.
 
 ### [ ] [2.7] /settings — "/u/your-handle" literal string in username hint reads as unfinished
 - category: external-critique
