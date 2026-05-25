@@ -259,7 +259,7 @@
 - suggested fix: align the labels to the same register — either "the next seven days" (no period, noun phrase) or "here is what arrives each morning." (full sentence, consistent with the stated voice posture).
 - source: browser
 
-### [LOW] /log — "today is a good place to start" edges toward coaching tone
+### [x] [LOW] /log — "today is a good place to start" edges toward coaching tone
 - pass: 7 (commit 69def1e)
 - viewport: both
 - category: voice
@@ -267,6 +267,7 @@
 - evidence: "your log is empty. today is a good place to start."
 - suggested fix: reframe as an observation: "your log is empty. today's entry will appear here." — describes what will happen without coaching.
 - source: browser
+- resolution: changed empty-state to "your log is empty. today's entry will appear here." in src/app/log/page.tsx. Shipped at ea70c0a.
 
 ### [LOW] /signin — sign-in page gives no destination context after email submission
 - pass: 7 (commit 69def1e)

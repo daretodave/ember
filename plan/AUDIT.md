@@ -242,7 +242,7 @@
 - suggested fix: align to the same register — either "the next seven days" (no period, noun phrase) or "here is what arrives each morning." (full sentence, consistent with the stated voice posture).
 - source: /critique pass 7 (commit 69def1e)
 
-### [ ] [2.7] /log — "today is a good place to start" edges toward coaching tone
+### [x] [2.7] /log — "today is a good place to start" edges toward coaching tone
 - category: external-critique
 - impact: 3
 - ease: 9
@@ -250,6 +250,8 @@
 - evidence: "your log is empty. today is a good place to start."
 - suggested fix: reframe as an observation: "your log is empty. today's entry will appear here." — describes what will happen without coaching.
 - source: /critique pass 7 (commit 69def1e)
+- issue: [mirror-failed: 2026-05-25T13:36:00Z]
+- resolution: changed empty-state to "your log is empty. today's entry will appear here." in src/app/log/page.tsx; updated bearings.md standing decision. Shipped at ea70c0a.
 
 ### [x] [2.7] /log — stat line drops unit noun for published count
 - category: external-critique
