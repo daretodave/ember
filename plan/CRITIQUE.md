@@ -26,7 +26,7 @@
 - suggested fix: when no public username is saved, render the publish toggle as disabled or add a note inline: "set a username in settings for entries to appear on your profile."
 - source: browser
 
-### [LOW] / — footer CTA copy uses direct second-person address
+### [x] [LOW] / — footer CTA copy uses direct second-person address
 - pass: 13 (commit 4f08c21)
 - viewport: both
 - category: voice
@@ -34,6 +34,7 @@
 - evidence: footer text: "today's prompt is waiting. a sign-in link is the only thing you'll receive. no password, no spam."
 - suggested fix: reframe as a description of how the system works: "the link arrives once. no password is set. no other mail is sent." — removes direct address and converts fragments to full declarative sentences.
 - source: browser
+- resolution: changed span text to "the link arrives once. no password is set. no other mail is sent." in src/app/page.tsx. Shipped at 9ffd684.
 
 ### [LOW] /settings — "sign out" sits adjacent to the form "save" with no visual separation
 - pass: 13 (commit 4f08c21)

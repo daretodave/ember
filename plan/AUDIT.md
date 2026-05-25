@@ -732,7 +732,7 @@
 - issue: [mirror-failed: 2026-05-25T00:00:00Z]
 - resolution: wrapped mosaicCount <p> with `{written > 0 && ...}` in src/app/log/page.tsx. Shipped at a901368.
 
-### [ ] [2.7] / — footer CTA copy uses direct second-person address
+### [x] [2.7] / — footer CTA copy uses direct second-person address
 - category: external-critique
 - impact: 3
 - ease: 9
@@ -740,6 +740,8 @@
 - evidence: footer text: "today's prompt is waiting. a sign-in link is the only thing you'll receive. no password, no spam."
 - suggested fix: reframe as a description of how the system works: "the link arrives once. no password is set. no other mail is sent."
 - source: /critique pass 13 (commit 4f08c21)
+- issue: [mirror-failed: 2026-05-25T19:18:00Z]
+- resolution: changed span text to "the link arrives once. no password is set. no other mail is sent." in src/app/page.tsx. Shipped at 9ffd684.
 
 ### [ ] [2.4] /today — "done" button label is ambiguous in focus mode
 - category: external-critique
