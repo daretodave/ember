@@ -21,7 +21,7 @@ test('landing page shows seven-day preview section', async ({ page }) => {
 test('landing page has sign-in CTA', async ({ page }) => {
   await page.goto('/')
   const ctaBtn = page.locator('a[href="/signin"]').last()
-  await expect(ctaBtn).toContainText('sign in to start')
+  await expect(ctaBtn).toContainText('sign in')
 })
 
 test('landing page has no horizontal overflow at 375px', async ({ page }) => {

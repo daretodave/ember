@@ -88,7 +88,7 @@ export default function LandingPage() {
             <span>a sign-in link is the only thing you&apos;ll receive. no password, no spam.</span>
           </p>
           <Link className={styles.ctaBtn} href="/signin">
-            sign in to start
+            sign in
           </Link>
         </div>
       </div>
