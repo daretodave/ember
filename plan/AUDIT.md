@@ -244,7 +244,7 @@
 - issue: [mirror-failed: 2026-05-24T00:00:00Z]
 - resolution: added `if (saveState === 'idle' && response === '') return ''` to saveIndicatorText() in TodayEntry.tsx. Shipped at a044cd0.
 
-### [ ] [2.7] / — heading register inconsistency between "the next seven days." and "this is what arrives each morning."
+### [x] [2.7] / — heading register inconsistency between "the next seven days." and "this is what arrives each morning."
 - category: external-critique
 - impact: 3
 - ease: 9
@@ -252,6 +252,8 @@
 - evidence: "the next seven days.\nthis is what arrives each morning."
 - suggested fix: align to the same register — either "the next seven days" (no period, noun phrase) or "here is what arrives each morning." (full sentence, consistent with the stated voice posture).
 - source: /critique pass 7 (commit 69def1e)
+- issue: [mirror-failed: 2026-05-25T20:18:00Z]
+- resolution: removed trailing period from h2 in src/app/page.tsx: "the next seven days." → "the next seven days". Shipped at 890e4e7.
 
 ### [x] [2.7] /log — "today is a good place to start" edges toward coaching tone
 - category: external-critique
