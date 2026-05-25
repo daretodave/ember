@@ -6,6 +6,16 @@
 
 ## Pending
 
+### [ ] [3.5] /settings — SettingsForm has no unit tests for save flow or state machine
+- category: tests
+- impact: 5
+- ease: 7
+- observation: `SettingsForm.tsx` is the client component that handles all settings saves. It manages four state variables (nameVal, usernameVal, tzVal, personalizedVal), sends them as a JSON payload, and transitions through saving/saved/error states with a 3-second "saved." fade. A prior bug (0419eb3) silently dropped `use_personalized_prompts` from saves because it was missing from the `useCallback` dependency array. No test file exists for the component, so any regression in the save payload or state machine would go undetected.
+- evidence: `find src/app/settings -name "*.test.*"` returns only `src/app/api/settings/__tests__/route.test.ts` (API handler, not the component). `src/app/settings/SettingsForm.tsx` lines 56–83: `handleSave` builds the fetch payload from four state variables; stale-closure bug was present until 0419eb3.
+- suggested fix: add `src/app/settings/__tests__/SettingsForm.test.tsx` covering: all four fields in the submitted payload; "saving..." state; "saved." in the aria-live region on success; `role="alert"` error on failure; username field-level error for conflict responses.
+- source: /iterate audit 2026-05-25
+- issue: [mirror-failed: 2026-05-25T01:40:00Z]
+
 ### [x] [4.5] /log — LogMosaic.tsx tileStateLabel has no unit tests; a11y-critical function unprotected
 - category: tests
 - impact: 5
