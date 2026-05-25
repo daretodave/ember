@@ -13,7 +13,7 @@ import styles from './page.module.css'
 
 export const metadata = {
   title: 'ember · today',
-  description: 'ten minutes of intention before the day swallows you',
+  description: "today's prompt and your daily writing space.",
 }
 
 export default async function TodayPage() {
