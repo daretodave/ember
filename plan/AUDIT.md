@@ -678,6 +678,34 @@
 - source: /critique pass 2 (commit 1ade924)
 - resolution: `aria-label="enter focus mode"` added to the focusTrigger button in TodayEntry.tsx as part of phase 19 (a9e1729).
 
+### [x] /settings — prompt variety radio group has no fieldset/legend grouping (critique pass 12)
+- category: external-critique
+- impact: 3
+- ease: 9
+- observation: the prompt variety toggle uses visually-styled radio inputs under a section heading. the section heading "prompt variety" is separate from the radio inputs in the DOM; if there is no `<fieldset>` with a `<legend>`, screen readers cannot programmatically associate the group label with the "standard" and "personalized" radio buttons.
+- evidence: settings text: "prompt variety\n\nstandard: ... personalized: ...\n\nstandard\npersonalized" — section heading and radio inputs appear as separate blocks with no structural grouping visible.
+- suggested fix: wrap the radio inputs in a `<fieldset>` with `<legend>prompt variety</legend>`, or add `role="group"` with `aria-labelledby` pointing to the "prompt variety" heading id.
+- source: /critique pass 12 (commit 079614a)
+- resolution: false positive — the container div already carries `role="radiogroup"` and `aria-label="prompt variety"`, which provides programmatic group labeling equivalent to `<fieldset>/<legend>`. The critique's text-based capture cannot read ARIA attributes; the association exists. No code change required.
+
+### [ ] [2.7] /log — page meta description is minimal and does not describe content
+- category: external-critique
+- impact: 3
+- ease: 9
+- observation: the /log page meta description reads "your past 60 days" — technically accurate but does not describe the page's content or purpose to someone arriving from a search result or bookmark. it names the data window but not what the page shows.
+- evidence: title: "ember · log"; description: "your past 60 days"
+- suggested fix: expand to describe the page's content, e.g. "a record of your past 60 days of writing — prompts, responses, and the entries you have published."
+- source: /critique pass 12 (commit 079614a)
+
+### [ ] [2.7] / — "ember · v1" footer version string reads as a developer artifact
+- category: external-critique
+- impact: 3
+- ease: 9
+- observation: the footer renders "ember · v1" where "v1" is a developer-facing version label with no meaning to a first-time reader. it sits alongside user-facing copy and disrupts the bookish, intentional voice. every other footer line carries user-facing information.
+- evidence: footer text: "ember · v1\nmade for adults who want a low-friction ritual."
+- suggested fix: remove the "· v1" suffix from the footer, leaving only "ember", or replace with a meaningful phrase such as the year.
+- source: /critique pass 12 (commit 079614a)
+
 ## Done
 
 ### [x] [4.5] a11y — sign-in confirmation message has no ARIA live region
