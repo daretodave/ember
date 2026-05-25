@@ -6,6 +6,16 @@
 
 ## Pending
 
+### [ ] [3.6] /u/[username] — ProfileMosaic has no unit tests; aria-label fix (22f9659) is unguarded
+- category: tests
+- impact: 4
+- ease: 9
+- observation: `ProfileMosaic.tsx` renders the 60-tile mosaic on the public profile page. The a11y fix at 22f9659 changed `aria-label={tile.displayDate}` (bare date) to `` aria-label={`${tile.displayDate} — published entry`} `` so screen readers get state context on every published tile. No test file exists for the component. If the label regresses, the fix breaks silently — the same gap that prompted LogMosaic.test.tsx (finding [4.5], shipped at 9e28f27) and DayStrip.test.tsx (finding [4.5], shipped at a91e2b4).
+- evidence: `find src/app/u -name "*.test.*"` returns nothing. `src/app/u/[username]/ProfileMosaic.tsx` line 32: `aria-label={\`${tile.displayDate} — published entry\`}`; non-published tiles use `aria-hidden="true"`. The sibling LogMosaic has 6 tests at src/app/log/__tests__/LogMosaic.test.tsx.
+- suggested fix: add `src/app/u/[username]/__tests__/ProfileMosaic.test.tsx` covering: published tile has `"<date> — published entry"` aria-label; published tile links to `/u/<username>/<date>`; non-published tile is aria-hidden; mosaic container has `"60-day practice mosaic"` group label.
+- source: /iterate audit 2026-05-25
+- issue: [mirror-failed: 2026-05-25T00:00:00Z]
+
 ### [x] [4.5] /today — meta description is the generic product tagline, not page-specific
 - category: external-critique
 - impact: 5
