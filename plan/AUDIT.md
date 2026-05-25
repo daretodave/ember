@@ -6,6 +6,17 @@
 
 ## Pending
 
+### [x] [4.0] /signin — SigninPage client component has no unit tests; role="status" and role="alert" unguarded
+- category: tests
+- impact: 5
+- ease: 8
+- observation: `src/app/signin/page.tsx` is a 'use client' component managing a 4-state machine (idle/sending/sent/error). The `role="status"` fix on the confirmation paragraph (d5d2f20) and the `role="alert"` on the error paragraph have no test coverage. If either ARIA role is removed in a future refactor, the regression is silent. The existing `src/app/signin/__tests__/actions.test.ts` tests the API route handler, not the page component.
+- evidence: `find src/app/signin/__tests__ -name "*.test.*"` returns only `actions.test.ts` (imports `../../api/auth/signin/route`). `src/app/signin/page.tsx` line 54: `<p className={styles.confirmation} role="status">` — no test asserts this role. Line 86: `<p className={styles.errorMsg} role="alert">` — no test asserts this role.
+- suggested fix: add `src/app/signin/__tests__/SigninPage.test.tsx` covering: (1) initial state renders form; (2) sending state disables button and shows "sending..."; (3) sent state shows confirmation with role="status" and hides form; (4) error state shows role="alert" with API error message; (5) fallback error message when API returns no error field.
+- source: /iterate audit 2026-05-25
+- issue: [mirror-failed: 2026-05-25T00:00:00Z]
+- resolution: added src/app/signin/__tests__/SigninPage.test.tsx with 6 tests covering initial render, sending state, sent state (role="status"), and error state (role="alert"). Shipped at a6842c1.
+
 ### [x] [3.6] /u/[username] — ProfileMosaic has no unit tests; aria-label fix (22f9659) is unguarded
 - category: tests
 - impact: 4
