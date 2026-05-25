@@ -6,7 +6,7 @@
 
 ## Pending
 
-### [ ] [3.6] /u/[username] — ProfileMosaic has no unit tests; aria-label fix (22f9659) is unguarded
+### [x] [3.6] /u/[username] — ProfileMosaic has no unit tests; aria-label fix (22f9659) is unguarded
 - category: tests
 - impact: 4
 - ease: 9
@@ -15,6 +15,7 @@
 - suggested fix: add `src/app/u/[username]/__tests__/ProfileMosaic.test.tsx` covering: published tile has `"<date> — published entry"` aria-label; published tile links to `/u/<username>/<date>`; non-published tile is aria-hidden; mosaic container has `"60-day practice mosaic"` group label.
 - source: /iterate audit 2026-05-25
 - issue: [mirror-failed: 2026-05-25T00:00:00Z]
+- resolution: added src/app/u/[username]/__tests__/ProfileMosaic.test.tsx with 5 tests. Shipped at fb76347.
 
 ### [x] [4.5] /today — meta description is the generic product tagline, not page-specific
 - category: external-critique
