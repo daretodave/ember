@@ -1,12 +1,57 @@
 # External-observer findings — Ember
 
-> Last pass: 2026-05-25 at commit 997e3b1
-> Pass count: 12
+> Last pass: 2026-05-25 at commit 4f08c21
+> Pass count: 13
 
 > Written by `/critique` after walking the live site as a
 > fresh-eyes visitor. Drained by `/iterate`.
 
 ## Pending
+
+### [LOW] /today — visible "done" label is ambiguous next to "save"
+- pass: 13 (commit 4f08c21)
+- viewport: both
+- category: comprehension
+- observation: the day-strip area renders a "done" button adjacent to the "save" button. the visible label is bare "done" with no surrounding copy indicating it marks the tiny task complete rather than finalising the entry or closing the page. the aria-label is correct for screen readers but sighted users read only "done".
+- evidence: body text: "save\ndone\nyour last seven days" — "done" sits between the entry controls and the day strip with no visible label explaining its referent.
+- suggested fix: change the visible button text to "mark done" or add a short adjacent label such as "tiny task:" directly above the button so its scope is unambiguous.
+- source: browser
+
+### [LOW] /today — publish toggle active with no hint that a public username is required
+- pass: 13 (commit 4f08c21)
+- viewport: both
+- category: comprehension
+- observation: the publish toggle appears on /today whether or not the user has set a public username in settings. toggling it without a username stores a published state in the database but the entry will not appear publicly because there is no /u/username route. there is no hint at the point of use that a username is a prerequisite.
+- evidence: /today shows the full publish toggle with "this entry will appear on your public profile." while /settings shows no username value in the public username field.
+- suggested fix: when no public username is saved, render the publish toggle as disabled or add a note inline: "set a username in settings for entries to appear on your profile."
+- source: browser
+
+### [LOW] / — footer CTA copy uses direct second-person address
+- pass: 13 (commit 4f08c21)
+- viewport: both
+- category: voice
+- observation: the footer CTA block reads "today's prompt is waiting. a sign-in link is the only thing you'll receive. no password, no spam." the phrase "you'll receive" is direct second-person address, and "no password, no spam" is a reassurance fragment rather than a settled declarative sentence. the voice guide specifies knowledgeable peer framing, not objection-handler copy.
+- evidence: footer text: "today's prompt is waiting. a sign-in link is the only thing you'll receive. no password, no spam."
+- suggested fix: reframe as a description of how the system works: "the link arrives once. no password is set. no other mail is sent." — removes direct address and converts fragments to full declarative sentences.
+- source: browser
+
+### [LOW] /settings — "sign out" sits adjacent to the form "save" with no visual separation
+- pass: 13 (commit 4f08c21)
+- viewport: both
+- category: comprehension
+- observation: the settings page ends with "@\nsave\nsign out" — the destructive "sign out" action appears immediately after the form's primary save action with no visible separator. a user scanning quickly could activate sign-out when intending to save.
+- evidence: settings body: "@\nsave\nsign out" — two differently-weighted actions share the same visual proximity.
+- suggested fix: place "sign out" in a distinct section below a visual divider or horizontal rule, separate from the form's save button, so it reads as a session action rather than a form action.
+- source: browser
+
+### [LOW] /log — all-zero stat line reads as a metrics artifact for a new user
+- pass: 13 (commit 4f08c21)
+- viewport: both
+- category: voice
+- observation: for a brand-new account with no entries, the log page renders "0 days written. 60 days quiet. 0 days published." immediately above the empty-state message. the triple-zero stat line reads as a metrics dashboard entry rather than the understated observational tone the voice guide specifies. the empty-state line below it already communicates the same information.
+- evidence: "0 days written. 60 days quiet. 0 days published.\n\nyour log is empty. today's entry will appear here."
+- suggested fix: suppress the stat line when all values are zero and let the empty-state message carry the page alone, or replace with a single observation such as "nothing written yet. today's entry will appear here."
+- source: browser
 
 ### [x] [MED] / — "the mosaic" is undefined jargon for a first-time visitor
 - pass: 11 (commit 2b4efe6)
