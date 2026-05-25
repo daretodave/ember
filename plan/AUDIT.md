@@ -6,7 +6,7 @@
 
 ## Pending
 
-### [ ] [3.5] /settings — SettingsForm has no unit tests for save flow or state machine
+### [x] [3.5] /settings — SettingsForm has no unit tests for save flow or state machine
 - category: tests
 - impact: 5
 - ease: 7
@@ -15,6 +15,7 @@
 - suggested fix: add `src/app/settings/__tests__/SettingsForm.test.tsx` covering: all four fields in the submitted payload; "saving..." state; "saved." in the aria-live region on success; `role="alert"` error on failure; username field-level error for conflict responses.
 - source: /iterate audit 2026-05-25
 - issue: [mirror-failed: 2026-05-25T01:40:00Z]
+- resolution: added src/app/settings/__tests__/SettingsForm.test.tsx with 9 tests covering payload, save state, and error handling. Shipped at 3db946d.
 
 ### [x] [4.5] /log — LogMosaic.tsx tileStateLabel has no unit tests; a11y-critical function unprotected
 - category: tests
