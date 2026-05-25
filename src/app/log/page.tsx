@@ -80,13 +80,15 @@ export default async function LogPage() {
       <section className={styles.mosaicWrap}>
         <h1 className={styles.mosaicMeta}>your past 60 days</h1>
         <LogMosaic tiles={tiles} />
-        <p className={styles.mosaicCount}>
-          {written} {written === 1 ? 'day' : 'days'} written.{' '}
-          <span>
-            {quiet} {quiet === 1 ? 'day' : 'days'} quiet.{' '}
-            {published} {published === 1 ? 'day' : 'days'} published.
-          </span>
-        </p>
+        {written > 0 && (
+          <p className={styles.mosaicCount}>
+            {written} {written === 1 ? 'day' : 'days'} written.{' '}
+            <span>
+              {quiet} {quiet === 1 ? 'day' : 'days'} quiet.{' '}
+              {published} {published === 1 ? 'day' : 'days'} published.
+            </span>
+          </p>
+        )}
       </section>
 
       <div className={styles.divider}>

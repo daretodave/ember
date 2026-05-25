@@ -721,6 +721,52 @@
 - suggested fix: remove the "· v1" suffix from the footer, leaving only "ember", or replace with a meaningful phrase such as the year.
 - source: /critique pass 12 (commit 079614a)
 
+### [ ] [3.6] /log — all-zero stat line reads as a metrics artifact for a new user
+- category: external-critique
+- impact: 4
+- ease: 9
+- observation: for a brand-new account with no entries, the log page renders "0 days written. 60 days quiet. 0 days published." immediately above the empty-state message. the triple-zero stat line reads as a metrics dashboard entry rather than the understated observational tone the voice guide specifies. the empty-state line below already communicates the same information.
+- evidence: "0 days written. 60 days quiet. 0 days published.\n\nyour log is empty. today's entry will appear here."
+- suggested fix: suppress the stat line when written=0 (all values are zero), letting the empty-state message carry the page alone. the stat line reappears as soon as the first entry is written.
+- source: /critique pass 13 (commit 4f08c21)
+- issue: [mirror-failed: 2026-05-25T00:00:00Z]
+
+### [ ] [2.7] / — footer CTA copy uses direct second-person address
+- category: external-critique
+- impact: 3
+- ease: 9
+- observation: the footer CTA block reads "today's prompt is waiting. a sign-in link is the only thing you'll receive. no password, no spam." the phrase "you'll receive" is direct second-person address, and "no password, no spam" is a reassurance fragment rather than a settled declarative sentence. the voice guide specifies knowledgeable peer framing, not objection-handler copy.
+- evidence: footer text: "today's prompt is waiting. a sign-in link is the only thing you'll receive. no password, no spam."
+- suggested fix: reframe as a description of how the system works: "the link arrives once. no password is set. no other mail is sent."
+- source: /critique pass 13 (commit 4f08c21)
+
+### [ ] [2.4] /today — "done" button label is ambiguous in focus mode
+- category: external-critique
+- impact: 3
+- ease: 8
+- observation: the focus mode overlay contains a "done" button (aria-label="exit focus mode") adjacent to a "save" button. the visible text "done" is ambiguous: a user in focus mode may read it as "done writing, save and exit" rather than "exit focus mode without saving". the aria-label is correct for screen readers but sighted users see only "done".
+- evidence: focus overlay DOM (always present): "save\ndone" — no adjacent copy distinguishing the exit action from a save action.
+- suggested fix: add a title attribute to the "done" button: title="return to normal view." so hovering reveals its scope; or change visible text to "exit focus" to match the aria-label semantics.
+- source: /critique pass 13 (commit 4f08c21)
+
+### [ ] [2.1] /settings — "sign out" sits adjacent to form "save" with no prominent visual separation
+- category: external-critique
+- impact: 3
+- ease: 7
+- observation: the settings page ends with "save\nsign out" — the footer's "sign out" action appears immediately after the form's primary save action in the DOM text. the footer has a border-top separator in CSS, but the visual distance between the two actions can feel compressed, particularly when the form is long on mobile.
+- evidence: settings body: "@\nsave\nsign out" — two differently-weighted actions appear in close proximity.
+- suggested fix: increase the top margin on the footer and add a short section label above "sign out" (e.g., "session") so it reads as a distinct category rather than a secondary form action.
+- source: /critique pass 13 (commit 4f08c21)
+
+### [ ] [1.8] /today — publish toggle active with no hint that a public username is required
+- category: external-critique
+- impact: 3
+- ease: 6
+- observation: the publish toggle appears on /today whether or not the user has set a public username. toggling it stores a published state but the entry will not appear publicly without a /u/username route. there is no hint at point of use that a username is a prerequisite.
+- evidence: /today shows the full publish toggle with "this entry will appear on your public profile." while /settings shows no username value.
+- suggested fix: when no public username is saved, render the publish toggle as disabled or add a note inline: "set a username in settings for entries to appear on your profile."
+- source: /critique pass 13 (commit 4f08c21)
+
 ## Done
 
 ### [x] [4.5] a11y — sign-in confirmation message has no ARIA live region
