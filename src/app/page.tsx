@@ -39,7 +39,7 @@ export default function LandingPage() {
 
         <section className={styles.seven}>
           <div className={styles.sevenHead}>
-            <h2 className={styles.sevenTitle}>the next seven days.</h2>
+            <h2 className={styles.sevenTitle}>the next seven days</h2>
             <span className={styles.sevenMeta}>this is what arrives each morning.</span>
           </div>
 
