@@ -71,7 +71,7 @@
 - source: /critique pass 11 (commit 2b4efe6)
 - resolution: false positive — SettingsForm.tsx already has `<label htmlFor="username">public username</label>` with matching `id="username"` on the input. The critique's text-capture could not see HTML attributes; the for/id association is correct in the current code. No code change required.
 
-### [ ] [2.7] / — "sign in to start" button label conflicts with "today's prompt is waiting" framing
+### [x] [2.7] / — "sign in to start" button label conflicts with "today's prompt is waiting" framing
 - category: external-critique
 - impact: 3
 - ease: 9
@@ -79,6 +79,8 @@
 - evidence: body text: "today's prompt is waiting. a sign-in link is the only thing you'll receive. no password, no spam.\nsign in to start"
 - suggested fix: change the button label to "sign in" to match the nav, removing the implication of a new beginning.
 - source: /critique pass 11 (commit 2b4efe6)
+- issue: [mirror-failed: 2026-05-25T10:07:00Z]
+- resolution: changed "sign in to start" to "sign in" in src/app/page.tsx; updated e2e smoke test. Shipped at 65b8387.
 
 ### [ ] [2.7] /signin — meta description is identical to the landing page
 - category: external-critique

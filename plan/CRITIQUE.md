@@ -65,7 +65,7 @@
 - suggested fix: remove the "· v1" suffix from the footer, leaving only "ember", or replace with a meaningful phrase such as the year.
 - source: browser
 
-### [LOW] / — "sign in to start" button label conflicts with "today's prompt is waiting" framing
+### [x] [LOW] / — "sign in to start" button label conflicts with "today's prompt is waiting" framing
 - pass: 11 (commit 2b4efe6)
 - viewport: both
 - category: voice
@@ -73,6 +73,7 @@
 - evidence: body text: "today's prompt is waiting. a sign-in link is the only thing you'll receive. no password, no spam.\nsign in to start"
 - suggested fix: change the button label to "sign in" to match the nav, removing the implication of a new beginning.
 - source: browser
+- resolution: changed "sign in to start" to "sign in" in src/app/page.tsx; updated e2e smoke test. Shipped at 65b8387.
 
 ### [LOW] /signin — meta description is identical to the landing page
 - pass: 11 (commit 2b4efe6)
