@@ -28,7 +28,7 @@
 - source: browser
 - resolution: false positive — SettingsForm.tsx already has `<label htmlFor="username">public username</label>` with matching `id="username"` on the input. The text-capture reader cannot see HTML attributes; the for/id association is correct in the current code. No code change required.
 
-### [MED] /today — meta description is the generic product tagline, not page-specific
+### [x] [MED] /today — meta description is the generic product tagline, not page-specific
 - pass: 12 (commit 997e3b1)
 - viewport: both
 - category: seo
@@ -36,6 +36,7 @@
 - evidence: title: "ember · today"; description: "ten minutes of intention before the day swallows you" — identical to the landing page description.
 - suggested fix: set a page-specific meta description on /today, e.g. "today's prompt and your daily writing space."
 - source: browser
+- resolution: changed description to "today's prompt and your daily writing space." in src/app/today/page.tsx. Shipped at 6d907ec.
 
 ### [LOW] /settings — prompt variety radio group has no fieldset/legend grouping
 - pass: 12 (commit 997e3b1)

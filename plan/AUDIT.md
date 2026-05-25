@@ -6,6 +6,17 @@
 
 ## Pending
 
+### [x] [4.5] /today — meta description is the generic product tagline, not page-specific
+- category: external-critique
+- impact: 5
+- ease: 9
+- observation: the /today page description reads "ten minutes of intention before the day swallows you" — the product tagline, shared with the landing page. a user bookmarking /today or seeing it in search results gets no description of what the page actually contains. the title "ember · today" differentiates the page but the description does not.
+- evidence: `src/app/today/page.tsx` line 16: `description: 'ten minutes of intention before the day swallows you'` — identical to the root layout/landing page description.
+- suggested fix: set a page-specific meta description on /today, e.g. "today's prompt and your daily writing space."
+- source: /critique pass 12 (commit 997e3b1)
+- issue: [mirror-failed: 2026-05-25T06:30:00Z]
+- resolution: changed description to "today's prompt and your daily writing space." in src/app/today/page.tsx. Shipped at 6d907ec.
+
 ### [x] [3.5] /settings — SettingsForm has no unit tests for save flow or state machine
 - category: tests
 - impact: 5
