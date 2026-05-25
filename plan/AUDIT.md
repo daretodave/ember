@@ -1061,7 +1061,7 @@
 - issue: #8
 - resolution: added `src/app/auth/callback/__tests__/route.test.ts` with 3 tests covering all three branches. Shipped at bef2c0e.
 
-### [user-issue #5] [HIGH] log in bug — magic-link callback redirects to localhost
+### [x] [user-issue #5] [HIGH] log in bug — magic-link callback redirects to localhost
 
 - category: external-issue
 - impact: 9
