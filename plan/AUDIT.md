@@ -6,6 +6,17 @@
 
 ## Pending
 
+### [x] [4.5] /log — LogMosaic.tsx tileStateLabel has no unit tests; a11y-critical function unprotected
+- category: tests
+- impact: 5
+- ease: 9
+- observation: `LogMosaic.tsx` exports a `tileStateLabel()` function that determines what screen readers announce for each of the 60 log mosaic tiles (`aria-label` format `"${displayDate} — ${tileStateLabel(state)}"`). The function was added as part of finding [4.8] at c8770e7. The sibling `DayStrip.tsx` tileStateLabel was just tested at a91e2b4 (9 tests). No test file exists for `LogMosaic.tsx`. If `tileStateLabel()` regresses, the a11y fix at c8770e7 breaks silently with no test signal.
+- evidence: `find src/app/log -name "*.test.*"` returns only `src/app/log/[date]/__tests__/EditEntry.test.tsx` — no LogMosaic test. `grep -rn "LogMosaic" src --include="*.test.*"` returns nothing. `src/app/log/LogMosaic.tsx` lines 21–29: `tileStateLabel()` maps 4 states to labels; all 60 tiles use `aria-label={\`${tile.displayDate} — ${tileStateLabel(tile.state)}\`}`.
+- suggested fix: add `src/app/log/__tests__/LogMosaic.test.tsx` covering all 4 tile states × aria-label format; assert all tiles link to `/log/[date]`; assert the mosaic container group label.
+- source: /iterate audit 2026-05-25
+- issue: #31
+- resolution: added src/app/log/__tests__/LogMosaic.test.tsx with 6 tests across all tile states. Shipped at 9e28f27.
+
 ### [x] [5.4] / — "the mosaic" is undefined jargon for a first-time visitor
 - category: external-critique
 - impact: 6
