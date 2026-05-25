@@ -127,7 +127,7 @@ export default async function LogPage() {
       ) : (
         <p className={styles.emptyState}>
           your log is empty.{' '}
-          <Link href="/today">today</Link> is a good place to start.
+          <Link href="/today">today&apos;s entry</Link> will appear here.
         </p>
       )}
       </main>
