@@ -1,7 +1,7 @@
 # Ember — phase candidates
 
-> Last pass: 2026-05-25 at commit 8345061
-> Pass count: 18
+> Last pass: 2026-05-25 at commit 9c6b31e
+> Pass count: 19
 
 Candidates proposed by `/expand`. Promotion to `plan/steps/01_build_plan.md`
 happens only via local `/oversight` — never from the cloud loop.
