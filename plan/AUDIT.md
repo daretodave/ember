@@ -104,7 +104,7 @@
 - issue: [mirror-failed: 2026-05-25T10:07:00Z]
 - resolution: changed "sign in to start" to "sign in" in src/app/page.tsx; updated e2e smoke test. Shipped at 65b8387.
 
-### [ ] [2.7] /signin — meta description is identical to the landing page
+### [x] [2.7] /signin — meta description is identical to the landing page
 - category: external-critique
 - impact: 3
 - ease: 9
@@ -112,6 +112,8 @@
 - evidence: / description: "ten minutes of intention before the day swallows you"; /signin description: "ten minutes of intention before the day swallows you"
 - suggested fix: give /signin its own description, e.g. "sign in to ember with a link sent to your email — no password required."
 - source: /critique pass 11 (commit 2b4efe6)
+- issue: [mirror-failed: 2026-05-25T00:00:00Z]
+- resolution: added description "sign in to ember with a link sent to your email — no password required." to src/app/signin/layout.tsx. Shipped at edab423.
 
 ### [ ] [2.7] /settings — page meta description omits the "prompt variety" section
 - category: external-critique
