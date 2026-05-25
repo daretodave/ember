@@ -44,7 +44,7 @@
 - suggested fix: place "sign out" in a distinct section below a visual divider or horizontal rule, separate from the form's save button, so it reads as a session action rather than a form action.
 - source: browser
 
-### [LOW] /log — all-zero stat line reads as a metrics artifact for a new user
+### [x] [LOW] /log — all-zero stat line reads as a metrics artifact for a new user
 - pass: 13 (commit 4f08c21)
 - viewport: both
 - category: voice
@@ -52,6 +52,7 @@
 - evidence: "0 days written. 60 days quiet. 0 days published.\n\nyour log is empty. today's entry will appear here."
 - suggested fix: suppress the stat line when all values are zero and let the empty-state message carry the page alone, or replace with a single observation such as "nothing written yet. today's entry will appear here."
 - source: browser
+- resolution: wrapped mosaicCount <p> with `{written > 0 && ...}` in src/app/log/page.tsx. Shipped at a901368.
 
 ### [x] [MED] / — "the mosaic" is undefined jargon for a first-time visitor
 - pass: 11 (commit 2b4efe6)

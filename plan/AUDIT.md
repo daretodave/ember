@@ -721,7 +721,7 @@
 - suggested fix: remove the "· v1" suffix from the footer, leaving only "ember", or replace with a meaningful phrase such as the year.
 - source: /critique pass 12 (commit 079614a)
 
-### [ ] [3.6] /log — all-zero stat line reads as a metrics artifact for a new user
+### [x] [3.6] /log — all-zero stat line reads as a metrics artifact for a new user
 - category: external-critique
 - impact: 4
 - ease: 9
@@ -730,6 +730,7 @@
 - suggested fix: suppress the stat line when written=0 (all values are zero), letting the empty-state message carry the page alone. the stat line reappears as soon as the first entry is written.
 - source: /critique pass 13 (commit 4f08c21)
 - issue: [mirror-failed: 2026-05-25T00:00:00Z]
+- resolution: wrapped mosaicCount <p> with `{written > 0 && ...}` in src/app/log/page.tsx. Shipped at a901368.
 
 ### [ ] [2.7] / — footer CTA copy uses direct second-person address
 - category: external-critique
