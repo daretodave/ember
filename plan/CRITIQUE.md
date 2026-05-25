@@ -1,7 +1,7 @@
 # External-observer findings — Ember
 
-> Last pass: 2026-05-24 at commit 2b4efe6
-> Pass count: 11
+> Last pass: 2026-05-25 at commit 997e3b1
+> Pass count: 12
 
 > Written by `/critique` after walking the live site as a
 > fresh-eyes visitor. Drained by `/iterate`.
@@ -27,6 +27,42 @@
 - suggested fix: associate the "public username" label with the input via a `<label for="...">` / `id` pair, or add `aria-label="public username"` to the input element itself.
 - source: browser
 - resolution: false positive — SettingsForm.tsx already has `<label htmlFor="username">public username</label>` with matching `id="username"` on the input. The text-capture reader cannot see HTML attributes; the for/id association is correct in the current code. No code change required.
+
+### [MED] /today — meta description is the generic product tagline, not page-specific
+- pass: 12 (commit 997e3b1)
+- viewport: both
+- category: seo
+- observation: the /today page description reads "ten minutes of intention before the day swallows you" — the product tagline, shared with the landing page. a user bookmarking /today or seeing it in search results gets no description of what the page actually contains. the title "ember · today" differentiates the page but the description does not.
+- evidence: title: "ember · today"; description: "ten minutes of intention before the day swallows you" — identical to the landing page description.
+- suggested fix: set a page-specific meta description on /today, e.g. "today's prompt and your daily writing space."
+- source: browser
+
+### [LOW] /settings — prompt variety radio group has no fieldset/legend grouping
+- pass: 12 (commit 997e3b1)
+- viewport: both
+- category: a11y
+- observation: the prompt variety toggle uses visually-styled radio inputs under a section heading. the section heading "prompt variety" is separate from the radio inputs in the DOM; if there is no `<fieldset>` with a `<legend>`, screen readers cannot programmatically associate the group label with the "standard" and "personalized" radio buttons. the focus-visible outline fix (2af17d5) addressed keyboard visibility but not group labeling.
+- evidence: settings text: "prompt variety\n\nstandard: same curated prompt for everyone each day. personalized: a unique prompt generated from your recent entries.\n\nstandard\npersonalized" — section heading and radio inputs appear as separate blocks with no structural grouping visible.
+- suggested fix: wrap the radio inputs in a `<fieldset>` with `<legend>prompt variety</legend>`, or add `role="group"` with `aria-labelledby` pointing to the "prompt variety" heading id.
+- source: browser
+
+### [LOW] /log — page meta description is minimal and does not describe content
+- pass: 12 (commit 997e3b1)
+- viewport: both
+- category: seo
+- observation: the /log page meta description reads "your past 60 days" — technically accurate but does not describe the page's content or purpose to someone arriving from a search result or bookmark. it names the data window but not what the page shows.
+- evidence: title: "ember · log"; description: "your past 60 days"
+- suggested fix: expand to describe the page's content, e.g. "a record of your past 60 days of writing — prompts, responses, and the entries you have published."
+- source: browser
+
+### [LOW] / — "ember · v1" footer version string reads as a developer artifact
+- pass: 12 (commit 997e3b1)
+- viewport: both
+- category: voice
+- observation: the footer renders "ember · v1" where "v1" is a developer-facing version label with no meaning to a first-time reader. it sits alongside user-facing copy and disrupts the bookish, intentional voice. every other footer line carries user-facing information.
+- evidence: footer text: "ember · v1\nmade for adults who want a low-friction ritual."
+- suggested fix: remove the "· v1" suffix from the footer, leaving only "ember", or replace with a meaningful phrase such as the year.
+- source: browser
 
 ### [LOW] / — "sign in to start" button label conflicts with "today's prompt is waiting" framing
 - pass: 11 (commit 2b4efe6)
