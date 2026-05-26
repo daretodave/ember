@@ -6,6 +6,17 @@
 
 ## Pending
 
+### [x] [3.2] sitemap.ts — profile-enrichment and fallback logic have no unit tests
+- category: tests
+- impact: 4
+- ease: 8
+- observation: `src/app/sitemap.ts` added profile-enrichment logic (finding [3.6], shipped at 57d1cc2) that queries Supabase for non-null `username` rows and appends `/u/<username>` entries. The function has three meaningful code paths: (1) static + profile entries on success; (2) static-only when Supabase returns an error; (3) static-only when the try/catch catches a thrown exception. No test file exists. A regression in the profile query, the null filter, or the error fallback would silently cause public profiles to disappear from the sitemap — the same gap that prompted the original finding to ship a fix.
+- evidence: `find src -name "sitemap*test*" -o -name "*test*sitemap*" 2>/dev/null` returns nothing. `src/app/sitemap.ts` uses `createClient` from `@supabase/supabase-js` with a try/catch around the full query and explicit `if (error || !profiles) return staticEntries` guard.
+- suggested fix: add `src/app/__tests__/sitemap.test.ts` covering: (1) returns static + profile entries when Supabase succeeds with profile rows; (2) returns static entries only when Supabase returns an error; (3) returns static entries only when the query throws; (4) home entry carries priority 1.
+- source: /iterate audit 2026-05-26
+- issue: [mirror-failed: 2026-05-26T00:00:00Z]
+- resolution: added src/app/__tests__/sitemap.test.ts with 4 tests. Shipped at 6a22818.
+
 ### [x] [3.6] /today — focus mode exit button visible label "done" ambiguous next to "save"
 - category: external-critique
 - impact: 4
