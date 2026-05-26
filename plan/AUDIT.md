@@ -856,6 +856,26 @@
 - suggested fix: replace the "@" prefix with "/u/" to match the actual URL pattern, or remove the prefix entirely and let the hint carry the format context.
 - source: /critique pass 14 (commit e748b34)
 
+### [x] [4.0] /today — TodayEntry handleSave has no test coverage; save payload and error states unguarded
+- category: tests
+- impact: 5
+- ease: 8
+- observation: `TodayEntry.tsx` `handleSave` is the core user-facing action — it POSTs date, response, task_done, and is_published to `/api/entries` and manages a 5-state machine (idle/saving/saved/error/draft). Multiple test files cover focus mode, offline draft, on-this-day, and the save indicator function, but none assert on the fetch payload or error-state transitions. A regression that silently drops task_done or is_published from the payload (the same class of bug as the personalizedVal stale-closure at 0419eb3 in SettingsForm) would ship undetected. The error-state role="alert" is also untested.
+- evidence: `grep -rn "handleSave\|api/entries" src/app/today/__tests__/` returns no matches. `src/app/today/TodayEntry.tsx` lines 78–102: handleSave sends `{ date, response, task_done: taskDone, is_published: isPublished }` via fetch; error state sets `role="alert"` at line 197.
+- suggested fix: add `src/app/today/__tests__/EntrySave.test.tsx` covering: (1) POST /api/entries called with correct payload including task_done and is_published; (2) task_done: true included when task button is toggled; (3) "saving..." state during in-flight request; (4) aria-live region shows saved time after success; (5) role="alert" error message on API failure; (6) "network error. try again." on fetch rejection.
+- source: /iterate audit 2026-05-26
+- issue: [mirror-failed: 2026-05-26T00:00:00Z]
+- resolution: added src/app/today/__tests__/EntrySave.test.tsx with 6 tests covering payload (task_done, is_published), saving state, saved time in aria-live, and error states. Shipped at eac5f4d.
+
+### [ ] [2.7] /today — publish toggle description is unconditional when toggle is off
+- category: external-critique
+- impact: 3
+- ease: 9
+- observation: the publish toggle description reads "this entry will appear on your public profile." as a static, unconditional statement. when the toggle is unchecked (the default state), this reads as a factual claim — the entry will appear — rather than a description of what enabling the toggle does. the mismatch between the off-state of the control and the unconditional phrasing creates a small but genuine comprehension gap.
+- evidence: body text: "publish\nthis entry will appear on your public profile." — the same static description appears in both the main view and the focus-mode overlay regardless of toggle state.
+- suggested fix: reframe to a conditional: "when published, this entry appears on your public profile." — aligns the description with the toggle's role as a state-change control rather than a guarantee.
+- source: /critique pass 15 (commit 286ecad)
+
 ## Done
 
 ### [x] [4.5] a11y — sign-in confirmation message has no ARIA live region
