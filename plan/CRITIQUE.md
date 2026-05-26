@@ -1,12 +1,66 @@
 # External-observer findings — Ember
 
-> Last pass: 2026-05-25 at commit 4f08c21
-> Pass count: 13
+> Last pass: 2026-05-26 at commit e748b34
+> Pass count: 14
 
 > Written by `/critique` after walking the live site as a
 > fresh-eyes visitor. Drained by `/iterate`.
 
 ## Pending
+
+### [LOW] /signin — reassurance line uses direct second-person address and a sentence fragment
+- pass: 14 (commit e748b34)
+- viewport: both
+- category: voice
+- observation: the reassurance line reads "we email you a sign-in link. no password, no spam." — "we email you" is first-person plural plus direct second-person address, a register shift from the impersonal constructions used throughout the rest of the site ("the link arrives once. no password is set. no other mail is sent."). the trailing "no password, no spam." is also a fragment rather than a complete sentence.
+- evidence: src/app/signin/page.tsx line 91: `we email you a sign-in link. <em>no password, no spam.</em>` — compare landing page footer, which uses impersonal declarative sentences throughout.
+- suggested fix: reframe as impersonal declarative sentences: "a sign-in link is sent to this address. no password. no other mail." — removes direct address and converts the fragment.
+- source: browser
+
+### [LOW] /signin — post-submission confirmation uses second-person imperative
+- pass: 14 (commit e748b34)
+- viewport: both
+- category: voice
+- observation: the confirmation state (after the link is sent) reads "check your email. a sign-in link is on its way." — "check your email" is a second-person imperative instruction, which the voice guide explicitly prohibits. the rest of the sign-in page avoids direct address.
+- evidence: src/app/signin/page.tsx line 55: `check your email. a sign-in link is on its way.` — rendered when state === 'sent'.
+- suggested fix: reframe as an observation: "a sign-in link is on its way." — removes the imperative while preserving the useful information.
+- source: browser
+
+### [LOW] /signin — email input placeholder uses second-person example address
+- pass: 14 (commit e748b34)
+- viewport: both
+- category: voice
+- observation: the email input carries the placeholder "you@somewhere.com" — a second-person illustrative address. the display name placeholder on /settings ("how you appear on your public profile") is already a pending finding; this is a separate instance of the same pattern on a different page.
+- evidence: src/app/signin/page.tsx line 69: `placeholder="you@somewhere.com"` — the only second-person reference on the form outside the reassurance line.
+- suggested fix: change to a neutral placeholder such as "email address" or remove the placeholder entirely, relying on the visible "email" label above the field.
+- source: browser
+
+### [LOW] / — OG image alt attribute carries brand name only, no descriptive text
+- pass: 14 (commit e748b34)
+- viewport: both
+- category: seo
+- observation: the root layout sets the OG image alt to the bare string "ember" with no descriptive phrase. if the image fails to render in a social card preview or is read by an assistive tool, the alt conveys only the brand name and nothing about the page content.
+- evidence: src/app/layout.tsx line 48: `{ url: '/opengraph-image', width: 1200, height: 630, alt: 'ember' }` — no descriptive phrase accompanies the brand name.
+- suggested fix: expand the alt to match the page description: "ember — a daily writing ritual" so the OG image carries the same context as the page title.
+- source: browser
+
+### [LOW] /settings — public username hint uses second-person imperative "leave blank"
+- pass: 14 (commit e748b34)
+- viewport: both
+- category: voice
+- observation: the public username hint reads "leave blank to stay private." — "leave blank" is a second-person imperative instruction. the voice guide prohibits second-person imperative copy. this is a distinct instance from the pending display name placeholder finding, which covers a different field on the same page.
+- evidence: src/app/settings/SettingsForm.tsx line 156: `your public profile lives at /u/your-handle. leave blank to stay private.`
+- suggested fix: reframe as a declarative: "an empty field keeps your profile private." — removes the imperative and converts to the preferred observational register.
+- source: browser
+
+### [LOW] /settings — "@" username prefix conflicts with "/u/" URL structure
+- pass: 14 (commit e748b34)
+- viewport: both
+- category: comprehension
+- observation: the public username input is prefixed with "@", which signals a social-media handle convention. ember's actual public URL pattern is "/u/handle", not "@handle". the hint immediately below reads "your public profile lives at /u/your-handle." — the "@" affordance and the URL format use different namespacing signals, and a user who copies "@handle" as their profile URL would be wrong.
+- evidence: src/app/settings/SettingsForm.tsx line 159: `<span className={styles.usernamePrefix}>@</span>` — followed by hint at line 156 citing "/u/your-handle".
+- suggested fix: replace the "@" prefix with "/u/" to match the actual URL pattern, or remove the prefix entirely and let the hint carry the format context.
+- source: browser
 
 ### [LOW] /today — visible "done" label is ambiguous next to "save"
 - pass: 13 (commit 4f08c21)
