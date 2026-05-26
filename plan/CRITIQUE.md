@@ -1,12 +1,21 @@
 # External-observer findings — Ember
 
-> Last pass: 2026-05-26 at commit e748b34
-> Pass count: 14
+> Last pass: 2026-05-26 at commit 286ecad
+> Pass count: 15
 
 > Written by `/critique` after walking the live site as a
 > fresh-eyes visitor. Drained by `/iterate`.
 
 ## Pending
+
+### [LOW] /today — publish toggle description is an unconditional statement when toggle is off
+- pass: 15 (commit 286ecad)
+- viewport: both
+- category: comprehension
+- observation: the publish toggle description reads "this entry will appear on your public profile." as a static, unconditional statement. when the toggle is unchecked (the default state), this reads as a factual claim — the entry will appear — rather than a description of what enabling the toggle does. the mismatch between the off-state of the control and the unconditional phrasing creates a small but genuine comprehension gap.
+- evidence: body text: "publish\nthis entry will appear on your public profile." — the same static description appears in both the main view and the focus-mode overlay regardless of toggle state.
+- suggested fix: reframe to a conditional: "when published, this entry appears on your public profile." — aligns the description with the toggle's role as a state-change control rather than a guarantee.
+- source: browser
 
 ### [LOW] /signin — reassurance line uses direct second-person address and a sentence fragment
 - pass: 14 (commit e748b34)
