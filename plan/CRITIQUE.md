@@ -8,7 +8,7 @@
 
 ## Pending
 
-### [LOW] /today — publish toggle description is an unconditional statement when toggle is off
+### [x] [LOW] /today — publish toggle description is an unconditional statement when toggle is off
 - pass: 15 (commit 286ecad)
 - viewport: both
 - category: comprehension
@@ -16,6 +16,7 @@
 - evidence: body text: "publish\nthis entry will appear on your public profile." — the same static description appears in both the main view and the focus-mode overlay regardless of toggle state.
 - suggested fix: reframe to a conditional: "when published, this entry appears on your public profile." — aligns the description with the toggle's role as a state-change control rather than a guarantee.
 - source: browser
+- resolution: changed title and aria-describedby span text to "when published, this entry appears on your public profile." in both main and focus-mode overlay copies. Shipped at 3e54d90.
 
 ### [LOW] /signin — reassurance line uses direct second-person address and a sentence fragment
 - pass: 14 (commit e748b34)

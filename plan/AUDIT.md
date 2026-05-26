@@ -879,14 +879,16 @@
 - issue: [mirror-failed: 2026-05-26T00:00:00Z]
 - resolution: added src/app/today/__tests__/EntrySave.test.tsx with 6 tests covering payload (task_done, is_published), saving state, saved time in aria-live, and error states. Shipped at eac5f4d.
 
-### [ ] [2.7] /today — publish toggle description is unconditional when toggle is off
+### [x] [3.6] /today — publish toggle description is unconditional when toggle is off
 - category: external-critique
-- impact: 3
+- impact: 4
 - ease: 9
+- note: re-scored 2026-05-26 — impact raised from 3 to 4 (upper LOW); the false guarantee is delivered via aria-describedby to screen readers on every checkbox focus regardless of state, making this an accessibility concern in addition to a comprehension gap on the most-visited authenticated page
 - observation: the publish toggle description reads "this entry will appear on your public profile." as a static, unconditional statement. when the toggle is unchecked (the default state), this reads as a factual claim — the entry will appear — rather than a description of what enabling the toggle does. the mismatch between the off-state of the control and the unconditional phrasing creates a small but genuine comprehension gap.
 - evidence: body text: "publish\nthis entry will appear on your public profile." — the same static description appears in both the main view and the focus-mode overlay regardless of toggle state.
 - suggested fix: reframe to a conditional: "when published, this entry appears on your public profile." — aligns the description with the toggle's role as a state-change control rather than a guarantee.
 - source: /critique pass 15 (commit 286ecad)
+- resolution: changed title and aria-describedby span text to "when published, this entry appears on your public profile." in both main and focus-mode overlay copies. Shipped at 3e54d90.
 
 ## Done
 
