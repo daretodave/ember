@@ -6,6 +6,17 @@
 
 ## Pending
 
+### [x] [3.6] /today — focus mode exit button visible label "done" ambiguous next to "save"
+- category: external-critique
+- impact: 4
+- ease: 9
+- observation: the focus mode overlay renders a "done" button adjacent to the "save" button. sighted users in focus mode cannot tell whether "done" exits the writing view, saves the entry, or marks the tiny task complete. the aria-label ("exit focus mode") is correct for screen readers but the visible text carries no referent.
+- evidence: src/app/today/TodayEntry.tsx line 264: `done` — the focus mode exit button; aria-label="exit focus mode" but visible text is bare "done".
+- suggested fix: change visible text to "done writing" so the exit control is distinct from "save" and the tiny task checkbox.
+- source: /critique pass 13 (commit 4f08c21)
+- issue: [mirror-failed: 2026-05-26T04:08:00Z]
+- resolution: changed focus mode exit button visible text from "done" to "done writing" in src/app/today/TodayEntry.tsx. Shipped at 25e38a7.
+
 ### [x] [4.0] /signin — SigninPage client component has no unit tests; role="status" and role="alert" unguarded
 - category: tests
 - impact: 5

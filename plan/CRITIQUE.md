@@ -62,7 +62,7 @@
 - suggested fix: replace the "@" prefix with "/u/" to match the actual URL pattern, or remove the prefix entirely and let the hint carry the format context.
 - source: browser
 
-### [LOW] /today — visible "done" label is ambiguous next to "save"
+### [x] [LOW] /today — visible "done" label is ambiguous next to "save"
 - pass: 13 (commit 4f08c21)
 - viewport: both
 - category: comprehension
@@ -70,6 +70,7 @@
 - evidence: body text: "save\ndone\nyour last seven days" — "done" sits between the entry controls and the day strip with no visible label explaining its referent.
 - suggested fix: change the visible button text to "mark done" or add a short adjacent label such as "tiny task:" directly above the button so its scope is unambiguous.
 - source: browser
+- resolution: changed focus mode exit button visible text from "done" to "done writing" in src/app/today/TodayEntry.tsx. Shipped at 25e38a7.
 
 ### [LOW] /today — publish toggle active with no hint that a public username is required
 - pass: 13 (commit 4f08c21)
