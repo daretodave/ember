@@ -261,7 +261,7 @@ export function TodayEntry({ date, task, prompt, initialEntry }: Props) {
               onClick={exitFocus}
               tabIndex={isFocus ? 0 : -1}
             >
-              done
+              done writing
             </button>
           </div>
         </div>
