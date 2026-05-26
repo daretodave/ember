@@ -153,7 +153,7 @@ export function SettingsForm({ displayName, username, timezone, usePersonalizedP
           public username
         </label>
         <p className={styles.hint}>
-          your public profile lives at /u/your-handle. leave blank to stay private.
+          your public profile lives at /u/username. leave blank to stay private.
         </p>
         <div className={styles.usernameWrap}>
           <span className={styles.usernamePrefix}>@</span>
@@ -166,7 +166,7 @@ export function SettingsForm({ displayName, username, timezone, usePersonalizedP
               setUsernameVal(e.target.value.toLowerCase())
               if (saveState === 'error') setSaveState('idle')
             }}
-            placeholder="your-handle"
+            placeholder="username"
             maxLength={30}
           />
         </div>
