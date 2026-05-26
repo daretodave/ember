@@ -402,7 +402,7 @@
 - source: browser
 - resolution: changed title and aria-describedby span text to "this entry will appear on your public profile." in both main and focus-overlay copies. Shipped at 1ec04e5.
 
-### [LOW] /settings — "/u/your-handle" literal string in username hint reads as unfinished
+### [x] [LOW] /settings — "/u/your-handle" literal string in username hint reads as unfinished
 - pass: 10 (commit 51b2c7c)
 - viewport: both
 - category: comprehension
@@ -410,6 +410,7 @@
 - evidence: `"your public profile lives at /u/your-handle. leave blank to stay private."`
 - suggested fix: replace the literal "-handle" with a clearly-generic placeholder token, e.g. "/u/username" or "/u/your-username", so the example reads as illustrative rather than instructional.
 - source: browser
+- resolution: changed "/u/your-handle" to "/u/username" in hint text and input placeholder in SettingsForm.tsx. Shipped at 72dba75.
 
 ### [LOW] /settings — personalized prompt gives no fallback signal for users with no entries
 - pass: 10 (commit 51b2c7c)

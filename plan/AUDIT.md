@@ -334,7 +334,7 @@
 - issue: [mirror-failed: 2026-05-24T16:08:00Z]
 - resolution: changed title and aria-describedby span text to "this entry will appear on your public profile." in both main and focus-overlay copies of the publish toggle. Shipped at 1ec04e5.
 
-### [ ] [2.7] /settings — "/u/your-handle" literal string in username hint reads as unfinished
+### [x] [2.7] /settings — "/u/your-handle" literal string in username hint reads as unfinished
 - category: external-critique
 - impact: 3
 - ease: 9
@@ -342,6 +342,8 @@
 - evidence: `"your public profile lives at /u/your-handle. leave blank to stay private."`
 - suggested fix: replace with a clearly-generic placeholder token, e.g. "/u/username" or "/u/your-username".
 - source: /critique pass 10 (commit 84e0c49)
+- issue: [mirror-failed: 2026-05-26T08:04:00Z]
+- resolution: changed "/u/your-handle" to "/u/username" in hint text and input placeholder in SettingsForm.tsx. Shipped at 72dba75.
 
 ### [ ] [2.1] /settings — personalized prompt gives no fallback signal for users with no entries
 - category: external-critique
