@@ -786,7 +786,7 @@
 - issue: [mirror-failed: 2026-05-25T19:18:00Z]
 - resolution: changed span text to "the link arrives once. no password is set. no other mail is sent." in src/app/page.tsx. Shipped at 9ffd684.
 
-### [ ] [2.4] /today — "done" button label is ambiguous in focus mode
+### [x] [2.4] /today — "done" button label is ambiguous in focus mode
 - category: external-critique
 - impact: 3
 - ease: 8
@@ -794,6 +794,7 @@
 - evidence: focus overlay DOM (always present): "save\ndone" — no adjacent copy distinguishing the exit action from a save action.
 - suggested fix: add a title attribute to the "done" button: title="return to normal view." so hovering reveals its scope; or change visible text to "exit focus" to match the aria-label semantics.
 - source: /critique pass 13 (commit 4f08c21)
+- resolution: addressed by commit 25e38a7 which changed visible text to "done writing" — same fix as the parallel [x] [3.6] finding. Visible text is now "done writing" making the exit action distinct from "save".
 
 ### [ ] [2.1] /settings — "sign out" sits adjacent to form "save" with no prominent visual separation
 - category: external-critique
