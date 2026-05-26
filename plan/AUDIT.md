@@ -290,7 +290,7 @@
 - issue: [mirror-failed: 2026-05-24T18:06:00Z]
 - resolution: added conditional "day/days" to published count in log/page.tsx. Shipped at 2ebac0d.
 
-### [ ] [2.7] / — footer "made for adults" frames product by exclusion
+### [x] [2.7] / — footer "made for adults" frames product by exclusion
 - category: external-critique
 - impact: 3
 - ease: 9
@@ -298,6 +298,8 @@
 - evidence: "ember · v1\nmade for adults who want a low-friction ritual."
 - suggested fix: reframe around the value rather than the audience boundary: "a daily writing ritual for people who want less noise." or remove the qualifier entirely.
 - source: /critique pass 8 (commit 5abb81e)
+- issue: [mirror-failed: 2026-05-26T00:00:00Z]
+- resolution: changed "made for adults who want a low-friction ritual." to "a low-friction writing ritual." in src/app/page.tsx. Shipped at 39b9993.
 
 ### [x] [2.7] /today — focus button has no hover tooltip while adjacent publish button does
 - category: external-critique
@@ -784,6 +786,60 @@
 - evidence: /today shows the full publish toggle with "this entry will appear on your public profile." while /settings shows no username value.
 - suggested fix: when no public username is saved, render the publish toggle as disabled or add a note inline: "set a username in settings for entries to appear on your profile."
 - source: /critique pass 13 (commit 4f08c21)
+
+### [ ] [2.7] /signin — reassurance line uses direct second-person address and a sentence fragment
+- category: external-critique
+- impact: 3
+- ease: 9
+- observation: the reassurance line reads "we email you a sign-in link. no password, no spam." — "we email you" is first-person plural plus direct second-person address, a register shift from the impersonal constructions used throughout the rest of the site. the trailing "no password, no spam." is a fragment rather than a complete sentence.
+- evidence: src/app/signin/page.tsx line 91: `we email you a sign-in link. <em>no password, no spam.</em>`
+- suggested fix: reframe as impersonal declarative sentences: "a sign-in link is sent to this address. no password. no other mail."
+- source: /critique pass 14 (commit e748b34)
+
+### [ ] [2.7] /signin — post-submission confirmation uses second-person imperative
+- category: external-critique
+- impact: 3
+- ease: 9
+- observation: the confirmation state reads "check your email. a sign-in link is on its way." — "check your email" is a second-person imperative instruction, which the voice guide explicitly prohibits. the rest of the sign-in page avoids direct address.
+- evidence: src/app/signin/page.tsx line 55: `check your email. a sign-in link is on its way.`
+- suggested fix: reframe as an observation: "a sign-in link is on its way." — removes the imperative while preserving the useful information.
+- source: /critique pass 14 (commit e748b34)
+
+### [ ] [2.7] /signin — email input placeholder uses second-person example address
+- category: external-critique
+- impact: 3
+- ease: 9
+- observation: the email input carries the placeholder "you@somewhere.com" — a second-person illustrative address that conflicts with the impersonal register used elsewhere on the page.
+- evidence: src/app/signin/page.tsx line 69: `placeholder="you@somewhere.com"`
+- suggested fix: change to a neutral placeholder such as "email address" or remove the placeholder entirely, relying on the visible label above the field.
+- source: /critique pass 14 (commit e748b34)
+
+### [ ] [2.7] / — OG image alt attribute carries brand name only, no descriptive text
+- category: seo
+- impact: 3
+- ease: 9
+- observation: the root layout sets the OG image alt to the bare string "ember" with no descriptive phrase. if the image fails to render or is read by an assistive tool, the alt conveys only the brand name and nothing about the page content.
+- evidence: src/app/layout.tsx line 48: `{ url: '/opengraph-image', width: 1200, height: 630, alt: 'ember' }`
+- suggested fix: expand the alt to match the page description: "ember — a daily writing ritual"
+- source: /critique pass 14 (commit e748b34)
+
+### [ ] [2.7] /settings — public username hint uses second-person imperative "leave blank"
+- category: external-critique
+- impact: 3
+- ease: 9
+- observation: the public username hint reads "leave blank to stay private." — "leave blank" is a second-person imperative instruction. the voice guide prohibits second-person imperative copy.
+- evidence: src/app/settings/SettingsForm.tsx: `your public profile lives at /u/your-handle. leave blank to stay private.`
+- suggested fix: reframe as a declarative: "an empty field keeps your profile private." — removes the imperative and converts to the preferred observational register.
+- source: /critique pass 14 (commit e748b34)
+
+### [ ] [2.7] /settings — "@" username prefix conflicts with "/u/" URL structure
+- category: external-critique
+- impact: 3
+- ease: 9
+- observation: the public username input is prefixed with "@", which signals a social-media handle convention. ember's actual public URL pattern is "/u/handle", not "@handle". the hint immediately below reads "your public profile lives at /u/your-handle." — the "@" affordance and the URL format use different namespacing signals.
+- evidence: src/app/settings/SettingsForm.tsx: `<span className={styles.usernamePrefix}>@</span>` followed by hint citing "/u/your-handle"
+- suggested fix: replace the "@" prefix with "/u/" to match the actual URL pattern, or remove the prefix entirely and let the hint carry the format context.
+- source: /critique pass 14 (commit e748b34)
 
 ## Done
 

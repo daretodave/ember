@@ -324,7 +324,7 @@
 - source: browser
 - resolution: added conditional "day/days" to published count in log/page.tsx. Shipped at 2ebac0d.
 
-### [LOW] / — footer "made for adults" frames product by exclusion
+### [x] [LOW] / — footer "made for adults" frames product by exclusion
 - pass: 8 (commit 5abb81e)
 - viewport: both
 - category: voice
@@ -332,6 +332,7 @@
 - evidence: "ember · v1\nmade for adults who want a low-friction ritual."
 - suggested fix: reframe around the value rather than the audience boundary: "a daily writing ritual for people who want less noise." or remove the qualifier entirely and let the body copy carry the framing.
 - source: browser
+- resolution: changed "made for adults who want a low-friction ritual." to "a low-friction writing ritual." in src/app/page.tsx. Shipped at 39b9993.
 
 ### [LOW] /settings — display name placeholder uses second-person "you"
 - pass: 8 (commit 5abb81e)
