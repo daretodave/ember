@@ -187,7 +187,7 @@
 - source: browser
 - resolution: added description "sign in to ember with a link sent to your email — no password required." to src/app/signin/layout.tsx. Shipped at edab423.
 
-### [LOW] /settings — page meta description omits the "prompt variety" section
+### [x] [LOW] /settings — page meta description omits the "prompt variety" section
 - pass: 11 (commit 2b4efe6)
 - viewport: both
 - category: seo
@@ -195,6 +195,7 @@
 - evidence: description field: "display name, timezone, public username"; captured text includes "prompt variety" as a distinct labeled section with two radio options.
 - suggested fix: update the description to "display name, timezone, prompt variety, public username" or a condensed equivalent.
 - source: browser
+- resolution: updated description to "display name, timezone, prompt variety, public username" in src/app/settings/page.tsx. Shipped at 4a95097.
 
 ### [x] [MED] / — CTA "sign in to start" names the action but not the destination
 - pass: 6 (commit be41cf9)

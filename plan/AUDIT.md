@@ -126,7 +126,7 @@
 - issue: [mirror-failed: 2026-05-25T00:00:00Z]
 - resolution: added description "sign in to ember with a link sent to your email — no password required." to src/app/signin/layout.tsx. Shipped at edab423.
 
-### [ ] [2.7] /settings — page meta description omits the "prompt variety" section
+### [x] [2.7] /settings — page meta description omits the "prompt variety" section
 - category: external-critique
 - impact: 3
 - ease: 9
@@ -134,6 +134,8 @@
 - evidence: description field: "display name, timezone, public username"; captured text includes "prompt variety" as a distinct labeled section with two radio options.
 - suggested fix: update the description to "display name, timezone, prompt variety, public username" or a condensed equivalent.
 - source: /critique pass 11 (commit 2b4efe6)
+- issue: [mirror-failed: 2026-05-26T13:46:00Z]
+- resolution: updated description to "display name, timezone, prompt variety, public username" in src/app/settings/page.tsx. Shipped at 4a95097.
 
 ### [x] [4.5] /today — saveIndicatorText has no regression tests for its two recently-fixed branches
 - category: tests
