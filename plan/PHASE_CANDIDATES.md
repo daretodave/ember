@@ -1,7 +1,7 @@
 # Ember — phase candidates
 
-> Last pass: 2026-05-26 at commit b3a8769
-> Pass count: 26
+> Last pass: 2026-05-26 at commit 083020f
+> Pass count: 27
 
 Candidates proposed by `/expand`. Promotion to `plan/steps/01_build_plan.md`
 happens only via local `/oversight` — never from the cloud loop.
@@ -10,7 +10,7 @@ happens only via local `/oversight` — never from the cloud loop.
 
 ### [ ] [score 5.0] Voice coherence audit pass — address pending copy inconsistencies and document voice rules
 
-- proposed: 2026-05-23, expand pass 8; signals updated pass 9; signals updated pass 10; scope item 1 resolved pass 11; signals updated pass 13; scope item 8 resolved pass 13; scope items 7 and 10 resolved pass 15; signals updated pass 16; signals updated pass 18; scope items 2 and 15 resolved pass 20; signals updated pass 21; scope item 5 resolved, scope items 20-24 added, signals updated pass 23; scope item 18 resolved, signals updated pass 24; scope item 11 resolved, signals updated pass 25; scope item 14 resolved, scope item 25 added, signals updated pass 26
+- proposed: 2026-05-23, expand pass 8; signals updated pass 9; signals updated pass 10; scope item 1 resolved pass 11; signals updated pass 13; scope item 8 resolved pass 13; scope items 7 and 10 resolved pass 15; signals updated pass 16; signals updated pass 18; scope items 2 and 15 resolved pass 20; signals updated pass 21; scope item 5 resolved, scope items 20-24 added, signals updated pass 23; scope item 18 resolved, signals updated pass 24; scope item 11 resolved, signals updated pass 25; scope item 14 resolved, scope item 25 added, signals updated pass 26; signals updated pass 27
 - source signals:
   - critique pass 7 (commit 69def1e): 4 pending LOW voice/copy findings across 4 pages — "not yet saved" reads as error before typing (/today), heading register inconsistency between noun phrase and declarative sentence (/), coaching tone in empty-state copy (/log), no destination context after email submission (/signin)
   - critique pass 8 (commit 5abb81e): 3 additional pending LOW voice/copy findings — stat line drops unit noun for published count (/log), footer "made for adults" frames by exclusion (/), display name placeholder uses second-person "you" (/settings)
@@ -62,6 +62,7 @@ happens only via local `/oversight` — never from the cloud loop.
 - note (2026-05-26, pass 23): 6 additional iterate commits since pass 21 (voice/copy fixes, /signin meta description, SigninPage unit tests, heading register fix, footer voice fixes); all are copy or test-only changes; no authenticated e2e coverage added. Risk surface unchanged.
 - note (2026-05-26, pass 24): 2 additional commits since pass 23 (focus mode exit button label fix, audit tick); no authenticated e2e coverage added. Risk surface unchanged.
 - note (2026-05-26, pass 26): 8 additional commits since pass 25 (sitemap.ts unit tests, TodayEntry handleSave unit tests, critique pass 15, several seo/voice fixes); unit coverage growing but no authenticated e2e coverage added. Risk surface unchanged.
+- note (2026-05-26, pass 27): 0 new code commits since pass 26; iterate audit confirms all findings below 3.0 threshold; no authenticated e2e coverage added. Risk surface unchanged.
 - source signals:
   - commit pattern: 19 phases shipped; all Playwright specs still test only anonymous/redirect state — `today.spec.ts` verifies redirect to `/signin` but never the actual write flow
   - phase 19 (PWA + offline): added service-worker path and IndexedDB draft persistence; these paths have zero e2e coverage
