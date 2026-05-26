@@ -150,7 +150,7 @@
 - source: browser
 - resolution: changed description to "today's prompt and your daily writing space." in src/app/today/page.tsx. Shipped at 6d907ec.
 
-### [LOW] /settings — prompt variety radio group has no fieldset/legend grouping
+### [x] [LOW] /settings — prompt variety radio group has no fieldset/legend grouping
 - pass: 12 (commit 997e3b1)
 - viewport: both
 - category: a11y
@@ -158,6 +158,7 @@
 - evidence: settings text: "prompt variety\n\nstandard: same curated prompt for everyone each day. personalized: a unique prompt generated from your recent entries.\n\nstandard\npersonalized" — section heading and radio inputs appear as separate blocks with no structural grouping visible.
 - suggested fix: wrap the radio inputs in a `<fieldset>` with `<legend>prompt variety</legend>`, or add `role="group"` with `aria-labelledby` pointing to the "prompt variety" heading id.
 - source: browser
+- resolution: false positive — the container div already carries `role="radiogroup"` and `aria-label="prompt variety"` (SettingsForm.tsx line 125), which provides programmatic group labeling equivalent to `<fieldset>/<legend>`. The critique's text-based capture cannot read ARIA attributes; the association exists. No code change required.
 
 ### [LOW] /log — page meta description is minimal and does not describe content
 - pass: 12 (commit 997e3b1)
