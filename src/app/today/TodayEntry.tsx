@@ -154,7 +154,7 @@ export function TodayEntry({ date, task, prompt, initialEntry }: Props) {
         className={styles.entry}
         value={response}
         onChange={handleResponseChange}
-        placeholder="take your time."
+        placeholder="there is no rush."
         rows={8}
       />
 
@@ -216,7 +216,7 @@ export function TodayEntry({ date, task, prompt, initialEntry }: Props) {
             className={styles.entry}
             value={response}
             onChange={handleResponseChange}
-            placeholder="take your time."
+            placeholder="there is no rush."
             rows={8}
             tabIndex={isFocus ? 0 : -1}
           />
