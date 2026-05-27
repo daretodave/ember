@@ -244,7 +244,7 @@
 - suggested fix: expand to describe the page's content, e.g. "a record of your past 60 days of writing — prompts, responses, and the entries you have published."
 - source: browser
 
-### [LOW] / — "ember · v1" footer version string reads as a developer artifact
+### [x] [LOW] / — "ember · v1" footer version string reads as a developer artifact
 - pass: 12 (commit 997e3b1)
 - viewport: both
 - category: voice
@@ -252,6 +252,7 @@
 - evidence: footer text: "ember · v1\nmade for adults who want a low-friction ritual."
 - suggested fix: remove the "· v1" suffix from the footer, leaving only "ember", or replace with a meaningful phrase such as the year.
 - source: browser
+- resolution: removed " · v1" suffix from footer span in src/app/page.tsx. Shipped at 5629222.
 
 ### [x] [LOW] / — "sign in to start" button label conflicts with "today's prompt is waiting" framing
 - pass: 11 (commit 2b4efe6)
