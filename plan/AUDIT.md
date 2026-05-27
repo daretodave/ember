@@ -814,14 +814,17 @@
 - suggested fix: when no public username is saved, render the publish toggle as disabled or add a note inline: "set a username in settings for entries to appear on your profile."
 - source: /critique pass 13 (commit 4f08c21)
 
-### [ ] [2.7] /signin — reassurance line uses direct second-person address and a sentence fragment
+### [x] [3.6] /signin — reassurance line uses direct second-person address and a sentence fragment
 - category: external-critique
-- impact: 3
+- impact: 4
 - ease: 9
-- observation: the reassurance line reads "we email you a sign-in link. no password, no spam." — "we email you" is first-person plural plus direct second-person address, a register shift from the impersonal constructions used throughout the rest of the site. the trailing "no password, no spam." is a fragment rather than a complete sentence.
-- evidence: src/app/signin/page.tsx line 91: `we email you a sign-in link. <em>no password, no spam.</em>`
-- suggested fix: reframe as impersonal declarative sentences: "a sign-in link is sent to this address. no password. no other mail."
+- note: re-scored 2026-05-27 — impact raised from 3 to 4; the reassurance paragraph is always-visible on the primary auth flow and reaches 100% of signing users; the voice violation is identical in register to the landing-page footer "you'll receive" copy fixed at 9ffd684 (which affected the same population). the landing page footer has already been rewritten to impersonal declarative sentences; /signin still uses the old form.
+- observation: the reassurance line reads "we email you a sign-in link. no password, no spam." — "we email you" is first-person plural plus direct second-person address, a register shift from the impersonal constructions used throughout the rest of the site ("the link arrives once. no password is set. no other mail is sent."). the trailing "no password, no spam." is a sentence fragment rather than a declarative statement.
+- evidence: src/app/signin/page.tsx line 91: `we email you a sign-in link. <em>no password, no spam.</em>` — compare landing page footer at src/app/page.tsx: "the link arrives once. no password is set. no other mail is sent."
+- suggested fix: reframe as impersonal declarative sentences: "a sign-in link is sent to this address. no password. no other mail." — removes direct address and converts the fragment. matches the impersonal register of the landing footer.
 - source: /critique pass 14 (commit e748b34)
+- issue: [mirror-failed: 2026-05-27T00:00:00Z]
+- resolution: changed "we email you a sign-in link. no password, no spam." to "a sign-in link is sent to this address. no password. no other mail." in src/app/signin/page.tsx. Shipped at 6397375.
 
 ### [ ] [2.7] /signin — post-submission confirmation uses second-person imperative
 - category: external-critique

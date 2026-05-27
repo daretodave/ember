@@ -18,7 +18,7 @@
 - source: browser
 - resolution: changed title and aria-describedby span text to "when published, this entry appears on your public profile." in both main and focus-mode overlay copies. Shipped at 3e54d90.
 
-### [LOW] /signin — reassurance line uses direct second-person address and a sentence fragment
+### [x] [LOW] /signin — reassurance line uses direct second-person address and a sentence fragment
 - pass: 14 (commit e748b34)
 - viewport: both
 - category: voice
@@ -26,6 +26,7 @@
 - evidence: src/app/signin/page.tsx line 91: `we email you a sign-in link. <em>no password, no spam.</em>` — compare landing page footer, which uses impersonal declarative sentences throughout.
 - suggested fix: reframe as impersonal declarative sentences: "a sign-in link is sent to this address. no password. no other mail." — removes direct address and converts the fragment.
 - source: browser
+- resolution: changed to "a sign-in link is sent to this address. no password. no other mail." in src/app/signin/page.tsx. Shipped at 6397375.
 
 ### [LOW] /signin — post-submission confirmation uses second-person imperative
 - pass: 14 (commit e748b34)
