@@ -35,7 +35,7 @@
 - suggested fix: move the expiry copy into the post-submission confirmation view (shown after the link is sent), so it reads as context for a link already in transit rather than a pre-emptive warning.
 - source: browser
 
-### [LOW] /today — task-done button has no hover tooltip while adjacent controls do
+### [x] [LOW] /today — task-done button has no hover tooltip while adjacent controls do
 - pass: 17 (commit 21ebca6)
 - viewport: desktop
 - category: comprehension
@@ -43,6 +43,7 @@
 - evidence: /today controls row: "publish / focus / save" alongside the task-done button — the task-done button's visible label changes state (done / not done) but carries no hover description consistent with the adjacent controls.
 - suggested fix: add title="marks today's tiny task as done." (and title="marks today's tiny task as not done." when already marked) to the task-done button in TodayEntry.tsx, consistent with the voice guide requirement for complete-sentence tooltip copy.
 - source: browser
+- resolution: added dynamic title attribute to the task-done button in TodayEntry.tsx. Shipped at 156c342.
 
 ### [x] [MED] / — "sign in" CTA gives no signal that it is also the account-creation path
 - pass: 16 (commit 27718e9)

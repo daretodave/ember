@@ -948,14 +948,17 @@
 - suggested fix: reframe as fully descriptive: "one small prompt and one tiny task each morning. a few sentences in response, the task marked if it happened, and the day continues." — removes the imperative verb while preserving the meaning.
 - source: /critique pass 17 (commit 21ebca6)
 
-### [ ] [2.7] /today — task-done button has no hover tooltip while adjacent controls do
+### [x] [3.6] /today — task-done button has no hover tooltip while adjacent controls do
 - category: external-critique
-- impact: 3
+- impact: 4
 - ease: 9
+- note: re-scored 2026-05-27 — impact raised from 3 to 4; the task button is the only control in the /today action row without a title attribute; it sits on the primary authenticated surface visited by all users; the voice guide rule (complete-sentence hover copy) applies to every control in the group — consistent with the same re-scoring applied to the textarea placeholder (ddafc86) and /signin email placeholder (736f911)
 - observation: the publish toggle carries title="when published, this entry appears on your public profile." and the focus button carries title="enters a distraction-free writing view." — both complete sentences with periods, per the voice guide. the task-done button is the only control in the group without a title attribute; a sighted user hovering over it receives no tooltip.
 - evidence: /today controls row — publish toggle and focus button carry title attributes per the voice guide; the task-done button does not.
 - suggested fix: add title="marks today's tiny task as done." (and title="marks today's tiny task as not done." when already marked) to the task-done button in TodayEntry.tsx.
 - source: /critique pass 17 (commit 21ebca6)
+- issue: [mirror-failed: 2026-05-27T22:25:00Z]
+- resolution: added dynamic title attribute (marks today's tiny task as done. / not done.) to the task-done button in TodayEntry.tsx. Shipped at 156c342.
 
 ### [ ] [2.1] / — "entering an email address for the first time creates an account" is ambiguous for returning visitors
 - category: external-critique
