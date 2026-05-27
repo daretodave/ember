@@ -140,6 +140,7 @@ export function TodayEntry({ date, task, prompt, initialEntry }: Props) {
           className={`${styles.taskCheck}${taskDone ? ` ${styles.done}` : ''}`}
           aria-pressed={taskDone}
           aria-label={taskDone ? 'mark task not done' : 'mark task done'}
+          title={taskDone ? "marks today's tiny task as not done." : "marks today's tiny task as done."}
           onClick={() => setTaskDone((v) => !v)}
         />
         <p className={styles.taskBody}>
