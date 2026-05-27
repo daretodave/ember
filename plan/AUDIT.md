@@ -6,6 +6,17 @@
 
 ## Pending
 
+### [x] [5.4] / — CTA "sign in" gives no signal that it is also the account-creation path
+- category: external-critique
+- impact: 6
+- ease: 9
+- observation: the landing page CTA is labelled "sign in" with no surrounding copy acknowledging that ember uses a single magic-link flow for both new and returning visitors. a first-time visitor who has never used the product sees "sign in" and may assume an account already exists. the existing trust signal "the link arrives once" presupposes a prior send, compounding the confusion.
+- evidence: footer CTA text: "today's prompt is waiting. the link arrives once. no password is set. no other mail is sent. sign in" — no copy explains the combined sign-in / account-creation flow.
+- suggested fix: add a single declarative line near the CTA: "entering an email address for the first time creates an account."
+- source: /critique pass 16 (commit 27718e9)
+- issue: [mirror-failed: 2026-05-27T02:40:00Z]
+- resolution: added "entering an email address for the first time creates an account." before the link-arrival trust signal in the CTA copy in src/app/page.tsx. Shipped at 631bd72.
+
 ### [x] [3.2] sitemap.ts — profile-enrichment and fallback logic have no unit tests
 - category: tests
 - impact: 4

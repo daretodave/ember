@@ -8,7 +8,7 @@
 
 ## Pending
 
-### [MED] / — "sign in" CTA gives no signal that it is also the account-creation path
+### [x] [MED] / — "sign in" CTA gives no signal that it is also the account-creation path
 - pass: 16 (commit 27718e9)
 - viewport: both
 - category: comprehension
@@ -16,6 +16,7 @@
 - evidence: footer CTA text: "today's prompt is waiting. the link arrives once. no password is set. no other mail is sent. sign in" — "the link arrives once" presupposes a prior send that has not occurred for a first-time visitor.
 - suggested fix: add a single declarative line near the CTA explaining the combined flow, e.g. "entering your email for the first time creates your account." — no second-person imperative required.
 - source: browser
+- resolution: added "entering an email address for the first time creates an account." before the link-arrival trust signal in the CTA copy in src/app/page.tsx. Shipped at 631bd72.
 
 ### [LOW] / — "no password is set" phrasing differs from sign-in page's "no password"
 - pass: 16 (commit 27718e9)
