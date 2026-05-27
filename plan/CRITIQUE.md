@@ -1,12 +1,48 @@
 # External-observer findings — Ember
 
-> Last pass: 2026-05-26 at commit 286ecad
-> Pass count: 15
+> Last pass: 2026-05-27 at commit 27718e9
+> Pass count: 16
 
 > Written by `/critique` after walking the live site as a
 > fresh-eyes visitor. Drained by `/iterate`.
 
 ## Pending
+
+### [MED] / — "sign in" CTA gives no signal that it is also the account-creation path
+- pass: 16 (commit 27718e9)
+- viewport: both
+- category: comprehension
+- observation: the landing page CTA is labelled "sign in" with no surrounding copy acknowledging that ember uses a single magic-link flow for both new and returning visitors. a first-time visitor who has never used the product sees "sign in" and may assume an account already exists — there is no "create account", "get started", or onboarding signal to indicate that entering an email for the first time is how an account is created.
+- evidence: footer CTA text: "today's prompt is waiting. the link arrives once. no password is set. no other mail is sent. sign in" — "the link arrives once" presupposes a prior send that has not occurred for a first-time visitor.
+- suggested fix: add a single declarative line near the CTA explaining the combined flow, e.g. "entering your email for the first time creates your account." — no second-person imperative required.
+- source: browser
+
+### [LOW] / — "no password is set" phrasing differs from sign-in page's "no password"
+- pass: 16 (commit 27718e9)
+- viewport: both
+- category: voice
+- observation: the home page footer CTA uses "no password is set. no other mail is sent." while the sign-in page uses the shorter "no password. no other mail." for the same reassurance. the passive-voice "is set" on the home page introduces a slightly different register and a word that is absent on the sign-in page, creating a minor cross-page inconsistency in how the passwordless model is described.
+- evidence: home footer: "no password is set. no other mail is sent." — /signin helper: "no password. no other mail."
+- suggested fix: normalise the home page footer to "no password. no other mail is sent." or adopt the sign-in page's shorter form throughout.
+- source: browser
+
+### [LOW] /today — textarea placeholder "take your time." is second-person imperative
+- pass: 16 (commit 27718e9)
+- viewport: both
+- category: voice
+- observation: both the main textarea and the focus-overlay textarea carry the placeholder text "take your time." — a second-person imperative instruction. the voice guide explicitly prohibits second-person imperative copy. the placeholder is visible to any user whose textarea is empty and focused.
+- evidence: src/app/today/TodayEntry.tsx: placeholder="take your time." appears on both the main-view textarea and the focus-overlay textarea.
+- suggested fix: replace with an impersonal declarative such as "there is no rush." or remove the placeholder entirely and let the "your response" label above the field carry the framing.
+- source: browser
+
+### [LOW] /today — focus-mode overlay renders aria-modal="false" when inactive
+- pass: 16 (commit 27718e9)
+- viewport: both
+- category: a11y
+- observation: the focus-mode overlay uses aria-modal={isFocus}, which serialises to aria-modal="false" when focus mode is inactive. the ARIA spec does not define a false state for aria-modal — the attribute should be absent when the dialog is not modal, not set to "false". the overlay is simultaneously aria-hidden="true" when inactive so practical impact on screen readers is limited, but the pattern diverges from the spec and may trigger warnings in axe-core.
+- evidence: src/app/today/TodayEntry.tsx line 204: aria-modal={isFocus} — when isFocus is false this produces aria-modal="false" on the div.
+- suggested fix: change to aria-modal={isFocus || undefined} so the attribute is absent rather than explicitly false when focus mode is not active.
+- source: browser
 
 ### [x] [LOW] /today — publish toggle description is an unconditional statement when toggle is off
 - pass: 15 (commit 286ecad)
