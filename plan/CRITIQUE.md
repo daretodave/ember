@@ -1,12 +1,48 @@
 # External-observer findings — Ember
 
-> Last pass: 2026-05-27 at commit 27718e9
-> Pass count: 16
+> Last pass: 2026-05-27 at commit 21ebca6
+> Pass count: 17
 
 > Written by `/critique` after walking the live site as a
 > fresh-eyes visitor. Drained by `/iterate`.
 
 ## Pending
+
+### [LOW] / — product description contains embedded second-person imperative clause
+- pass: 17 (commit 21ebca6)
+- viewport: both
+- category: voice
+- observation: the introductory paragraph reads "you write a few sentences in response, mark the task done if you did it, and move on." — the clause "mark the task done" is an imperative verb form embedded in what is otherwise a descriptive series using "you write... and move on." the voice guide prohibits second-person imperative copy outside quoted text. a first-time reader could receive this as a directive rather than a description.
+- evidence: body text: "one small prompt and one tiny task each morning. you write a few sentences in response, mark the task done if you did it, and move on." — "mark the task done" uses imperative mood mid-sentence.
+- suggested fix: reframe as fully descriptive: "one small prompt and one tiny task each morning. a few sentences in response, the task marked if it happened, and the day continues." — removes the imperative verb while preserving the meaning.
+- source: browser
+
+### [LOW] / — "entering an email address for the first time creates an account" is ambiguous for returning visitors
+- pass: 17 (commit 21ebca6)
+- viewport: both
+- category: comprehension
+- observation: the CTA footer reads "entering an email address for the first time creates an account. the link arrives once." a returning visitor who already has an account reads "for the first time" and may worry whether entering their existing email again creates a duplicate account rather than sending a sign-in link. the copy addresses the new-user case but leaves the returning-user case unanswered.
+- evidence: footer CTA: "today's prompt is waiting. entering an email address for the first time creates an account. the link arrives once. no password is set. no other mail is sent." — no copy disambiguates behavior for known email addresses.
+- suggested fix: split into two cases or reframe without the conditional qualifier: "a known address receives a sign-in link. a new address creates an account." — covers both visitor types in the same declarative register.
+- source: browser
+
+### [LOW] /signin — expiry notice appears in the pre-submission state
+- pass: 17 (commit 21ebca6)
+- viewport: both
+- category: comprehension
+- observation: "sign-in links expire after 24 hours." appears in the page footer before any link has been sent. a first-time visitor completing the email form reads this as an unprompted time-pressure signal rather than post-send guidance. the information is accurate but its position implies urgency before anything has happened.
+- evidence: page body text (pre-submission state): "sign in. / email / send the link / a sign-in link is sent to this address. no password. no other mail. / ember / sign-in links expire after 24 hours." — the expiry line is always visible, not conditional on link dispatch.
+- suggested fix: move the expiry copy into the post-submission confirmation view (shown after the link is sent), so it reads as context for a link already in transit rather than a pre-emptive warning.
+- source: browser
+
+### [LOW] /today — task-done button has no hover tooltip while adjacent controls do
+- pass: 17 (commit 21ebca6)
+- viewport: desktop
+- category: comprehension
+- observation: the publish toggle carries title="when published, this entry appears on your public profile." and the focus button carries title="enters a distraction-free writing view." — both complete sentences with periods, per the voice guide. the task-done button is the only control in the group without a title attribute; a sighted user hovering over it receives no tooltip.
+- evidence: /today controls row: "publish / focus / save" alongside the task-done button — the task-done button's visible label changes state (done / not done) but carries no hover description consistent with the adjacent controls.
+- suggested fix: add title="marks today's tiny task as done." (and title="marks today's tiny task as not done." when already marked) to the task-done button in TodayEntry.tsx, consistent with the voice guide requirement for complete-sentence tooltip copy.
+- source: browser
 
 ### [x] [MED] / — "sign in" CTA gives no signal that it is also the account-creation path
 - pass: 16 (commit 27718e9)
