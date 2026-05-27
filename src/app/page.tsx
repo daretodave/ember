@@ -85,7 +85,7 @@ export default function LandingPage() {
         <div className={styles.ctaInner}>
           <p className={styles.ctaCopy}>
             today&apos;s prompt is waiting.{' '}
-            <span>the link arrives once. no password is set. no other mail is sent.</span>
+            <span>entering an email address for the first time creates an account. the link arrives once. no password is set. no other mail is sent.</span>
           </p>
           <Link className={styles.ctaBtn} href="/signin">
             sign in
