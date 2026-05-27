@@ -904,6 +904,36 @@
 - source: /critique pass 15 (commit 286ecad)
 - resolution: changed title and aria-describedby span text to "when published, this entry appears on your public profile." in both main and focus-mode overlay copies. Shipped at 3e54d90.
 
+### [x] [3.6] /today — textarea placeholder "take your time." is second-person imperative
+- category: external-critique
+- impact: 4
+- ease: 9
+- note: impact scored at upper-end LOW (4) — the placeholder is the first text an authenticated user sees on the primary writing surface before typing; the voice guide explicitly prohibits second-person imperative copy; the fix affects every /today visit with an empty textarea
+- observation: both the main textarea and the focus-overlay textarea carry the placeholder text "take your time." — a second-person imperative instruction. the voice guide explicitly prohibits second-person imperative copy. the placeholder is visible to any user whose textarea is empty and focused.
+- evidence: src/app/today/TodayEntry.tsx line 157: `placeholder="take your time."` on main textarea; line 219: same on focus-overlay textarea.
+- suggested fix: replace with an impersonal declarative such as "there is no rush." or remove the placeholder entirely and let the "your response" label above the field carry the framing.
+- source: /critique pass 16 (commit 27718e9)
+- issue: [mirror-failed: 2026-05-27T06:13:00Z]
+- resolution: changed placeholder to "there is no rush." on both main and focus-overlay textareas in src/app/today/TodayEntry.tsx. Shipped at ddafc86.
+
+### [ ] [2.7] / — "no password is set" phrasing differs from sign-in page's "no password"
+- category: external-critique
+- impact: 3
+- ease: 9
+- observation: the home page footer CTA uses "no password is set. no other mail is sent." while the sign-in page uses the shorter "no password. no other mail." for the same reassurance. the passive-voice "is set" on the home page introduces a slightly different register and a word absent on the sign-in page, creating a minor cross-page inconsistency in how the passwordless model is described.
+- evidence: home footer: "no password is set. no other mail is sent." — /signin helper: "no password. no other mail."
+- suggested fix: normalise to "no password. no other mail." on the home page footer to match the shorter form used on /signin.
+- source: /critique pass 16 (commit 27718e9)
+
+### [ ] [2.7] /today — focus-mode overlay renders aria-modal="false" when inactive
+- category: external-critique
+- impact: 3
+- ease: 9
+- observation: the focus-mode overlay uses `aria-modal={isFocus}`, which serialises to `aria-modal="false"` when focus mode is inactive. the ARIA spec does not define a false state for aria-modal — the attribute should be absent when the dialog is not modal, not set to "false". the overlay is simultaneously `aria-hidden="true"` when inactive so practical impact on screen readers is limited, but the pattern diverges from the spec and may trigger axe-core warnings.
+- evidence: src/app/today/TodayEntry.tsx line 204: `aria-modal={isFocus}` — when isFocus is false this produces `aria-modal="false"` on the div.
+- suggested fix: change to `aria-modal={isFocus || undefined}` so the attribute is absent rather than explicitly false when focus mode is not active.
+- source: /critique pass 16 (commit 27718e9)
+
 ## Done
 
 ### [x] [4.5] a11y — sign-in confirmation message has no ARIA live region

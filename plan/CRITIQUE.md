@@ -27,7 +27,7 @@
 - suggested fix: normalise the home page footer to "no password. no other mail is sent." or adopt the sign-in page's shorter form throughout.
 - source: browser
 
-### [LOW] /today — textarea placeholder "take your time." is second-person imperative
+### [x] [LOW] /today — textarea placeholder "take your time." is second-person imperative
 - pass: 16 (commit 27718e9)
 - viewport: both
 - category: voice
@@ -35,6 +35,7 @@
 - evidence: src/app/today/TodayEntry.tsx: placeholder="take your time." appears on both the main-view textarea and the focus-overlay textarea.
 - suggested fix: replace with an impersonal declarative such as "there is no rush." or remove the placeholder entirely and let the "your response" label above the field carry the framing.
 - source: browser
+- resolution: changed placeholder to "there is no rush." on both main and focus-overlay textareas in src/app/today/TodayEntry.tsx. Shipped at ddafc86.
 
 ### [LOW] /today — focus-mode overlay renders aria-modal="false" when inactive
 - pass: 16 (commit 27718e9)
