@@ -937,6 +937,42 @@
 - suggested fix: change to `aria-modal={isFocus || undefined}` so the attribute is absent rather than explicitly false when focus mode is not active.
 - source: /critique pass 16 (commit 27718e9)
 
+### [ ] [2.7] / — product description contains embedded second-person imperative clause
+- category: external-critique
+- impact: 3
+- ease: 9
+- observation: the introductory paragraph reads "you write a few sentences in response, mark the task done if you did it, and move on." — the clause "mark the task done" is an imperative verb form embedded in what is otherwise a descriptive series using "you write... and move on." the voice guide prohibits second-person imperative copy outside quoted text.
+- evidence: body text: "one small prompt and one tiny task each morning. you write a few sentences in response, mark the task done if you did it, and move on." — "mark the task done" uses imperative mood mid-sentence.
+- suggested fix: reframe as fully descriptive: "one small prompt and one tiny task each morning. a few sentences in response, the task marked if it happened, and the day continues." — removes the imperative verb while preserving the meaning.
+- source: /critique pass 17 (commit 21ebca6)
+
+### [ ] [2.7] /today — task-done button has no hover tooltip while adjacent controls do
+- category: external-critique
+- impact: 3
+- ease: 9
+- observation: the publish toggle carries title="when published, this entry appears on your public profile." and the focus button carries title="enters a distraction-free writing view." — both complete sentences with periods, per the voice guide. the task-done button is the only control in the group without a title attribute; a sighted user hovering over it receives no tooltip.
+- evidence: /today controls row — publish toggle and focus button carry title attributes per the voice guide; the task-done button does not.
+- suggested fix: add title="marks today's tiny task as done." (and title="marks today's tiny task as not done." when already marked) to the task-done button in TodayEntry.tsx.
+- source: /critique pass 17 (commit 21ebca6)
+
+### [ ] [2.1] / — "entering an email address for the first time creates an account" is ambiguous for returning visitors
+- category: external-critique
+- impact: 3
+- ease: 7
+- observation: the CTA footer reads "entering an email address for the first time creates an account. the link arrives once." a returning visitor who already has an account reads "for the first time" and may worry whether entering their existing email again creates a duplicate account rather than sending a sign-in link.
+- evidence: footer CTA: "today's prompt is waiting. entering an email address for the first time creates an account. the link arrives once. no password is set. no other mail is sent." — no copy disambiguates behavior for known email addresses.
+- suggested fix: split into two cases: "a known address receives a sign-in link. a new address creates an account." — covers both visitor types in the same declarative register.
+- source: /critique pass 17 (commit 21ebca6)
+
+### [ ] [1.8] /signin — expiry notice appears in the pre-submission state
+- category: external-critique
+- impact: 3
+- ease: 6
+- observation: "sign-in links expire after 24 hours." appears in the page footer before any link has been sent. a first-time visitor completing the email form reads this as an unprompted time-pressure signal rather than post-send guidance.
+- evidence: page body text (pre-submission state): "sign in. / email / send the link / a sign-in link is sent to this address. no password. no other mail. / ember / sign-in links expire after 24 hours." — the expiry line is always visible, not conditional on link dispatch.
+- suggested fix: move the expiry copy into the post-submission confirmation view (shown after the link is sent), so it reads as context for a link already in transit rather than a pre-emptive warning.
+- source: /critique pass 17 (commit 21ebca6)
+
 ## Done
 
 ### [x] [4.5] a11y — sign-in confirmation message has no ARIA live region
