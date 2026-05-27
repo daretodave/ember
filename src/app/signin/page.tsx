@@ -66,7 +66,7 @@ export default function SigninPage() {
                   className={styles.fieldInput}
                   id="email"
                   type="email"
-                  placeholder="you@somewhere.com"
+                  placeholder="email address"
                   autoFocus
                   required
                   disabled={state === 'sending'}
