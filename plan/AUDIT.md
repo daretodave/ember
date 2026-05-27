@@ -846,14 +846,17 @@
 - suggested fix: reframe as an observation: "a sign-in link is on its way." — removes the imperative while preserving the useful information.
 - source: /critique pass 14 (commit e748b34)
 
-### [ ] [2.7] /signin — email input placeholder uses second-person example address
+### [x] [4.0] /signin — email input placeholder uses second-person example address
 - category: external-critique
-- impact: 3
-- ease: 9
+- impact: 4
+- ease: 10
+- note: re-scored 2026-05-27 — impact raised from 3 to 4; placeholder visible to 100% of /signin visitors before any input, on the primary auth conversion path; same justification that raised /today textarea placeholder to impact 4 at ddafc86
 - observation: the email input carries the placeholder "you@somewhere.com" — a second-person illustrative address that conflicts with the impersonal register used elsewhere on the page.
 - evidence: src/app/signin/page.tsx line 69: `placeholder="you@somewhere.com"`
 - suggested fix: change to a neutral placeholder such as "email address" or remove the placeholder entirely, relying on the visible label above the field.
 - source: /critique pass 14 (commit e748b34)
+- issue: [mirror-failed: 2026-05-27T08:10:00Z]
+- resolution: changed placeholder to "email address" in src/app/signin/page.tsx. Shipped at 736f911.
 
 ### [ ] [2.7] / — OG image alt attribute carries brand name only, no descriptive text
 - category: seo
