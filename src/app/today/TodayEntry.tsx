@@ -111,6 +111,22 @@ export function TodayEntry({ date, task, prompt, initialEntry }: Props) {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isOnline])
 
+  // Warn before unload when there is unsaved server-side content
+  useEffect(() => {
+    const hasUnsaved = (saveState === 'idle' || saveState === 'error') && response !== ''
+    if (!hasUnsaved) {
+      window.onbeforeunload = null
+      return
+    }
+    window.onbeforeunload = (e) => {
+      e.preventDefault()
+      return ''
+    }
+    return () => {
+      window.onbeforeunload = null
+    }
+  }, [saveState, response])
+
   const handleResponseChange = useCallback((e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const value = e.target.value
     setResponse(value)
