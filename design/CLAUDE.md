@@ -99,6 +99,26 @@ These rules are enforced by the `lint:no-uppercase-css` step in the verify gate 
 
 ---
 
+## Copy and voice rules
+
+These rules are derived from 19 critique passes and the voice coherence candidate (expand pass 8 → 44). They apply to every user-facing string: body copy, placeholder text, tooltip titles, meta descriptions, button labels, hint text, and empty states. Apply them before writing any copy.
+
+| Rule | Requirement | Example fix |
+|---|---|---|
+| **No second-person imperative** | Copy must not instruct the user. No "leave blank", "take your time", "mark the task done", "check your email". Reframe as declarative or observational. | "leave blank to stay private." → "an empty field keeps your profile private." |
+| **No possessive presupposition** | On pages visible before account creation (`/`, `/signin`), avoid possessives that assume existing content: "your log", "your responses", "your entries". Use "the log", "responses", or reframe. | "your responses accumulate" → "responses accumulate" |
+| **Register consistency** | Section headings on the same page must use the same syntactic form. Don't mix noun phrases and full declarative sentences in adjacent headings. | "the next seven days." (noun phrase with period) next to "this is what arrives each morning." (full sentence) is inconsistent — align both to noun phrases or both to full sentences. |
+| **Tooltip completeness** | Every interactive control in a group must carry a `title` attribute with a complete sentence and period, if any sibling control does. No half-completed sets. | If the publish toggle has `title="when published, this entry appears on your public profile."`, the adjacent focus and save buttons must also have `title` attributes. |
+| **Meta description uniqueness** | Every route must export its own `description` in `metadata`. The root layout tagline is not a valid description for any child page. | `/today` must not inherit the root layout's "ten minutes of intention before the day swallows you" — it needs its own page-specific description. |
+| **Cross-page phrasing consistency** | When the same concept appears on multiple pages, use identical phrasing. Passive vs. active, clause vs. noun phrase, are not interchangeable across pages. | Landing page "no password is set." must match `/signin`'s "no password." — normalize to one form. |
+| **Value-first framing** | Describe who is served and what value they receive. Do not define the audience by exclusion ("made for adults", "not for productivity hackers"). | "made for adults who want a low-friction ritual." → "a low-friction writing ritual." |
+| **Coaching-free copy** | No encouragement copy ("today is a good place to start"), no "yet" implying failure ("not yet saved"), no motivational asides. State what exists, not what is missing or expected. | "today is a good place to start." → "today's entry will appear here." |
+| **Attribution-free voice** | Do not name vendors or technical infrastructure in user-facing copy. No "Supabase", "Claude", "magic-link via Supabase", or equivalent. Describe behavior, not implementation. | "generated for you by Claude" → "generated from your recent entries" |
+
+These rules have no automated enforcement (unlike the `text-transform:uppercase` CSS ban above). They are read by agents and contributors before writing copy. If a critique finding matches one of these patterns, cite the rule name in the AUDIT.md row.
+
+---
+
 ## What the design folder does NOT cover
 
 - **Favicon, OG image, social cards.** These are the demand-pull asset layer. A future `/ship-asset` slice renders them against the mosaic primitive, but they don't ship in v1.
