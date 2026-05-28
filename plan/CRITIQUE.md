@@ -27,7 +27,7 @@
 - suggested fix: wrap both elements in <hgroup> so AT understands the date as supplementary context for the heading, or add aria-describedby on the H1 pointing to the dateStamp paragraph's id.
 - source: browser
 
-### [LOW] / — full sentence wrapped in <em>, applying spoken stress to a plain declaration
+### [x] [LOW] / — full sentence wrapped in <em>, applying spoken stress to a plain declaration
 - pass: 19 (commit fc34abc)
 - viewport: both
 - category: voice
@@ -35,6 +35,7 @@
 - evidence: src/app/page.tsx: <p>the same prompt and task arrive for everyone on a given day. <em>ember does not personalize your morning.</em></p>
 - suggested fix: remove the <em> wrapper and let the sentence stand as plain text, consistent with the rest of the closing paragraph.
 - source: browser
+- resolution: removed <em> wrapper from "ember does not personalize your morning." in src/app/page.tsx. Shipped at d4a139f.
 
 ### [LOW] /today — "your last seven days" heading implies an existing record for a new user
 - pass: 19 (commit fc34abc)
