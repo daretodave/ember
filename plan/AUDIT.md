@@ -17,7 +17,7 @@
 - issue: [mirror-failed: 2026-05-28T00:00:00Z]
 - resolution: removed <em> wrapper from "ember does not personalize your morning." in src/app/page.tsx. Shipped at d4a139f.
 
-### [ ] [3.0] /today — "your last seven days" heading implies an existing record for a new user
+### [x] [3.0] /today — "your last seven days" heading implies an existing record for a new user
 - category: external-critique
 - impact: 3
 - ease: 10
@@ -25,6 +25,8 @@
 - evidence: src/app/today/DayStrip.tsx: `<h2 className={styles.stripLabel}>your last seven days</h2>`; authenticated capture shows all seven strip days as "no entry".
 - suggested fix: change to "the last seven days" to describe the time window without the possessive.
 - source: /critique pass 19 (commit fc34abc)
+- issue: [mirror-failed: 2026-05-28T00:00:00Z]
+- resolution: changed heading to "the last seven days" in src/app/today/DayStrip.tsx; DayStrip.test.tsx updated. Shipped at e016982.
 
 ### [x] [3.0] / — "your responses accumulate" addresses a visitor who has no responses yet
 - category: external-critique
