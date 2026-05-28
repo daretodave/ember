@@ -52,7 +52,7 @@ export default function SigninPage() {
 
           {state === 'sent' ? (
             <p className={styles.confirmation} role="status">
-              check your email. a sign-in link is on its way.{' '}
+              a sign-in link is on its way.{' '}
               <em>no password required.</em>
             </p>
           ) : (
