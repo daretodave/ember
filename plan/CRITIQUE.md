@@ -8,7 +8,7 @@
 
 ## Pending
 
-### [MED] /today — save button carries no description; privacy of saved-but-unpublished entries is unstated
+### [x] [MED] /today — save button carries no description; privacy of saved-but-unpublished entries is unstated
 - pass: 18 (commit 6c01dc8)
 - viewport: both
 - category: comprehension
@@ -16,6 +16,7 @@
 - evidence: capture text: "publish / when published, this entry appears on your public profile. / focus / save" — save appears as a bare label with no adjacent description in either main or focus-overlay view.
 - suggested fix: add a short description near the save action, e.g. "entries are saved privately by default." to close the visibility gap for users who save without publishing.
 - source: browser
+- resolution: added title="entries are saved privately by default." to both save buttons (main view and focus overlay) in TodayEntry.tsx. Shipped at ac5aee3.
 
 ### [MED] /today — no signal that entries are not auto-saved; navigation away silently discards unsaved work
 - pass: 18 (commit 6c01dc8)

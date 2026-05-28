@@ -6,6 +6,53 @@
 
 ## Pending
 
+### [x] [4.8] /today — save button carries no description; privacy of saved-but-unpublished entries is unstated
+- category: external-critique
+- impact: 6
+- ease: 8
+- observation: the publish toggle has an inline description explaining its effect on visibility. the save button has no equivalent description. a first-time user cannot determine whether an entry that is saved without publishing is stored privately or visible elsewhere.
+- evidence: capture text: "publish / when published, this entry appears on your public profile. / focus / save" — save appears as a bare label with no adjacent description in either main or focus-overlay view.
+- suggested fix: add title="entries are saved privately by default." to the save button, consistent with the title attributes already on the focus button and publish toggle label.
+- source: /critique pass 18 (commit 6c01dc8)
+- issue: [mirror-failed: 2026-05-28T00:00:00Z]
+- resolution: added title="entries are saved privately by default." to both save buttons (main view and focus overlay) in src/app/today/TodayEntry.tsx. Shipped at ac5aee3.
+
+### [ ] [3.6] /today — no signal that entries are not auto-saved; navigation away silently discards unsaved work
+- category: external-critique
+- impact: 6
+- ease: 6
+- observation: the page requires an explicit press of "save" to persist an entry. no copy or ui pattern informs the user that the entry is not saved automatically. a user who writes a response and then navigates away without pressing save would lose their work with no warning.
+- evidence: capture shows "save" as the sole persistence action with no "unsaved changes" notice, no auto-save mention, and no navigation-away guard visible on the /today page.
+- suggested fix: add a route-change guard warning when the textarea has unsaved content, or add a brief note near the save button such as "entries are not saved automatically."
+- source: /critique pass 18 (commit 6c01dc8)
+
+### [ ] [3.6] /today — nav links carry no aria-current marker identifying the active page
+- category: a11y
+- impact: 4
+- ease: 9
+- observation: the authenticated navigation renders "today / log / settings" identically across all three pages. no aria-current="page" attribute is applied to the link matching the current route. screen reader users traversing the nav have no programmatic signal indicating which page is active.
+- evidence: all three page captures show the same nav text "today / log / settings" with no active-state differentiation; no aria-current is inferable from any capture.
+- suggested fix: add aria-current="page" to the nav anchor matching the current route in the shared navigation component, conditioned on the active pathname.
+- source: /critique pass 18 (commit 6c01dc8)
+
+### [ ] [2.7] / — "the link arrives once" is ambiguous before any link has been sent
+- category: comprehension
+- impact: 3
+- ease: 9
+- observation: in the home-page footer CTA, "the link arrives once" appears before a visitor has entered their email. "once" is ambiguous: it could mean one link per request (the intended meaning) or one link ever. a first-time visitor who misses or does not receive the link may read this as meaning the opportunity is permanently spent.
+- evidence: footer CTA: "the link arrives once. no password is set. no other mail is sent."
+- suggested fix: replace "the link arrives once" with per-request language, e.g. "a link is sent each time this form is submitted." — or drop the clause entirely, since single-send-per-request is implicit in a magic-link flow.
+- source: /critique pass 18 (commit 6c01dc8)
+
+### [ ] [2.7] / — "your log" referenced before the visitor has created an account
+- category: comprehension
+- impact: 3
+- ease: 9
+- observation: the reassurance paragraph closes with "your log shows what is, not what isn't." a first-time visitor has no log — the possessive "your" presupposes an existing account. the sentence is designed as reassurance but lands as an abstraction with no concrete referent for someone who has never used ember.
+- evidence: body text: "there are no streaks to break, no reminders to dismiss, no notifications to mute. forgetting a day is fine. your log shows what is, not what isn't."
+- suggested fix: remove the possessive: "the log shows what is, not what isn't." — preserves the reassurance without implying the visitor already has a record.
+- source: /critique pass 18 (commit 6c01dc8)
+
 ### [x] [5.4] / — CTA "sign in" gives no signal that it is also the account-creation path
 - category: external-critique
 - impact: 6
