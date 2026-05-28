@@ -6,6 +6,17 @@
 
 ## Pending
 
+### [x] [4.0] design/CLAUDE.md — no copy/voice rules documented; violations recur across critique passes
+- category: tests
+- impact: 5
+- ease: 8
+- observation: design/CLAUDE.md has a "CSS rule bans" section documenting the text-transform:uppercase ban, enforced by the verify gate. no equivalent section exists for copy and voice rules. the voice coherence candidate (score 5.0, filed at expand pass 8, now pass 44) has accumulated 10+ recurring patterns across 19 critique passes: second-person imperatives in hints and placeholders, possessive presupposition for first-time visitors, register inconsistency between adjacent headings, absent tooltip completeness, cross-page phrasing inconsistency, and value-first framing violations. without documentation, future agents and iterations repeat the same class of violation.
+- evidence: plan/PHASE_CANDIDATES.md voice coherence candidate notes 10 unresolved scope items from passes 7–44; plan/CRITIQUE.md records 19 passes with voice/copy violations across every authenticated page; design/CLAUDE.md has no "Copy and voice rules" section despite an analogous "CSS rule bans" section.
+- suggested fix: add a "Copy and voice rules" section to design/CLAUDE.md documenting the recurring patterns as named, actionable rules — second-person imperative ban, possessive presupposition guidance, register consistency, tooltip completeness, meta description uniqueness, cross-page phrasing consistency, value-first framing, and attribution-free voice.
+- source: /iterate audit 2026-05-28
+- issue: [mirror-failed: loop-issue.mjs not present in scripts/]
+- resolution: added "Copy and voice rules" section to design/CLAUDE.md with 9 named rules derived from the voice coherence candidate and 19 critique passes. Shipped at c3e4586.
+
 ### [x] [3.0] / — full sentence wrapped in <em>, applying spoken stress to a plain declaration
 - category: external-critique
 - impact: 3
