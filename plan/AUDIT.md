@@ -6,6 +6,17 @@
 
 ## Pending
 
+### [x] [4.5] / — home meta description is the brand tagline with no product-category keyword
+- category: seo
+- impact: 5
+- ease: 9
+- observation: the root layout `description` field — used as `<meta name="description">` across all pages that do not override it — reads "ten minutes of intention before the day swallows you". this is the product tagline, also used verbatim in `openGraph.description` and `twitter.description`. it contains no word from the functional product vocabulary (writing, ritual, daily, prompt) that appears in the page title "ember — a daily writing ritual". a search-results snippet reader gets no indication of what the site does; the description reads as a motivational tagline with no product-category terms.
+- evidence: `src/app/layout.tsx` line 36: `description: 'ten minutes of intention before the day swallows you'`; page title: `'ember — a daily writing ritual'`; none of those title terms appear in the description.
+- suggested fix: replace the description with one that anchors the product category while preserving voice, e.g. `'ember is a daily writing ritual — one prompt and one small task each morning.'` Update `openGraph.description` and `twitter.description` consistently.
+- source: /critique pass 18 (commit 6c01dc8)
+- issue: [mirror-failed: 2026-05-28T00:00:00Z]
+- resolution: updated description, openGraph.description, and twitter.description in src/app/layout.tsx to "ember is a daily writing ritual — one prompt and one small task each morning." Shipped at ec895b6.
+
 ### [x] [4.8] /today — save button carries no description; privacy of saved-but-unpublished entries is unstated
 - category: external-critique
 - impact: 6
