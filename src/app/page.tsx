@@ -66,7 +66,7 @@ export default function LandingPage() {
         <section className={styles.closing}>
           <p>
             the same prompt and task arrive for everyone on a given day.{' '}
-            <em>ember does not personalize your morning.</em>
+            ember does not personalize your morning.
           </p>
           <p>
             there are no streaks to break, no reminders to dismiss, no
