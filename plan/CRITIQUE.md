@@ -1,12 +1,66 @@
 # External-observer findings — Ember
 
-> Last pass: 2026-05-27 at commit 21ebca6
-> Pass count: 17
+> Last pass: 2026-05-28 at commit 6c01dc8
+> Pass count: 18
 
 > Written by `/critique` after walking the live site as a
 > fresh-eyes visitor. Drained by `/iterate`.
 
 ## Pending
+
+### [MED] /today — save button carries no description; privacy of saved-but-unpublished entries is unstated
+- pass: 18 (commit 6c01dc8)
+- viewport: both
+- category: comprehension
+- observation: the publish toggle has an inline description ("when published, this entry appears on your public profile.") explaining its effect on visibility. the save button has no equivalent description. a first-time user cannot determine whether an entry that is saved without publishing is stored privately or visible elsewhere. the only copy addressing visibility is scoped to the publish toggle; the default state — saved, not published — is never described.
+- evidence: capture text: "publish / when published, this entry appears on your public profile. / focus / save" — save appears as a bare label with no adjacent description in either main or focus-overlay view.
+- suggested fix: add a short description near the save action, e.g. "entries are saved privately by default." to close the visibility gap for users who save without publishing.
+- source: browser
+
+### [MED] /today — no signal that entries are not auto-saved; navigation away silently discards unsaved work
+- pass: 18 (commit 6c01dc8)
+- viewport: both
+- category: comprehension
+- observation: the page requires an explicit press of "save" to persist an entry. no copy or ui pattern informs the user that the entry is not saved automatically. a user who writes a response and then navigates to /log or /settings without pressing save would lose their work with no warning. the blank idle save-state indicator correctly shows nothing before typing but provides no guidance after writing begins.
+- evidence: capture shows "save" as the sole persistence action with no "unsaved changes" notice, no auto-save mention, and no navigation-away guard visible on the /today page.
+- suggested fix: add a route-change guard warning when the textarea has unsaved content, or add a brief note near the save button such as "entries are not saved automatically." to set the user's expectation.
+- source: browser
+
+### [LOW] /today — nav links carry no aria-current marker identifying the active page
+- pass: 18 (commit 6c01dc8)
+- viewport: both
+- category: a11y
+- observation: the authenticated navigation renders "today / log / settings" identically across all three pages. no aria-current="page" attribute is applied to the link matching the current route. sighted users infer location from page content; screen reader users traversing the nav have no programmatic signal indicating which page is active.
+- evidence: all three page captures show the same nav text "today / log / settings" with no active-state differentiation; no aria-current is inferable from any capture.
+- suggested fix: add aria-current="page" to the nav anchor matching the current route in the shared navigation component, conditioned on the active pathname.
+- source: browser
+
+### [LOW] / — "the link arrives once" is ambiguous before any link has been sent
+- pass: 18 (commit 6c01dc8)
+- viewport: both
+- category: comprehension
+- observation: in the home-page footer CTA, "the link arrives once" appears before a visitor has entered their email. "once" is ambiguous: it could mean the system sends exactly one link per request (the intended meaning) or that only one link is ever issued to an address across all time. a first-time visitor who misses or does not receive the link may read this as meaning the opportunity is permanently spent.
+- evidence: footer CTA: "today's prompt is waiting. entering an email address for the first time creates an account. the link arrives once. no password is set. no other mail is sent."
+- suggested fix: replace "the link arrives once" with per-request language, e.g. "a link is sent each time this form is submitted." — or drop the clause entirely, since single-send-per-request is implicit in a magic-link flow.
+- source: browser
+
+### [LOW] / — "your log" referenced before the visitor has created an account
+- pass: 18 (commit 6c01dc8)
+- viewport: both
+- category: comprehension
+- observation: the reassurance paragraph closes with "your log shows what is, not what isn't." a first-time visitor has no log — the possessive "your" presupposes an existing account and record. the sentence is designed as reassurance but lands as an abstraction with no concrete referent for someone who has never used ember.
+- evidence: body text: "there are no streaks to break, no reminders to dismiss, no notifications to mute. forgetting a day is fine. your log shows what is, not what isn't."
+- suggested fix: remove the possessive to de-anchor from an assumed account: "the log shows what is, not what isn't." — preserves the reassurance without implying the visitor already has a record.
+- source: browser
+
+### [LOW] / — home meta description is the brand tagline with no product-category keyword
+- pass: 18 (commit 6c01dc8)
+- viewport: both
+- category: seo
+- observation: the home page meta description is "ten minutes of intention before the day swallows you" — identical to the visible lede. it contains no word from the functional product vocabulary (writing, ritual, daily, prompt, log) that appears in the page title. a search-results reader scanning snippets gets no indication of what the site does; the description reads as a motivational tagline with no product-category terms.
+- evidence: meta description: "ten minutes of intention before the day swallows you" — page title: "ember — a daily writing ritual"; none of those title terms appear in the description.
+- suggested fix: extend or replace the description to anchor the product category, e.g. "ember is a daily writing ritual — one prompt and one small task each morning." keeps the tone while adding terms a search-snippet reader can act on.
+- source: browser
 
 ### [LOW] / — product description contains embedded second-person imperative clause
 - pass: 17 (commit 21ebca6)
