@@ -1,12 +1,66 @@
 # External-observer findings — Ember
 
-> Last pass: 2026-05-28 at commit 6c01dc8
-> Pass count: 18
+> Last pass: 2026-05-28 at commit fc34abc
+> Pass count: 19
 
 > Written by `/critique` after walking the live site as a
 > fresh-eyes visitor. Drained by `/iterate`.
 
 ## Pending
+
+### [MED] /settings — no unsaved-changes guard when navigating away
+- pass: 19 (commit fc34abc)
+- viewport: both
+- category: comprehension
+- observation: the settings form provides no indication of unsaved changes and no route-leave warning. a user who edits fields and navigates away without saving loses their changes silently. /today implements a window.onbeforeunload guard for unsaved entries; /settings has no equivalent, creating an inconsistent safety model across the two primary edit surfaces.
+- evidence: src/app/settings/SettingsForm.tsx formFoot renders the save button with no dirty-state indicator and no route-change guard; contrast with TodayEntry.tsx which sets window.onbeforeunload when the textarea has content and saveState is 'idle' or 'error'.
+- suggested fix: track whether any field value differs from its initially-loaded profile value and either show an 'unsaved changes' indicator near the save button or add a window.onbeforeunload guard that fires when the form is dirty, mirroring the /today pattern.
+- source: browser
+
+### [LOW] /today — date paragraph has no programmatic association with the prompt H1
+- pass: 19 (commit fc34abc)
+- viewport: both
+- category: a11y
+- observation: the page renders the date string (e.g. "Thu 28 May 2026") as a plain <p> element immediately before the prompt H1. the date contextualises the H1 but has no semantic relationship to it — no aria-describedby on the H1 and no hgroup wrapper. a screen reader user encounters the date as an unrelated body paragraph before the page's H1, with no signal that the date is the heading's temporal context.
+- evidence: src/app/today/page.tsx: <p className={styles.dateStamp}>{displayDate}</p> followed immediately by <h1 className={styles.prompt}>{prompt}</h1> — no association element present.
+- suggested fix: wrap both elements in <hgroup> so AT understands the date as supplementary context for the heading, or add aria-describedby on the H1 pointing to the dateStamp paragraph's id.
+- source: browser
+
+### [LOW] / — full sentence wrapped in <em>, applying spoken stress to a plain declaration
+- pass: 19 (commit fc34abc)
+- viewport: both
+- category: voice
+- observation: the closing paragraph wraps the entire sentence "ember does not personalize your morning." in an <em> element. screen readers voice <em> with stress inflection. the voice guide specifies plain, settled statements of value; wrapping a complete declarative sentence in emphasis applies editorial pressure that conflicts with the understated register of the surrounding copy.
+- evidence: src/app/page.tsx: <p>the same prompt and task arrive for everyone on a given day. <em>ember does not personalize your morning.</em></p>
+- suggested fix: remove the <em> wrapper and let the sentence stand as plain text, consistent with the rest of the closing paragraph.
+- source: browser
+
+### [LOW] /today — "your last seven days" heading implies an existing record for a new user
+- pass: 19 (commit fc34abc)
+- viewport: both
+- category: voice
+- observation: the day strip section is headed "your last seven days" regardless of whether the user has written anything. for a first-time user whose strip shows seven consecutive "no entry" states, the possessive heading implies ownership of a history that does not yet exist. the heading is technically accurate but the "your" framing presupposes content, inconsistent with the voice guide's observational register.
+- evidence: src/app/today/DayStrip.tsx: <h2 className={styles.stripLabel}>your last seven days</h2>; authenticated capture shows all seven strip days as "no entry".
+- suggested fix: change to "the last seven days" to describe the time window without the possessive.
+- source: browser
+
+### [LOW] / — "your responses accumulate" addresses a visitor who has no responses yet
+- pass: 19 (commit fc34abc)
+- viewport: both
+- category: voice
+- observation: the sub-pitch paragraph reads "over weeks, your responses accumulate into a quiet personal log." for an anonymous first-time visitor, "your responses" presupposes a writing history that does not exist. this is a separate phrase from the standing "your log" finding — it appears earlier in the same paragraph and uses a different possessive noun.
+- evidence: body text: "one small prompt and one tiny task each morning. you write a few sentences in response, mark the task done if you did it, and move on. over weeks, your responses accumulate into a quiet personal log."
+- suggested fix: remove the possessive: "over weeks, responses accumulate into a quiet personal log." — describes the feature without assuming an existing account.
+- source: browser
+
+### [LOW] /signin — post-submission confirmation appends redundant password reassurance
+- pass: 19 (commit fc34abc)
+- viewport: both
+- category: comprehension
+- observation: when the sign-in link has been sent, the page renders "a sign-in link is on its way. no password required." the password reassurance was already visible pre-submission in the form's reassurance line ("no password. no other mail."). repeating it in the confirmed state — when the user is focused on retrieving their email — is redundant, and the <em> emphasis increases its salience at an odd moment.
+- evidence: src/app/signin/page.tsx: state === 'sent' renders <p>a sign-in link is on its way. <em>no password required.</em></p>
+- suggested fix: remove "no password required." from the confirmation state; "a sign-in link is on its way." is sufficient post-submission copy.
+- source: browser
 
 ### [x] [MED] /today — save button carries no description; privacy of saved-but-unpublished entries is unstated
 - pass: 18 (commit 6c01dc8)
