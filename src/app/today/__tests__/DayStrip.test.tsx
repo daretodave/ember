@@ -46,7 +46,7 @@ function makeEntry(date: string, overrides: Partial<Entry> = {}): Entry {
 describe('DayStrip', () => {
   it('renders the section heading', () => {
     render(<DayStrip todayDate={TODAY} entries={new Map()} />)
-    expect(screen.getByRole('heading', { name: 'your last seven days' })).toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: 'the last seven days' })).toBeInTheDocument()
   })
 
   it('renders a link to /log', () => {
