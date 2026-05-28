@@ -18,7 +18,7 @@
 - source: browser
 - resolution: added title="entries are saved privately by default." to both save buttons (main view and focus overlay) in TodayEntry.tsx. Shipped at ac5aee3.
 
-### [MED] /today — no signal that entries are not auto-saved; navigation away silently discards unsaved work
+### [x] [MED] /today — no signal that entries are not auto-saved; navigation away silently discards unsaved work
 - pass: 18 (commit 6c01dc8)
 - viewport: both
 - category: comprehension
@@ -26,8 +26,9 @@
 - evidence: capture shows "save" as the sole persistence action with no "unsaved changes" notice, no auto-save mention, and no navigation-away guard visible on the /today page.
 - suggested fix: add a route-change guard warning when the textarea has unsaved content, or add a brief note near the save button such as "entries are not saved automatically." to set the user's expectation.
 - source: browser
+- resolution: added window.onbeforeunload handler in TodayEntry.tsx — fires when saveState is 'idle' or 'error' and textarea is non-empty; cleared on successful save, empty textarea, or unmount. Shipped at bdcd692.
 
-### [LOW] /today — nav links carry no aria-current marker identifying the active page
+### [x] [LOW] /today — nav links carry no aria-current marker identifying the active page
 - pass: 18 (commit 6c01dc8)
 - viewport: both
 - category: a11y
@@ -35,6 +36,7 @@
 - evidence: all three page captures show the same nav text "today / log / settings" with no active-state differentiation; no aria-current is inferable from any capture.
 - suggested fix: add aria-current="page" to the nav anchor matching the current route in the shared navigation component, conditioned on the active pathname.
 - source: browser
+- resolution: false positive — all three authenticated pages already carry `aria-current="page"` on the active nav link (today/page.tsx:65, log/page.tsx:74, settings/page.tsx:40). The critique text-capture reader cannot see HTML attributes; the attribute is present. No code change required.
 
 ### [LOW] / — "the link arrives once" is ambiguous before any link has been sent
 - pass: 18 (commit 6c01dc8)

@@ -17,7 +17,7 @@
 - issue: [mirror-failed: 2026-05-28T00:00:00Z]
 - resolution: added title="entries are saved privately by default." to both save buttons (main view and focus overlay) in src/app/today/TodayEntry.tsx. Shipped at ac5aee3.
 
-### [ ] [3.6] /today — no signal that entries are not auto-saved; navigation away silently discards unsaved work
+### [x] [3.6] /today — no signal that entries are not auto-saved; navigation away silently discards unsaved work
 - category: external-critique
 - impact: 6
 - ease: 6
@@ -25,8 +25,10 @@
 - evidence: capture shows "save" as the sole persistence action with no "unsaved changes" notice, no auto-save mention, and no navigation-away guard visible on the /today page.
 - suggested fix: add a route-change guard warning when the textarea has unsaved content, or add a brief note near the save button such as "entries are not saved automatically."
 - source: /critique pass 18 (commit 6c01dc8)
+- issue: [mirror-failed: 2026-05-28T04:09:00Z]
+- resolution: added window.onbeforeunload handler in TodayEntry.tsx — fires when saveState is 'idle' or 'error' and textarea is non-empty; cleared on save success, empty textarea, or unmount. Shipped at bdcd692.
 
-### [ ] [3.6] /today — nav links carry no aria-current marker identifying the active page
+### [x] [3.6] /today — nav links carry no aria-current marker identifying the active page
 - category: a11y
 - impact: 4
 - ease: 9
@@ -34,6 +36,7 @@
 - evidence: all three page captures show the same nav text "today / log / settings" with no active-state differentiation; no aria-current is inferable from any capture.
 - suggested fix: add aria-current="page" to the nav anchor matching the current route in the shared navigation component, conditioned on the active pathname.
 - source: /critique pass 18 (commit 6c01dc8)
+- resolution: false positive — all three authenticated pages already carry `aria-current="page"` on the active nav link (`today/page.tsx:65`, `log/page.tsx:74`, `settings/page.tsx:40`). The critique text-capture reader cannot see HTML attributes; the attribute is correctly present. No code change required.
 
 ### [ ] [2.7] / — "the link arrives once" is ambiguous before any link has been sent
 - category: comprehension
