@@ -76,6 +76,30 @@ describe('SettingsForm — save payload (regression: 0419eb3)', () => {
   })
 })
 
+describe('SettingsForm — unsaved-changes guard', () => {
+  it('sets window.onbeforeunload when a field is edited', () => {
+    render(<SettingsForm {...BASE_PROPS} />)
+    expect(window.onbeforeunload).toBeNull()
+    fireEvent.change(screen.getByLabelText<HTMLInputElement>('display name'), { target: { value: 'Bob' } })
+    expect(window.onbeforeunload).toBeTypeOf('function')
+  })
+
+  it('clears window.onbeforeunload after a successful save', async () => {
+    global.fetch = vi.fn().mockResolvedValue({
+      ok: true,
+      json: async () => ({}),
+    } as Response)
+    render(<SettingsForm {...BASE_PROPS} />)
+    fireEvent.change(screen.getByLabelText<HTMLInputElement>('display name'), { target: { value: 'Bob' } })
+    expect(window.onbeforeunload).toBeTypeOf('function')
+
+    fireEvent.submit(document.querySelector('form')!)
+    await waitFor(() => {
+      expect(window.onbeforeunload).toBeNull()
+    })
+  })
+})
+
 describe('SettingsForm — save state', () => {
   it('disables save button and shows "saving..." while request is in flight', async () => {
     let settle: (v: Response) => void

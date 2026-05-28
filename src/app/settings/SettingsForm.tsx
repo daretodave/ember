@@ -1,6 +1,6 @@
 'use client'
 
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { TimezoneCombobox } from '@/components/timezone/TimezoneCombobox'
 import styles from './page.module.css'
 
@@ -22,6 +22,9 @@ export function SettingsForm({ displayName, username, timezone, usePersonalizedP
   const [timezones, setTimezones] = useState<string[]>([])
   const [saveState, setSaveState] = useState<SaveState>('idle')
   const [errorMsg, setErrorMsg] = useState('')
+
+  // Track last-saved values to detect unsaved changes
+  const savedSnapshotRef = useRef({ nameVal: displayName, usernameVal: username, tzVal: timezone, personalizedVal: usePersonalizedPrompts })
 
   // Populate timezone list from browser
   useEffect(() => {
@@ -53,6 +56,27 @@ export function SettingsForm({ displayName, username, timezone, usePersonalizedP
     return () => clearTimeout(t)
   }, [saveState])
 
+  // Warn before unload when there are unsaved changes
+  const isDirty =
+    nameVal !== savedSnapshotRef.current.nameVal ||
+    usernameVal !== savedSnapshotRef.current.usernameVal ||
+    tzVal !== savedSnapshotRef.current.tzVal ||
+    personalizedVal !== savedSnapshotRef.current.personalizedVal
+
+  useEffect(() => {
+    if (!isDirty || saveState === 'saving') {
+      window.onbeforeunload = null
+      return
+    }
+    window.onbeforeunload = (e) => {
+      e.preventDefault()
+      return ''
+    }
+    return () => {
+      window.onbeforeunload = null
+    }
+  }, [isDirty, saveState])
+
   const handleSave = useCallback(async () => {
     setSaveState('saving')
     setErrorMsg('')
@@ -70,6 +94,7 @@ export function SettingsForm({ displayName, username, timezone, usePersonalizedP
       })
 
       if (res.ok) {
+        savedSnapshotRef.current = { nameVal, usernameVal, tzVal, personalizedVal }
         setSaveState('saved')
       } else {
         const data = (await res.json().catch(() => ({}))) as { error?: string }
