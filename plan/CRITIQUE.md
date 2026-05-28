@@ -46,7 +46,7 @@
 - suggested fix: change to "the last seven days" to describe the time window without the possessive.
 - source: browser
 
-### [LOW] / — "your responses accumulate" addresses a visitor who has no responses yet
+### [x] [LOW] / — "your responses accumulate" addresses a visitor who has no responses yet
 - pass: 19 (commit fc34abc)
 - viewport: both
 - category: voice
@@ -54,6 +54,7 @@
 - evidence: body text: "one small prompt and one tiny task each morning. you write a few sentences in response, mark the task done if you did it, and move on. over weeks, your responses accumulate into a quiet personal log."
 - suggested fix: remove the possessive: "over weeks, responses accumulate into a quiet personal log." — describes the feature without assuming an existing account.
 - source: browser
+- resolution: removed possessive "your" from "your responses accumulate" in src/app/page.tsx. Shipped at 7fbde80.
 
 ### [LOW] /signin — post-submission confirmation appends redundant password reassurance
 - pass: 19 (commit fc34abc)

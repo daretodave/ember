@@ -26,7 +26,7 @@
 - suggested fix: change to "the last seven days" to describe the time window without the possessive.
 - source: /critique pass 19 (commit fc34abc)
 
-### [ ] [3.0] / — "your responses accumulate" addresses a visitor who has no responses yet
+### [x] [3.0] / — "your responses accumulate" addresses a visitor who has no responses yet
 - category: external-critique
 - impact: 3
 - ease: 10
@@ -34,6 +34,8 @@
 - evidence: body text: "over weeks, your responses accumulate into a quiet personal log."
 - suggested fix: remove the possessive: "over weeks, responses accumulate into a quiet personal log."
 - source: /critique pass 19 (commit fc34abc)
+- issue: [mirror-failed: 2026-05-28T19:57:00Z]
+- resolution: removed possessive "your" from "your responses accumulate" in src/app/page.tsx. Shipped at 7fbde80.
 
 ### [ ] [2.7] /today — date paragraph has no programmatic association with the prompt H1
 - category: a11y
