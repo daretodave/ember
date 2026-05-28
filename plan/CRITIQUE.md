@@ -103,7 +103,7 @@
 - source: browser
 - resolution: changed to "a sign-in link is sent to this address. no password. no other mail." in src/app/signin/page.tsx. Shipped at 6397375.
 
-### [LOW] /signin — post-submission confirmation uses second-person imperative
+### [x] [LOW] /signin — post-submission confirmation uses second-person imperative
 - pass: 14 (commit e748b34)
 - viewport: both
 - category: voice
@@ -111,6 +111,7 @@
 - evidence: src/app/signin/page.tsx line 55: `check your email. a sign-in link is on its way.` — rendered when state === 'sent'.
 - suggested fix: reframe as an observation: "a sign-in link is on its way." — removes the imperative while preserving the useful information.
 - source: browser
+- resolution: changed confirmation text to "a sign-in link is on its way." in src/app/signin/page.tsx. Shipped at ad55037.
 
 ### [LOW] /signin — email input placeholder uses second-person example address
 - pass: 14 (commit e748b34)

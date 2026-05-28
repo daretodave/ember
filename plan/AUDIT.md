@@ -839,14 +839,17 @@
 - issue: [mirror-failed: 2026-05-27T00:00:00Z]
 - resolution: changed "we email you a sign-in link. no password, no spam." to "a sign-in link is sent to this address. no password. no other mail." in src/app/signin/page.tsx. Shipped at 6397375.
 
-### [ ] [2.7] /signin — post-submission confirmation uses second-person imperative
+### [x] [3.6] /signin — post-submission confirmation uses second-person imperative
 - category: external-critique
-- impact: 3
+- impact: 4
 - ease: 9
+- note: re-scored 2026-05-28 — impact raised from 3 to 4; the confirmation paragraph is seen by 100% of users who complete the sign-in flow on the primary auth path; same justification as /signin reassurance-line re-score (6397375) and /signin email placeholder re-score (736f911)
 - observation: the confirmation state reads "check your email. a sign-in link is on its way." — "check your email" is a second-person imperative instruction, which the voice guide explicitly prohibits. the rest of the sign-in page avoids direct address.
 - evidence: src/app/signin/page.tsx line 55: `check your email. a sign-in link is on its way.`
 - suggested fix: reframe as an observation: "a sign-in link is on its way." — removes the imperative while preserving the useful information.
 - source: /critique pass 14 (commit e748b34)
+- issue: [mirror-failed: 2026-05-28T00:04:25Z]
+- resolution: changed confirmation text to "a sign-in link is on its way." in src/app/signin/page.tsx. Shipped at ad55037.
 
 ### [x] [4.0] /signin — email input placeholder uses second-person example address
 - category: external-critique
