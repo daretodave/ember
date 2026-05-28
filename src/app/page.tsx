@@ -29,7 +29,7 @@ export default function LandingPage() {
           <p className={styles.subpitch}>
             one small prompt and one tiny task each morning. you write a few
             sentences in response, mark the task done if you did it, and move on.
-            over weeks, your responses accumulate into a quiet personal log.
+            over weeks, responses accumulate into a quiet personal log.
           </p>
         </section>
 
