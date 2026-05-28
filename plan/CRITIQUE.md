@@ -8,7 +8,7 @@
 
 ## Pending
 
-### [MED] /settings — no unsaved-changes guard when navigating away
+### [x] [MED] /settings — no unsaved-changes guard when navigating away
 - pass: 19 (commit fc34abc)
 - viewport: both
 - category: comprehension
@@ -16,6 +16,7 @@
 - evidence: src/app/settings/SettingsForm.tsx formFoot renders the save button with no dirty-state indicator and no route-change guard; contrast with TodayEntry.tsx which sets window.onbeforeunload when the textarea has content and saveState is 'idle' or 'error'.
 - suggested fix: track whether any field value differs from its initially-loaded profile value and either show an 'unsaved changes' indicator near the save button or add a window.onbeforeunload guard that fires when the form is dirty, mirroring the /today pattern.
 - source: browser
+- resolution: added savedSnapshotRef + isDirty logic + window.onbeforeunload guard in SettingsForm.tsx; 2 unit tests added. Shipped at 5da280f.
 
 ### [LOW] /today — date paragraph has no programmatic association with the prompt H1
 - pass: 19 (commit fc34abc)

@@ -6,6 +6,17 @@
 
 ## Pending
 
+### [x] [4.2] /settings — no unsaved-changes guard when navigating away
+- category: external-critique
+- impact: 6
+- ease: 7
+- observation: the settings form provides no indication of unsaved changes and no route-leave warning. a user who edits fields and navigates away without saving loses their changes silently. /today implements a window.onbeforeunload guard for unsaved entries; /settings has no equivalent, creating an inconsistent safety model across the two primary edit surfaces.
+- evidence: src/app/settings/SettingsForm.tsx formFoot renders the save button with no dirty-state indicator and no route-change guard; contrast with TodayEntry.tsx which sets window.onbeforeunload when the textarea has content and saveState is 'idle' or 'error'.
+- suggested fix: track whether any field value differs from its initially-loaded profile value and add a window.onbeforeunload guard that fires when the form is dirty, mirroring the /today pattern.
+- source: /critique pass 19 (commit fc34abc)
+- issue: [mirror-failed: 2026-05-28T17:53:00Z]
+- resolution: added savedSnapshotRef tracking last-saved values; isDirty computed from current field state vs snapshot; window.onbeforeunload set when dirty, cleared on successful save. 2 unit tests added. Shipped at 5da280f.
+
 ### [x] [4.5] / — home meta description is the brand tagline with no product-category keyword
 - category: seo
 - impact: 5
