@@ -189,6 +189,7 @@ export function TodayEntry({ date, task, prompt, initialEntry }: Props) {
             className={styles.saveBtn}
             disabled={saveState === 'saving'}
             onClick={handleSave}
+            title="entries are saved privately by default."
           >
             {saveState === 'saving' ? 'saving...' : 'save'}
           </button>
@@ -244,6 +245,7 @@ export function TodayEntry({ date, task, prompt, initialEntry }: Props) {
                 disabled={saveState === 'saving'}
                 onClick={handleSave}
                 tabIndex={isFocus ? 0 : -1}
+                title="entries are saved privately by default."
               >
                 {saveState === 'saving' ? 'saving...' : 'save'}
               </button>
