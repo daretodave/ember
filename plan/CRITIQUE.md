@@ -356,7 +356,7 @@
 - source: browser
 - resolution: false positive — the container div already carries `role="radiogroup"` and `aria-label="prompt variety"` (SettingsForm.tsx line 125), which provides programmatic group labeling equivalent to `<fieldset>/<legend>`. The critique's text-based capture cannot read ARIA attributes; the association exists. No code change required.
 
-### [LOW] /log — page meta description is minimal and does not describe content
+### [x] [LOW] /log — page meta description is minimal and does not describe content
 - pass: 12 (commit 997e3b1)
 - viewport: both
 - category: seo
@@ -364,6 +364,7 @@
 - evidence: title: "ember · log"; description: "your past 60 days"
 - suggested fix: expand to describe the page's content, e.g. "a record of your past 60 days of writing — prompts, responses, and the entries you have published."
 - source: browser
+- resolution: updated description in src/app/log/page.tsx to 'your writing log — prompts, responses, and the entries you have published over the past 60 days.' Shipped at a29ff1f.
 
 ### [x] [LOW] / — "ember · v1" footer version string reads as a developer artifact
 - pass: 12 (commit 997e3b1)

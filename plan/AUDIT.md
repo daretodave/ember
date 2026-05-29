@@ -6,6 +6,17 @@
 
 ## Pending
 
+### [x] [3.6] /log — meta description "your past 60 days" names the window but not the page's purpose
+- category: external-critique
+- impact: 4
+- ease: 9
+- observation: the /log page exports `description: 'your past 60 days'` — accurate but opaque. a search-result snippet or bookmark tooltip for /log conveys only a time window; it tells a reader nothing about what the page contains (a mosaic and stat line of writing entries). the critique's suggested fix has been pending since pass 12. the design/CLAUDE.md "Meta description uniqueness" rule requires every route to export a page-specific description that describes content, not just re-states the title.
+- evidence: src/app/log/page.tsx line 13: `description: 'your past 60 days'`; design/CLAUDE.md "Meta description uniqueness" rule; critique pass 12 (commit 997e3b1) filed this finding as unaddressed.
+- suggested fix: replace with a description that names the content: `'your writing log — prompts, responses, and the entries you have published over the past 60 days.'`
+- source: /critique pass 12 (commit 997e3b1)
+- issue: [mirror-failed: loop-issue.mjs not present in scripts/]
+- resolution: updated description in src/app/log/page.tsx to 'your writing log — prompts, responses, and the entries you have published over the past 60 days.' Shipped at a29ff1f.
+
 ### [x] [4.0] design/CLAUDE.md — no copy/voice rules documented; violations recur across critique passes
 - category: tests
 - impact: 5
