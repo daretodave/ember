@@ -50,14 +50,16 @@
 - issue: [mirror-failed: 2026-05-28T19:57:00Z]
 - resolution: removed possessive "your" from "your responses accumulate" in src/app/page.tsx. Shipped at 7fbde80.
 
-### [ ] [2.7] /today — date paragraph has no programmatic association with the prompt H1
+### [ ] [3.6] /today — date paragraph has no programmatic association with the prompt H1
 - category: a11y
-- impact: 3
+- impact: 4
 - ease: 9
+- note: re-scored 2026-05-29 — impact raised from 3 to 4; the date paragraph is the first content element before the prompt H1 on /today; a screen reader user encounters it as an orphaned paragraph with no programmatic relationship to the heading it contextualizes; affects every /today visit for all authenticated users; WCAG 2.1 SC 1.3.1 gap on the primary authenticated page — same reach justification as /today textarea placeholder (ddafc86) and task-done button (156c342) re-scores
 - observation: the page renders the date string as a plain <p> element immediately before the prompt H1. the date contextualises the H1 but has no semantic relationship to it — no aria-describedby on the H1 and no hgroup wrapper. a screen reader user encounters the date as an unrelated body paragraph before the page's H1.
 - evidence: src/app/today/page.tsx: `<p className={styles.dateStamp}>{displayDate}</p>` followed immediately by `<h1 className={styles.prompt}>{prompt}</h1>` — no association element present.
-- suggested fix: wrap both elements in `<hgroup>` so AT understands the date as supplementary context for the heading, or add `aria-describedby` on the H1 pointing to the dateStamp paragraph's id.
+- suggested fix: add `id="today-date"` to the date `<p>` and `aria-describedby="today-date"` to the `<h1>`, so AT announces the prompt with the date as supplementary context.
 - source: /critique pass 19 (commit fc34abc)
+- issue: [mirror-failed: loop-issue.mjs not present in scripts/]
 
 ### [ ] [1.8] /signin — post-submission confirmation appends redundant password reassurance
 - category: external-critique
