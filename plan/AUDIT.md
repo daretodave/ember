@@ -50,7 +50,7 @@
 - issue: [mirror-failed: 2026-05-28T19:57:00Z]
 - resolution: removed possessive "your" from "your responses accumulate" in src/app/page.tsx. Shipped at 7fbde80.
 
-### [ ] [3.6] /today — date paragraph has no programmatic association with the prompt H1
+### [x] [3.6] /today — date paragraph has no programmatic association with the prompt H1
 - category: a11y
 - impact: 4
 - ease: 9
@@ -60,6 +60,7 @@
 - suggested fix: add `id="today-date"` to the date `<p>` and `aria-describedby="today-date"` to the `<h1>`, so AT announces the prompt with the date as supplementary context.
 - source: /critique pass 19 (commit fc34abc)
 - issue: [mirror-failed: loop-issue.mjs not present in scripts/]
+- resolution: added id="today-date" to date <p> and aria-describedby="today-date" to prompt <h1> in src/app/today/page.tsx. Shipped at 4ccd1b3.
 
 ### [ ] [1.8] /signin — post-submission confirmation appends redundant password reassurance
 - category: external-critique

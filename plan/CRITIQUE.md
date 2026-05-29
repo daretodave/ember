@@ -18,7 +18,7 @@
 - source: browser
 - resolution: added savedSnapshotRef + isDirty logic + window.onbeforeunload guard in SettingsForm.tsx; 2 unit tests added. Shipped at 5da280f.
 
-### [LOW] /today — date paragraph has no programmatic association with the prompt H1
+### [x] [LOW] /today — date paragraph has no programmatic association with the prompt H1
 - pass: 19 (commit fc34abc)
 - viewport: both
 - category: a11y
@@ -26,6 +26,7 @@
 - evidence: src/app/today/page.tsx: <p className={styles.dateStamp}>{displayDate}</p> followed immediately by <h1 className={styles.prompt}>{prompt}</h1> — no association element present.
 - suggested fix: wrap both elements in <hgroup> so AT understands the date as supplementary context for the heading, or add aria-describedby on the H1 pointing to the dateStamp paragraph's id.
 - source: browser
+- resolution: added id="today-date" to date <p> and aria-describedby="today-date" to prompt <h1> in src/app/today/page.tsx. Shipped at 4ccd1b3.
 
 ### [x] [LOW] / — full sentence wrapped in <em>, applying spoken stress to a plain declaration
 - pass: 19 (commit fc34abc)
