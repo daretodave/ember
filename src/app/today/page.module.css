@@ -284,6 +284,13 @@
   cursor: default;
 }
 
+.publishHint {
+  font-family: var(--font-sans);
+  font-size: var(--type-12);
+  color: var(--color-ink-muted);
+  margin-top: var(--space-2);
+}
+
 .saveError {
   font-family: var(--font-sans);
   font-size: var(--type-12);

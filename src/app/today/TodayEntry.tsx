@@ -13,9 +13,10 @@ type Props = {
   task: string
   prompt: string
   initialEntry: Entry | null
+  hasUsername?: boolean
 }
 
-export function TodayEntry({ date, task, prompt, initialEntry }: Props) {
+export function TodayEntry({ date, task, prompt, initialEntry, hasUsername = true }: Props) {
   const [response, setResponse] = useState(initialEntry?.response ?? '')
   const [taskDone, setTaskDone] = useState(initialEntry?.task_done ?? false)
   const [isPublished, setIsPublished] = useState(initialEntry?.is_published ?? false)
@@ -212,6 +213,13 @@ export function TodayEntry({ date, task, prompt, initialEntry }: Props) {
         </div>
       </div>
 
+      {!hasUsername && (
+        <p className={styles.publishHint}>
+          entries appear publicly only when a username is set in{' '}
+          <a href="/settings">settings</a>.
+        </p>
+      )}
+
       {saveState === 'error' && errorMsg && (
         <p className={styles.saveError} role="alert">{errorMsg}</p>
       )}
@@ -267,6 +275,13 @@ export function TodayEntry({ date, task, prompt, initialEntry }: Props) {
               </button>
             </div>
           </div>
+
+          {!hasUsername && (
+            <p className={styles.publishHint}>
+              entries appear publicly only when a username is set in{' '}
+              <a href="/settings" tabIndex={isFocus ? 0 : -1}>settings</a>.
+            </p>
+          )}
 
           {saveState === 'error' && errorMsg && (
             <p className={styles.saveError} role="alert">{errorMsg}</p>

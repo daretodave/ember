@@ -73,7 +73,7 @@ export default async function TodayPage() {
 
         <h1 className={styles.prompt} aria-describedby="today-date">{prompt}</h1>
 
-        <TodayEntry date={date} initialEntry={todayEntry} task={task} prompt={prompt} />
+        <TodayEntry date={date} initialEntry={todayEntry} task={task} prompt={prompt} hasUsername={Boolean(profile?.username)} />
 
         <OnThisDay entry={onThisDay} todayYear={new Date(date + 'T00:00:00Z').getUTCFullYear()} />
       </main>
