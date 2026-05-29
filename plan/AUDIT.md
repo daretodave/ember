@@ -1160,6 +1160,17 @@
 - suggested fix: move the expiry copy into the post-submission confirmation view (shown after the link is sent), so it reads as context for a link already in transit rather than a pre-emptive warning.
 - source: /critique pass 17 (commit 21ebca6)
 
+### [x] [3.6] /today and /log/[date] — save indicator reads "not yet saved"; "yet" violates coaching-free copy rule
+- category: external-critique
+- impact: 4
+- ease: 9
+- observation: the save-state indicator on /today and /log/[date] returns "not yet saved" when the user has typed content but hasn't saved. the word "yet" implies the user should have saved already — a failure-state framing explicitly prohibited by design/CLAUDE.md "coaching-free copy" rule ("no 'yet' implying failure ('not yet saved')"). the string is used in TodayEntry.tsx (saveIndicatorText fallback) and EditEntry.tsx (inline JSX).
+- evidence: src/app/today/TodayEntry.tsx:148: `return 'not yet saved'`; src/app/log/[date]/EditEntry.tsx:114: `{savedAt ? formatSavedTime(savedAt) : 'not yet saved'}`; design/CLAUDE.md "coaching-free copy" rule names "not yet saved" as an example violation
+- suggested fix: replace "not yet saved" with "unsaved" in both locations — states what IS (the entry is unsaved) without implying expectation or failure
+- source: /iterate audit 2026-05-29
+- issue: [mirror-failed: loop-issue.mjs not present in scripts/]
+- resolution: replaced "not yet saved" with "unsaved" in TodayEntry.tsx and EditEntry.tsx; updated SaveIndicator.test.tsx regression guard. Shipped at 9615e7d.
+
 ## Done
 
 ### [x] [4.5] a11y — sign-in confirmation message has no ARIA live region
