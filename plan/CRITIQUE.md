@@ -1,12 +1,66 @@
 # External-observer findings — Ember
 
-> Last pass: 2026-05-29 at commit 737e7d7
-> Pass count: 21
+> Last pass: 2026-05-29 at commit 24d04ae
+> Pass count: 22
 
 > Written by `/critique` after walking the live site as a
 > fresh-eyes visitor. Drained by `/iterate`.
 
 ## Pending
+
+### [LOW] / — tiny task copy in 7-day preview uses second-person imperative throughout
+- pass: 22 (commit 24d04ae)
+- viewport: both
+- category: voice
+- observation: all seven tiny task lines in the anonymous landing-page preview are second-person imperative constructions — "say something true and specific to someone today", "tidy the surface you look at most often", "spend fifteen minutes reading something", "write that opinion down in two sentences", etc. the voice guide explicitly prohibits second-person imperative copy. the product description on the same page already uses the participial form ("the task marked if it happened") to describe tasks, but the actual task text throughout the preview contradicts it.
+- evidence: body text: "tiny task — say something true and specific to someone today — not a formality. / tiny task — make yourself something to eat with a little more care than usual. / tiny task — tidy the surface you look at most often. / tiny task — spend fifteen minutes reading something with no productivity justification. / tiny task — do one small thing today that you avoided before. / tiny task — write that opinion down in two sentences." — all are imperative verb forms.
+- suggested fix: reframe task content as gerund or participial form consistent with the product description's register, e.g. "saying something true and specific to someone today." — removes the imperative while preserving the instruction. apply consistently across content/prompts.json.
+- source: browser
+
+### [LOW] /signin — page carries no signal that submitting a new email creates an account
+- pass: 22 (commit 24d04ae)
+- viewport: both
+- category: comprehension
+- observation: the home page CTA block includes "entering an email address for the first time creates an account." to explain the combined sign-in / account-creation flow. the /signin page itself carries no equivalent — a visitor who arrives directly at /signin (via a search result, a shared link, or a browser bookmark) sees only "sign in." with an email field and a "send the link" button, with no indication that submitting an unknown address will create an account rather than failing.
+- evidence: full /signin page text: "skip to content / ember / back to home / sign in. / email / send the link / a sign-in link is sent to this address. no password. no other mail. / ember / sign-in links expire after 24 hours." — no account-creation mention present.
+- suggested fix: add a single declarative line below the reassurance text on /signin: "entering an email address for the first time creates an account." — mirrors the home CTA explainer and closes the comprehension gap for direct-arrival visitors.
+- source: browser
+
+### [LOW] /today — "done writing" focus-exit button carries no title attribute
+- pass: 22 (commit 24d04ae)
+- viewport: desktop
+- category: voice
+- observation: the "done writing" button that exits focus mode has no title attribute. the voice guide requires hover/tooltip copy to be a complete sentence with a period. every other interactive control on /today already carries one: the focus-trigger button has title="enters a distraction-free writing view.", the task-done button has dynamic title attributes, and both save buttons have title="entries are saved privately by default." — "done writing" is the only control in the group without a complete-sentence hover description.
+- evidence: TodayEntry.tsx: focusDone button carries aria-label="exit focus mode" and visible text "done writing" but no title attribute; compare focusTrigger button which carries title="enters a distraction-free writing view." and aria-label="enter focus mode".
+- suggested fix: add title="exits the distraction-free writing view." to the focusDone button in TodayEntry.tsx, consistent with the voice guide's tooltip-completeness rule.
+- source: browser
+
+### [LOW] /today — focus overlay always rendered in DOM; page text is doubled for raw-text consumers
+- pass: 22 (commit 24d04ae)
+- viewport: both
+- category: seo
+- observation: the focus-mode overlay is retained permanently in the DOM for its opacity-transition animation and hidden from assistive technology via aria-hidden={!isFocus}. any raw-DOM text reader — Playwright innerText, link-preview scrapers, feed parsers — sees the full prompt, "your response" label, publish description, and username prereq hint duplicated verbatim in the same page. the page's serialised text content is effectively doubled at rest.
+- evidence: page text capture shows: prompt → controls block ("publish / when published... / focus / save / entries appear publicly...") → [focus overlay] prompt again → controls block again ("publish / when published... / save / entries appear publicly...") → "done writing". the overlay content appears unconditionally before the day strip.
+- suggested fix: conditionally render the focus overlay's inner content only when isFocus is true — e.g. `{isFocus && <FocusOverlayContent />}` — so the duplicate text is absent from the DOM at rest. the outer overlay container can remain for transition purposes.
+- source: browser
+
+### [LOW] /log — H1 "your past 60 days" uses possessive for accounts with no entries
+- pass: 22 (commit 24d04ae)
+- viewport: both
+- category: voice
+- observation: the /log page H1 reads "your past 60 days" regardless of whether the user has any entries. for a brand-new account, the possessive "your" presupposes 60 days of engagement that does not exist — the same pattern that prompted the /today DayStrip fix at e016982, which changed "your last seven days" to "the last seven days". the /log H1 was not updated in that pass.
+- evidence: page text: "your past 60 days" as H1 immediately above "your log is empty. today's entry will appear here." — the heading claims ownership of a period the user has not engaged with.
+- suggested fix: change the /log H1 in log/page.tsx from "your past 60 days" to "the past 60 days", consistent with the DayStrip fix applied to the same pattern on /today.
+- source: browser
+
+### [LOW] /today — username prereq hint links to /settings with a plain `<a>` tag, not Next.js Link
+- pass: 22 (commit 24d04ae)
+- viewport: both
+- category: navigation
+- observation: the publish prereq hint ("entries appear publicly only when a username is set in settings.") links to /settings using a plain HTML `<a>` tag in both the main view and the focus overlay. clicking it triggers a full browser navigation and page reload rather than a client-side transition. every other in-app link on the page — the nav links, the "open log" strip link, and the /log empty-state link — uses Next.js Link, which prefetches and routes client-side.
+- evidence: TodayEntry.tsx: `<a href="/settings">settings</a>` appears twice — once in the main prereq hint (around line 219) and once in the focus overlay prereq hint (around line 282). all nav links use `<Link href="...">` from 'next/link'.
+- suggested fix: replace both `<a href="/settings">` instances in TodayEntry.tsx with `<Link href="/settings">` (importing Link from 'next/link') to restore consistent client-side routing.
+- source: browser
 
 ### [x] [LOW] /settings — meta description enumerates field names without a descriptive sentence
 - pass: 21 (commit 737e7d7)
