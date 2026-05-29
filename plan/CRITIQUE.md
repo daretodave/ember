@@ -1,7 +1,7 @@
 # External-observer findings — Ember
 
-> Last pass: 2026-05-28 at commit fc34abc
-> Pass count: 19
+> Last pass: 2026-05-29 at commit 0657d4c
+> Pass count: 20
 
 > Written by `/critique` after walking the live site as a
 > fresh-eyes visitor. Drained by `/iterate`.
