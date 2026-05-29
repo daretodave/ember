@@ -8,7 +8,7 @@
 
 ## Pending
 
-### [LOW] /settings — meta description enumerates field names without a descriptive sentence
+### [x] [LOW] /settings — meta description enumerates field names without a descriptive sentence
 - pass: 21 (commit 737e7d7)
 - viewport: both
 - category: seo
@@ -16,6 +16,7 @@
 - evidence: meta description: "display name, timezone, prompt variety, public username" — no sentence form, no purpose signal.
 - suggested fix: replace with a sentence: "account settings for your writing practice — display name, timezone, prompt variety, and public username." or similar that conveys purpose alongside the field list.
 - source: browser
+- resolution: changed description to 'account settings for your writing practice — display name, timezone, prompt variety, and public username.' in src/app/settings/page.tsx. Shipped at e0a3a2b.
 
 ### [x] [MED] /settings — no unsaved-changes guard when navigating away
 - pass: 19 (commit fc34abc)

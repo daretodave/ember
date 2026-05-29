@@ -84,6 +84,17 @@
 - issue: [mirror-failed: loop-issue.mjs not present in scripts/]
 - resolution: added id="today-date" to date <p> and aria-describedby="today-date" to prompt <h1> in src/app/today/page.tsx. Shipped at 4ccd1b3.
 
+### [x] [3.6] /settings — meta description is a bare field list with no purpose signal
+- category: external-critique
+- impact: 4
+- ease: 9
+- observation: the /settings page exports `description: 'display name, timezone, prompt variety, public username'` — a comma-separated list of field labels with no sentence form and no description of what the page is for. a search-engine snippet or bookmark tooltip for /settings shows only control names with no context about what the page does or why a user would visit it. compare /today ("today's prompt and your daily writing space.") and /log ("your writing log — prompts, responses, and the entries you have published over the past 60 days.") — both describe page purpose.
+- evidence: src/app/settings/page.tsx line 11: `description: 'display name, timezone, prompt variety, public username'` — no sentence form, no purpose signal.
+- suggested fix: replace with a sentence: `'account settings for your writing practice — display name, timezone, prompt variety, and public username.'`
+- source: /critique pass 21 (commit 737e7d7)
+- issue: [mirror-failed: loop-issue.mjs not present in scripts/]
+- resolution: changed description to 'account settings for your writing practice — display name, timezone, prompt variety, and public username.' in src/app/settings/page.tsx. Shipped at e0a3a2b.
+
 ### [ ] [1.8] /signin — post-submission confirmation appends redundant password reassurance
 - category: external-critique
 - impact: 2
@@ -918,7 +929,7 @@
 - source: /critique pass 12 (commit 079614a)
 - resolution: false positive — the container div already carries `role="radiogroup"` and `aria-label="prompt variety"`, which provides programmatic group labeling equivalent to `<fieldset>/<legend>`. The critique's text-based capture cannot read ARIA attributes; the association exists. No code change required.
 
-### [ ] [2.7] /log — page meta description is minimal and does not describe content
+### [x] [2.7] /log — page meta description is minimal and does not describe content
 - category: external-critique
 - impact: 3
 - ease: 9
@@ -926,6 +937,7 @@
 - evidence: title: "ember · log"; description: "your past 60 days"
 - suggested fix: expand to describe the page's content, e.g. "a record of your past 60 days of writing — prompts, responses, and the entries you have published."
 - source: /critique pass 12 (commit 079614a)
+- resolution: already addressed — description updated to 'your writing log — prompts, responses, and the entries you have published over the past 60 days.' by the [x] [3.6] sibling item shipped at a29ff1f. Duplicate entry; no code change required.
 
 ### [x] [2.7] / — "ember · v1" footer version string reads as a developer artifact
 - category: external-critique
