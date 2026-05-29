@@ -1000,14 +1000,17 @@
 - issue: [mirror-failed: 2026-05-27T08:10:00Z]
 - resolution: changed placeholder to "email address" in src/app/signin/page.tsx. Shipped at 736f911.
 
-### [ ] [2.7] / — OG image alt attribute carries brand name only, no descriptive text
+### [x] [3.0] / — OG image alt attribute carries brand name only, no descriptive text
 - category: seo
 - impact: 3
-- ease: 9
+- ease: 10
+- note: re-scored 2026-05-29 — ease raised from 9 to 10; the change is a single 4-word string addition inside the root layout metadata object — no logic, no imports, no structural change; ease 10 is warranted
 - observation: the root layout sets the OG image alt to the bare string "ember" with no descriptive phrase. if the image fails to render or is read by an assistive tool, the alt conveys only the brand name and nothing about the page content.
 - evidence: src/app/layout.tsx line 48: `{ url: '/opengraph-image', width: 1200, height: 630, alt: 'ember' }`
 - suggested fix: expand the alt to match the page description: "ember — a daily writing ritual"
 - source: /critique pass 14 (commit e748b34)
+- issue: [mirror-failed: loop-issue.mjs not present in scripts/]
+- resolution: changed alt to 'ember — a daily writing ritual' in src/app/layout.tsx openGraph images. Shipped at bb32ff9.
 
 ### [ ] [2.7] /settings — public username hint uses second-person imperative "leave blank"
 - category: external-critique

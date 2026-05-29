@@ -238,7 +238,7 @@
 - suggested fix: change to a neutral placeholder such as "email address" or remove the placeholder entirely, relying on the visible "email" label above the field.
 - source: browser
 
-### [LOW] / — OG image alt attribute carries brand name only, no descriptive text
+### [x] [LOW] / — OG image alt attribute carries brand name only, no descriptive text
 - pass: 14 (commit e748b34)
 - viewport: both
 - category: seo
@@ -246,6 +246,7 @@
 - evidence: src/app/layout.tsx line 48: `{ url: '/opengraph-image', width: 1200, height: 630, alt: 'ember' }` — no descriptive phrase accompanies the brand name.
 - suggested fix: expand the alt to match the page description: "ember — a daily writing ritual" so the OG image carries the same context as the page title.
 - source: browser
+- resolution: changed alt to 'ember — a daily writing ritual' in src/app/layout.tsx openGraph images. Shipped at bb32ff9.
 
 ### [LOW] /settings — public username hint uses second-person imperative "leave blank"
 - pass: 14 (commit e748b34)
