@@ -1,12 +1,21 @@
 # External-observer findings — Ember
 
-> Last pass: 2026-05-29 at commit 0657d4c
-> Pass count: 20
+> Last pass: 2026-05-29 at commit 737e7d7
+> Pass count: 21
 
 > Written by `/critique` after walking the live site as a
 > fresh-eyes visitor. Drained by `/iterate`.
 
 ## Pending
+
+### [LOW] /settings — meta description enumerates field names without a descriptive sentence
+- pass: 21 (commit 737e7d7)
+- viewport: both
+- category: seo
+- observation: the /settings page exports `description: 'display name, timezone, prompt variety, public username'` — a bare comma-separated list of field labels. a search-engine snippet or bookmark tooltip for /settings shows only control names with no context about what the page does or why a user would visit it. compare /today ("today's prompt and your daily writing space.") and /log ("your writing log — prompts, responses, and the entries you have published over the past 60 days.") — both describe page purpose.
+- evidence: meta description: "display name, timezone, prompt variety, public username" — no sentence form, no purpose signal.
+- suggested fix: replace with a sentence: "account settings for your writing practice — display name, timezone, prompt variety, and public username." or similar that conveys purpose alongside the field list.
+- source: browser
 
 ### [x] [MED] /settings — no unsaved-changes guard when navigating away
 - pass: 19 (commit fc34abc)
@@ -278,8 +287,8 @@
 - source: browser
 - resolution: changed focus mode exit button visible text from "done" to "done writing" in src/app/today/TodayEntry.tsx. Shipped at 25e38a7.
 
-### [LOW] /today — publish toggle active with no hint that a public username is required
-- pass: 13 (commit 4f08c21)
+### [MED] /today — publish toggle active with no hint that a public username is required
+- pass: 13 (commit 4f08c21); severity raised pass 21 — independent reader re-identified as significant
 - viewport: both
 - category: comprehension
 - observation: the publish toggle appears on /today whether or not the user has set a public username in settings. toggling it without a username stores a published state in the database but the entry will not appear publicly because there is no /u/username route. there is no hint at the point of use that a username is a prerequisite.
