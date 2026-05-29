@@ -6,6 +6,18 @@
 
 ## Pending
 
+### [x] [3.0] /today — focus-mode overlay renders aria-modal="false" when inactive
+- category: a11y
+- impact: 3
+- ease: 10
+- note: scored 2026-05-29 — ease is 10; the fix is a single expression change (`aria-modal={isFocus || undefined}`) that omits the attribute when isFocus is false; ARIA spec does not define a false state for aria-modal; the overlay already uses aria-hidden="true" when inactive so practical screen-reader impact is limited, but the false attribute value diverges from the spec and may trigger warnings in strict ARIA auditors
+- observation: the focus-mode overlay div carries `aria-modal={isFocus}`, which serialises to `aria-modal="false"` when focus mode is inactive. the ARIA spec does not define a false state for aria-modal — the attribute should be absent when the element is not modal. the overlay is already `aria-hidden="true"` when inactive, but the spurious false attribute leaves the element non-conformant.
+- evidence: src/app/today/TodayEntry.tsx line 230: `aria-modal={isFocus}` — when isFocus is false this produces `aria-modal="false"` on the dialog div; ARIA 1.1 spec §6.6.5: aria-modal is a boolean attribute; false values should be represented by attribute absence.
+- suggested fix: change `aria-modal={isFocus}` to `aria-modal={isFocus || undefined}` so the attribute is absent rather than explicitly false when focus mode is not active.
+- source: /critique pass 16 (commit 27718e9)
+- issue: #32
+- resolution: changed aria-modal={isFocus} to aria-modal={isFocus || undefined} in src/app/today/TodayEntry.tsx so the attribute is absent rather than "false" when focus mode is inactive. Shipped at 4db7e74.
+
 ### [x] [4.0] /log/[date] — edit textarea placeholder uses second-person imperative not present in /today
 - category: external-critique
 - impact: 4

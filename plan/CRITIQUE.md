@@ -202,7 +202,7 @@
 - source: browser
 - resolution: changed placeholder to "there is no rush." on both main and focus-overlay textareas in src/app/today/TodayEntry.tsx. Shipped at ddafc86.
 
-### [LOW] /today — focus-mode overlay renders aria-modal="false" when inactive
+### [x] [LOW] /today — focus-mode overlay renders aria-modal="false" when inactive
 - pass: 16 (commit 27718e9)
 - viewport: both
 - category: a11y
@@ -210,6 +210,7 @@
 - evidence: src/app/today/TodayEntry.tsx line 204: aria-modal={isFocus} — when isFocus is false this produces aria-modal="false" on the div.
 - suggested fix: change to aria-modal={isFocus || undefined} so the attribute is absent rather than explicitly false when focus mode is not active.
 - source: browser
+- resolution: changed aria-modal={isFocus} to aria-modal={isFocus || undefined} in src/app/today/TodayEntry.tsx. Shipped at 4db7e74.
 
 ### [x] [LOW] /today — publish toggle description is an unconditional statement when toggle is off
 - pass: 15 (commit 286ecad)
