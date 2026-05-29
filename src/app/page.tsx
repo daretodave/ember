@@ -27,8 +27,8 @@ export default function LandingPage() {
             ten minutes of <em>intention</em> before the day swallows you.
           </h1>
           <p className={styles.subpitch}>
-            one small prompt and one tiny task each morning. you write a few
-            sentences in response, mark the task done if you did it, and move on.
+            one small prompt and one tiny task each morning. a few sentences in
+            response, the task marked if it happened, and the day continues.
             over weeks, responses accumulate into a quiet personal log.
           </p>
         </section>
