@@ -227,7 +227,7 @@ export function TodayEntry({ date, task, prompt, initialEntry, hasUsername = tru
       {/* Focus mode overlay — always in DOM so opacity transition plays on close */}
       <div
         role="dialog"
-        aria-modal={isFocus}
+        aria-modal={isFocus || undefined}
         aria-labelledby="focus-mode-heading"
         aria-hidden={!isFocus}
         className={`${styles.focusOverlay}${isFocus ? ` ${styles.focusOverlayActive}` : ''}`}
