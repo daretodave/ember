@@ -45,7 +45,7 @@ export const metadata: Metadata = {
     title: 'ember — a daily writing ritual',
     description: 'ember is a daily writing ritual — one prompt and one small task each morning.',
     url: siteUrl,
-    images: [{ url: '/opengraph-image', width: 1200, height: 630, alt: 'ember' }],
+    images: [{ url: '/opengraph-image', width: 1200, height: 630, alt: 'ember — a daily writing ritual' }],
   },
   twitter: {
     card: 'summary_large_image',
