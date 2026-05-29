@@ -10,7 +10,7 @@ import styles from './page.module.css'
 
 export const metadata = {
   title: 'ember · log',
-  description: 'your past 60 days',
+  description: 'your writing log — prompts, responses, and the entries you have published over the past 60 days.',
 }
 
 export default async function LogPage() {
