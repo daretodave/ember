@@ -145,7 +145,7 @@ export function TodayEntry({ date, task, prompt, initialEntry }: Props) {
     if (saveState === 'saved' && savedAt) return formatSavedTime(savedAt)
     if (saveState === 'draft') return 'draft restored'
     if (saveState === 'idle' && response === '') return ''
-    return 'not yet saved'
+    return 'unsaved'
   }
 
   return (

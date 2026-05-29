@@ -111,7 +111,7 @@ export function EditEntry({ date, task, initialEntry }: Props) {
 
         <div className={styles.entryMeta}>
           <span className={styles.lastSaved} aria-live="polite">
-            {savedAt ? formatSavedTime(savedAt) : 'not yet saved'}
+            {savedAt ? formatSavedTime(savedAt) : 'unsaved'}
           </span>
           <div className={styles.entryActions}>
             <label className={styles.publishToggle}>
