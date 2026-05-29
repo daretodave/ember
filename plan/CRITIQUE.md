@@ -288,7 +288,7 @@
 - source: browser
 - resolution: changed focus mode exit button visible text from "done" to "done writing" in src/app/today/TodayEntry.tsx. Shipped at 25e38a7.
 
-### [MED] /today — publish toggle active with no hint that a public username is required
+### [x] [MED] /today — publish toggle active with no hint that a public username is required
 - pass: 13 (commit 4f08c21); severity raised pass 21 — independent reader re-identified as significant
 - viewport: both
 - category: comprehension
@@ -296,6 +296,7 @@
 - evidence: /today shows the full publish toggle with "this entry will appear on your public profile." while /settings shows no username value in the public username field.
 - suggested fix: when no public username is saved, render the publish toggle as disabled or add a note inline: "set a username in settings for entries to appear on your profile."
 - source: browser
+- resolution: added hasUsername prop to TodayEntry; renders declarative prereq hint below publish toggle when no username is set. Shipped at bceeb20.
 
 ### [x] [LOW] / — footer CTA copy uses direct second-person address
 - pass: 13 (commit 4f08c21)

@@ -991,14 +991,17 @@
 - suggested fix: increase the top margin on the footer and add a short section label above "sign out" (e.g., "session") so it reads as a distinct category rather than a secondary form action.
 - source: /critique pass 13 (commit 4f08c21)
 
-### [ ] [1.8] /today — publish toggle active with no hint that a public username is required
+### [x] [3.0] /today — publish toggle active with no hint that a public username is required
 - category: external-critique
-- impact: 3
+- impact: 5
 - ease: 6
+- note: re-scored 2026-05-29 — severity raised to MED in CRITIQUE pass 21; impact updated from 3 to 5; score raised from 1.8 to 3.0
 - observation: the publish toggle appears on /today whether or not the user has set a public username. toggling it stores a published state but the entry will not appear publicly without a /u/username route. there is no hint at point of use that a username is a prerequisite.
 - evidence: /today shows the full publish toggle with "this entry will appear on your public profile." while /settings shows no username value.
 - suggested fix: when no public username is saved, render the publish toggle as disabled or add a note inline: "set a username in settings for entries to appear on your profile."
 - source: /critique pass 13 (commit 4f08c21)
+- issue: [mirror-failed: loop-issue.mjs not present in scripts/]
+- resolution: added `hasUsername` prop to TodayEntry; when false (no profile.username), renders "entries appear publicly only when a username is set in settings." below the publish toggle in both main view and focus overlay. page.tsx passes `hasUsername={Boolean(profile?.username)}`. 3 tests added. Shipped at bceeb20.
 
 ### [x] [3.6] /signin — reassurance line uses direct second-person address and a sentence fragment
 - category: external-critique
