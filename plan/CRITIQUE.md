@@ -97,7 +97,7 @@
 - source: browser
 - resolution: false positive — all three authenticated pages already carry `aria-current="page"` on the active nav link (today/page.tsx:65, log/page.tsx:74, settings/page.tsx:40). The critique text-capture reader cannot see HTML attributes; the attribute is present. No code change required.
 
-### [LOW] / — "the link arrives once" is ambiguous before any link has been sent
+### [x] [LOW] / — "the link arrives once" is ambiguous before any link has been sent
 - pass: 18 (commit 6c01dc8)
 - viewport: both
 - category: comprehension
@@ -105,6 +105,7 @@
 - evidence: footer CTA: "today's prompt is waiting. entering an email address for the first time creates an account. the link arrives once. no password is set. no other mail is sent."
 - suggested fix: replace "the link arrives once" with per-request language, e.g. "a link is sent each time this form is submitted." — or drop the clause entirely, since single-send-per-request is implicit in a magic-link flow.
 - source: browser
+- resolution: removed "the link arrives once." from the CTA footer span in src/app/page.tsx. Shipped at a595d0f.
 
 ### [LOW] / — "your log" referenced before the visitor has created an account
 - pass: 18 (commit 6c01dc8)

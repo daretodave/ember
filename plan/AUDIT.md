@@ -125,14 +125,16 @@
 - source: /critique pass 18 (commit 6c01dc8)
 - resolution: false positive — all three authenticated pages already carry `aria-current="page"` on the active nav link (`today/page.tsx:65`, `log/page.tsx:74`, `settings/page.tsx:40`). The critique text-capture reader cannot see HTML attributes; the attribute is correctly present. No code change required.
 
-### [ ] [2.7] / — "the link arrives once" is ambiguous before any link has been sent
+### [x] [3.0] / — "the link arrives once" is ambiguous before any link has been sent
 - category: comprehension
 - impact: 3
-- ease: 9
+- ease: 10
+- note: re-scored 2026-05-29 — ease raised from 9 to 10; the fix is a single clause removal from one string in src/app/page.tsx with no logic, no imports, no structural change; same ease-10 rationale as bb32ff9 (OG image alt, single 4-word string addition); score 3 × 10 / 10 = 3.0
 - observation: in the home-page footer CTA, "the link arrives once" appears before a visitor has entered their email. "once" is ambiguous: it could mean one link per request (the intended meaning) or one link ever. a first-time visitor who misses or does not receive the link may read this as meaning the opportunity is permanently spent.
 - evidence: footer CTA: "the link arrives once. no password is set. no other mail is sent."
 - suggested fix: replace "the link arrives once" with per-request language, e.g. "a link is sent each time this form is submitted." — or drop the clause entirely, since single-send-per-request is implicit in a magic-link flow.
 - source: /critique pass 18 (commit 6c01dc8)
+- resolution: removed "the link arrives once." from the CTA footer span in src/app/page.tsx; remaining trust copy is self-sufficient. Shipped at a595d0f.
 
 ### [ ] [2.7] / — "your log" referenced before the visitor has created an account
 - category: comprehension
