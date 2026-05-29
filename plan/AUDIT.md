@@ -6,6 +6,17 @@
 
 ## Pending
 
+### [x] [4.0] /log/[date] — edit textarea placeholder uses second-person imperative not present in /today
+- category: external-critique
+- impact: 4
+- ease: 10
+- observation: the edit textarea in EditEntry.tsx carries `placeholder="take your time."` — a second-person imperative that the voice guide explicitly prohibits. the identical fix was applied to TodayEntry.tsx at ddafc86 (changing "take your time." to "there is no rush.") but EditEntry.tsx was not updated in the same pass. a user editing a past entry on /log/[date] sees the old imperative placeholder rather than the consistent impersonal declarative used on /today.
+- evidence: src/app/log/[date]/EditEntry.tsx line 106: `placeholder="take your time."` — compare src/app/today/TodayEntry.tsx line 174 (main) and line 238 (focus overlay): both now read `placeholder="there is no rush."` after ddafc86.
+- suggested fix: change `placeholder="take your time."` to `placeholder="there is no rush."` in EditEntry.tsx line 106 to match the /today voice fix.
+- source: /iterate audit 2026-05-29
+- issue: [mirror-failed: loop-issue.mjs not present in scripts/]
+- resolution: changed placeholder to "there is no rush." in src/app/log/[date]/EditEntry.tsx. Shipped at 1353a34.
+
 ### [x] [3.6] /log — meta description "your past 60 days" names the window but not the page's purpose
 - category: external-critique
 - impact: 4
