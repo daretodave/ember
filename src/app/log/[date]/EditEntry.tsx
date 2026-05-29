@@ -103,7 +103,7 @@ export function EditEntry({ date, task, initialEntry }: Props) {
             setEditResponse(e.target.value)
             if (saveState === 'saved') setSaveState('idle')
           }}
-          placeholder="take your time."
+          placeholder="there is no rush."
           rows={8}
           // biome-ignore lint/a11y/noAutofocus: intentional — entering edit mode is an explicit user action
           autoFocus
