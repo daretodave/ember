@@ -1082,14 +1082,17 @@
 - suggested fix: change to `aria-modal={isFocus || undefined}` so the attribute is absent rather than explicitly false when focus mode is not active.
 - source: /critique pass 16 (commit 27718e9)
 
-### [ ] [2.7] / — product description contains embedded second-person imperative clause
+### [x] [3.6] / — product description contains embedded second-person imperative clause
 - category: external-critique
-- impact: 3
+- impact: 4
 - ease: 9
+- note: re-scored 2026-05-29 — impact raised from 3 to 4; the sub-pitch paragraph is the primary product description on the landing page, visible to every anonymous visitor; the voice guide explicitly prohibits second-person imperative copy; the same re-scoring logic applied to the textarea placeholder (ddafc86), the /signin reassurance line (6397375), and the task-done tooltip (156c342)
 - observation: the introductory paragraph reads "you write a few sentences in response, mark the task done if you did it, and move on." — the clause "mark the task done" is an imperative verb form embedded in what is otherwise a descriptive series using "you write... and move on." the voice guide prohibits second-person imperative copy outside quoted text.
 - evidence: body text: "one small prompt and one tiny task each morning. you write a few sentences in response, mark the task done if you did it, and move on." — "mark the task done" uses imperative mood mid-sentence.
 - suggested fix: reframe as fully descriptive: "one small prompt and one tiny task each morning. a few sentences in response, the task marked if it happened, and the day continues." — removes the imperative verb while preserving the meaning.
 - source: /critique pass 17 (commit 21ebca6)
+- issue: [mirror-failed: loop-issue.mjs not present in scripts/]
+- resolution: changed sub-pitch to "a few sentences in response, the task marked if it happened, and the day continues." in src/app/page.tsx. Shipped at 6b618e3.
 
 ### [x] [3.6] /today — task-done button has no hover tooltip while adjacent controls do
 - category: external-critique

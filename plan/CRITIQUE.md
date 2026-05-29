@@ -124,7 +124,7 @@
 - suggested fix: extend or replace the description to anchor the product category, e.g. "ember is a daily writing ritual — one prompt and one small task each morning." keeps the tone while adding terms a search-snippet reader can act on.
 - source: browser
 
-### [LOW] / — product description contains embedded second-person imperative clause
+### [x] [LOW] / — product description contains embedded second-person imperative clause
 - pass: 17 (commit 21ebca6)
 - viewport: both
 - category: voice
@@ -132,6 +132,7 @@
 - evidence: body text: "one small prompt and one tiny task each morning. you write a few sentences in response, mark the task done if you did it, and move on." — "mark the task done" uses imperative mood mid-sentence.
 - suggested fix: reframe as fully descriptive: "one small prompt and one tiny task each morning. a few sentences in response, the task marked if it happened, and the day continues." — removes the imperative verb while preserving the meaning.
 - source: browser
+- resolution: changed sub-pitch to "a few sentences in response, the task marked if it happened, and the day continues." in src/app/page.tsx. Shipped at 6b618e3.
 
 ### [LOW] / — "entering an email address for the first time creates an account" is ambiguous for returning visitors
 - pass: 17 (commit 21ebca6)
