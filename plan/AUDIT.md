@@ -6,6 +6,18 @@
 
 ## Pending
 
+### [x] [3.0] /settings — save button carries no title attribute while /today save buttons do
+- category: external-critique
+- impact: 3
+- ease: 10
+- note: scored 2026-05-30 — the voice guide requires hover/tooltip copy to be a complete sentence with a period; the /today page save buttons carry title="entries are saved privately by default." (shipped at ac5aee3); the equivalent submit button in SettingsForm.tsx formFoot has no title attribute; a sighted user hovering over the settings save button on desktop receives no tooltip, inconsistent with the tooltip-completeness pattern on /today; fix is a single attribute addition
+- observation: the voice guide requires hover/tooltip copy to be a complete sentence with a period. the /today page save buttons carry title="entries are saved privately by default." but the equivalent submit button in SettingsForm.tsx formFoot has no title attribute. a sighted user hovering over the settings save button on desktop receives no tooltip, inconsistent with the pattern established on /today.
+- evidence: settings page body: "save" button rendered with no tooltip — compare /today which shows title="entries are saved privately by default." on both main and focus-overlay save buttons.
+- suggested fix: add title="saves display name, timezone, prompt variety, and username." to the submit button in SettingsForm.tsx, consistent with the /today tooltip pattern.
+- source: /critique pass 23 (commit 4737f15)
+- issue: [mirror-failed: loop-issue.mjs not present in scripts/]
+- resolution: added title="saves display name, timezone, prompt variety, and username." to the submit button in src/app/settings/SettingsForm.tsx. Shipped at fd27cba.
+
 ### [x] [3.0] /today — "done writing" focus-exit button carries no title attribute
 - category: external-critique
 - impact: 3
@@ -1159,7 +1171,7 @@
 - suggested fix: normalise to "no password. no other mail." on the home page footer to match the shorter form used on /signin.
 - source: /critique pass 16 (commit 27718e9)
 
-### [ ] [2.7] /today — focus-mode overlay renders aria-modal="false" when inactive
+### [x] [2.7] /today — focus-mode overlay renders aria-modal="false" when inactive
 - category: external-critique
 - impact: 3
 - ease: 9
@@ -1167,6 +1179,7 @@
 - evidence: src/app/today/TodayEntry.tsx line 204: `aria-modal={isFocus}` — when isFocus is false this produces `aria-modal="false"` on the div.
 - suggested fix: change to `aria-modal={isFocus || undefined}` so the attribute is absent rather than explicitly false when focus mode is not active.
 - source: /critique pass 16 (commit 27718e9)
+- resolution: duplicate entry — already resolved at 4db7e74 (the [x] [3.0] sibling at top of Pending, sourced from critique pass 16). No code change required.
 
 ### [x] [3.6] / — product description contains embedded second-person imperative clause
 - category: external-critique

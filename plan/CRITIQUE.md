@@ -17,7 +17,7 @@
 - suggested fix: change "your log is empty." to "the log is empty." to match the non-possessive register applied to the H1 in the same correction pass.
 - source: browser
 
-### [LOW] /settings — save button carries no title attribute while /today save buttons do
+### [x] [LOW] /settings — save button carries no title attribute while /today save buttons do
 - pass: 23 (commit 4737f15)
 - viewport: desktop
 - category: voice
@@ -25,6 +25,7 @@
 - evidence: settings page body: "save" button rendered with no tooltip — compare /today which shows title="entries are saved privately by default." on both main and focus-overlay save buttons.
 - suggested fix: add title="saves display name, timezone, prompt variety, and username." to the submit button in SettingsForm.tsx, consistent with the /today tooltip pattern.
 - source: browser
+- resolution: added title="saves display name, timezone, prompt variety, and username." to the submit button in src/app/settings/SettingsForm.tsx. Shipped at fd27cba.
 
 ### [LOW] /log — meta description uses second-person possessives
 - pass: 23 (commit 4737f15)
