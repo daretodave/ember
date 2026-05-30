@@ -18,7 +18,7 @@
 - source: browser
 - resolution: changed both instances to "response" in TodayEntry.tsx; three test files updated. Shipped at 9e8d354.
 
-### [LOW] /today — meta description uses second-person possessive "your daily writing space"
+### [x] [LOW] /today — meta description uses second-person possessive "your daily writing space"
 - pass: 24 (commit c62ca34)
 - viewport: both
 - category: seo
@@ -26,6 +26,7 @@
 - evidence: src/app/today/page.tsx line 16: `description: "today's prompt and your daily writing space."` — the possessive "your" is the only instance of direct address in the /today metadata.
 - suggested fix: change to "today's prompt and a space to write." — removes the possessive while preserving the page-purpose signal.
 - source: browser
+- resolution: changed description to "today's prompt and a space to write." in src/app/today/page.tsx. Shipped at 74466d1.
 
 ### [x] [LOW] /log — "your log is empty." uses possessive after H1 was corrected to non-possessive
 - pass: 23 (commit 4737f15)

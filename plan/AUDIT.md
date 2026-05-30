@@ -18,7 +18,7 @@
 - issue: [mirror-failed: loop-issue.mjs not present in scripts/]
 - resolution: changed both instances of "your response" to "response" in TodayEntry.tsx; three test files updated to match. Shipped at 9e8d354.
 
-### [ ] [3.0] /today — meta description uses second-person possessive "your daily writing space"
+### [x] [3.0] /today — meta description uses second-person possessive "your daily writing space"
 - category: external-critique
 - impact: 3
 - ease: 10
@@ -27,6 +27,8 @@
 - evidence: src/app/today/page.tsx line 16: `description: "today's prompt and your daily writing space."` — the possessive "your" is the only instance of direct address in the /today metadata.
 - suggested fix: change to "today's prompt and a space to write." — removes the possessive while preserving the page-purpose signal.
 - source: /critique pass 24 (commit c62ca34)
+- issue: [mirror-failed: loop-issue.mjs not present in scripts/]
+- resolution: changed description to "today's prompt and a space to write." in src/app/today/page.tsx. Shipped at 74466d1.
 
 ### [ ] [2.7] /log — meta description uses second-person possessives
 - category: external-critique
