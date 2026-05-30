@@ -62,7 +62,7 @@ typographic restraint reads better than capitalization.
   (where it's chronological).
 - **Empty state for /today:** "Today's prompt is below. Take
   your time."
-- **Empty state for /log:** "Your log is empty. Today's entry will appear here."
+- **Empty state for /log:** "The log is empty. Today's entry will appear here."
 - **Error state:** muted card with the literal error code
   and a "try again" link. No friendly euphemisms.
 - **Top-N count:** N/A (no rankings, no leaderboards)
