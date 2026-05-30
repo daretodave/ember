@@ -1,6 +1,7 @@
 'use client'
 
 import { useCallback, useEffect, useRef, useState } from 'react'
+import Link from 'next/link'
 import type { Entry } from '@/lib/entries'
 import { formatSavedTime } from '@/lib/entries'
 import { clearDraft, getDraft, saveDraft } from '@/lib/draft-store'
@@ -216,7 +217,7 @@ export function TodayEntry({ date, task, prompt, initialEntry, hasUsername = tru
       {!hasUsername && (
         <p className={styles.publishHint}>
           entries appear publicly only when a username is set in{' '}
-          <a href="/settings">settings</a>.
+          <Link href="/settings">settings</Link>.
         </p>
       )}
 
@@ -279,7 +280,7 @@ export function TodayEntry({ date, task, prompt, initialEntry, hasUsername = tru
           {!hasUsername && (
             <p className={styles.publishHint}>
               entries appear publicly only when a username is set in{' '}
-              <a href="/settings" tabIndex={isFocus ? 0 : -1}>settings</a>.
+              <Link href="/settings" tabIndex={isFocus ? 0 : -1}>settings</Link>.
             </p>
           )}
 
