@@ -57,7 +57,7 @@
 - source: browser
 - resolution: changed H1 from "your past 60 days" to "the past 60 days" in src/app/log/page.tsx. Shipped at 3c775f9.
 
-### [LOW] /today — username prereq hint links to /settings with a plain `<a>` tag, not Next.js Link
+### [x] [LOW] /today — username prereq hint links to /settings with a plain `<a>` tag, not Next.js Link
 - pass: 22 (commit 24d04ae)
 - viewport: both
 - category: navigation
@@ -65,6 +65,7 @@
 - evidence: TodayEntry.tsx: `<a href="/settings">settings</a>` appears twice — once in the main prereq hint (around line 219) and once in the focus overlay prereq hint (around line 282). all nav links use `<Link href="...">` from 'next/link'.
 - suggested fix: replace both `<a href="/settings">` instances in TodayEntry.tsx with `<Link href="/settings">` (importing Link from 'next/link') to restore consistent client-side routing.
 - source: browser
+- resolution: replaced both instances with `<Link href="/settings">` and added Link import in TodayEntry.tsx. Shipped at 2082b89.
 
 ### [x] [LOW] /settings — meta description enumerates field names without a descriptive sentence
 - pass: 21 (commit 737e7d7)

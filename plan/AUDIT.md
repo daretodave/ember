@@ -18,7 +18,7 @@
 - issue: [mirror-failed: loop-issue.mjs not present in scripts/]
 - resolution: added title="exits the distraction-free writing view." to the focusDone button in TodayEntry.tsx. Shipped at 0251932.
 
-### [ ] [3.0] /today — username prereq hint links to /settings with a plain <a> tag, not Next.js Link
+### [x] [3.0] /today — username prereq hint links to /settings with a plain <a> tag, not Next.js Link
 - category: external-critique
 - impact: 3
 - ease: 10
@@ -28,6 +28,7 @@
 - suggested fix: replace both `<a href="/settings">` instances with `<Link href="/settings">` and add `import Link from 'next/link'`
 - source: /critique pass 22 (commit 24d04ae)
 - issue: [mirror-failed: loop-issue.mjs not present in scripts/]
+- resolution: replaced both `<a href="/settings">` instances with `<Link href="/settings">` and added Link import in TodayEntry.tsx. Shipped at 2082b89.
 
 ### [x] [3.0] /today — focus-mode overlay renders aria-modal="false" when inactive
 - category: a11y
