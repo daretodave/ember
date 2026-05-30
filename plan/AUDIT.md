@@ -6,6 +6,66 @@
 
 ## Pending
 
+### [ ] [2.7] /log — meta description uses second-person possessives
+- category: external-critique
+- impact: 3
+- ease: 9
+- note: scored 2026-05-30 — meta description reads "your writing log — prompts, responses, and the entries you have published over the past 60 days." the H1 was de-possessived at 3c775f9 ("your past 60 days" → "the past 60 days") and the empty-state was updated at da2510a, but the meta description still carries "your writing log" and "you have published"; fix is a single string replacement
+- observation: the /log page meta description reads "your writing log — prompts, responses, and the entries you have published over the past 60 days." two possessives remain: "your writing log" and "the entries you have published." the H1 was de-possessived ("the past 60 days") but the meta description was not updated to match.
+- evidence: meta description: "your writing log — prompts, responses, and the entries you have published over the past 60 days." — "your" and "you have published" both remain after the H1 fix at 3c775f9.
+- suggested fix: reframe to an impersonal description, e.g. "a 60-day writing log — prompts, responses, and published entries." removes direct address while retaining the content signal.
+- source: /critique pass 23 (commit 4737f15)
+
+### [ ] [2.0] /signin — H1 "sign in." carries a terminal period no other page heading uses
+- category: external-critique
+- impact: 2
+- ease: 10
+- note: scored 2026-05-30 — ease is 10; the fix is a single character removal from the H1 string in src/app/signin/page.tsx; no logic, no imports, no structural change
+- observation: the /signin page H1 reads "sign in." with a terminal period. no other page heading in the app ends with a period — "settings" and "the past 60 days" carry no terminal period. the period tips "sign in." into a declarative-sentence register inconsistent with how heading labels are treated elsewhere.
+- evidence: captured H1: "sign in." — compare authenticated page headings ("settings", "the past 60 days") which carry no terminal period.
+- suggested fix: remove the terminal period from the "sign in" H1 in src/app/signin/page.tsx so it reads as a heading label rather than a declarative sentence.
+- source: /critique pass 23 (commit 4737f15)
+
+### [ ] [1.8] /signin — "send the link" button uses definite article before any link has been introduced
+- category: external-critique
+- impact: 2
+- ease: 9
+- note: scored 2026-05-30 — the submit button reads "send the link"; the surrounding reassurance copy uses the indefinite article "a sign-in link is sent to this address"; the "a" in the description and "the" in the button label are at odds for a first-time visitor
+- observation: the submit button reads "send the link." the definite article "the" presupposes a previously established referent, but the surrounding reassurance copy uses the indefinite article: "a sign-in link is sent to this address." the "a" in the description and "the" in the button label are at odds.
+- evidence: button label: "send the link" — adjacent reassurance text: "a sign-in link is sent to this address. no password. no other mail."
+- suggested fix: change the button label to "send a link" or "send sign-in link" so the article matches the indefinite framing of the surrounding copy.
+- source: /critique pass 23 (commit 4737f15)
+
+### [ ] [1.5] / — "ten minutes" in the lede is never grounded in the product description
+- category: external-critique
+- impact: 3
+- ease: 5
+- note: scored 2026-05-30 — ease is 5 due to brand judgment required: whether to retain "ten minutes" with a qualifier or remove the specific figure entirely; the product makes no formal time guarantee so either direction is defensible
+- observation: the lede opens with "ten minutes of intention before the day swallows you." the product description that follows never references duration. a first-time reader has no basis for the ten-minute figure — whether it is a maximum, an average, a design constraint, or a rhetorical gesture. the number floats without context anywhere on the page.
+- evidence: lede: "ten minutes of intention before the day swallows you." product description: "one small prompt and one tiny task each morning. a few sentences in response, the task marked if it happened, and the day continues. over weeks, responses accumulate into a quiet personal log." — no duration reference in the description or the 7-day preview.
+- suggested fix: either ground the figure with a brief qualifier (e.g. "a prompt and a task — ten minutes at most.") or remove the specific number from the lede if the product makes no time guarantee, letting the product description carry the framing unaided.
+- source: /critique pass 23 (commit 4737f15)
+
+### [ ] [1.8] /today — focus overlay always rendered in DOM; page text is doubled for raw-text consumers
+- category: external-critique
+- impact: 3
+- ease: 6
+- note: scored 2026-05-30 — ease is 6; conditional rendering requires care around the opacity-transition animation; the outer overlay container can remain for CSS transition purposes while inner content is conditionally mounted
+- observation: the focus-mode overlay is retained permanently in the DOM for its opacity-transition animation and hidden from assistive technology via aria-hidden={!isFocus}. any raw-DOM text reader — Playwright innerText, link-preview scrapers, feed parsers — sees the full prompt, "your response" label, publish description, and username prereq hint duplicated verbatim in the same page.
+- evidence: page text capture shows: prompt → controls block ("publish / focus / save / entries appear publicly...") → [focus overlay] prompt again → controls block again → "done writing". the overlay content appears unconditionally before the day strip.
+- suggested fix: conditionally render the focus overlay's inner content only when isFocus is true — e.g. {isFocus && <FocusOverlayContent />} — so the duplicate text is absent from the DOM at rest. the outer overlay container can remain for transition purposes.
+- source: /critique pass 22 (commit 24d04ae)
+
+### [ ] [1.6] / — tiny task copy in 7-day preview uses second-person imperative throughout
+- category: external-critique
+- impact: 4
+- ease: 4
+- note: scored 2026-05-30 — ease is 4; requires updating task text across content/prompts.json (~101 entries) to convert imperative verb forms to gerund or participial constructions; the content change is mechanical but large in scope
+- observation: all seven tiny task lines in the anonymous landing-page preview are second-person imperative constructions — "say something true and specific to someone today", "tidy the surface you look at most often", "spend fifteen minutes reading something", etc. the voice guide explicitly prohibits second-person imperative copy. the product description on the same page already uses the participial form ("the task marked if it happened") to describe tasks, but the actual task text throughout the preview contradicts it.
+- evidence: body text: "tiny task — say something true and specific to someone today — not a formality. / tiny task — make yourself something to eat with a little more care than usual. / tiny task — tidy the surface you look at most often. / tiny task — spend fifteen minutes reading something with no productivity justification. / tiny task — do one small thing today that you avoided before. / tiny task — write that opinion down in two sentences." — all are imperative verb forms.
+- suggested fix: reframe task content as gerund or participial form consistent with the product description's register, e.g. "saying something true and specific to someone today." — apply consistently across content/prompts.json.
+- source: /critique pass 22 (commit 24d04ae)
+
 ### [x] [3.0] /log — "your log is empty." uses possessive after H1 was corrected to non-possessive
 - category: external-critique
 - impact: 3
