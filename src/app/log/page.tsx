@@ -78,7 +78,7 @@ export default async function LogPage() {
 
       <main id="main-content">
       <section className={styles.mosaicWrap}>
-        <h1 className={styles.mosaicMeta}>your past 60 days</h1>
+        <h1 className={styles.mosaicMeta}>the past 60 days</h1>
         <LogMosaic tiles={tiles} />
         {written > 0 && (
           <p className={styles.mosaicCount}>
