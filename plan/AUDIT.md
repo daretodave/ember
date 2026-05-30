@@ -6,6 +6,29 @@
 
 ## Pending
 
+### [x] [3.0] /today — "done writing" focus-exit button carries no title attribute
+- category: external-critique
+- impact: 3
+- ease: 10
+- note: scored 2026-05-30 — voice guide requires hover/tooltip copy to be a complete sentence with a period; every other interactive control on /today already carries a title attribute (focusTrigger: "enters a distraction-free writing view.", task-done button: dynamic title, both save buttons: "entries are saved privately by default."); focusDone is the only control in the group without one; fix is a single attribute addition to TodayEntry.tsx
+- observation: the "done writing" button that exits focus mode has no title attribute. the voice guide requires hover/tooltip copy to be a complete sentence with a period. every other interactive control on /today already carries one; focusDone is the only control without a complete-sentence hover description.
+- evidence: TodayEntry.tsx: focusDone button carries aria-label="exit focus mode" and visible text "done writing" but no title attribute; compare focusTrigger which carries title="enters a distraction-free writing view."
+- suggested fix: add title="exits the distraction-free writing view." to the focusDone button in TodayEntry.tsx
+- source: /critique pass 22 (commit 24d04ae)
+- issue: [mirror-failed: loop-issue.mjs not present in scripts/]
+- resolution: added title="exits the distraction-free writing view." to the focusDone button in TodayEntry.tsx. Shipped at 0251932.
+
+### [ ] [3.0] /today — username prereq hint links to /settings with a plain <a> tag, not Next.js Link
+- category: external-critique
+- impact: 3
+- ease: 10
+- note: scored 2026-05-30 — every other in-app link on /today uses Next.js Link (nav links, "open log" strip link); the plain <a> triggers a full browser reload rather than client-side navigation; fix is two-line swap + import addition in TodayEntry.tsx
+- observation: the publish prereq hint ("entries appear publicly only when a username is set in settings.") links to /settings using a plain HTML <a> tag in both main view and focus overlay, causing a full page reload rather than client-side navigation.
+- evidence: TodayEntry.tsx line ~219 and ~282: `<a href="/settings">settings</a>` appears twice; all nav links use Link from 'next/link'
+- suggested fix: replace both `<a href="/settings">` instances with `<Link href="/settings">` and add `import Link from 'next/link'`
+- source: /critique pass 22 (commit 24d04ae)
+- issue: [mirror-failed: loop-issue.mjs not present in scripts/]
+
 ### [x] [3.0] /today — focus-mode overlay renders aria-modal="false" when inactive
 - category: a11y
 - impact: 3

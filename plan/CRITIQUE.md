@@ -28,7 +28,7 @@
 - issue: [mirror-failed: loop-issue.mjs not present in scripts/]
 - resolution: appended "entering an email address for the first time creates an account." to the reassurance paragraph in src/app/signin/page.tsx (shown in idle/sending/error states). Shipped at 34cce6c.
 
-### [LOW] /today — "done writing" focus-exit button carries no title attribute
+### [x] [LOW] /today — "done writing" focus-exit button carries no title attribute
 - pass: 22 (commit 24d04ae)
 - viewport: desktop
 - category: voice
@@ -36,6 +36,7 @@
 - evidence: TodayEntry.tsx: focusDone button carries aria-label="exit focus mode" and visible text "done writing" but no title attribute; compare focusTrigger button which carries title="enters a distraction-free writing view." and aria-label="enter focus mode".
 - suggested fix: add title="exits the distraction-free writing view." to the focusDone button in TodayEntry.tsx, consistent with the voice guide's tooltip-completeness rule.
 - source: browser
+- resolution: added title="exits the distraction-free writing view." to the focusDone button in TodayEntry.tsx. Shipped at 0251932.
 
 ### [LOW] /today — focus overlay always rendered in DOM; page text is doubled for raw-text consumers
 - pass: 22 (commit 24d04ae)
