@@ -46,7 +46,7 @@
 - suggested fix: conditionally render the focus overlay's inner content only when isFocus is true — e.g. `{isFocus && <FocusOverlayContent />}` — so the duplicate text is absent from the DOM at rest. the outer overlay container can remain for transition purposes.
 - source: browser
 
-### [LOW] /log — H1 "your past 60 days" uses possessive for accounts with no entries
+### [x] [LOW] /log — H1 "your past 60 days" uses possessive for accounts with no entries
 - pass: 22 (commit 24d04ae)
 - viewport: both
 - category: voice
@@ -54,6 +54,7 @@
 - evidence: page text: "your past 60 days" as H1 immediately above "your log is empty. today's entry will appear here." — the heading claims ownership of a period the user has not engaged with.
 - suggested fix: change the /log H1 in log/page.tsx from "your past 60 days" to "the past 60 days", consistent with the DayStrip fix applied to the same pattern on /today.
 - source: browser
+- resolution: changed H1 from "your past 60 days" to "the past 60 days" in src/app/log/page.tsx. Shipped at 3c775f9.
 
 ### [LOW] /today — username prereq hint links to /settings with a plain `<a>` tag, not Next.js Link
 - pass: 22 (commit 24d04ae)

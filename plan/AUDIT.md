@@ -107,6 +107,17 @@
 - issue: [mirror-failed: loop-issue.mjs not present in scripts/]
 - resolution: changed description to 'account settings for your writing practice — display name, timezone, prompt variety, and public username.' in src/app/settings/page.tsx. Shipped at e0a3a2b.
 
+### [x] [3.0] /log — H1 "your past 60 days" uses possessive for accounts with no entries
+- category: external-critique
+- impact: 3
+- ease: 10
+- observation: the /log page H1 reads "your past 60 days" regardless of whether the user has any entries. for a brand-new account, the possessive "your" presupposes 60 days of engagement that does not exist — the same pattern that prompted the /today DayStrip fix at e016982, which changed "your last seven days" to "the last seven days". the /log H1 was not updated in that pass.
+- evidence: src/app/log/page.tsx line 81: `<h1 className={styles.mosaicMeta}>your past 60 days</h1>` — possessive heading above the empty-state message.
+- suggested fix: change the /log H1 from "your past 60 days" to "the past 60 days", consistent with the DayStrip fix applied to the same pattern on /today.
+- source: /critique pass 22 (commit 24d04ae)
+- issue: [mirror-failed: loop-issue.mjs not present in scripts/]
+- resolution: changed H1 from "your past 60 days" to "the past 60 days" in src/app/log/page.tsx. Shipped at 3c775f9.
+
 ### [ ] [1.8] /signin — post-submission confirmation appends redundant password reassurance
 - category: external-critique
 - impact: 2
