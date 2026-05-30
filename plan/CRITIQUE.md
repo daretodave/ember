@@ -17,14 +17,16 @@
 - suggested fix: reframe task content as gerund or participial form consistent with the product description's register, e.g. "saying something true and specific to someone today." — removes the imperative while preserving the instruction. apply consistently across content/prompts.json.
 - source: browser
 
-### [LOW] /signin — page carries no signal that submitting a new email creates an account
+### [x] [LOW] /signin — page carries no signal that submitting a new email creates an account
 - pass: 22 (commit 24d04ae)
 - viewport: both
 - category: comprehension
-- observation: the home page CTA block includes "entering an email address for the first time creates an account." to explain the combined sign-in / account-creation flow. the /signin page itself carries no equivalent — a visitor who arrives directly at /signin (via a search result, a shared link, or a browser bookmark) sees only "sign in." with an email field and a "send the link" button, with no indication that submitting an unknown address will create an account rather than failing.
+- observation: the home page CTA block includes "entering an email address for the first time creates an account." to explain the combined sign-in / account-creation flow. the /signin page itself carried no equivalent — a visitor who arrives directly at /signin (via a search result, a shared link, or a browser bookmark) sees only "sign in." with an email field and a "send the link" button, with no indication that submitting an unknown address will create an account rather than failing.
 - evidence: full /signin page text: "skip to content / ember / back to home / sign in. / email / send the link / a sign-in link is sent to this address. no password. no other mail. / ember / sign-in links expire after 24 hours." — no account-creation mention present.
 - suggested fix: add a single declarative line below the reassurance text on /signin: "entering an email address for the first time creates an account." — mirrors the home CTA explainer and closes the comprehension gap for direct-arrival visitors.
 - source: browser
+- issue: [mirror-failed: loop-issue.mjs not present in scripts/]
+- resolution: appended "entering an email address for the first time creates an account." to the reassurance paragraph in src/app/signin/page.tsx (shown in idle/sending/error states). Shipped at 34cce6c.
 
 ### [LOW] /today — "done writing" focus-exit button carries no title attribute
 - pass: 22 (commit 24d04ae)
