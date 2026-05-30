@@ -1,12 +1,66 @@
 # External-observer findings — Ember
 
-> Last pass: 2026-05-29 at commit 24d04ae
-> Pass count: 22
+> Last pass: 2026-05-30 at commit 4737f15
+> Pass count: 23
 
 > Written by `/critique` after walking the live site as a
 > fresh-eyes visitor. Drained by `/iterate`.
 
 ## Pending
+
+### [LOW] /log — "your log is empty." uses possessive after H1 was corrected to non-possessive
+- pass: 23 (commit 4737f15)
+- viewport: both
+- category: voice
+- observation: the H1 on /log was changed from "your past 60 days" to "the past 60 days" at 3c775f9 to avoid presupposing content for a zero-entry user. the empty-state sentence immediately below the mosaic was not updated in the same pass and still reads "your log is empty. today's entry will appear here." — the possessive "your log" persists one line below the fixed heading, contradicting the fix's own logic.
+- evidence: /log body text: "the past 60 days\n\nyour log is empty. today's entry will appear here." — "the" in the H1, "your" in the body.
+- suggested fix: change "your log is empty." to "the log is empty." to match the non-possessive register applied to the H1 in the same correction pass.
+- source: browser
+
+### [LOW] /settings — save button carries no title attribute while /today save buttons do
+- pass: 23 (commit 4737f15)
+- viewport: desktop
+- category: voice
+- observation: the voice guide requires hover/tooltip copy to be a complete sentence with a period. the /today page save buttons carry title="entries are saved privately by default." but the equivalent submit button in SettingsForm.tsx formFoot has no title attribute. a sighted user hovering over the settings save button on desktop receives no tooltip, inconsistent with the pattern established on /today.
+- evidence: settings page body: "save" button rendered with no tooltip — compare /today which shows title="entries are saved privately by default." on both main and focus-overlay save buttons.
+- suggested fix: add title="saves display name, timezone, prompt variety, and username." to the submit button in SettingsForm.tsx, consistent with the /today tooltip pattern.
+- source: browser
+
+### [LOW] /log — meta description uses second-person possessives
+- pass: 23 (commit 4737f15)
+- viewport: both
+- category: voice
+- observation: the /log page meta description reads "your writing log — prompts, responses, and the entries you have published over the past 60 days." two possessives remain: "your writing log" and "the entries you have published." for a zero-entry user or a first-time visitor arriving from a search result, both phrases address the reader as though they already have a publication history. the H1 was de-possessived ("the past 60 days") but the meta description was not updated to match.
+- evidence: meta description: "your writing log — prompts, responses, and the entries you have published over the past 60 days." — "your" and "you have published" both remain.
+- suggested fix: reframe to an impersonal description, e.g. "a 60-day writing log — prompts, responses, and published entries." removes direct address while retaining the content signal.
+- source: browser
+
+### [LOW] /signin — H1 "sign in." carries a terminal period no other page heading uses
+- pass: 23 (commit 4737f15)
+- viewport: both
+- category: voice
+- observation: the /signin page H1 reads "sign in." with a terminal period. no other page heading in the app set ends with a period — the home lede is a full sentence and its period is appropriate, but "sign in." is a two-word label functioning as a heading. the period tips it into a declarative-sentence register that is inconsistent with how heading labels are treated elsewhere.
+- evidence: captured H1: "sign in." — compare authenticated page headings ("settings", "the past 60 days") which carry no terminal period. section labels on the home page ("the next seven days", "this is what arrives each morning.") are inconsistent with each other but neither is a page H1.
+- suggested fix: remove the terminal period from the "sign in" H1 in src/app/signin/page.tsx so it reads as a heading label rather than a declarative sentence.
+- source: browser
+
+### [LOW] /signin — "send the link" button uses definite article before any link has been introduced
+- pass: 23 (commit 4737f15)
+- viewport: both
+- category: comprehension
+- observation: the submit button reads "send the link." the definite article "the" presupposes a previously established referent, but the surrounding reassurance copy uses the indefinite article: "a sign-in link is sent to this address." for a first-time visitor the button implies a specific known link rather than the one they are about to request, creating a small article mismatch.
+- evidence: button label: "send the link" — adjacent reassurance text: "a sign-in link is sent to this address. no password. no other mail." the "a" in the description and "the" in the button label are at odds.
+- suggested fix: change the button label to "send a link" or "send sign-in link" so the article matches the indefinite framing of the surrounding copy.
+- source: browser
+
+### [LOW] / — "ten minutes" in the lede is never grounded in the product description
+- pass: 23 (commit 4737f15)
+- viewport: both
+- category: comprehension
+- observation: the lede opens with "ten minutes of intention before the day swallows you." the product description that follows — "a few sentences in response, the task marked if it happened, and the day continues" — never references duration. a first-time reader has no basis for the ten-minute figure: whether it is a maximum, an average, a design constraint, or a rhetorical gesture. the number floats without context anywhere on the page.
+- evidence: lede: "ten minutes of intention before the day swallows you." product description: "one small prompt and one tiny task each morning. a few sentences in response, the task marked if it happened, and the day continues. over weeks, responses accumulate into a quiet personal log." — no duration reference in the description or the 7-day preview.
+- suggested fix: either ground the figure with a brief qualifier (e.g. "a prompt and a task — ten minutes at most.") or remove the specific number from the lede if the product makes no time guarantee, letting the product description carry the framing unaided.
+- source: browser
 
 ### [LOW] / — tiny task copy in 7-day preview uses second-person imperative throughout
 - pass: 22 (commit 24d04ae)
