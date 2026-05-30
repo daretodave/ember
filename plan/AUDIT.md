@@ -6,6 +6,28 @@
 
 ## Pending
 
+### [x] [3.0] /today — "your response" textarea label uses second-person possessive
+- category: external-critique
+- impact: 3
+- ease: 10
+- note: scored 2026-05-30 — both the main-form label (TodayEntry.tsx:170) and the focus-overlay label (TodayEntry.tsx:239) read "your response"; the possessive "your" is the only remaining instance of direct-address copy on the page after prior de-possessiving passes; fix is a two-occurrence text replacement in a single file
+- observation: the label above the entry textarea reads "your response" in both the main form and the focus-mode overlay. the voice guide avoids presuppositional second-person address; prior passes de-possessived other labels on /today and /log. "your response" persists as the sole remaining possessive label on the page.
+- evidence: TodayEntry.tsx line 170 and line 239: `<label ... className={styles.entryLabel}>your response</label>`.
+- suggested fix: change both instances of "your response" to "response" in TodayEntry.tsx — removes the possessive while remaining clear as a textarea label.
+- source: /critique pass 24 (commit c62ca34)
+- issue: [mirror-failed: loop-issue.mjs not present in scripts/]
+- resolution: changed both instances of "your response" to "response" in TodayEntry.tsx; three test files updated to match. Shipped at 9e8d354.
+
+### [ ] [3.0] /today — meta description uses second-person possessive "your daily writing space"
+- category: external-critique
+- impact: 3
+- ease: 10
+- note: scored 2026-05-30 — the /today meta description reads "today's prompt and your daily writing space." the phrase "your daily writing space" addresses the reader possessively; the description appears in search results and bookmark previews where the visitor may not yet have a practice to call "yours"; fix is a single string replacement in src/app/today/page.tsx
+- observation: the /today meta description reads "today's prompt and your daily writing space." the phrase "your daily writing space" uses second-person possessive address, which the voice guide discourages.
+- evidence: src/app/today/page.tsx line 16: `description: "today's prompt and your daily writing space."` — the possessive "your" is the only instance of direct address in the /today metadata.
+- suggested fix: change to "today's prompt and a space to write." — removes the possessive while preserving the page-purpose signal.
+- source: /critique pass 24 (commit c62ca34)
+
 ### [ ] [2.7] /log — meta description uses second-person possessives
 - category: external-critique
 - impact: 3

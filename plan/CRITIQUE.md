@@ -8,7 +8,7 @@
 
 ## Pending
 
-### [LOW] /today — "your response" textarea label uses second-person possessive
+### [x] [LOW] /today — "your response" textarea label uses second-person possessive
 - pass: 24 (commit c62ca34)
 - viewport: both
 - category: voice
@@ -16,6 +16,7 @@
 - evidence: body text: "your response" appears twice — once in the main form and once in the focus overlay. TodayEntry.tsx line 170 and line 239: `<label ... className={styles.entryLabel}>your response</label>`.
 - suggested fix: change both instances of "your response" to "response" in TodayEntry.tsx — removes the possessive while remaining clear as a textarea label.
 - source: browser
+- resolution: changed both instances to "response" in TodayEntry.tsx; three test files updated. Shipped at 9e8d354.
 
 ### [LOW] /today — meta description uses second-person possessive "your daily writing space"
 - pass: 24 (commit c62ca34)
