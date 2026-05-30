@@ -1,12 +1,30 @@
 # External-observer findings — Ember
 
-> Last pass: 2026-05-30 at commit 4737f15
-> Pass count: 23
+> Last pass: 2026-05-30 at commit c62ca34
+> Pass count: 24
 
 > Written by `/critique` after walking the live site as a
 > fresh-eyes visitor. Drained by `/iterate`.
 
 ## Pending
+
+### [LOW] /today — "your response" textarea label uses second-person possessive
+- pass: 24 (commit c62ca34)
+- viewport: both
+- category: voice
+- observation: the label above the entry textarea reads "your response" in both the main form and the focus-mode overlay. the voice guide avoids presuppositional second-person address; prior passes de-possessived "your last seven days" → "the last seven days" (DayStrip.tsx), "your past 60 days" → "the past 60 days" (log H1), and "your log is empty." → "the log is empty." for consistency. "your response" persists as the sole remaining possessive label on the page, applying the same pattern that was corrected everywhere else on /today.
+- evidence: body text: "your response" appears twice — once in the main form and once in the focus overlay. TodayEntry.tsx line 170 and line 239: `<label ... className={styles.entryLabel}>your response</label>`.
+- suggested fix: change both instances of "your response" to "response" in TodayEntry.tsx — removes the possessive while remaining clear as a textarea label.
+- source: browser
+
+### [LOW] /today — meta description uses second-person possessive "your daily writing space"
+- pass: 24 (commit c62ca34)
+- viewport: both
+- category: seo
+- observation: the /today meta description reads "today's prompt and your daily writing space." the phrase "your daily writing space" addresses the reader possessively. the /log meta description's possessives are a pending finding; the /today meta description presents the same pattern and has not been addressed. the description appears in search results and bookmark previews where the visitor may not yet have a practice to call "yours."
+- evidence: src/app/today/page.tsx line 16: `description: "today's prompt and your daily writing space."` — the possessive "your" is the only instance of direct address in the /today metadata.
+- suggested fix: change to "today's prompt and a space to write." — removes the possessive while preserving the page-purpose signal.
+- source: browser
 
 ### [x] [LOW] /log — "your log is empty." uses possessive after H1 was corrected to non-possessive
 - pass: 23 (commit 4737f15)
