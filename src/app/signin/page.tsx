@@ -88,7 +88,8 @@ export default function SigninPage() {
 
           {state !== 'sent' && (
             <p className={styles.reassurance}>
-              a sign-in link is sent to this address. no password. no other mail.
+              a sign-in link is sent to this address. no password. no other mail.{' '}
+              entering an email address for the first time creates an account.
             </p>
           )}
         </div>
