@@ -6,6 +6,18 @@
 
 ## Pending
 
+### [x] [3.0] /log — "your log is empty." uses possessive after H1 was corrected to non-possessive
+- category: external-critique
+- impact: 3
+- ease: 10
+- note: scored 2026-05-30 — the H1 on /log was changed from "your past 60 days" to "the past 60 days" at 3c775f9; the empty-state sentence immediately below still reads "your log is empty." — the possessive "your log" persists one line below the fixed heading, contradicting the fix's own logic; fix is a single string replacement
+- observation: the H1 on /log was changed from "your past 60 days" to "the past 60 days" at 3c775f9 to avoid presupposing content for a zero-entry user. the empty-state sentence immediately below the mosaic was not updated in the same pass and still reads "your log is empty. today's entry will appear here." — the possessive "your log" persists one line below the fixed heading, contradicting the fix's own logic.
+- evidence: /log body text: "the past 60 days\n\nyour log is empty. today's entry will appear here." — "the" in the H1, "your" in the body.
+- suggested fix: change "your log is empty." to "the log is empty." to match the non-possessive register applied to the H1 in the same correction pass. also update bearings.md standing decision.
+- source: /critique pass 23 (commit 96ddb64)
+- issue: [mirror-failed: loop-issue.mjs not present in scripts/]
+- resolution: changed "your log is empty." to "the log is empty." in src/app/log/page.tsx; updated bearings.md standing decision. Shipped at da2510a.
+
 ### [x] [3.0] /settings — save button carries no title attribute while /today save buttons do
 - category: external-critique
 - impact: 3

@@ -8,7 +8,7 @@
 
 ## Pending
 
-### [LOW] /log — "your log is empty." uses possessive after H1 was corrected to non-possessive
+### [x] [LOW] /log — "your log is empty." uses possessive after H1 was corrected to non-possessive
 - pass: 23 (commit 4737f15)
 - viewport: both
 - category: voice
@@ -16,6 +16,7 @@
 - evidence: /log body text: "the past 60 days\n\nyour log is empty. today's entry will appear here." — "the" in the H1, "your" in the body.
 - suggested fix: change "your log is empty." to "the log is empty." to match the non-possessive register applied to the H1 in the same correction pass.
 - source: browser
+- resolution: changed "your log is empty." to "the log is empty." in src/app/log/page.tsx; updated bearings.md standing decision. Shipped at da2510a.
 
 ### [x] [LOW] /settings — save button carries no title attribute while /today save buttons do
 - pass: 23 (commit 4737f15)
