@@ -36,7 +36,7 @@ describe('offline draft — load on mount', () => {
     render(<TodayEntry {...baseProps} />)
 
     await waitFor(() => {
-      const textarea = screen.getByLabelText<HTMLTextAreaElement>('your response', {
+      const textarea = screen.getByLabelText<HTMLTextAreaElement>('response', {
         selector: '#today-entry-response',
       })
       expect(textarea.value).toBe('restored text')
@@ -69,7 +69,7 @@ describe('offline draft — load on mount', () => {
       expect(getDraft).not.toHaveBeenCalled()
     })
 
-    const textarea = screen.getByLabelText<HTMLTextAreaElement>('your response', {
+    const textarea = screen.getByLabelText<HTMLTextAreaElement>('response', {
       selector: '#today-entry-response',
     })
     expect(textarea.value).toBe('server entry')

@@ -54,13 +54,13 @@ describe('focus mode', () => {
 
   it('textarea in focus overlay shares state with the main textarea', () => {
     render(<TodayEntry {...DEFAULT_PROPS} />)
-    const mainTextarea = screen.getByLabelText<HTMLTextAreaElement>('your response', {
+    const mainTextarea = screen.getByLabelText<HTMLTextAreaElement>('response', {
       selector: '#today-entry-response',
     })
     fireEvent.change(mainTextarea, { target: { value: 'hello world' } })
 
     fireEvent.click(screen.getByRole('button', { name: 'enter focus mode' }))
-    const focusTextarea = screen.getByLabelText<HTMLTextAreaElement>('your response', {
+    const focusTextarea = screen.getByLabelText<HTMLTextAreaElement>('response', {
       selector: '#focus-entry-response',
     })
     expect(focusTextarea.value).toBe('hello world')

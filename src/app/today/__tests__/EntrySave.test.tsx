@@ -29,7 +29,7 @@ const BASE_PROPS = {
 }
 
 function typeInEntry(text: string) {
-  const textarea = screen.getByLabelText<HTMLTextAreaElement>('your response', {
+  const textarea = screen.getByLabelText<HTMLTextAreaElement>('response', {
     selector: '#today-entry-response',
   })
   fireEvent.change(textarea, { target: { value: text } })

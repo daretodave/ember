@@ -167,7 +167,7 @@ export function TodayEntry({ date, task, prompt, initialEntry, hasUsername = tru
         </p>
       </div>
 
-      <label htmlFor="today-entry-response" className={styles.entryLabel}>your response</label>
+      <label htmlFor="today-entry-response" className={styles.entryLabel}>response</label>
       <textarea
         id="today-entry-response"
         className={styles.entry}
@@ -236,7 +236,7 @@ export function TodayEntry({ date, task, prompt, initialEntry, hasUsername = tru
         <div className={styles.focusContent}>
           <p id="focus-mode-heading" className={styles.focusPrompt}>{prompt}</p>
 
-          <label htmlFor="focus-entry-response" className={styles.entryLabel}>your response</label>
+          <label htmlFor="focus-entry-response" className={styles.entryLabel}>response</label>
           <textarea
             id="focus-entry-response"
             ref={focusTextareaRef}
