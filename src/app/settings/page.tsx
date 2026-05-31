@@ -8,7 +8,7 @@ import styles from './page.module.css'
 
 export const metadata = {
   title: 'ember · settings',
-  description: 'account settings for your writing practice — display name, timezone, prompt variety, and public username.',
+  description: 'account settings — display name, timezone, prompt variety, and public username.',
 }
 
 export default async function SettingsPage() {
