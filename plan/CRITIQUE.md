@@ -87,7 +87,7 @@
 - source: browser
 - resolution: added title="saves display name, timezone, prompt variety, and username." to the submit button in src/app/settings/SettingsForm.tsx. Shipped at fd27cba.
 
-### [LOW] /log — meta description uses second-person possessives
+### [x] [LOW] /log — meta description uses second-person possessives
 - pass: 23 (commit 4737f15)
 - viewport: both
 - category: voice
@@ -95,6 +95,7 @@
 - evidence: meta description: "your writing log — prompts, responses, and the entries you have published over the past 60 days." — "your" and "you have published" both remain.
 - suggested fix: reframe to an impersonal description, e.g. "a 60-day writing log — prompts, responses, and published entries." removes direct address while retaining the content signal.
 - source: browser
+- resolution: changed description to "a 60-day writing log — prompts, responses, and published entries." in src/app/log/page.tsx. Shipped at a5181c7.
 
 ### [LOW] /signin — H1 "sign in." carries a terminal period no other page heading uses
 - pass: 23 (commit 4737f15)

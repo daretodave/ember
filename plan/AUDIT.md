@@ -99,15 +99,17 @@
 - issue: [mirror-failed: loop-issue.mjs not present in scripts/]
 - resolution: changed label to "response" in EditEntry.tsx; four test references in EditEntry.test.tsx updated. Shipped at 22b7e74.
 
-### [ ] [2.7] /log — meta description uses second-person possessives
+### [x] [3.0] /log — meta description uses second-person possessives
 - category: external-critique
 - impact: 3
-- ease: 9
-- note: scored 2026-05-30 — meta description reads "your writing log — prompts, responses, and the entries you have published over the past 60 days." the H1 was de-possessived at 3c775f9 ("your past 60 days" → "the past 60 days") and the empty-state was updated at da2510a, but the meta description still carries "your writing log" and "you have published"; fix is a single string replacement
+- ease: 10
+- note: re-scored 2026-05-31 — ease raised from 9 to 10; single string replacement in one file, no logic, no imports, no structural change — same class as /settings meta description (ease 10, score 3.0) and /log/[date] meta description (ease 10, score 3.0); "your writing log" and "you have published" are possessives introduced at a29ff1f; H1 was de-possessived at 3c775f9 but meta description was not updated
 - observation: the /log page meta description reads "your writing log — prompts, responses, and the entries you have published over the past 60 days." two possessives remain: "your writing log" and "the entries you have published." the H1 was de-possessived ("the past 60 days") but the meta description was not updated to match.
 - evidence: meta description: "your writing log — prompts, responses, and the entries you have published over the past 60 days." — "your" and "you have published" both remain after the H1 fix at 3c775f9.
 - suggested fix: reframe to an impersonal description, e.g. "a 60-day writing log — prompts, responses, and published entries." removes direct address while retaining the content signal.
 - source: /critique pass 23 (commit 4737f15)
+- issue: [mirror-failed: loop-issue.mjs not present in scripts/]
+- resolution: changed description to "a 60-day writing log — prompts, responses, and published entries." in src/app/log/page.tsx. Shipped at a5181c7.
 
 ### [ ] [2.0] /signin — H1 "sign in." carries a terminal period no other page heading uses
 - category: external-critique
