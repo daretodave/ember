@@ -395,14 +395,17 @@
 - source: /critique pass 18 (commit 6c01dc8)
 - resolution: removed "the link arrives once." from the CTA footer span in src/app/page.tsx; remaining trust copy is self-sufficient. Shipped at a595d0f.
 
-### [ ] [2.7] / — "your log" referenced before the visitor has created an account
+### [x] [3.0] / — "your log" referenced before the visitor has created an account
 - category: comprehension
 - impact: 3
-- ease: 9
+- ease: 10
+- note: re-scored 2026-05-31 — ease raised from 9 to 10; single word removal ("your" → "the") in one line of src/app/page.tsx, no logic, no imports, no tests; same fix type as "your responses accumulate" (7fbde80) which was also ease 10 score 3.0
 - observation: the reassurance paragraph closes with "your log shows what is, not what isn't." a first-time visitor has no log — the possessive "your" presupposes an existing account. the sentence is designed as reassurance but lands as an abstraction with no concrete referent for someone who has never used ember.
 - evidence: body text: "there are no streaks to break, no reminders to dismiss, no notifications to mute. forgetting a day is fine. your log shows what is, not what isn't."
 - suggested fix: remove the possessive: "the log shows what is, not what isn't." — preserves the reassurance without implying the visitor already has a record.
 - source: /critique pass 18 (commit 6c01dc8)
+- issue: [mirror-failed: loop-issue.mjs not present in scripts/]
+- resolution: changed "your log shows what is" to "the log shows what is" in src/app/page.tsx. Shipped at 1c6a9c6.
 
 ### [x] [5.4] / — CTA "sign in" gives no signal that it is also the account-creation path
 - category: external-critique

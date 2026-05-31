@@ -292,7 +292,7 @@
 - source: browser
 - resolution: removed "the link arrives once." from the CTA footer span in src/app/page.tsx. Shipped at a595d0f.
 
-### [LOW] / — "your log" referenced before the visitor has created an account
+### [x] [LOW] / — "your log" referenced before the visitor has created an account
 - pass: 18 (commit 6c01dc8)
 - viewport: both
 - category: comprehension
@@ -300,6 +300,7 @@
 - evidence: body text: "there are no streaks to break, no reminders to dismiss, no notifications to mute. forgetting a day is fine. your log shows what is, not what isn't."
 - suggested fix: remove the possessive to de-anchor from an assumed account: "the log shows what is, not what isn't." — preserves the reassurance without implying the visitor already has a record.
 - source: browser
+- resolution: changed "your log shows what is" to "the log shows what is" in src/app/page.tsx. Shipped at 1c6a9c6.
 
 ### [LOW] / — home meta description is the brand tagline with no product-category keyword
 - pass: 18 (commit 6c01dc8)
