@@ -1,12 +1,48 @@
 # External-observer findings — Ember
 
-> Last pass: 2026-05-30 at commit c62ca34
-> Pass count: 24
+> Last pass: 2026-05-31 at commit 57690c4
+> Pass count: 25
 
 > Written by `/critique` after walking the live site as a
 > fresh-eyes visitor. Drained by `/iterate`.
 
 ## Pending
+
+### [LOW] /today — publish toggle description uses possessive "your public profile"
+- pass: 25 (commit 57690c4)
+- viewport: both
+- category: voice
+- observation: the publish toggle description reads "when published, this entry appears on your public profile." the phrase "your public profile" is a second-person possessive. this text was introduced in the pass 15 fix (3e54d90), which correctly changed the phrasing from unconditional to conditional but retained the possessive. the same de-possessiving pattern applied elsewhere on /today ("response" replacing "your response", "the last seven days" replacing "your last seven days") was not applied to this string. it appears twice in the DOM: once in the main view and once in the focus overlay.
+- evidence: /today body text: "when published, this entry appears on your public profile." — present at two positions in both desktop and mobile captures.
+- suggested fix: change to "when published, this entry appears on the public profile." — removes the possessive while preserving the conditional framing.
+- source: browser
+
+### [LOW] /settings — meta description uses possessive "your writing practice"
+- pass: 25 (commit 57690c4)
+- viewport: both
+- category: seo
+- observation: the /settings page meta description reads "account settings for your writing practice — display name, timezone, prompt variety, and public username." the phrase "your writing practice" is a second-person possessive. this text was introduced by the pass 21 fix (e0a3a2b) which added purpose context to a bare field list — but the possessive was introduced in that same fix. the same de-possessiving pattern applied to /log, /log/[date], and /today meta descriptions applies here.
+- evidence: /settings description: "account settings for your writing practice — display name, timezone, prompt variety, and public username."
+- suggested fix: change to "account settings — display name, timezone, prompt variety, and public username." — removes the possessive while retaining the field list.
+- source: browser
+
+### [LOW] /settings — prompt variety description uses possessive "your recent entries"
+- pass: 25 (commit 57690c4)
+- viewport: both
+- category: voice
+- observation: the personalized option description reads "personalized: a unique prompt generated from your recent entries." the phrase "your recent entries" is a second-person possessive. the "standard" option description avoids possessives ("same curated prompt for everyone each day"), making the two toggle descriptions inconsistent in register.
+- evidence: /settings body text: "personalized: a unique prompt generated from your recent entries."
+- suggested fix: change to "personalized: a unique prompt generated from recent entries." — removes the possessive and aligns the register of both toggle descriptions.
+- source: browser
+
+### [LOW] / — 7-day preview section header doubled in mobile DOM text
+- pass: 25 (commit 57690c4)
+- viewport: mobile
+- category: seo
+- observation: the 7-day preview section header — "the next seven days" and the subline "this is what arrives each morning." — appears twice in sequence in the mobile DOM text capture. the desktop capture shows it once; the mobile capture shows it duplicated back-to-back. this is the same always-in-DOM pattern as the focus-mode overlay (pending finding from pass 22): a second instance is rendered for a mobile layout slot and remains in the DOM when CSS-hidden, so raw-text readers — feed parsers, search scrapers, Playwright innerText — see the duplication.
+- evidence: mobile body text: "the next seven days\nthis is what arrives each morning.\nthe next seven days\nthis is what arrives each morning.\ntoday\nSun 31 May" — block appears once in the desktop capture.
+- suggested fix: if a second header instance is rendered for a mobile layout slot, apply aria-hidden="true" to the duplicate or conditionally render its text content only when the primary instance is not visible.
+- source: browser
 
 ### [x] [LOW] /today — "your response" textarea label uses second-person possessive
 - pass: 24 (commit c62ca34)
