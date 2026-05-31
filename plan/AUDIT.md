@@ -6,7 +6,7 @@
 
 ## Pending
 
-### [ ] [3.0] /log/[date] — meta description uses possessive "your entry for ${date}"
+### [x] [3.0] /log/[date] — meta description uses possessive "your entry for ${date}"
 - category: external-critique
 - impact: 3
 - ease: 10
@@ -15,6 +15,8 @@
 - evidence: src/app/log/[date]/page.tsx line 20: `description: \`your entry for ${date}\`` — compare /today (fixed at 74466d1) and /log (fixed at a29ff1f) which no longer carry possessive meta descriptions.
 - suggested fix: change to `description: \`an entry for ${date}\`` — removes the possessive while retaining the date context that distinguishes this description per entry.
 - source: /iterate audit 2026-05-31
+- issue: [mirror-failed: loop-issue.mjs not present in scripts/]
+- resolution: changed description to "an entry for ${date}" in src/app/log/[date]/page.tsx. Shipped at 07f5e88.
 
 ### [x] [3.0] /today — "your response" textarea label uses second-person possessive
 - category: external-critique
