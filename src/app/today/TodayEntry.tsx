@@ -182,7 +182,7 @@ export function TodayEntry({ date, task, prompt, initialEntry, hasUsername = tru
           {saveIndicatorText()}
         </span>
         <div className={styles.entryActions}>
-          <label className={styles.publishToggle} title="when published, this entry appears on your public profile.">
+          <label className={styles.publishToggle} title="when published, this entry appears on the public profile.">
             <input
               type="checkbox"
               checked={isPublished}
@@ -190,7 +190,7 @@ export function TodayEntry({ date, task, prompt, initialEntry, hasUsername = tru
               aria-describedby="publish-desc"
             />
             publish
-            <span id="publish-desc" className={styles.srOnly}>when published, this entry appears on your public profile.</span>
+            <span id="publish-desc" className={styles.srOnly}>when published, this entry appears on the public profile.</span>
           </label>
           <button
             ref={focusTriggerRef}
@@ -253,7 +253,7 @@ export function TodayEntry({ date, task, prompt, initialEntry, hasUsername = tru
               {saveIndicatorText()}
             </span>
             <div className={styles.entryActions}>
-              <label className={styles.publishToggle} title="when published, this entry appears on your public profile.">
+              <label className={styles.publishToggle} title="when published, this entry appears on the public profile.">
                 <input
                   type="checkbox"
                   checked={isPublished}
@@ -262,7 +262,7 @@ export function TodayEntry({ date, task, prompt, initialEntry, hasUsername = tru
                   aria-describedby="publish-desc-focus"
                 />
                 publish
-                <span id="publish-desc-focus" className={styles.srOnly}>when published, this entry appears on your public profile.</span>
+                <span id="publish-desc-focus" className={styles.srOnly}>when published, this entry appears on the public profile.</span>
               </label>
               <button
                 type="button"
