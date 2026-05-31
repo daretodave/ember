@@ -1,12 +1,21 @@
 # External-observer findings — Ember
 
-> Last pass: 2026-05-31 at commit 57690c4
-> Pass count: 25
+> Last pass: 2026-05-31 at commit 4ab0064
+> Pass count: 26
 
 > Written by `/critique` after walking the live site as a
 > fresh-eyes visitor. Drained by `/iterate`.
 
 ## Pending
+
+### [LOW] / — closing statement "ember does not personalize your morning." uses second-person possessive "your morning"
+- pass: 26 (commit 4ab0064)
+- viewport: both
+- category: voice
+- observation: the closing paragraph reads "the same prompt and task arrive for everyone on a given day. ember does not personalize your morning." the phrase "your morning" is a second-person possessive. adjacent possessives in the same section have been corrected in prior passes ("your log" → "the log" at 1c6a9c6; "your responses" → "responses" at 7fbde80). "your morning" was not addressed in those passes. it may be intentional — the contrast between "your morning" (personal) and "does not personalize" (impersonal) is arguably the point of the sentence — but the pattern is consistent with the other corrected possessives on the page.
+- evidence: body text: "the same prompt and task arrive for everyone on a given day. ember does not personalize your morning." — "your morning" is the remaining possessive in the closing section after the prior de-possessiving passes.
+- suggested fix: if the possessive is not intentional: change to "ember does not personalize the morning." — removes the possessive while preserving the anti-personalization statement. if the possessive is intentional for brand contrast: no change needed; this finding is a [needs-user-call].
+- source: browser
 
 ### [x] [LOW] /today — publish toggle description uses possessive "your public profile"
 - pass: 25 (commit 57690c4)

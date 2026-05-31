@@ -45,7 +45,7 @@
 - category: external-critique
 - impact: 4
 - ease: 7
-- note: scored 2026-05-31 — from critique pass 25; same always-in-DOM pattern as focus overlay (pending iterate finding); fix requires conditional rendering or aria-hidden on the duplicate instance; requires care around mobile layout
+- note: scored 2026-05-31 — from critique pass 25; same always-in-DOM pattern as focus overlay (pending iterate finding); fix requires conditional rendering or aria-hidden on the duplicate instance; requires care around mobile layout; pass 26 mobile capture did not reproduce the doubling — header appeared once; no code change explains this; may be intermittent or layout-condition-dependent; finding kept pending pending a dedicated fix
 - observation: the 7-day preview section header ("the next seven days" / "this is what arrives each morning.") appears twice in sequence in the mobile DOM text capture. the duplicate is rendered for a mobile layout slot and remains in the DOM when CSS-hidden, so raw-text readers see the duplication.
 - evidence: mobile body text: "the next seven days\nthis is what arrives each morning.\nthe next seven days\nthis is what arrives each morning." — block appears once in the desktop capture.
 - suggested fix: apply aria-hidden="true" to the duplicate instance, or conditionally render its text content only when the primary instance is not visible.
