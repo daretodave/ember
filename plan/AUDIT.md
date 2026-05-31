@@ -18,7 +18,7 @@
 - issue: [mirror-failed: loop-issue.mjs not present in scripts/]
 - resolution: changed all 4 occurrences in TodayEntry.tsx. Shipped at 95eb800.
 
-### [ ] [3.0] /settings — meta description uses possessive "your writing practice"
+### [x] [3.0] /settings — meta description uses possessive "your writing practice"
 - category: external-critique
 - impact: 3
 - ease: 10
@@ -27,6 +27,8 @@
 - evidence: src/app/settings/page.tsx line 11: description contains "your writing practice"
 - suggested fix: change to "account settings — display name, timezone, prompt variety, and public username." — removes the possessive while retaining the field list.
 - source: /critique pass 25 (commit 57690c4)
+- issue: [mirror-failed: 2026-05-31T06:09:00Z]
+- resolution: changed description to "account settings — display name, timezone, prompt variety, and public username." in src/app/settings/page.tsx. Shipped at b7aeccb.
 
 ### [ ] [3.0] /settings — prompt variety description uses possessive "your recent entries"
 - category: external-critique

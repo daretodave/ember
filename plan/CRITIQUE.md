@@ -18,7 +18,7 @@
 - source: browser
 - resolution: changed all 4 occurrences in TodayEntry.tsx. Shipped at 95eb800.
 
-### [LOW] /settings — meta description uses possessive "your writing practice"
+### [x] [LOW] /settings — meta description uses possessive "your writing practice"
 - pass: 25 (commit 57690c4)
 - viewport: both
 - category: seo
@@ -26,6 +26,7 @@
 - evidence: /settings description: "account settings for your writing practice — display name, timezone, prompt variety, and public username."
 - suggested fix: change to "account settings — display name, timezone, prompt variety, and public username." — removes the possessive while retaining the field list.
 - source: browser
+- resolution: changed description to "account settings — display name, timezone, prompt variety, and public username." in src/app/settings/page.tsx. Shipped at b7aeccb.
 
 ### [LOW] /settings — prompt variety description uses possessive "your recent entries"
 - pass: 25 (commit 57690c4)
