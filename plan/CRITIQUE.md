@@ -28,7 +28,7 @@
 - source: browser
 - resolution: changed description to "account settings — display name, timezone, prompt variety, and public username." in src/app/settings/page.tsx. Shipped at b7aeccb.
 
-### [LOW] /settings — prompt variety description uses possessive "your recent entries"
+### [x] [LOW] /settings — prompt variety description uses possessive "your recent entries"
 - pass: 25 (commit 57690c4)
 - viewport: both
 - category: voice
@@ -36,6 +36,7 @@
 - evidence: /settings body text: "personalized: a unique prompt generated from your recent entries."
 - suggested fix: change to "personalized: a unique prompt generated from recent entries." — removes the possessive and aligns the register of both toggle descriptions.
 - source: browser
+- resolution: changed "your recent entries" to "recent entries" in SettingsForm.tsx hint text. Shipped at HEAD.
 
 ### [LOW] / — 7-day preview section header doubled in mobile DOM text
 - pass: 25 (commit 57690c4)
