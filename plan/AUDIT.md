@@ -6,6 +6,16 @@
 
 ## Pending
 
+### [ ] [3.0] [needs-user-call] / — closing paragraph "ember does not personalize your morning." possessive may be intentional brand rhetoric
+- category: external-critique
+- impact: 3
+- ease: 10
+- note: scored 2026-05-31 — from critique pass 26 (04acd0a); adjacent possessives in the same closing section were corrected at 1c6a9c6 and 7fbde80; this one is different — the critique finding notes "the contrast between 'your morning' (personal) and 'does not personalize' (impersonal) is arguably the point of the sentence"; iterate cannot resolve autonomously; if intentional, no change; if unintentional, change to "ember does not personalize the morning."
+- observation: the closing paragraph reads "the same prompt and task arrive for everyone on a given day. ember does not personalize your morning." the phrase "your morning" is a second-person possessive. the sentence structure uses "your morning" as the personal referent that ember explicitly declines to personalize — the possessive may be the rhetorical load-bearing element rather than an oversight.
+- evidence: src/app/page.tsx closing paragraph: `ember does not personalize your morning.` — contrast with "your log shows what is" (changed to "the log" at 1c6a9c6) and "your responses accumulate" (changed to "responses" at 7fbde80) which were straightforward presupposition fixes. the "your morning" case is different in that the possessive is the object of the anti-personalization claim.
+- suggested fix: [needs-user-call] if unintentional: change to "ember does not personalize the morning." if intentional for brand contrast: no change needed.
+- source: /critique pass 26 (commit 04acd0a)
+
 ### [x] [3.0] /today — publish toggle description uses possessive "your public profile"
 - category: external-critique
 - impact: 3
