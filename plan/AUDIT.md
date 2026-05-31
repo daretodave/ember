@@ -16,6 +16,18 @@
 - suggested fix: [needs-user-call] if unintentional: change to "ember does not personalize the morning." if intentional for brand contrast: no change needed.
 - source: /critique pass 26 (commit 04acd0a)
 
+### [x] [3.0] /u/[username] and /u/[username]/[date] — OG image alt not updated to match root layout fix
+- category: seo
+- impact: 3
+- ease: 10
+- note: scored 2026-05-31 — root layout OG image alt was changed from 'ember' to 'ember — a daily writing ritual' at bb32ff9; the public profile page generateMetadata() functions both include an openGraph.images block with alt: 'ember' — the old bare value — which overrides the root layout for these routes; these are the primary share targets in the product and should carry the descriptive alt
+- observation: src/app/u/[username]/page.tsx and src/app/u/[username]/[date]/page.tsx both set openGraph.images with alt: 'ember'. the root layout was updated at bb32ff9 to alt: 'ember — a daily writing ritual'; because generateMetadata() in these pages overrides the root layout's openGraph block, the descriptive alt never reaches the public profile pages. these routes are the primary social-sharing surface.
+- evidence: src/app/u/[username]/page.tsx line 33: `alt: 'ember'`; src/app/u/[username]/[date]/page.tsx line 34: `alt: 'ember'`; src/app/layout.tsx line 48: `alt: 'ember — a daily writing ritual'` (fixed at bb32ff9)
+- suggested fix: change alt: 'ember' to alt: 'ember — a daily writing ritual' in both generateMetadata() functions, consistent with the root layout fix.
+- source: /iterate audit 2026-05-31
+- issue: [mirror-failed: loop-issue.mjs not present in scripts/]
+- resolution: changed alt to 'ember — a daily writing ritual' in both /u/[username]/page.tsx and /u/[username]/[date]/page.tsx. Shipped at c3a2779.
+
 ### [x] [3.0] /today — publish toggle description uses possessive "your public profile"
 - category: external-critique
 - impact: 3
