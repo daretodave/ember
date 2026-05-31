@@ -30,6 +30,18 @@
 - issue: [mirror-failed: loop-issue.mjs not present in scripts/]
 - resolution: changed description to "today's prompt and a space to write." in src/app/today/page.tsx. Shipped at 74466d1.
 
+### [x] [3.0] /log/[date] — edit textarea label "your response" not updated with /today fix
+- category: external-critique
+- impact: 3
+- ease: 10
+- note: scored 2026-05-31 — EditEntry.tsx:97 label read "your response" while the identical label in TodayEntry.tsx was changed to "response" at 9e8d354; the edit view on /log/[date] was not updated in the same pass; fix is a single text replacement in EditEntry.tsx plus four test references in EditEntry.test.tsx
+- observation: /log/[date] edit mode shows a textarea labeled "your response" — the same possessive that was corrected on /today. the two components are parallel writing surfaces; the fix applied to one should apply to both.
+- evidence: src/app/log/[date]/EditEntry.tsx:97 `<label ... className={styles.entryLabel}>your response</label>` — unchanged after 9e8d354 fixed TodayEntry.tsx.
+- suggested fix: change "your response" to "response" in EditEntry.tsx; update four test references in EditEntry.test.tsx.
+- source: /iterate audit 2026-05-31
+- issue: [mirror-failed: loop-issue.mjs not present in scripts/]
+- resolution: changed label to "response" in EditEntry.tsx; four test references in EditEntry.test.tsx updated. Shipped at 22b7e74.
+
 ### [ ] [2.7] /log — meta description uses second-person possessives
 - category: external-critique
 - impact: 3
