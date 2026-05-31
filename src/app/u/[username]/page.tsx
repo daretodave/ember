@@ -30,7 +30,7 @@ export async function generateMetadata({ params }: Props) {
       title,
       description,
       url,
-      images: [{ url: '/opengraph-image', width: 1200, height: 630, alt: 'ember' }],
+      images: [{ url: '/opengraph-image', width: 1200, height: 630, alt: 'ember — a daily writing ritual' }],
     },
     twitter: {
       card: 'summary_large_image' as const,
