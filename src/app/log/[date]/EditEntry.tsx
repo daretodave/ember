@@ -94,7 +94,7 @@ export function EditEntry({ date, task, initialEntry }: Props) {
           </p>
         </div>
 
-        <label htmlFor="edit-entry-response" className={styles.entryLabel}>your response</label>
+        <label htmlFor="edit-entry-response" className={styles.entryLabel}>response</label>
         <textarea
           id="edit-entry-response"
           className={styles.entry}

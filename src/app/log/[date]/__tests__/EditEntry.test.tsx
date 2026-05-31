@@ -67,13 +67,13 @@ describe('EditEntry — entering edit mode', () => {
   it('switches to edit mode when edit button is clicked', () => {
     render(<EditEntry date="2026-05-10" task="do the thing" initialEntry={BASE_ENTRY} />)
     fireEvent.click(screen.getByRole('button', { name: 'edit' }))
-    expect(screen.getByRole('textbox', { name: 'your response' })).toBeInTheDocument()
+    expect(screen.getByRole('textbox', { name: 'response' })).toBeInTheDocument()
   })
 
   it('pre-fills textarea with current response', () => {
     render(<EditEntry date="2026-05-10" task="do the thing" initialEntry={BASE_ENTRY} />)
     fireEvent.click(screen.getByRole('button', { name: 'edit' }))
-    const textarea = screen.getByRole('textbox', { name: 'your response' }) as HTMLTextAreaElement
+    const textarea = screen.getByRole('textbox', { name: 'response' }) as HTMLTextAreaElement
     expect(textarea.value).toBe(BASE_ENTRY.response)
   })
 
@@ -113,7 +113,7 @@ describe('EditEntry — save flow', () => {
     render(<EditEntry date="2026-05-10" task="do the thing" initialEntry={BASE_ENTRY} />)
     fireEvent.click(screen.getByRole('button', { name: 'edit' }))
 
-    const textarea = screen.getByRole('textbox', { name: 'your response' })
+    const textarea = screen.getByRole('textbox', { name: 'response' })
     fireEvent.change(textarea, { target: { value: 'updated text' } })
 
     fireEvent.click(screen.getByRole('button', { name: 'save' }))
@@ -141,7 +141,7 @@ describe('EditEntry — save flow', () => {
 
     render(<EditEntry date="2026-05-10" task="do the thing" initialEntry={BASE_ENTRY} />)
     fireEvent.click(screen.getByRole('button', { name: 'edit' }))
-    fireEvent.change(screen.getByRole('textbox', { name: 'your response' }), {
+    fireEvent.change(screen.getByRole('textbox', { name: 'response' }), {
       target: { value: 'updated text' },
     })
     fireEvent.click(screen.getByRole('button', { name: 'save' }))
