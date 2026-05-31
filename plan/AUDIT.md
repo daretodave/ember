@@ -6,6 +6,48 @@
 
 ## Pending
 
+### [x] [3.0] /today — publish toggle description uses possessive "your public profile"
+- category: external-critique
+- impact: 3
+- ease: 10
+- note: scored 2026-05-31 — from critique pass 25; "when published, this entry appears on your public profile." appears in 4 places in TodayEntry.tsx (title attr and srOnly span in both main and focus overlay); change "your public profile" to "the public profile"; parallels de-possessiving applied to every other /today string in passes 22–25
+- observation: the publish toggle description reads "when published, this entry appears on your public profile." the phrase "your public profile" is a second-person possessive. it appears twice in the DOM (main view and focus overlay), in both the title attribute and the aria-describedby span. the same de-possessiving pattern applied elsewhere on /today was not applied to this string when the toggle description was reframed at 3e54d90.
+- evidence: TodayEntry.tsx lines 185, 193, 256, 265: "when published, this entry appears on your public profile." — present in title attrs and srOnly spans for both main and focus overlay instances.
+- suggested fix: change to "when published, this entry appears on the public profile." — removes the possessive while preserving the conditional framing.
+- source: /critique pass 25 (commit 57690c4)
+- issue: [mirror-failed: loop-issue.mjs not present in scripts/]
+- resolution: changed all 4 occurrences in TodayEntry.tsx. Shipped at 95eb800.
+
+### [ ] [3.0] /settings — meta description uses possessive "your writing practice"
+- category: external-critique
+- impact: 3
+- ease: 10
+- note: scored 2026-05-31 — from critique pass 25; the description was rewritten at e0a3a2b adding purpose context, but introduced "your writing practice" in the new text; parallel fixes removed the same pattern from /log, /log/[date], and /today meta descriptions
+- observation: the /settings page meta description reads "account settings for your writing practice — display name, timezone, prompt variety, and public username." the phrase "your writing practice" is a second-person possessive, introduced by the pass 21 fix (e0a3a2b).
+- evidence: src/app/settings/page.tsx line 11: description contains "your writing practice"
+- suggested fix: change to "account settings — display name, timezone, prompt variety, and public username." — removes the possessive while retaining the field list.
+- source: /critique pass 25 (commit 57690c4)
+
+### [ ] [3.0] /settings — prompt variety description uses possessive "your recent entries"
+- category: external-critique
+- impact: 3
+- ease: 10
+- note: scored 2026-05-31 — from critique pass 25; "your recent entries" was introduced when vendor attribution was removed at 73ce8ed; the standard option description avoids possessives, making the two descriptions inconsistent in register
+- observation: the personalized option description reads "personalized: a unique prompt generated from your recent entries." the phrase "your recent entries" is a second-person possessive. the "standard" option description ("same curated prompt for everyone each day") avoids possessives.
+- evidence: src/app/settings/SettingsForm.tsx line 148: personalized hint contains "your recent entries"
+- suggested fix: change to "personalized: a unique prompt generated from recent entries." — removes the possessive and aligns both toggle descriptions.
+- source: /critique pass 25 (commit 57690c4)
+
+### [ ] [2.8] / — 7-day preview section header doubled in mobile DOM text
+- category: external-critique
+- impact: 4
+- ease: 7
+- note: scored 2026-05-31 — from critique pass 25; same always-in-DOM pattern as focus overlay (pending iterate finding); fix requires conditional rendering or aria-hidden on the duplicate instance; requires care around mobile layout
+- observation: the 7-day preview section header ("the next seven days" / "this is what arrives each morning.") appears twice in sequence in the mobile DOM text capture. the duplicate is rendered for a mobile layout slot and remains in the DOM when CSS-hidden, so raw-text readers see the duplication.
+- evidence: mobile body text: "the next seven days\nthis is what arrives each morning.\nthe next seven days\nthis is what arrives each morning." — block appears once in the desktop capture.
+- suggested fix: apply aria-hidden="true" to the duplicate instance, or conditionally render its text content only when the primary instance is not visible.
+- source: /critique pass 25 (commit 57690c4)
+
 ### [x] [3.0] /log/[date] — meta description uses possessive "your entry for ${date}"
 - category: external-critique
 - impact: 3

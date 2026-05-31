@@ -8,7 +8,7 @@
 
 ## Pending
 
-### [LOW] /today — publish toggle description uses possessive "your public profile"
+### [x] [LOW] /today — publish toggle description uses possessive "your public profile"
 - pass: 25 (commit 57690c4)
 - viewport: both
 - category: voice
@@ -16,6 +16,7 @@
 - evidence: /today body text: "when published, this entry appears on your public profile." — present at two positions in both desktop and mobile captures.
 - suggested fix: change to "when published, this entry appears on the public profile." — removes the possessive while preserving the conditional framing.
 - source: browser
+- resolution: changed all 4 occurrences in TodayEntry.tsx. Shipped at 95eb800.
 
 ### [LOW] /settings — meta description uses possessive "your writing practice"
 - pass: 25 (commit 57690c4)
