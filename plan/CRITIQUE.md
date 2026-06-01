@@ -1,12 +1,48 @@
 # External-observer findings — Ember
 
-> Last pass: 2026-05-31 at commit 4ab0064
-> Pass count: 26
+> Last pass: 2026-06-01 at commit 43ffddf
+> Pass count: 27
 
 > Written by `/critique` after walking the live site as a
 > fresh-eyes visitor. Drained by `/iterate`.
 
 ## Pending
+
+### [LOW] / — closing paragraph uses "task" where all other occurrences use "tiny task"
+- pass: 27 (commit 43ffddf)
+- viewport: both
+- category: voice
+- observation: the closing paragraph reads "the same prompt and task arrive for everyone on a given day." the product consistently uses "tiny task" as its compound label — once in the sub-pitch ("one small prompt and one tiny task each morning.") and seven times in the 7-day preview ("tiny task — ..."). "task" alone in the closing paragraph is the only stripped instance, creating a terminology inconsistency on the same page that uses the compound form everywhere else.
+- evidence: body text: "the same prompt and task arrive for everyone on a given day." — compare: "one small prompt and one tiny task each morning." and seven "tiny task —" lines in the 7-day preview.
+- suggested fix: change "the same prompt and task" to "the same prompt and tiny task" to match the product's labeling throughout the page.
+- source: browser
+
+### [LOW] / — "forgetting a day is fine" presupposes an existing practice for a pre-signup visitor
+- pass: 27 (commit 43ffddf)
+- viewport: both
+- category: comprehension
+- observation: the reassurance paragraph reads "forgetting a day is fine. the log shows what is, not what isn't." a first-time visitor who has not yet signed up cannot have forgotten a day — the sentence addresses continuity anxiety in an existing practitioner. for someone evaluating whether to start, it is a solution to a problem they do not yet have. the surrounding copy ("there are no streaks to break, no reminders to dismiss, no notifications to mute.") does not presuppose prior use; only "forgetting a day" does.
+- evidence: body text: "there are no streaks to break, no reminders to dismiss, no notifications to mute. forgetting a day is fine. the log shows what is, not what isn't." — positioned before the sign-in CTA on the anonymous landing page.
+- suggested fix: reframe as a feature description rather than reassurance for an existing habit: "a missed day leaves no mark." — preserves the anti-streak signal without presupposing an established record.
+- source: browser
+
+### [LOW] /settings — display name field has no hint text; scope of the field is unclear for a new user
+- pass: 27 (commit 43ffddf)
+- viewport: both
+- category: comprehension
+- observation: the settings page has three data fields — display name, timezone, and public username. public username has a supporting hint ("your public profile lives at /u/username. leave blank to stay private."). display name has no equivalent description. for a first-time empty-account user it is unclear whether the display name appears on the public profile, in log headings, in emails, or nowhere visible — the field is a bare label with no signal about its function or scope.
+- evidence: capture text: "settings\ndisplay name\ntimezone\nprompt variety\n\nstandard: same curated prompt for everyone each day..." — "display name" is followed immediately by "timezone" with no intervening description.
+- suggested fix: add a one-sentence hint below the display name input describing where it surfaces, e.g. "shown on published entries on the public profile."
+- source: browser
+
+### [LOW] /settings — "curated" in the standard prompt option description uses ungrounded editorial register
+- pass: 27 (commit 43ffddf)
+- viewport: both
+- category: voice
+- observation: the standard prompt variety option reads "same curated prompt for everyone each day." "curated" implies intentional selection by a person or editorial process, but nothing on the page or in the broader site identifies what that process is. the personalized option names its mechanism explicitly ("generated from recent entries"); the standard option asserts quality ("curated") without specifying one. this is inconsistent in register and at odds with the plain, non-marketing voice used throughout the site.
+- evidence: capture text: "standard: same curated prompt for everyone each day. personalized: a unique prompt generated from recent entries." — "curated" is the sole ungrounded evaluative word in the settings description block.
+- suggested fix: change to "same prompt for everyone each day." — removes the ungrounded assertion while preserving the shared-prompt contrast with the personalized option.
+- source: browser
 
 ### [LOW] / — closing statement "ember does not personalize your morning." uses second-person possessive "your morning"
 - pass: 26 (commit 4ab0064)
@@ -47,7 +83,7 @@
 - source: browser
 - resolution: changed "your recent entries" to "recent entries" in SettingsForm.tsx hint text. Shipped at HEAD.
 
-### [LOW] / — 7-day preview section header doubled in mobile DOM text
+### [x] [LOW] / — 7-day preview section header doubled in mobile DOM text
 - pass: 25 (commit 57690c4)
 - viewport: mobile
 - category: seo
@@ -55,6 +91,7 @@
 - evidence: mobile body text: "the next seven days\nthis is what arrives each morning.\nthe next seven days\nthis is what arrives each morning.\ntoday\nSun 31 May" — block appears once in the desktop capture.
 - suggested fix: if a second header instance is rendered for a mobile layout slot, apply aria-hidden="true" to the duplicate or conditionally render its text content only when the primary instance is not visible.
 - source: browser
+- resolution: pass 27 mobile capture (2026-06-01) shows bodyTextLength 1973 — identical to desktop — with the section header appearing only once. the duplication is no longer present; issue resolved by a prior undocumented change.
 
 ### [x] [LOW] /today — "your response" textarea label uses second-person possessive
 - pass: 24 (commit c62ca34)
