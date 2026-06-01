@@ -17,7 +17,7 @@
 - suggested fix: change "one small prompt and one tiny task each morning." to "one prompt and one tiny task each morning." to match how "prompt" is treated everywhere else on the page.
 - source: browser
 
-### [LOW] /signin — expiry notice "sign-in links expire after 24 hours." is in the page footer, separated from the confirmation area
+### [x] [LOW] /signin — expiry notice "sign-in links expire after 24 hours." is in the page footer, separated from the confirmation area
 - pass: 28 (commit 64a33db)
 - viewport: both
 - category: comprehension
@@ -25,6 +25,7 @@
 - evidence: /signin body text (footer): "sign-in links expire after 24 hours." — separated from the confirmation copy: "a sign-in link is on its way. the link opens today's prompt directly." by the footer boundary.
 - suggested fix: move "sign-in links expire after 24 hours." into the confirmation state body, adjacent to "the link opens today's prompt directly." so expiry context appears at the moment it is relevant.
 - source: browser
+- resolution: added "sign-in links expire after 24 hours." to the 'sent' state confirmation paragraph in src/app/signin/page.tsx. Shipped at 1cb0860.
 
 ### [LOW] / — section subheader "this is what arrives each morning." uses "this" as an ambiguous pronoun
 - pass: 28 (commit 64a33db)

@@ -28,6 +28,18 @@
 - issue: [mirror-failed: 2026-06-01T06:26:00Z]
 - resolution: added "shown on published entries on the public profile." hint below the display name label in SettingsForm.tsx. Shipped at 2e34197.
 
+### [x] [2.4] /signin — expiry notice in page footer, separated from confirmation area
+- category: external-critique
+- impact: 3
+- ease: 8
+- note: scored 2026-06-01 — from critique pass 28 (64a33db); the expiry notice ("sign-in links expire after 24 hours.") was only in the page footer; on mobile the footer is below the fold after form submission; a user who reads the confirmation and closes the tab misses the only guidance on how long to act
+- observation: the sign-in link expiry notice is placed in the page footer, below the form and confirmation text. a visitor who submits their email, reads the confirmation ("a sign-in link is on its way. the link opens today's prompt directly."), and then closes or minimises the tab will not have seen the expiry notice.
+- evidence: /signin body text (footer): "sign-in links expire after 24 hours." — separated from the confirmation copy by the footer boundary.
+- suggested fix: move "sign-in links expire after 24 hours." into the confirmation state body, adjacent to "the link opens today's prompt directly."
+- source: /critique pass 28 (commit 64a33db)
+- issue: [mirror-failed: loop-issue.mjs not present in scripts/]
+- resolution: added "sign-in links expire after 24 hours." to the 'sent' state confirmation paragraph in src/app/signin/page.tsx. Shipped at 1cb0860.
+
 ### [ ] [2.1] / — "forgetting a day is fine" presupposes an existing practice for a pre-signup visitor
 - category: external-critique
 - impact: 3
@@ -37,6 +49,16 @@
 - evidence: body text: "forgetting a day is fine." — positioned before the sign-in CTA on the anonymous landing page.
 - suggested fix: reframe as a feature description rather than reassurance for an existing habit: "a missed day leaves no mark." — preserves the anti-streak signal without presupposing an established record.
 - source: /critique pass 27 (commit a59273f)
+
+### [ ] [2.1] / — section subheader "this is what arrives each morning." uses "this" as an ambiguous pronoun
+- category: external-critique
+- impact: 3
+- ease: 7
+- note: scored 2026-06-01 — from critique pass 28 (64a33db); "this" could refer to the full seven-item list or to the daily pattern of one prompt and one tiny task; the product description above explains the daily pattern but the subheader doesn't make the relationship explicit
+- observation: the 7-day preview section has a two-line header: "the next seven days" followed by "this is what arrives each morning." for a first-time reader, "this" is an ambiguous pronoun — it could refer to the full seven-item list or to the pattern of one prompt and one tiny task that arrives each day.
+- evidence: capture text: "the next seven days\nthis is what arrives each morning.\ntoday\n..." — seven date blocks follow the ambiguous "this."
+- suggested fix: replace with explicit framing such as "one prompt and one tiny task, every morning." to make the daily-delivery model unambiguous before the list.
+- source: /critique pass 28 (commit 64a33db)
 
 ### [ ] [2.0] / — closing paragraph uses "task" where all other occurrences use "tiny task"
 - category: external-critique
@@ -57,6 +79,16 @@
 - evidence: capture text: "standard: same curated prompt for everyone each day."
 - suggested fix: change to "same prompt for everyone each day." — removes the ungrounded assertion while preserving the shared-prompt contrast.
 - source: /critique pass 27 (commit a59273f)
+
+### [ ] [2.0] / — lede says "one small prompt" but the named concept throughout is "prompt"
+- category: external-critique
+- impact: 2
+- ease: 10
+- note: scored 2026-06-01 — from critique pass 28 (64a33db); "small" is not used as a modifier for "prompt" anywhere else on the page; "tiny task" is used consistently as a compound label; the asymmetry in how the two components are named in the lede is a minor inconsistency
+- observation: the product description reads "one small prompt and one tiny task each morning." "tiny task" is the branded compound label used throughout — in the 7-day preview and in the closing paragraph. "small" is not used as a modifier for "prompt" anywhere else; the named concept is simply "prompt."
+- evidence: lede: "one small prompt and one tiny task each morning." — compare 7-day preview items: "tiny task — tidy the surface..." / closing: "the same prompt and tiny task arrive for everyone on a given day."
+- suggested fix: change "one small prompt and one tiny task each morning." to "one prompt and one tiny task each morning." to match how "prompt" is treated everywhere else on the page.
+- source: /critique pass 28 (commit 64a33db)
 
 ### [x] [3.0] /u/[username] and /u/[username]/[date] — OG image alt not updated to match root layout fix
 - category: seo
