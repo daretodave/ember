@@ -6,6 +6,18 @@
 
 ## Pending
 
+### [x] [3.0] /u/[username] and /u/[username]/[date] — authenticated nav link reads "your log", inconsistent with authenticated app nav label "log"
+- category: external-critique
+- impact: 3
+- ease: 10
+- note: scored 2026-06-01 — fresh audit; both public-profile page headers show "your log" as a nav link to /log when the visitor is signed in; the authenticated app nav uses the plain label "log" (no possessive) across /today, /log, /settings; the public profile header breaks that pattern with "your log"; two-file fix
+- observation: the public profile pages (/u/[username] and /u/[username]/[date]) render a header nav link "your log" pointing to /log when the visiting user is authenticated. the authenticated app's own nav uses plain "log" (no possessive) across all three authenticated pages. the asymmetry introduces a second-person possessive that is inconsistent with both the voice guide and the nav label the user sees on every other page.
+- evidence: src/app/u/[username]/page.tsx line 91: `your log`; src/app/u/[username]/[date]/page.tsx line 90: `your log` — compare src/app/today/page.tsx, src/app/log/page.tsx, src/app/settings/page.tsx nav links which all use plain "log".
+- suggested fix: change "your log" to "log" in both public-profile page headers, consistent with the nav label used throughout the authenticated app.
+- source: /iterate audit 2026-06-01
+- issue: [mirror-failed: loop-issue.mjs not present in scripts/]
+- resolution: changed "your log" to "log" in both src/app/u/[username]/page.tsx and src/app/u/[username]/[date]/page.tsx. Shipped at 077dab3.
+
 ### [ ] [3.0] [needs-user-call] / — closing paragraph "ember does not personalize your morning." possessive may be intentional brand rhetoric
 - category: external-critique
 - impact: 3
