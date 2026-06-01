@@ -1,12 +1,39 @@
 # External-observer findings — Ember
 
-> Last pass: 2026-06-01 at commit 43ffddf
-> Pass count: 27
+> Last pass: 2026-06-01 at commit 64a33db
+> Pass count: 28
 
 > Written by `/critique` after walking the live site as a
 > fresh-eyes visitor. Drained by `/iterate`.
 
 ## Pending
+
+### [LOW] / — lede says "one small prompt" but the named concept throughout is "prompt"
+- pass: 28 (commit 64a33db)
+- viewport: both
+- category: voice
+- observation: the product description reads "one small prompt and one tiny task each morning." "tiny task" is the consistently branded compound label used throughout the page — in the 7-day preview header, in all seven preview items, and in the closing paragraph. "small" is not used as a modifier for "prompt" anywhere else; the named concept is simply "prompt." the asymmetry between "small prompt" (lede) and the unmodified "prompt" everywhere else creates a minor inconsistency in how the product names its two components.
+- evidence: lede: "one small prompt and one tiny task each morning." — compare 7-day preview items: "tiny task — tidy the surface..." / closing: "the same prompt and tiny task arrive for everyone on a given day." (noting scope item 37 fix pending: task → tiny task in closing paragraph).
+- suggested fix: change "one small prompt and one tiny task each morning." to "one prompt and one tiny task each morning." to match how "prompt" is treated everywhere else on the page.
+- source: browser
+
+### [LOW] /signin — expiry notice "sign-in links expire after 24 hours." is in the page footer, separated from the confirmation area
+- pass: 28 (commit 64a33db)
+- viewport: both
+- category: comprehension
+- observation: the sign-in link expiry notice ("sign-in links expire after 24 hours.") is placed in the page footer, below the form and confirmation text. a visitor who submits their email, reads the confirmation ("a sign-in link is on its way. the link opens today's prompt directly."), and then closes or minimises the tab will not have seen the expiry notice, which is the only guidance about how long to act. on mobile the footer is below the fold after form submission.
+- evidence: /signin body text (footer): "sign-in links expire after 24 hours." — separated from the confirmation copy: "a sign-in link is on its way. the link opens today's prompt directly." by the footer boundary.
+- suggested fix: move "sign-in links expire after 24 hours." into the confirmation state body, adjacent to "the link opens today's prompt directly." so expiry context appears at the moment it is relevant.
+- source: browser
+
+### [LOW] / — section subheader "this is what arrives each morning." uses "this" as an ambiguous pronoun
+- pass: 28 (commit 64a33db)
+- viewport: both
+- category: comprehension
+- observation: the 7-day preview section has a two-line header: "the next seven days" followed by "this is what arrives each morning." for a first-time reader, "this" is an ambiguous pronoun. it could refer to the full seven-item list (which would be odd — seven things don't all arrive each morning) or to the pattern of one prompt and one tiny task that arrives each day. the product description above explains the daily pattern, but the section subheader doesn't make the relationship between the seven-day list and the daily delivery explicit.
+- evidence: capture text: "the next seven days\nthis is what arrives each morning.\ntoday\nMon 1 Jun\n\nwhat's the last time you were in a space..." — seven date blocks follow the ambiguous "this."
+- suggested fix: replace with an explicit framing such as "a prompt and a tiny task, arriving each morning — here are the next seven." or simply "one prompt and one tiny task, every morning." to make the daily-delivery model unambiguous before the list.
+- source: browser
 
 ### [LOW] / — closing paragraph uses "task" where all other occurrences use "tiny task"
 - pass: 27 (commit 43ffddf)
