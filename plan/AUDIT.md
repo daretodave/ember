@@ -16,6 +16,46 @@
 - suggested fix: [needs-user-call] if unintentional: change to "ember does not personalize the morning." if intentional for brand contrast: no change needed.
 - source: /critique pass 26 (commit 04acd0a)
 
+### [ ] [2.4] /settings — display name field has no hint text; scope unclear for new user
+- category: external-critique
+- impact: 3
+- ease: 8
+- note: scored 2026-06-01 — from critique pass 27 (a59273f); the public username field carries a hint "your public profile lives at /u/username. leave blank to stay private." but the display name field has no equivalent; a new user cannot tell whether the display name appears on the public profile, in emails, or nowhere visible
+- observation: the settings page has three data fields — display name, timezone, and public username. public username has a supporting hint. display name has no equivalent description. for a first-time empty-account user it is unclear where the display name surfaces.
+- evidence: capture text: "settings\ndisplay name\ntimezone\nprompt variety\n..." — "display name" is followed immediately by "timezone" with no intervening description.
+- suggested fix: add a one-sentence hint below the display name input describing where it surfaces, e.g. "shown on published entries on the public profile."
+- source: /critique pass 27 (commit a59273f)
+
+### [ ] [2.1] / — "forgetting a day is fine" presupposes an existing practice for a pre-signup visitor
+- category: external-critique
+- impact: 3
+- ease: 7
+- note: scored 2026-06-01 — from critique pass 27 (a59273f); the reassurance paragraph addresses continuity anxiety for an existing practitioner; a first-time visitor evaluating the product cannot have forgotten a day; the surrounding copy ("there are no streaks to break, no reminders to dismiss, no notifications to mute.") does not presuppose prior use; only "forgetting a day" does
+- observation: the reassurance paragraph reads "there are no streaks to break, no reminders to dismiss, no notifications to mute. forgetting a day is fine. the log shows what is, not what isn't." a first-time visitor who has not yet signed up cannot have forgotten a day — the sentence addresses continuity anxiety in an existing practitioner.
+- evidence: body text: "forgetting a day is fine." — positioned before the sign-in CTA on the anonymous landing page.
+- suggested fix: reframe as a feature description rather than reassurance for an existing habit: "a missed day leaves no mark." — preserves the anti-streak signal without presupposing an established record.
+- source: /critique pass 27 (commit a59273f)
+
+### [ ] [2.0] / — closing paragraph uses "task" where all other occurrences use "tiny task"
+- category: external-critique
+- impact: 2
+- ease: 10
+- note: scored 2026-06-01 — from critique pass 27 (a59273f); "tiny task" is used as a compound label consistently on the landing page (seven times in the 7-day preview) except in the closing paragraph which uses "task" alone; 1-word fix
+- observation: the closing paragraph reads "the same prompt and task arrive for everyone on a given day." the product uses "tiny task" as its compound label everywhere else on the page.
+- evidence: body text: "the same prompt and task arrive for everyone on a given day." — compare seven "tiny task —" lines in the 7-day preview.
+- suggested fix: change "the same prompt and task" to "the same prompt and tiny task" to match the product's labeling throughout the page.
+- source: /critique pass 27 (commit a59273f)
+
+### [ ] [2.0] /settings — "curated" in standard prompt option uses ungrounded editorial register
+- category: external-critique
+- impact: 2
+- ease: 10
+- note: scored 2026-06-01 — from critique pass 27 (a59273f); "curated" implies intentional selection by an editorial process not described anywhere on the page; the personalized option names its mechanism explicitly; removing "curated" aligns both option descriptions in register; 1-word fix
+- observation: the standard prompt variety option reads "same curated prompt for everyone each day." the word "curated" asserts quality without specifying a process, inconsistent with the plain attributionless voice used throughout.
+- evidence: capture text: "standard: same curated prompt for everyone each day."
+- suggested fix: change to "same prompt for everyone each day." — removes the ungrounded assertion while preserving the shared-prompt contrast.
+- source: /critique pass 27 (commit a59273f)
+
 ### [x] [3.0] /u/[username] and /u/[username]/[date] — OG image alt not updated to match root layout fix
 - category: seo
 - impact: 3
@@ -63,7 +103,7 @@
 - source: /critique pass 25 (commit 57690c4)
 - resolution: changed "your recent entries" to "recent entries" in SettingsForm.tsx hint text. Shipped at HEAD.
 
-### [ ] [2.8] / — 7-day preview section header doubled in mobile DOM text
+### [x] [2.8] / — 7-day preview section header doubled in mobile DOM text
 - category: external-critique
 - impact: 4
 - ease: 7
@@ -72,6 +112,7 @@
 - evidence: mobile body text: "the next seven days\nthis is what arrives each morning.\nthe next seven days\nthis is what arrives each morning." — block appears once in the desktop capture.
 - suggested fix: apply aria-hidden="true" to the duplicate instance, or conditionally render its text content only when the primary instance is not visible.
 - source: /critique pass 25 (commit 57690c4)
+- resolution: critique pass 27 (a59273f) mobile capture shows bodyTextLength identical to desktop with section header appearing only once; duplication no longer present; resolved by an undocumented prior change. No code change required.
 
 ### [x] [3.0] /log/[date] — meta description uses possessive "your entry for ${date}"
 - category: external-critique
