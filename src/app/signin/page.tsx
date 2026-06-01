@@ -53,7 +53,7 @@ export default function SigninPage() {
           {state === 'sent' ? (
             <p className={styles.confirmation} role="status">
               a sign-in link is on its way. the link opens today&apos;s prompt
-              directly.{' '}
+              directly. sign-in links expire after 24 hours.{' '}
               <em>no password required.</em>
             </p>
           ) : (
