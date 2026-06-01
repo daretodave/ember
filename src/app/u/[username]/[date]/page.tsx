@@ -87,7 +87,7 @@ export default async function PublicEntryPage({ params }: Props) {
         </Link>
         {user ? (
           <Link href="/log" className={styles.headerLink}>
-            your log
+            log
           </Link>
         ) : (
           <Link href="/signin" className={styles.headerLink}>
