@@ -26,7 +26,7 @@
 - suggested fix: reframe as a feature description rather than reassurance for an existing habit: "a missed day leaves no mark." — preserves the anti-streak signal without presupposing an established record.
 - source: browser
 
-### [LOW] /settings — display name field has no hint text; scope of the field is unclear for a new user
+### [x] [LOW] /settings — display name field has no hint text; scope of the field is unclear for a new user
 - pass: 27 (commit 43ffddf)
 - viewport: both
 - category: comprehension
@@ -34,6 +34,7 @@
 - evidence: capture text: "settings\ndisplay name\ntimezone\nprompt variety\n\nstandard: same curated prompt for everyone each day..." — "display name" is followed immediately by "timezone" with no intervening description.
 - suggested fix: add a one-sentence hint below the display name input describing where it surfaces, e.g. "shown on published entries on the public profile."
 - source: browser
+- resolution: added "shown on published entries on the public profile." hint below the display name label in SettingsForm.tsx. Shipped at 2e34197.
 
 ### [LOW] /settings — "curated" in the standard prompt option description uses ungrounded editorial register
 - pass: 27 (commit 43ffddf)

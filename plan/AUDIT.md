@@ -16,7 +16,7 @@
 - suggested fix: [needs-user-call] if unintentional: change to "ember does not personalize the morning." if intentional for brand contrast: no change needed.
 - source: /critique pass 26 (commit 04acd0a)
 
-### [ ] [2.4] /settings — display name field has no hint text; scope unclear for new user
+### [x] [2.4] /settings — display name field has no hint text; scope unclear for new user
 - category: external-critique
 - impact: 3
 - ease: 8
@@ -25,6 +25,8 @@
 - evidence: capture text: "settings\ndisplay name\ntimezone\nprompt variety\n..." — "display name" is followed immediately by "timezone" with no intervening description.
 - suggested fix: add a one-sentence hint below the display name input describing where it surfaces, e.g. "shown on published entries on the public profile."
 - source: /critique pass 27 (commit a59273f)
+- issue: [mirror-failed: 2026-06-01T06:26:00Z]
+- resolution: added "shown on published entries on the public profile." hint below the display name label in SettingsForm.tsx. Shipped at 2e34197.
 
 ### [ ] [2.1] / — "forgetting a day is fine" presupposes an existing practice for a pre-signup visitor
 - category: external-critique
