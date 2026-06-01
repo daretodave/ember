@@ -52,7 +52,8 @@ export default function SigninPage() {
 
           {state === 'sent' ? (
             <p className={styles.confirmation} role="status">
-              a sign-in link is on its way.{' '}
+              a sign-in link is on its way. the link opens today&apos;s prompt
+              directly.{' '}
               <em>no password required.</em>
             </p>
           ) : (
