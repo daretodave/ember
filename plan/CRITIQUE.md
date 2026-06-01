@@ -818,7 +818,7 @@
 - source: browser
 - resolution: changed empty-state to "your log is empty. today's entry will appear here." in src/app/log/page.tsx. Shipped at ea70c0a.
 
-### [LOW] /signin — sign-in page gives no destination context after email submission
+### [x] [LOW] /signin — sign-in page gives no destination context after email submission
 - pass: 7 (commit 69def1e)
 - viewport: both
 - category: comprehension
@@ -826,6 +826,7 @@
 - evidence: "we email you a sign-in link. no password, no spam." / "sign-in links expire after 24 hours." — no destination copy
 - suggested fix: add one sentence to the footer, e.g. "the link opens your daily prompt directly." — closes the post-submit loop.
 - source: browser
+- resolution: added "the link opens today's prompt directly." to the sent-state confirmation in src/app/signin/page.tsx. Shipped at 97821b2.
 
 ### [x] [LOW] /settings — "Claude" vendor name appears in personalized prompt hint
 - pass: 6 (commit be41cf9)

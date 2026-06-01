@@ -844,14 +844,17 @@
 - suggested fix: add a brief qualifier after the existing description, e.g. "falls back to a standard prompt until entries exist."
 - source: /critique pass 10 (commit 84e0c49)
 
-### [ ] [2.4] /signin — sign-in page gives no destination context after email submission
+### [x] [3.2] /signin — sign-in page gives no destination context after email submission
 - category: external-critique
-- impact: 3
+- impact: 4
 - ease: 8
+- note: re-scored 2026-06-01 — impact raised from 3 to 4; the /signin page is the conversion gate for every user; after email submission the user has no signal about where the link takes them; first-time users are most uncertain at this exact moment; fix is one sentence addition to the sent-state paragraph
 - observation: the sign-in page confirms an email link will be sent and notes "sign-in links expire after 24 hours." but never tells the user where that link takes them. a first-time visitor has no frame of reference for what the logged-in experience looks like before clicking.
-- evidence: "we email you a sign-in link. no password, no spam." / "sign-in links expire after 24 hours." — no destination copy
-- suggested fix: add one sentence to the footer, e.g. "the link opens your daily prompt directly." — closes the post-submit loop.
+- evidence: sent-state confirmation: "a sign-in link is on its way." — footer: "sign-in links expire after 24 hours." — no destination copy in either location.
+- suggested fix: add "the link opens today's prompt directly." to the sent-state confirmation paragraph so the user knows where they'll land.
 - source: /critique pass 7 (commit 69def1e)
+- issue: [mirror-failed: loop-issue.mjs not present in scripts/]
+- resolution: added "the link opens today's prompt directly." to the sent-state confirmation paragraph in src/app/signin/page.tsx. Shipped at 97821b2.
 
 ### [ ] [2.1] /settings — timezone combobox shows no value for accounts with no saved timezone
 - category: external-critique
