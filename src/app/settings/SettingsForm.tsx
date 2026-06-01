@@ -119,6 +119,9 @@ export function SettingsForm({ displayName, username, timezone, usePersonalizedP
         <label className={styles.label} htmlFor="display-name">
           display name
         </label>
+        <p className={styles.hint}>
+          shown on published entries on the public profile.
+        </p>
         <input
           id="display-name"
           type="text"
