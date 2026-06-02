@@ -1,12 +1,66 @@
 # External-observer findings — Ember
 
-> Last pass: 2026-06-02 at commit e9a5f15
-> Pass count: 29
+> Last pass: 2026-06-02 at commit 53cd344
+> Pass count: 30
 
 > Written by `/critique` after walking the live site as a
 > fresh-eyes visitor. Drained by `/iterate`.
 
 ## Pending
+
+### [MED] /today — publish prereq hint gives no current-state signal for users with no username
+- pass: 30 (commit 53cd344)
+- viewport: both
+- category: comprehension
+- observation: the publish toggle is interactive for a new user with no public username set. the prereq hint reads "entries appear publicly only when a username is set in settings." — a conditional observation in the present tense that does not tell the user whether they currently have a username. a user who enables the toggle and saves receives no in-page signal that the entry is not visible anywhere, because the hint does not distinguish "no username set now" from "username may be set later."
+- evidence: capture text: "publish / when published, this entry appears on the public profile. / focus / save / entries appear publicly only when a username is set in settings." — toggle is enabled and interactive; hint is passive with no current-state signal for a zero-username account.
+- suggested fix: when no username is saved, change the prereq hint to a present-tense status: "no public username is set — published entries will remain private until one is added in settings." so the toggle's current effect is unambiguous.
+- source: browser
+
+### [LOW] / — Twitter card images array lacks alt text
+- pass: 30 (commit 53cd344)
+- viewport: both
+- category: seo
+- observation: the root layout Twitter card metadata specifies `images` as a plain string array. next.js app router requires an object array `[{ url, alt }]` to emit an alt attribute on the twitter card image. the plain string form produces a twitter card image with no accessible description. the opengraph image at the same path correctly includes alt text.
+- evidence: src/app/layout.tsx: `twitter: { images: ['/opengraph-image'] }` — plain string, no alt property. compare `openGraph.images: [{ url: '/opengraph-image', width: 1200, height: 630, alt: 'ember — a daily writing ritual' }]` — object with alt.
+- suggested fix: change `twitter.images` to `[{ url: '/opengraph-image', alt: 'ember — a daily writing ritual' }]` to match the opengraph object format and carry an accessible image description in the twitter card.
+- source: browser
+
+### [LOW] /today — "focus" button has no visible description on mobile (touch devices)
+- pass: 30 (commit 53cd344)
+- viewport: mobile
+- category: comprehension
+- observation: the "focus" button carries a title attribute ("enters a distraction-free writing view.") on desktop, but title tooltips are not surfaced on touch devices. the adjacent publish toggle has a description line rendered below it in the DOM; "save" is self-explanatory. "focus" is the only control in the row with no supporting copy visible at the mobile viewport.
+- evidence: mobile capture controls sequence: "publish / when published, this entry appears on the public profile. / focus / save" — "focus" has no adjacent description; the title attribute is inaccessible on touch.
+- suggested fix: render a short description element below the focus button in the DOM, parallel to the publish description ("enters a distraction-free writing view."), so touch users see a plain-language explanation without hover.
+- source: browser
+
+### [LOW] /settings — "your public profile lives at /u/username" uses second-person possessive
+- pass: 30 (commit 53cd344)
+- viewport: both
+- category: voice
+- observation: the public username field hint reads "your public profile lives at /u/username." the phrase "your public profile" is a second-person possessive. prior passes de-possessived "your public profile" in the /today publish description (resolved at 95eb800) but the same phrase persists in this hint. the pending pass-14 finding covers "leave blank to stay private" as imperative; the possessive "your public profile lives at" in the same sentence is a distinct, unfiled instance.
+- evidence: settings capture: "your public profile lives at /u/username. leave blank to stay private." — "your public profile" is the possessive portion; "leave blank" is the imperative portion filed separately at pass 14.
+- suggested fix: change to "a public profile will appear at /u/username." to remove the possessive while retaining the url example.
+- source: browser
+
+### [LOW] /signin — "sign-in links expire after 24 hours." appears twice simultaneously after submission
+- pass: 30 (commit 53cd344)
+- viewport: both
+- category: comprehension
+- observation: after a visitor submits their email, "sign-in links expire after 24 hours." appears twice simultaneously: once in the sent-state confirmation paragraph (added at pass 28) and once in the always-visible page footer. the phrase was added to the sent-state at 1cb0860 but the footer span was not removed, producing verbatim duplication on the same screen in the sent state.
+- evidence: src/app/signin/page.tsx: sent-state `<p>` ends with "sign-in links expire after 24 hours."; footer unconditionally renders `<span>sign-in links expire after 24 hours.</span>` regardless of state.
+- suggested fix: remove "sign-in links expire after 24 hours." from the footer span, or render it only when state !== 'sent', so the expiry notice appears once in the confirmation paragraph where it is most relevant.
+- source: browser
+
+### [LOW] / — MosaicPreview aria-label "60 days of practice" misrepresents illustrative content
+- pass: 30 (commit 53cd344)
+- viewport: both
+- category: a11y
+- observation: the MosaicPreview component on the landing page carries `aria-label="60 days of practice"`. for an anonymous visitor who has never used ember, the mosaic is a hardcoded illustrative tile pattern unrelated to any visitor's data. the label "60 days of practice" implies personal ownership of a practice that does not exist for an anonymous first-time visitor, misrepresenting the element's illustrative nature to screen reader users.
+- evidence: src/components/mosaic/MosaicPreview.tsx: `role="img" aria-label="60 days of practice"` — the PREVIEW_PATTERN is a static hardcoded array not derived from any user session or authenticated context.
+- suggested fix: change aria-label to "an example of 60 days tracked" or "illustrative writing log" to accurately describe the decorative, non-personal nature of the element for screen reader users arriving anonymously.
+- source: browser
 
 ### [LOW] /signin — meta description uses second-person possessive "your email"
 - pass: 29 (commit e9a5f15)
