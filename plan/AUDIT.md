@@ -6,6 +6,51 @@
 
 ## Pending
 
+### [x] [3.6] / — root layout meta description uses "small task" instead of branded "tiny task"
+- category: seo
+- impact: 4
+- ease: 9
+- note: scored 2026-06-02 — from critique pass 29 (e9a5f15); three parallel occurrences in src/app/layout.tsx (description, openGraph.description, twitter.description); the page body and all seven 7-day preview items use "tiny task" consistently; the meta description diverges with "small task", which appears nowhere else on the page; affects search snippets and social cards for the primary landing surface
+- observation: the root layout meta description reads "ember is a daily writing ritual — one prompt and one small task each morning." the product's branded compound label throughout the landing page body, all seven 7-day preview items, and the closing paragraph is "tiny task" — never "small task." the description diverges from the product's own terminology; a search-result snippet would show a term that does not match any text visible on the landing page.
+- evidence: src/app/layout.tsx line 36: `description: 'ember is a daily writing ritual — one prompt and one small task each morning.'` — also openGraph.description (line 46) and twitter.description (line 53) carry the same text. landing page body: "one small prompt and one tiny task each morning." and all seven preview lines beginning "tiny task — ...".
+- suggested fix: change "one small task" to "one tiny task" in all three occurrences (description, openGraph.description, twitter.description) in src/app/layout.tsx to match the product's branded label.
+- source: /critique pass 29 (commit e9a5f15)
+- issue: [mirror-failed: loop-issue.mjs not present in scripts/]
+- resolution: changed "one small task" to "one tiny task" in all three metadata fields (description, openGraph.description, twitter.description) in src/app/layout.tsx. Shipped at 75cf391.
+
+### [ ] [2.1] / — H1 uses semantic `<em>` for typographic italics on "intention"
+- category: a11y
+- impact: 3
+- ease: 7
+- note: scored 2026-06-02 — from critique pass 29 (e9a5f15); the H1 on the landing page renders "intention" in an `<em>` element; `<em>` carries semantic stress meaning — screen readers voice it with spoken emphasis; the rendering intent appears typographic (italic); the fix is to replace `<em>` with a `<span>` styled with a CSS italic class and remove the semantic stress signal
+- observation: the landing page H1 renders "ten minutes of intention before the day swallows you." with the word "intention" wrapped in an `<em>` element. `<em>` carries semantic stress meaning — screen readers voice its contents with spoken emphasis. the rendering intent appears to be typographic (italic styling), but using `<em>` for italics in a heading applies spoken stress to one word of an otherwise plain declarative sentence.
+- evidence: src/app/page.tsx line 27: `ten minutes of <em>intention</em> before the day swallows you.` — the only `<em>` element in a heading context on the site.
+- suggested fix: replace `<em>` with a `<span>` styled with a CSS italic class (e.g. `styles.pitchAccent`) to remove the semantic stress signal from the accessible tree while preserving the italic rendering. add `.pitchAccent { font-style: italic; }` to the page's CSS module.
+- source: /critique pass 29 (commit e9a5f15)
+- issue: [mirror-failed: loop-issue.mjs not present in scripts/]
+
+### [ ] [2.0] /signin — meta description uses second-person possessive "your email"
+- category: voice
+- impact: 2
+- ease: 10
+- note: scored 2026-06-02 — from critique pass 29 (e9a5f15); the /signin meta description reads "sign in to ember with a link sent to your email — no password required." — "your email" is the only possessive remaining in the site's meta description set; all other page meta descriptions now avoid direct address; single string replacement in src/app/signin/layout.tsx
+- observation: the /signin page meta description reads "sign in to ember with a link sent to your email — no password required." the phrase "your email" is a second-person possessive. the de-possessiving pattern applied to /log, /today, /settings, and /log/[date] meta descriptions was not applied to this description when it was written. every other page meta description on the site now avoids direct address; /signin is the remaining outlier.
+- evidence: src/app/signin/layout.tsx line 5: `description: 'sign in to ember with a link sent to your email — no password required.'` — "your email" is the only possessive remaining in the site's meta description set.
+- suggested fix: change to "sign in to ember with a link sent by email — no password required." — removes the possessive while preserving the meaning.
+- source: /critique pass 29 (commit e9a5f15)
+- issue: [mirror-failed: loop-issue.mjs not present in scripts/]
+
+### [ ] [2.0] /settings — "view your public profile" link text uses second-person possessive
+- category: voice
+- impact: 2
+- ease: 10
+- note: scored 2026-06-02 — from critique pass 29 (e9a5f15); when a public username is saved, the settings page renders a link "view your public profile." — "your public profile" is a second-person possessive; other settings strings were de-possessived but this conditional link was not; single string change in src/app/settings/page.tsx
+- observation: when a public username is saved, the settings page renders a link with text "view your public profile." the phrase "your public profile" is a second-person possessive. the same de-possessiving pattern applied to other settings strings was not applied to this link.
+- evidence: src/app/settings/page.tsx line 58: `view your public profile` — rendered only when profile?.username is truthy; the link text is the sole remaining possessive in the settings page visible content.
+- suggested fix: change link text to "view public profile" to remove the possessive while preserving the navigation purpose.
+- source: /critique pass 29 (commit e9a5f15)
+- issue: [mirror-failed: loop-issue.mjs not present in scripts/]
+
 ### [x] [3.0] /u/[username] and /u/[username]/[date] — authenticated nav link reads "your log", inconsistent with authenticated app nav label "log"
 - category: external-critique
 - impact: 3

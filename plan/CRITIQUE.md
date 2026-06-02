@@ -17,7 +17,7 @@
 - suggested fix: change to "sign in to ember with a link sent by email — no password required." — removes the possessive while preserving the meaning.
 - source: browser
 
-### [LOW] / — root layout meta description uses "small task" instead of branded "tiny task"
+### [x] [LOW] / — root layout meta description uses "small task" instead of branded "tiny task"
 - pass: 29 (commit e9a5f15)
 - viewport: both
 - category: seo
@@ -25,6 +25,7 @@
 - evidence: src/app/layout.tsx line 36: `description: 'ember is a daily writing ritual — one prompt and one small task each morning.'` — compare landing page body: "one small prompt and one tiny task each morning." and all seven preview lines beginning "tiny task — ..."; also openGraph.description at lines 46, 53 carries the same text.
 - suggested fix: change to "ember is a daily writing ritual — one prompt and one tiny task each morning." in all three occurrences (description, openGraph.description, twitter.description) to match the product's branded label.
 - source: browser
+- resolution: changed all three occurrences in src/app/layout.tsx. Shipped at 75cf391.
 
 ### [LOW] /settings — "view your public profile" link text uses second-person possessive
 - pass: 29 (commit e9a5f15)
