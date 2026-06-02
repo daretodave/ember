@@ -33,7 +33,7 @@ const siteUrl =
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: 'ember — a daily writing ritual',
-  description: 'ember is a daily writing ritual — one prompt and one small task each morning.',
+  description: 'ember is a daily writing ritual — one prompt and one tiny task each morning.',
   manifest: '/manifest.webmanifest',
   icons: {
     icon: '/icon.svg',
@@ -43,14 +43,14 @@ export const metadata: Metadata = {
     type: 'website',
     siteName: 'ember',
     title: 'ember — a daily writing ritual',
-    description: 'ember is a daily writing ritual — one prompt and one small task each morning.',
+    description: 'ember is a daily writing ritual — one prompt and one tiny task each morning.',
     url: siteUrl,
     images: [{ url: '/opengraph-image', width: 1200, height: 630, alt: 'ember — a daily writing ritual' }],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'ember — a daily writing ritual',
-    description: 'ember is a daily writing ritual — one prompt and one small task each morning.',
+    description: 'ember is a daily writing ritual — one prompt and one tiny task each morning.',
     images: ['/opengraph-image'],
   },
 }
