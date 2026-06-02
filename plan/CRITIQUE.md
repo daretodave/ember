@@ -1,12 +1,48 @@
 # External-observer findings — Ember
 
-> Last pass: 2026-06-01 at commit 64a33db
-> Pass count: 28
+> Last pass: 2026-06-02 at commit e9a5f15
+> Pass count: 29
 
 > Written by `/critique` after walking the live site as a
 > fresh-eyes visitor. Drained by `/iterate`.
 
 ## Pending
+
+### [LOW] /signin — meta description uses second-person possessive "your email"
+- pass: 29 (commit e9a5f15)
+- viewport: both
+- category: seo
+- observation: the /signin page meta description reads "sign in to ember with a link sent to your email — no password required." the phrase "your email" is a second-person possessive. the de-possessiving pattern applied to /log, /today, /settings, and /log/[date] meta descriptions was not applied to this description when it was written. every other page meta description on the site now avoids direct address; /signin is the remaining outlier.
+- evidence: src/app/signin/layout.tsx line 5: `description: 'sign in to ember with a link sent to your email — no password required.'` — "your email" is the only possessive remaining in the site's meta description set.
+- suggested fix: change to "sign in to ember with a link sent by email — no password required." — removes the possessive while preserving the meaning.
+- source: browser
+
+### [LOW] / — root layout meta description uses "small task" instead of branded "tiny task"
+- pass: 29 (commit e9a5f15)
+- viewport: both
+- category: seo
+- observation: the root layout meta description reads "ember is a daily writing ritual — one prompt and one small task each morning." the product's branded compound label throughout the landing page body, all seven 7-day preview items, and the closing paragraph is "tiny task" — never "small task." the description diverges from the product's own terminology; a search-result snippet would show a term that does not match any text visible on the landing page.
+- evidence: src/app/layout.tsx line 36: `description: 'ember is a daily writing ritual — one prompt and one small task each morning.'` — compare landing page body: "one small prompt and one tiny task each morning." and all seven preview lines beginning "tiny task — ..."; also openGraph.description at lines 46, 53 carries the same text.
+- suggested fix: change to "ember is a daily writing ritual — one prompt and one tiny task each morning." in all three occurrences (description, openGraph.description, twitter.description) to match the product's branded label.
+- source: browser
+
+### [LOW] /settings — "view your public profile" link text uses second-person possessive
+- pass: 29 (commit e9a5f15)
+- viewport: both
+- category: voice
+- observation: when a public username is saved, the settings page renders a link with text "view your public profile." the phrase "your public profile" is a second-person possessive. the same de-possessiving pattern applied to other settings strings ("your writing practice", "your recent entries") was not applied to this link, which is rendered conditionally below the form only when a username is set.
+- evidence: src/app/settings/page.tsx line 58: `view your public profile` — rendered only when profile?.username is truthy; the link text is the sole remaining possessive in the settings page visible content.
+- suggested fix: change link text to "view public profile" to remove the possessive while preserving the navigation purpose.
+- source: browser
+
+### [LOW] / — H1 uses semantic `<em>` for typographic italics on "intention"
+- pass: 29 (commit e9a5f15)
+- viewport: both
+- category: a11y
+- observation: the landing page H1 renders "ten minutes of intention before the day swallows you." with the word "intention" wrapped in an `<em>` element. the `<em>` element carries semantic stress meaning in HTML — screen readers voice its contents with spoken emphasis. the rendering intent appears to be typographic (italic styling), but using `<em>` for italics in a heading applies spoken stress to one word of an otherwise plain declarative sentence. the design system uses no other typographic emphasis elements in headings.
+- evidence: src/app/page.tsx line 27: `ten minutes of <em>intention</em> before the day swallows you.` — the only `<em>` element in a heading context on the site.
+- suggested fix: if the intent is typographic only, replace `<em>` with a `<span>` styled with a CSS italic class (e.g. `styles.pitchAccent`) to remove the semantic stress signal from the accessible tree while preserving the italic rendering.
+- source: browser
 
 ### [LOW] / — lede says "one small prompt" but the named concept throughout is "prompt"
 - pass: 28 (commit 64a33db)
