@@ -1,12 +1,39 @@
 # External-observer findings — Ember
 
-> Last pass: 2026-06-03 at commit c0b8bad
-> Pass count: 31
+> Last pass: 2026-06-03 at commit 3f7071a
+> Pass count: 32
 
 > Written by `/critique` after walking the live site as a
 > fresh-eyes visitor. Drained by `/iterate`.
 
 ## Pending
+
+### [LOW] / — meta description says "one prompt" while page body says "one small prompt"
+- pass: 32 (commit 3f7071a)
+- viewport: both
+- category: seo
+- observation: the root layout meta description reads "ember is a daily writing ritual — one prompt and one tiny task each morning." the landing page body reads "one small prompt and one tiny task each morning." the modifier "small" distinguishes the prompt element on the page but is absent from the meta. a search-result snippet describes the product's first component differently from the body copy.
+- evidence: meta description (src/app/layout.tsx): "ember is a daily writing ritual — one prompt and one tiny task each morning." body text: "one small prompt and one tiny task each morning." — "small" present in body, absent in meta.
+- suggested fix: change meta description to "ember is a daily writing ritual — one small prompt and one tiny task each morning." to match the body phrasing exactly.
+- source: browser
+
+### [LOW] /settings — "leave blank to stay private." uses second-person imperative in the public username hint
+- pass: 32 (commit 3f7071a)
+- viewport: both
+- category: voice
+- observation: the public username hint reads "your public profile lives at /u/username. leave blank to stay private." both sentences use second-person address: "your public profile" (possessive, already a pending finding at pass 30) and "leave blank" (imperative). the voice guide prohibits second-person imperative copy. the two adjacent second-person constructions compound the direct-address register on the same hint line.
+- evidence: settings page body text: "your public profile lives at /u/username. leave blank to stay private." — "leave blank" is the imperative construction.
+- suggested fix: change "leave blank to stay private." to "an empty field keeps the profile private." — removes the imperative while preserving the intent.
+- source: browser
+
+### [LOW] /settings — "@" prefix on the public username field implies social-media handle format but the URL pattern is "/u/username"
+- pass: 32 (commit 3f7071a)
+- viewport: both
+- category: comprehension
+- observation: the public username input is prefixed with "@", suggesting a "@handle" convention. the URL convention for public profiles is "/u/username", not "@username". a user who enters a username sees their public profile at "/u/username" — a different format from what the "@" prefix implies. the prefix sets an expectation the product does not fulfill.
+- evidence: settings page body text: "your public profile lives at /u/username. ... @ save sign out" — "@" appears as the visible input prefix immediately before the username field.
+- suggested fix: replace the "@" prefix with "/u/" to match the actual URL pattern — sets the correct URL expectation at the point of input.
+- source: browser
 
 ### [x] [LOW] /today — OnThisDay component uses second-person "you wrote"
 - pass: 31 (commit c0b8bad)
