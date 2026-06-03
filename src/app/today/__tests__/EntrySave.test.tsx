@@ -109,18 +109,18 @@ describe('EntrySave — payload', () => {
 describe('EntrySave — publish hint', () => {
   it('shows username prereq hint when hasUsername is false', () => {
     render(<TodayEntry {...BASE_PROPS} hasUsername={false} />)
-    const hints = screen.getAllByText(/entries appear publicly only when a username is set in/)
+    const hints = screen.getAllByText(/no public username is set/)
     expect(hints.length).toBe(2) // main view + focus overlay
   })
 
   it('hides username prereq hint when hasUsername is true', () => {
     render(<TodayEntry {...BASE_PROPS} hasUsername={true} />)
-    expect(screen.queryAllByText(/entries appear publicly only when a username is set in/)).toHaveLength(0)
+    expect(screen.queryAllByText(/no public username is set/)).toHaveLength(0)
   })
 
   it('hides username prereq hint by default (no hasUsername prop)', () => {
     render(<TodayEntry {...BASE_PROPS} />)
-    expect(screen.queryAllByText(/entries appear publicly only when a username is set in/)).toHaveLength(0)
+    expect(screen.queryAllByText(/no public username is set/)).toHaveLength(0)
   })
 })
 
