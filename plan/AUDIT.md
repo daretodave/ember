@@ -42,7 +42,7 @@
 - issue: [mirror-failed: loop-issue.mjs not present in scripts/]
 - resolution: changed 'saving...', 'draft restored', 'unsaved' to 'saving.', 'draft restored.', 'not yet saved.' in TodayEntry.tsx; button labels updated; 3 test files updated. Shipped at 17830b2.
 
-### [ ] [2.7] /today — OnThisDay component uses second-person "you wrote"
+### [x] [2.7] /today — OnThisDay component uses second-person "you wrote"
 - category: voice
 - impact: 3
 - ease: 9
@@ -51,6 +51,8 @@
 - evidence: src/app/today/OnThisDay.tsx line 34: `{yearText}, you wrote &mdash;{' '}` — e.g. "a year ago, you wrote — [excerpt]". confirmed in test assertions at OnThisDay.test.tsx lines 78, 96.
 - suggested fix: reframe to an impersonal construction, e.g. "a year ago —" followed by the excerpt directly, dropping "you wrote" entirely. preserves the temporal framing without direct address.
 - source: /critique pass 31 (commit c0b8bad)
+- issue: [mirror-failed: loop-issue.mjs not present in scripts/]
+- resolution: changed "{yearText}, you wrote —" to "{yearText} —" in OnThisDay.tsx, dropping "you wrote" entirely. Two test assertions updated. Shipped at 2d880ee.
 
 ### [ ] [2.4] /signin — page title separator inconsistency (· vs —)
 - category: seo

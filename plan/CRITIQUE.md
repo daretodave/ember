@@ -8,7 +8,7 @@
 
 ## Pending
 
-### [LOW] /today — OnThisDay component uses second-person "you wrote"
+### [x] [LOW] /today — OnThisDay component uses second-person "you wrote"
 - pass: 31 (commit c0b8bad)
 - viewport: both
 - category: voice
@@ -16,6 +16,7 @@
 - evidence: src/app/today/OnThisDay.tsx line 34: `{yearText}, you wrote &mdash;{' '}` — e.g. "a year ago, you wrote — [excerpt]". confirmed in test assertions at OnThisDay.test.tsx lines 78, 96.
 - suggested fix: reframe to an impersonal construction, e.g. "a year ago —" followed by the excerpt directly, dropping "you wrote" entirely. preserves the temporal framing without direct address.
 - source: browser
+- resolution: changed "{yearText}, you wrote —" to "{yearText} —" in OnThisDay.tsx. Two test assertions updated. Shipped at 2d880ee.
 
 ### [x] [LOW] /log — most-recent entry article has no accessible name
 - pass: 31 (commit c0b8bad)
