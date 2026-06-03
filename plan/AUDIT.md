@@ -30,7 +30,7 @@
 - issue: [mirror-failed: loop-issue.mjs not present in scripts/]
 - resolution: added aria-label="most recent entry" to the article element in src/app/log/page.tsx. Shipped at d6aed87.
 
-### [ ] [3.6] /today — save indicator status strings are sentence fragments
+### [x] [3.6] /today — save indicator status strings are sentence fragments
 - category: voice
 - impact: 4
 - ease: 9
@@ -39,6 +39,8 @@
 - evidence: src/app/today/TodayEntry.tsx lines 145, 148, 150: `return 'saving...'`, `return 'draft restored'`, `return 'unsaved'`; button label at lines 212, 275: `{saveState === 'saving' ? 'saving...' : 'save'}`.
 - suggested fix: change to "saving." (period, no ellipsis), "draft restored." and "not yet saved." — all complete sentences, consistent with "saved." and the voice spec.
 - source: /critique pass 31 (commit c0b8bad)
+- issue: [mirror-failed: loop-issue.mjs not present in scripts/]
+- resolution: changed 'saving...', 'draft restored', 'unsaved' to 'saving.', 'draft restored.', 'not yet saved.' in TodayEntry.tsx; button labels updated; 3 test files updated. Shipped at 17830b2.
 
 ### [ ] [2.7] /today — OnThisDay component uses second-person "you wrote"
 - category: voice
