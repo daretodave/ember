@@ -65,7 +65,7 @@
 - source: browser
 - resolution: changed 'saving...', 'draft restored', 'unsaved' to 'saving.', 'draft restored.', 'not yet saved.' in TodayEntry.tsx; button labels and 3 test files updated. Shipped at 17830b2.
 
-### [LOW] /signin — page title separator inconsistency (· vs —)
+### [x] [LOW] /signin — page title separator inconsistency (· vs —)
 - pass: 31 (commit c0b8bad)
 - viewport: both
 - category: seo
@@ -73,6 +73,7 @@
 - evidence: anonymous capture title "ember — a daily writing ritual" (homepage); "ember · sign in" (/signin); authenticated captures: "ember · today", "ember · log", "ember · settings". the root layout sets the default template with em dash; page-level layouts override with middle dot.
 - suggested fix: standardise on the middle dot across all titles — change the root layout to "ember · a daily writing ritual" — or adopt the em dash pattern in all page-level templates.
 - source: browser
+- resolution: changed root layout title, openGraph.title, and twitter.title from em dash to middle dot in src/app/layout.tsx. Shipped at 37d4e8a.
 
 ### [x] [LOW] / — footer label "a low-friction writing ritual." uses product-management jargon
 - pass: 31 (commit c0b8bad)

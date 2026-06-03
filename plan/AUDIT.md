@@ -74,7 +74,7 @@
 - issue: [mirror-failed: loop-issue.mjs not present in scripts/]
 - resolution: changed "{yearText}, you wrote —" to "{yearText} —" in OnThisDay.tsx, dropping "you wrote" entirely. Two test assertions updated. Shipped at 2d880ee.
 
-### [ ] [2.4] /signin — page title separator inconsistency (· vs —)
+### [x] [2.4] /signin — page title separator inconsistency (· vs —)
 - category: seo
 - impact: 3
 - ease: 8
@@ -83,6 +83,8 @@
 - evidence: anonymous capture title "ember — a daily writing ritual" (homepage); "ember · sign in" (/signin); authenticated captures: "ember · today", "ember · log", "ember · settings". the root layout sets the default template with em dash; page-level layouts override with middle dot.
 - suggested fix: standardise on the middle dot across all titles — change the root layout to "ember · a daily writing ritual" — or adopt the em dash pattern in all page-level templates.
 - source: /critique pass 31 (commit c0b8bad)
+- issue: [mirror-failed: 2026-06-03T23:22:00Z]
+- resolution: changed root layout title, openGraph.title, and twitter.title from em dash to middle dot in src/app/layout.tsx. Shipped at 37d4e8a.
 
 ### [x] [4.0] /today — publish prereq hint gives no current-state signal for users with no username
 - category: external-critique
