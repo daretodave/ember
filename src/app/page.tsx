@@ -77,7 +77,7 @@ export default function LandingPage() {
 
         <div className={styles.footerCredit}>
           <span>ember</span>
-          <span>a low-friction writing ritual.</span>
+          <span>a daily writing ritual.</span>
         </div>
       </main>
 
