@@ -6,6 +6,58 @@
 
 ## Pending
 
+### [x] [3.6] / — footer label "a low-friction writing ritual." uses product-management jargon
+- category: voice
+- impact: 4
+- ease: 9
+- note: scored 2026-06-03 — from critique pass 31 (c0b8bad); "low-friction" is product-management register — it describes the design posture in technical terms rather than experiential ones; the rest of the page uses concrete, experiential language ("ten minutes of intention", "a quiet personal log"); fix is a single word removal in src/app/page.tsx line 80
+- observation: the homepage footer label reads "a low-friction writing ritual." the compound modifier "low-friction" is product-management register — it describes the design posture in technical terms rather than experiential ones. the voice guide specifies plain and slightly bookish; the rest of the page uses concrete, experiential language ("ten minutes of intention", "a quiet personal log").
+- evidence: src/app/page.tsx line 80: `<span>a low-friction writing ritual.</span>` — footer section label immediately below the wordmark.
+- suggested fix: replace with a plain experiential descriptor, e.g. "a daily writing ritual." (dropping the modifier entirely) or "a quiet daily practice." to match the page's own register.
+- source: /critique pass 31 (commit c0b8bad)
+- issue: [mirror-failed: 2026-06-03T00:00:00Z]
+- resolution: changed "a low-friction writing ritual." to "a daily writing ritual." in src/app/page.tsx. Shipped at 260eb99.
+
+### [ ] [3.6] /log — most-recent entry article has no accessible name
+- category: a11y
+- impact: 4
+- ease: 9
+- note: scored 2026-06-03 — from critique pass 31 (c0b8bad); the article element at src/app/log/page.tsx line 100 has no aria-label; "showing the most recent." prose sits outside the article boundary with no programmatic association; fix is a single attribute addition
+- observation: when entries exist, the most-recent entry is wrapped in an `<article>` element with no accessible name. screen reader users navigating by landmark or article role encounter the prompt text as the only heading inside the article, with no context identifying this as the most recent log entry. the "showing the most recent." prose sits outside the article boundary and has no programmatic association to it.
+- evidence: src/app/log/page.tsx line 100: `<article className={styles.entryView}>` — no aria-label attribute. the "showing the most recent." string at line 123 is outside the article.
+- suggested fix: add `aria-label="most recent entry"` to the article element so AT users understand its role in the page structure.
+- source: /critique pass 31 (commit c0b8bad)
+
+### [ ] [3.6] /today — save indicator status strings are sentence fragments
+- category: voice
+- impact: 4
+- ease: 9
+- note: scored 2026-06-03 — from critique pass 31 (c0b8bad); three save-indicator status strings are sentence fragments without terminal periods, inconsistent with the voice spec's requirement that copy communicating state be a complete sentence; "saving...", "unsaved", "draft restored" in TodayEntry.tsx lines 145, 148, 150; "saved." already has a period; fix requires 3 string changes + test updates
+- observation: three save-indicator status strings are sentence fragments without terminal periods, inconsistent with the voice spec's requirement that copy communicating state be a complete sentence. "saving..." uses an ellipsis convention; "unsaved" is a bare adjective; "draft restored" is a past-participle phrase with no period. the strings appear in the aria-live indicator span (read aloud by screen readers) and as button text, so their register affects both sighted and AT users. the "saved." indicator already has a period; the others are inconsistent with it.
+- evidence: src/app/today/TodayEntry.tsx lines 145, 148, 150: `return 'saving...'`, `return 'draft restored'`, `return 'unsaved'`; button label at lines 212, 275: `{saveState === 'saving' ? 'saving...' : 'save'}`.
+- suggested fix: change to "saving." (period, no ellipsis), "draft restored." and "not yet saved." — all complete sentences, consistent with "saved." and the voice spec.
+- source: /critique pass 31 (commit c0b8bad)
+
+### [ ] [2.7] /today — OnThisDay component uses second-person "you wrote"
+- category: voice
+- impact: 3
+- ease: 9
+- note: scored 2026-06-03 — from critique pass 31 (c0b8bad); the on-this-day component renders "{yearText}, you wrote —" followed by an excerpt; "you wrote" is a second-person construction; fix is a string change in OnThisDay.tsx + test assertion update
+- observation: the on-this-day component renders "{yearText}, you wrote —" followed by an excerpt from a prior-year entry. "you wrote" is a second-person construction that conflicts with the no-second-person voice posture applied throughout the site. the feature renders only when the user has a prior entry on the same calendar day in an earlier year.
+- evidence: src/app/today/OnThisDay.tsx line 34: `{yearText}, you wrote &mdash;{' '}` — e.g. "a year ago, you wrote — [excerpt]". confirmed in test assertions at OnThisDay.test.tsx lines 78, 96.
+- suggested fix: reframe to an impersonal construction, e.g. "a year ago —" followed by the excerpt directly, dropping "you wrote" entirely. preserves the temporal framing without direct address.
+- source: /critique pass 31 (commit c0b8bad)
+
+### [ ] [2.4] /signin — page title separator inconsistency (· vs —)
+- category: seo
+- impact: 3
+- ease: 8
+- note: scored 2026-06-03 — from critique pass 31 (c0b8bad); root layout uses em dash ("ember — a daily writing ritual") while all page-level titles use middle dot ("ember · sign in", etc.); fix is a root layout template change or a global page-level update
+- observation: the root layout title uses an em dash as separator ("ember — a daily writing ritual") while all page-level titles use a middle dot ("ember · sign in", "ember · today", "ember · log", "ember · settings"). the two separator characters produce inconsistent visual rhythm across browser tabs and search engine result listings.
+- evidence: anonymous capture title "ember — a daily writing ritual" (homepage); "ember · sign in" (/signin); authenticated captures: "ember · today", "ember · log", "ember · settings". the root layout sets the default template with em dash; page-level layouts override with middle dot.
+- suggested fix: standardise on the middle dot across all titles — change the root layout to "ember · a daily writing ritual" — or adopt the em dash pattern in all page-level templates.
+- source: /critique pass 31 (commit c0b8bad)
+
 ### [x] [4.0] /today — publish prereq hint gives no current-state signal for users with no username
 - category: external-critique
 - impact: 5

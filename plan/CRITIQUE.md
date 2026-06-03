@@ -44,7 +44,7 @@
 - suggested fix: standardise on the middle dot across all titles — change the root layout to "ember · a daily writing ritual" — or adopt the em dash pattern in all page-level templates.
 - source: browser
 
-### [LOW] / — footer label "a low-friction writing ritual." uses product-management jargon
+### [x] [LOW] / — footer label "a low-friction writing ritual." uses product-management jargon
 - pass: 31 (commit c0b8bad)
 - viewport: both
 - category: voice
@@ -52,6 +52,7 @@
 - evidence: anonymous capture: "ember\na low-friction writing ritual." — footer section label immediately below the wordmark.
 - suggested fix: replace with a plain experiential descriptor, e.g. "a daily writing ritual." (dropping the modifier entirely) or "a quiet daily practice." to match the page's own register.
 - source: browser
+- resolution: changed "a low-friction writing ritual." to "a daily writing ritual." in src/app/page.tsx. Shipped at 260eb99.
 
 ### [LOW] / — Twitter card images array lacks alt text
 - pass: 30 (commit 53cd344)
