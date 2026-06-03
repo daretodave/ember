@@ -35,7 +35,7 @@
 - suggested fix: change to "a public profile will appear at /u/username." to remove the possessive while retaining the url example.
 - source: browser
 
-### [LOW] /signin — "sign-in links expire after 24 hours." appears twice simultaneously after submission
+### [x] [LOW] /signin — "sign-in links expire after 24 hours." appears twice simultaneously after submission
 - pass: 30 (commit 53cd344)
 - viewport: both
 - category: comprehension
@@ -43,6 +43,7 @@
 - evidence: src/app/signin/page.tsx: sent-state `<p>` ends with "sign-in links expire after 24 hours."; footer unconditionally renders `<span>sign-in links expire after 24 hours.</span>` regardless of state.
 - suggested fix: remove "sign-in links expire after 24 hours." from the footer span, or render it only when state !== 'sent', so the expiry notice appears once in the confirmation paragraph where it is most relevant.
 - source: browser
+- resolution: conditionally render footer expiry span only when state !== 'sent'. Shipped at fce61a6.
 
 ### [LOW] / — MosaicPreview aria-label "60 days of practice" misrepresents illustrative content
 - pass: 30 (commit 53cd344)

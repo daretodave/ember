@@ -18,7 +18,7 @@
 - issue: [mirror-failed: loop-issue.mjs not present in scripts/]
 - resolution: changed hint text to "no public username is set — published entries will remain private until one is added in settings." in both main view and focus overlay of TodayEntry.tsx. 3 test assertions updated. Shipped at c013b8c.
 
-### [ ] [2.7] /signin — "sign-in links expire after 24 hours." appears twice simultaneously after submission
+### [x] [2.7] /signin — "sign-in links expire after 24 hours." appears twice simultaneously after submission
 - category: external-critique
 - impact: 3
 - ease: 9
@@ -27,6 +27,8 @@
 - evidence: src/app/signin/page.tsx: sent-state `<p>` ends with "sign-in links expire after 24 hours."; footer unconditionally renders `<span>sign-in links expire after 24 hours.</span>` regardless of state.
 - suggested fix: remove "sign-in links expire after 24 hours." from the footer span, or render it only when state !== 'sent', so the expiry notice appears once in the confirmation paragraph where it is most relevant.
 - source: /critique pass 30 (commit fd83207)
+- issue: [mirror-failed: loop-issue.mjs not present in scripts/]
+- resolution: conditionally render footer expiry span only when state !== 'sent' in src/app/signin/page.tsx; test added asserting notice appears in role="status" and is absent from footer in sent state. Shipped at fce61a6.
 
 ### [ ] [2.0] /settings — hint text "your public profile lives at /u/username" uses second-person possessive
 - category: external-critique
