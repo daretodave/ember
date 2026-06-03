@@ -6,6 +6,68 @@
 
 ## Pending
 
+### [x] [4.0] /today — publish prereq hint gives no current-state signal for users with no username
+- category: external-critique
+- impact: 5
+- ease: 8
+- note: scored 2026-06-03 — from critique pass 30 (fd83207); the publish prereq hint reads "entries appear publicly only when a username is set in settings." — passive present-tense phrasing that does not tell the user whether they currently have a username; the toggle is interactive but there is no signal that the entry will remain private; fix is a hint text change in two places (main view + focus overlay) in TodayEntry.tsx with test updates
+- observation: the publish toggle is interactive for a new user with no public username set. the prereq hint reads "entries appear publicly only when a username is set in settings." — a conditional observation in the present tense that does not tell the user whether they currently have a username. a user who enables the toggle and saves receives no in-page signal that the entry is not visible anywhere.
+- evidence: capture text: "publish / when published, this entry appears on the public profile. / focus / save / entries appear publicly only when a username is set in settings." — toggle is enabled and interactive; hint is passive with no current-state signal for a zero-username account.
+- suggested fix: when no username is saved, change the prereq hint to "no public username is set — published entries will remain private until one is added in settings." so the toggle's current effect is unambiguous.
+- source: /critique pass 30 (commit fd83207)
+- issue: [mirror-failed: loop-issue.mjs not present in scripts/]
+- resolution: changed hint text to "no public username is set — published entries will remain private until one is added in settings." in both main view and focus overlay of TodayEntry.tsx. 3 test assertions updated. Shipped at c013b8c.
+
+### [ ] [2.7] /signin — "sign-in links expire after 24 hours." appears twice simultaneously after submission
+- category: external-critique
+- impact: 3
+- ease: 9
+- note: scored 2026-06-03 — from critique pass 30 (fd83207); the expiry notice was added to the sent-state at 1cb0860 but the footer span was not removed; verbatim duplication on the same screen in the sent state; fix is a conditional render or removal of the footer span
+- observation: after a visitor submits their email, "sign-in links expire after 24 hours." appears twice simultaneously: once in the sent-state confirmation paragraph (added at pass 28) and once in the always-visible page footer. the phrase was added to the sent-state at 1cb0860 but the footer span was not removed, producing verbatim duplication on the same screen in the sent state.
+- evidence: src/app/signin/page.tsx: sent-state `<p>` ends with "sign-in links expire after 24 hours."; footer unconditionally renders `<span>sign-in links expire after 24 hours.</span>` regardless of state.
+- suggested fix: remove "sign-in links expire after 24 hours." from the footer span, or render it only when state !== 'sent', so the expiry notice appears once in the confirmation paragraph where it is most relevant.
+- source: /critique pass 30 (commit fd83207)
+
+### [ ] [2.0] /settings — hint text "your public profile lives at /u/username" uses second-person possessive
+- category: external-critique
+- impact: 2
+- ease: 10
+- note: scored 2026-06-03 — from critique pass 30 (fd83207); the public username field hint reads "your public profile lives at /u/username." — "your public profile" is a second-person possessive; single string change in SettingsForm.tsx
+- observation: the public username field hint reads "your public profile lives at /u/username." the phrase "your public profile" is a second-person possessive. prior passes de-possessived "your public profile" in the /today publish description but the same phrase persists in this hint.
+- evidence: settings capture: "your public profile lives at /u/username. leave blank to stay private." — "your public profile" is the possessive portion.
+- suggested fix: change to "a public profile will appear at /u/username." to remove the possessive while retaining the url example.
+- source: /critique pass 30 (commit fd83207)
+
+### [ ] [1.8] / — Twitter card images array lacks alt text
+- category: seo
+- impact: 2
+- ease: 9
+- note: scored 2026-06-03 — from critique pass 30 (fd83207); the root layout Twitter card metadata specifies `images` as a plain string array; next.js requires an object array `[{ url, alt }]` to emit an alt attribute; the opengraph image at the same path correctly includes alt text
+- observation: the root layout Twitter card metadata specifies `images` as a plain string array. next.js app router requires an object array `[{ url, alt }]` to emit an alt attribute on the twitter card image. the plain string form produces a twitter card image with no accessible description.
+- evidence: src/app/layout.tsx: `twitter: { images: ['/opengraph-image'] }` — plain string, no alt property. compare `openGraph.images: [{ url: '/opengraph-image', width: 1200, height: 630, alt: 'ember — a daily writing ritual' }]` — object with alt.
+- suggested fix: change `twitter.images` to `[{ url: '/opengraph-image', alt: 'ember — a daily writing ritual' }]` to match the opengraph object format.
+- source: /critique pass 30 (commit fd83207)
+
+### [ ] [1.8] / — MosaicPreview aria-label "60 days of practice" misrepresents illustrative content
+- category: a11y
+- impact: 2
+- ease: 9
+- note: scored 2026-06-03 — from critique pass 30 (fd83207); the MosaicPreview on the landing page carries `aria-label="60 days of practice"` but the mosaic is a hardcoded illustrative tile pattern unrelated to any visitor's data; single string change in MosaicPreview.tsx
+- observation: the MosaicPreview component on the landing page carries `aria-label="60 days of practice"`. for an anonymous visitor who has never used ember, the mosaic is a hardcoded illustrative tile pattern. the label "60 days of practice" implies personal ownership of a practice that does not exist for an anonymous first-time visitor.
+- evidence: src/components/mosaic/MosaicPreview.tsx: `role="img" aria-label="60 days of practice"` — the PREVIEW_PATTERN is a static hardcoded array not derived from any user session.
+- suggested fix: change aria-label to "an example of 60 days tracked" or "illustrative writing log" to accurately describe the decorative, non-personal nature of the element.
+- source: /critique pass 30 (commit fd83207)
+
+### [ ] [1.6] /today — "focus" button has no visible description on mobile (touch devices)
+- category: comprehension
+- impact: 2
+- ease: 8
+- note: scored 2026-06-03 — from critique pass 30 (fd83207); the "focus" button carries a title attribute on desktop but title tooltips are not surfaced on touch devices; the adjacent publish toggle has a description line rendered below it in the DOM; "focus" is the only control with no supporting copy visible at the mobile viewport
+- observation: the "focus" button carries a title attribute ("enters a distraction-free writing view.") on desktop, but title tooltips are not surfaced on touch devices. "focus" is the only control in the row with no supporting copy visible at the mobile viewport.
+- evidence: mobile capture controls sequence: "publish / when published, this entry appears on the public profile. / focus / save" — "focus" has no adjacent description; the title attribute is inaccessible on touch.
+- suggested fix: render a short description element below the focus button in the DOM, parallel to the publish description ("enters a distraction-free writing view."), so touch users see a plain-language explanation without hover.
+- source: /critique pass 30 (commit fd83207)
+
 ### [x] [3.6] / — root layout meta description uses "small task" instead of branded "tiny task"
 - category: seo
 - impact: 4

@@ -8,15 +8,6 @@
 
 ## Pending
 
-### [MED] /today — publish prereq hint gives no current-state signal for users with no username
-- pass: 30 (commit 53cd344)
-- viewport: both
-- category: comprehension
-- observation: the publish toggle is interactive for a new user with no public username set. the prereq hint reads "entries appear publicly only when a username is set in settings." — a conditional observation in the present tense that does not tell the user whether they currently have a username. a user who enables the toggle and saves receives no in-page signal that the entry is not visible anywhere, because the hint does not distinguish "no username set now" from "username may be set later."
-- evidence: capture text: "publish / when published, this entry appears on the public profile. / focus / save / entries appear publicly only when a username is set in settings." — toggle is enabled and interactive; hint is passive with no current-state signal for a zero-username account.
-- suggested fix: when no username is saved, change the prereq hint to a present-tense status: "no public username is set — published entries will remain private until one is added in settings." so the toggle's current effect is unambiguous.
-- source: browser
-
 ### [LOW] / — Twitter card images array lacks alt text
 - pass: 30 (commit 53cd344)
 - viewport: both
@@ -1057,6 +1048,15 @@
 - resolution: footer now reads "sign-in links expire after 24 hours." — added at dfe1ae4 when the vendor attribution was replaced. Expiry concern addressed.
 
 ## Done
+
+### [x] [MED] /today — publish prereq hint gives no current-state signal for users with no username
+- pass: 30 (commit 53cd344)
+- viewport: both
+- category: comprehension
+- observation: the publish toggle is interactive for a new user with no public username set. the prereq hint reads "entries appear publicly only when a username is set in settings." — a conditional observation in the present tense that does not tell the user whether they currently have a username. a user who enables the toggle and saves receives no in-page signal that the entry is not visible anywhere.
+- evidence: capture text: "publish / when published, this entry appears on the public profile. / focus / save / entries appear publicly only when a username is set in settings." — toggle enabled and interactive; hint passive with no current-state signal.
+- suggested fix: change hint to "no public username is set — published entries will remain private until one is added in settings."
+- resolution: changed hint text in both main view and focus overlay of TodayEntry.tsx. 3 test assertions updated. Shipped at c013b8c.
 
 ### [x] [LOW] /today — task label "today's tiny task —" differs from anonymous preview "tiny task —"
 - pass: 5 (commit 4552045)
