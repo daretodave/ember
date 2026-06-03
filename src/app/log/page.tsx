@@ -97,7 +97,7 @@ export default async function LogPage() {
 
       {recentEntry && recentPrompt ? (
         <>
-          <article className={styles.entryView}>
+          <article className={styles.entryView} aria-label="most recent entry">
             <header className={styles.entryDate}>
               {formatDisplayDate(recentDate!)}
               {recentDate === today && ' · today'}
