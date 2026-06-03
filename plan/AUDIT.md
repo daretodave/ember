@@ -6,6 +6,26 @@
 
 ## Pending
 
+### [ ] [3.0] [needs-user-call] / — meta description "one prompt" while body reads "one small prompt"
+- category: seo
+- impact: 3
+- ease: 10
+- note: scored 2026-06-03 — from critique pass 32 (5d7505e); root layout meta reads "ember is a daily writing ritual — one prompt and one tiny task each morning." while body reads "one small prompt and one tiny task each morning."; two pending findings point in opposite directions — this one (add "small" to meta) and existing AUDIT.md [2.0] ("/ — lede says 'one small prompt' but the named concept throughout is 'prompt'" which proposes removing "small" from the body); [needs-user-call] on which direction to align
+- observation: the meta description lacks the modifier "small" that the body applies to "prompt." a search-result snippet differs from the visible page copy. a complementary pending finding [2.0] proposes removing "small" from the body lede to match the meta and the closing paragraph; the two fixes contradict each other.
+- evidence: src/app/layout.tsx line 36: `description: 'ember is a daily writing ritual — one prompt and one tiny task each morning.'`; src/app/page.tsx line 30: `one small prompt and one tiny task each morning.` — "small" present in body, absent in meta.
+- suggested fix: [needs-user-call] (a) add "small" to meta: "ember is a daily writing ritual — one small prompt and one tiny task each morning." or (b) remove "small" from body lede to match meta and closing paragraph — resolves both this and the existing [2.0].
+- source: /critique pass 32 (commit 5d7505e)
+
+### [ ] [2.0] /settings — "leave blank to stay private." uses second-person imperative in public username hint
+- category: voice
+- impact: 2
+- ease: 10
+- note: scored 2026-06-03 — from critique pass 32 (5d7505e); second sentence of the public username hint uses imperative mood; adjacent to existing [2.0] pending finding about "your public profile lives at /u/username" possessive in the same hint text; fixing together would rewrite the full hint as one string change; the "@" prefix finding from the same critique pass is a false positive — the product displays @username on public profile pages (src/app/u/[username]/page.tsx:103), making the settings @ prefix consistent with the product's own display convention; "@" not added to AUDIT.md as actionable
+- observation: the public username hint reads "your public profile lives at /u/username. leave blank to stay private." the second sentence "leave blank to stay private." is a second-person imperative. the voice guide prohibits second-person imperative copy.
+- evidence: src/app/settings/SettingsForm.tsx line 184: `your public profile lives at /u/username. leave blank to stay private.` — "leave blank" is the imperative clause.
+- suggested fix: change "leave blank to stay private." to "an empty field keeps the profile private." or address both hint sentences together in one change: "a public profile will appear at /u/username. an empty field keeps the profile private."
+- source: /critique pass 32 (commit 5d7505e)
+
 ### [x] [3.6] / — footer label "a low-friction writing ritual." uses product-management jargon
 - category: voice
 - impact: 4
