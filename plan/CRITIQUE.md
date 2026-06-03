@@ -128,7 +128,7 @@
 - suggested fix: change "the same prompt and task" to "the same prompt and tiny task" to match the product's labeling throughout the page.
 - source: browser
 
-### [LOW] / — "forgetting a day is fine" presupposes an existing practice for a pre-signup visitor
+### [x] [LOW] / — "forgetting a day is fine" presupposes an existing practice for a pre-signup visitor
 - pass: 27 (commit 43ffddf)
 - viewport: both
 - category: comprehension
@@ -136,6 +136,7 @@
 - evidence: body text: "there are no streaks to break, no reminders to dismiss, no notifications to mute. forgetting a day is fine. the log shows what is, not what isn't." — positioned before the sign-in CTA on the anonymous landing page.
 - suggested fix: reframe as a feature description rather than reassurance for an existing habit: "a missed day leaves no mark." — preserves the anti-streak signal without presupposing an established record.
 - source: browser
+- resolution: changed "forgetting a day is fine." to "a missed day leaves no mark." in src/app/page.tsx. Shipped at 346dd7b.
 
 ### [x] [LOW] /settings — display name field has no hint text; scope of the field is unclear for a new user
 - pass: 27 (commit 43ffddf)

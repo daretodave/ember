@@ -161,7 +161,7 @@
 - issue: [mirror-failed: loop-issue.mjs not present in scripts/]
 - resolution: added "sign-in links expire after 24 hours." to the 'sent' state confirmation paragraph in src/app/signin/page.tsx. Shipped at 1cb0860.
 
-### [ ] [2.1] / — "forgetting a day is fine" presupposes an existing practice for a pre-signup visitor
+### [x] [2.1] / — "forgetting a day is fine" presupposes an existing practice for a pre-signup visitor
 - category: external-critique
 - impact: 3
 - ease: 7
@@ -170,6 +170,8 @@
 - evidence: body text: "forgetting a day is fine." — positioned before the sign-in CTA on the anonymous landing page.
 - suggested fix: reframe as a feature description rather than reassurance for an existing habit: "a missed day leaves no mark." — preserves the anti-streak signal without presupposing an established record.
 - source: /critique pass 27 (commit a59273f)
+- issue: [mirror-failed: loop-issue.mjs not present in scripts/]
+- resolution: changed "forgetting a day is fine." to "a missed day leaves no mark." in src/app/page.tsx. Shipped at 346dd7b.
 
 ### [ ] [2.1] / — section subheader "this is what arrives each morning." uses "this" as an ambiguous pronoun
 - category: external-critique
