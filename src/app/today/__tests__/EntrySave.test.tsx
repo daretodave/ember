@@ -125,7 +125,7 @@ describe('EntrySave — publish hint', () => {
 })
 
 describe('EntrySave — save state', () => {
-  it('shows "saving..." and disables save button during in-flight request', async () => {
+  it('shows "saving." and disables save button during in-flight request', async () => {
     let settle: (v: Response) => void
     global.fetch = vi.fn().mockReturnValue(
       new Promise<Response>((r) => {
@@ -138,7 +138,7 @@ describe('EntrySave — save state', () => {
     clickSave()
 
     await waitFor(() => {
-      const savingBtns = screen.getAllByRole('button', { name: 'saving...' })
+      const savingBtns = screen.getAllByRole('button', { name: 'saving.' })
       expect(savingBtns[0]).toBeDisabled()
     })
 

@@ -43,7 +43,7 @@ describe('offline draft — load on mount', () => {
     })
 
     await waitFor(() => {
-      expect(screen.getAllByText('draft restored').length).toBeGreaterThan(0)
+      expect(screen.getAllByText('draft restored.').length).toBeGreaterThan(0)
     })
   })
 

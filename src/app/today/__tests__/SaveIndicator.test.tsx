@@ -44,10 +44,10 @@ describe('save indicator — idle-empty state (regression: a044cd0)', () => {
     indicators.forEach((el) => expect(el.textContent).toBe(''))
   })
 
-  it('never renders "unsaved" text on initial empty load', () => {
+  it('never renders "not yet saved." text on initial empty load', () => {
     render(<TodayEntry {...BASE_PROPS} initialEntry={null} />)
     const indicators = Array.from(document.querySelectorAll('[aria-live="polite"]'))
-    indicators.forEach((el) => expect(el.textContent).not.toContain('unsaved'))
+    indicators.forEach((el) => expect(el.textContent).not.toContain('not yet saved.'))
   })
 })
 

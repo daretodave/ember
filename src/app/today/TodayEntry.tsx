@@ -142,12 +142,12 @@ export function TodayEntry({ date, task, prompt, initialEntry, hasUsername = tru
   }, [date, saveState, taskDone])
 
   function saveIndicatorText() {
-    if (saveState === 'saving') return 'saving...'
+    if (saveState === 'saving') return 'saving.'
     if (!isOnline && saveState !== 'saved') return 'saved locally — will sync'
     if (saveState === 'saved' && savedAt) return formatSavedTime(savedAt)
-    if (saveState === 'draft') return 'draft restored'
+    if (saveState === 'draft') return 'draft restored.'
     if (saveState === 'idle' && response === '') return ''
-    return 'unsaved'
+    return 'not yet saved.'
   }
 
   return (
@@ -209,7 +209,7 @@ export function TodayEntry({ date, task, prompt, initialEntry, hasUsername = tru
             onClick={handleSave}
             title="entries are saved privately by default."
           >
-            {saveState === 'saving' ? 'saving...' : 'save'}
+            {saveState === 'saving' ? 'saving.' : 'save'}
           </button>
         </div>
       </div>
@@ -272,7 +272,7 @@ export function TodayEntry({ date, task, prompt, initialEntry, hasUsername = tru
                 tabIndex={isFocus ? 0 : -1}
                 title="entries are saved privately by default."
               >
-                {saveState === 'saving' ? 'saving...' : 'save'}
+                {saveState === 'saving' ? 'saving.' : 'save'}
               </button>
             </div>
           </div>
