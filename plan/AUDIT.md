@@ -18,7 +18,7 @@
 - issue: [mirror-failed: 2026-06-03T00:00:00Z]
 - resolution: changed "a low-friction writing ritual." to "a daily writing ritual." in src/app/page.tsx. Shipped at 260eb99.
 
-### [ ] [3.6] /log — most-recent entry article has no accessible name
+### [x] [3.6] /log — most-recent entry article has no accessible name
 - category: a11y
 - impact: 4
 - ease: 9
@@ -27,6 +27,8 @@
 - evidence: src/app/log/page.tsx line 100: `<article className={styles.entryView}>` — no aria-label attribute. the "showing the most recent." string at line 123 is outside the article.
 - suggested fix: add `aria-label="most recent entry"` to the article element so AT users understand its role in the page structure.
 - source: /critique pass 31 (commit c0b8bad)
+- issue: [mirror-failed: loop-issue.mjs not present in scripts/]
+- resolution: added aria-label="most recent entry" to the article element in src/app/log/page.tsx. Shipped at d6aed87.
 
 ### [ ] [3.6] /today — save indicator status strings are sentence fragments
 - category: voice

@@ -17,7 +17,7 @@
 - suggested fix: reframe to an impersonal construction, e.g. "a year ago —" followed by the excerpt directly, dropping "you wrote" entirely. preserves the temporal framing without direct address.
 - source: browser
 
-### [LOW] /log — most-recent entry article has no accessible name
+### [x] [LOW] /log — most-recent entry article has no accessible name
 - pass: 31 (commit c0b8bad)
 - viewport: both
 - category: a11y
@@ -25,6 +25,7 @@
 - evidence: src/app/log/page.tsx line 100: `<article className={styles.entryView}>` — no aria-label attribute. the "showing the most recent." string at line 123 is outside the article.
 - suggested fix: add `aria-label="most recent entry"` to the article element so AT users understand its role in the page structure.
 - source: browser
+- resolution: added aria-label="most recent entry" to the article element in src/app/log/page.tsx. Shipped at d6aed87.
 
 ### [LOW] /today — save indicator status strings are sentence fragments
 - pass: 31 (commit c0b8bad)
