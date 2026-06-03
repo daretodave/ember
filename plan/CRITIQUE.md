@@ -1,12 +1,57 @@
 # External-observer findings — Ember
 
-> Last pass: 2026-06-02 at commit 53cd344
-> Pass count: 30
+> Last pass: 2026-06-03 at commit c0b8bad
+> Pass count: 31
 
 > Written by `/critique` after walking the live site as a
 > fresh-eyes visitor. Drained by `/iterate`.
 
 ## Pending
+
+### [LOW] /today — OnThisDay component uses second-person "you wrote"
+- pass: 31 (commit c0b8bad)
+- viewport: both
+- category: voice
+- observation: the on-this-day component renders "{yearText}, you wrote —" followed by an excerpt from a prior-year entry. "you wrote" is a second-person construction that conflicts with the no-second-person voice posture applied throughout the site. the feature renders only when the user has a prior entry on the same calendar day in an earlier year; the bot account had no such entries so it did not appear in the capture, but the source copy is confirmed.
+- evidence: src/app/today/OnThisDay.tsx line 34: `{yearText}, you wrote &mdash;{' '}` — e.g. "a year ago, you wrote — [excerpt]". confirmed in test assertions at OnThisDay.test.tsx lines 78, 96.
+- suggested fix: reframe to an impersonal construction, e.g. "a year ago —" followed by the excerpt directly, dropping "you wrote" entirely. preserves the temporal framing without direct address.
+- source: browser
+
+### [LOW] /log — most-recent entry article has no accessible name
+- pass: 31 (commit c0b8bad)
+- viewport: both
+- category: a11y
+- observation: when entries exist, the most-recent entry is wrapped in an `<article>` element with no accessible name. screen reader users navigating by landmark or article role encounter the prompt text as the only heading inside the article, with no context identifying this as the most recent log entry. the "showing the most recent." prose sits outside the article boundary and has no programmatic association to it.
+- evidence: src/app/log/page.tsx line 100: `<article className={styles.entryView}>` — no aria-label attribute. the "showing the most recent." string at line 123 is outside the article.
+- suggested fix: add `aria-label="most recent entry"` to the article element so AT users understand its role in the page structure.
+- source: browser
+
+### [LOW] /today — save indicator status strings are sentence fragments
+- pass: 31 (commit c0b8bad)
+- viewport: both
+- category: voice
+- observation: three save-indicator status strings are sentence fragments without terminal periods, inconsistent with the voice spec's requirement that copy communicating state be a complete sentence. "saving..." uses an ellipsis convention; "unsaved" is a bare adjective; "draft restored" is a past-participle phrase with no period. the strings appear in the aria-live indicator span (read aloud by screen readers) and as button text, so their register affects both sighted and AT users. the "saved." indicator already has a period; the others are inconsistent with it.
+- evidence: src/app/today/TodayEntry.tsx lines 145, 148, 150: `return 'saving...'`, `return 'draft restored'`, `return 'unsaved'`; button label at lines 212, 275: `{saveState === 'saving' ? 'saving...' : 'save'}`.
+- suggested fix: change to "saving." (period, no ellipsis), "draft restored." and "not yet saved." — all complete sentences, consistent with "saved." and the voice spec.
+- source: browser
+
+### [LOW] /signin — page title separator inconsistency (· vs —)
+- pass: 31 (commit c0b8bad)
+- viewport: both
+- category: seo
+- observation: the root layout title uses an em dash as separator ("ember — a daily writing ritual") while all page-level titles use a middle dot ("ember · sign in", "ember · today", "ember · log", "ember · settings"). the two separator characters produce inconsistent visual rhythm across browser tabs and search engine result listings.
+- evidence: anonymous capture title "ember — a daily writing ritual" (homepage); "ember · sign in" (/signin); authenticated captures: "ember · today", "ember · log", "ember · settings". the root layout sets the default template with em dash; page-level layouts override with middle dot.
+- suggested fix: standardise on the middle dot across all titles — change the root layout to "ember · a daily writing ritual" — or adopt the em dash pattern in all page-level templates.
+- source: browser
+
+### [LOW] / — footer label "a low-friction writing ritual." uses product-management jargon
+- pass: 31 (commit c0b8bad)
+- viewport: both
+- category: voice
+- observation: the homepage footer label reads "a low-friction writing ritual." the compound modifier "low-friction" is product-management register — it describes the design posture in technical terms rather than experiential ones. the voice guide specifies plain and slightly bookish; the rest of the page uses concrete, experiential language ("ten minutes of intention", "a quiet personal log").
+- evidence: anonymous capture: "ember\na low-friction writing ritual." — footer section label immediately below the wordmark.
+- suggested fix: replace with a plain experiential descriptor, e.g. "a daily writing ritual." (dropping the modifier entirely) or "a quiet daily practice." to match the page's own register.
+- source: browser
 
 ### [LOW] / — Twitter card images array lacks alt text
 - pass: 30 (commit 53cd344)
