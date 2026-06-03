@@ -62,6 +62,26 @@ describe('SigninPage — sent state', () => {
     })
     expect(screen.queryByRole('button', { name: 'send the link' })).not.toBeInTheDocument()
   })
+
+  it('shows expiry notice in confirmation, not in footer', async () => {
+    global.fetch = vi.fn().mockResolvedValue({
+      ok: true,
+      json: async () => ({}),
+    } as Response)
+
+    render(<SigninPage />)
+    fireEvent.change(screen.getByLabelText('email'), {
+      target: { value: 'user@example.com' },
+    })
+    fireEvent.submit(document.querySelector('form')!)
+
+    await waitFor(() => {
+      expect(screen.getByRole('status')).toBeInTheDocument()
+    })
+
+    expect(screen.getByRole('status')).toHaveTextContent('sign-in links expire after 24 hours.')
+    expect(document.querySelector('footer')).not.toHaveTextContent('sign-in links expire after 24 hours.')
+  })
 })
 
 describe('SigninPage — error state', () => {

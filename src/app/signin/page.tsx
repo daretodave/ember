@@ -98,7 +98,7 @@ export default function SigninPage() {
 
       <footer className={styles.footer}>
         <span>ember</span>
-        <span>sign-in links expire after 24 hours.</span>
+        {state !== 'sent' && <span>sign-in links expire after 24 hours.</span>}
       </footer>
     </div>
   )
