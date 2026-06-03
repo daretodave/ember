@@ -567,7 +567,7 @@
 - source: browser
 - resolution: added "entering an email address for the first time creates an account." before the link-arrival trust signal in the CTA copy in src/app/page.tsx. Shipped at 631bd72.
 
-### [LOW] / — "no password is set" phrasing differs from sign-in page's "no password"
+### [x] [LOW] / — "no password is set" phrasing differs from sign-in page's "no password"
 - pass: 16 (commit 27718e9)
 - viewport: both
 - category: voice
@@ -575,6 +575,7 @@
 - evidence: home footer: "no password is set. no other mail is sent." — /signin helper: "no password. no other mail."
 - suggested fix: normalise the home page footer to "no password. no other mail is sent." or adopt the sign-in page's shorter form throughout.
 - source: browser
+- resolution: changed "no password is set. no other mail is sent." to "no password. no other mail." in src/app/page.tsx. Shipped at 0941397.
 
 ### [x] [LOW] /today — textarea placeholder "take your time." is second-person imperative
 - pass: 16 (commit 27718e9)

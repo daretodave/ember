@@ -1613,7 +1613,7 @@
 - issue: [mirror-failed: 2026-05-27T06:13:00Z]
 - resolution: changed placeholder to "there is no rush." on both main and focus-overlay textareas in src/app/today/TodayEntry.tsx. Shipped at ddafc86.
 
-### [ ] [2.7] / — "no password is set" phrasing differs from sign-in page's "no password"
+### [x] [2.7] / — "no password is set" phrasing differs from sign-in page's "no password"
 - category: external-critique
 - impact: 3
 - ease: 9
@@ -1621,6 +1621,8 @@
 - evidence: home footer: "no password is set. no other mail is sent." — /signin helper: "no password. no other mail."
 - suggested fix: normalise to "no password. no other mail." on the home page footer to match the shorter form used on /signin.
 - source: /critique pass 16 (commit 27718e9)
+- issue: [mirror-failed: 2026-06-03T16:12:00Z]
+- resolution: changed "no password is set. no other mail is sent." to "no password. no other mail." in src/app/page.tsx. Shipped at 0941397.
 
 ### [x] [2.7] /today — focus-mode overlay renders aria-modal="false" when inactive
 - category: external-critique
