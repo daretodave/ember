@@ -75,7 +75,7 @@ describe('OnThisDay component', () => {
 
   it('renders the year-ago text and opening clause', () => {
     render(<OnThisDay entry={BASE_ENTRY} todayYear={2026} />)
-    expect(screen.getByText(/a year ago, you wrote/)).toBeInTheDocument()
+    expect(screen.getByText(/a year ago/)).toBeInTheDocument()
     expect(screen.getByText('something I noticed that day')).toBeInTheDocument()
   })
 
@@ -93,6 +93,6 @@ describe('OnThisDay component', () => {
 
   it('renders "two years ago" for entry 2 years back', () => {
     render(<OnThisDay entry={{ ...BASE_ENTRY, date: '2024-05-21' }} todayYear={2026} />)
-    expect(screen.getByText(/two years ago, you wrote/)).toBeInTheDocument()
+    expect(screen.getByText(/two years ago/)).toBeInTheDocument()
   })
 })

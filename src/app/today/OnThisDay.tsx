@@ -31,7 +31,7 @@ export function OnThisDay({ entry, todayYear }: Props) {
   return (
     <aside className={styles.onThisDay}>
       <p className={styles.onThisDayText}>
-        {yearText}, you wrote &mdash;{' '}
+        {yearText} &mdash;{' '}
         <Link href={`/log/${entry.date}`} className={styles.onThisDayLink}>
           {clause}
         </Link>
