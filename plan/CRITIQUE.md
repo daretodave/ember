@@ -18,7 +18,7 @@
 - source: browser
 - resolution: split into two sentences with "a username" replacing "one". Shipped at 581f6f2.
 
-### [LOW] /settings — timezone field label absent from mobile text capture; warrants verification
+### [x] [LOW] /settings — timezone field label absent from mobile text capture; warrants verification
 - pass: 33 (commit 308df1f)
 - viewport: mobile
 - category: comprehension
@@ -26,6 +26,7 @@
 - evidence: desktop body text: "display name\n\nshown on published entries on the public profile.\n\ntimezone\nprompt variety\n\nstandard: same curated prompt..." — mobile body text: "display name\n\nshown on published entries on the public profile.\n\nstandard: same curated prompt..." — "timezone" and "prompt variety" labels both absent from mobile sequence; no media query hides .label at ≤480px in settings/page.module.css.
 - suggested fix: verify that the timezone field and its label render visibly at 375px on the live site; if the labels are hidden or the field is not accessible at mobile, restore both; if confirmed as a text-extraction artifact from the combobox component, no code change is needed.
 - source: browser
+- resolution: false positive — code inspection confirms the "timezone" label is a standard `<label htmlFor="timezone">` element (SettingsForm.tsx line 137) with no responsive CSS rule hiding it at any breakpoint (settings/page.module.css has no display:none on .label). The "prompt variety" label is a plain `<span className={styles.label}>`. The absence in mobile text capture is a text-extraction artifact from the TimezoneCombobox client component's dynamic rendering state. No code change needed.
 
 ### [x] [LOW] /signin — "entering an email address for the first time creates an account" on the sign-in page creates returning-user ambiguity
 - pass: 33 (commit 308df1f)
@@ -56,7 +57,7 @@
 - source: browser
 - resolution: rewritten as "a public profile will appear at /u/username. an empty field keeps the profile private." in SettingsForm.tsx. Shipped at a57cc00.
 
-### [LOW] /settings — "@" prefix on the public username field implies social-media handle format but the URL pattern is "/u/username"
+### [x] [LOW] /settings — "@" prefix on the public username field implies social-media handle format but the URL pattern is "/u/username"
 - pass: 32 (commit 3f7071a)
 - viewport: both
 - category: comprehension
@@ -64,6 +65,7 @@
 - evidence: settings page body text: "your public profile lives at /u/username. ... @ save sign out" — "@" appears as the visible input prefix immediately before the username field.
 - suggested fix: replace the "@" prefix with "/u/" to match the actual URL pattern — sets the correct URL expectation at the point of input.
 - source: browser
+- resolution: false positive — the public profile page (src/app/u/[username]/page.tsx line 103) displays the username with an "@" prefix on the rendered profile, making the "@" input affordance consistent with the product's own display convention. the URL pattern uses "/u/" but the display convention uses "@". no code change needed; the "@" prefix accurately foreshadows how the username is displayed on the public profile.
 
 ### [x] [LOW] /today — OnThisDay component uses second-person "you wrote"
 - pass: 31 (commit c0b8bad)

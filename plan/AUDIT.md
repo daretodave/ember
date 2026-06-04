@@ -201,7 +201,7 @@
 - issue: [mirror-failed: loop-issue.mjs not present in scripts/]
 - resolution: changed "one small task" to "one tiny task" in all three metadata fields (description, openGraph.description, twitter.description) in src/app/layout.tsx. Shipped at 75cf391.
 
-### [ ] [2.1] / — H1 uses semantic `<em>` for typographic italics on "intention"
+### [x] [2.1] / — H1 uses semantic `<em>` for typographic italics on "intention"
 - category: a11y
 - impact: 3
 - ease: 7
@@ -211,6 +211,7 @@
 - suggested fix: replace `<em>` with a `<span>` styled with a CSS italic class (e.g. `styles.pitchAccent`) to remove the semantic stress signal from the accessible tree while preserving the italic rendering. add `.pitchAccent { font-style: italic; }` to the page's CSS module.
 - source: /critique pass 29 (commit e9a5f15)
 - issue: [mirror-failed: loop-issue.mjs not present in scripts/]
+- resolution: replaced `<em>intention</em>` with `<span className={styles.pitchAccent}>intention</span>` in src/app/page.tsx; renamed `.pitch em` CSS rule to `.pitchAccent` in page.module.css. Shipped at 81072fa.
 
 ### [ ] [2.0] /signin — meta description uses second-person possessive "your email"
 - category: voice
