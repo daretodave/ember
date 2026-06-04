@@ -68,7 +68,6 @@ export default function SigninPage() {
                   id="email"
                   type="email"
                   placeholder="email address"
-                  autoFocus
                   required
                   disabled={state === 'sending'}
                 />
