@@ -43,24 +43,26 @@ export default function LandingPage() {
             <span className={styles.sevenMeta}>one prompt and one tiny task, every morning.</span>
           </div>
 
-          {days.map((day) => (
-            <div
-              key={day.date.toISOString()}
-              className={`${styles.day} ${day.isToday ? styles.dayToday : ''}`}
-            >
-              <span className={styles.dayDate}>
-                {day.label}
-                <br />
-                {day.shortDate}
-              </span>
-              <div className={styles.dayBody}>
-                <p className={styles.dayPrompt}>{day.prompt}</p>
-                <p className={styles.dayTask}>
-                  tiny task — {day.task}
-                </p>
-              </div>
-            </div>
-          ))}
+          <ul className={styles.sevenList}>
+            {days.map((day) => (
+              <li
+                key={day.date.toISOString()}
+                className={`${styles.day} ${day.isToday ? styles.dayToday : ''}`}
+              >
+                <span className={styles.dayDate}>
+                  {day.label}
+                  <br />
+                  {day.shortDate}
+                </span>
+                <div className={styles.dayBody}>
+                  <p className={styles.dayPrompt}>{day.prompt}</p>
+                  <p className={styles.dayTask}>
+                    tiny task — {day.task}
+                  </p>
+                </div>
+              </li>
+            ))}
+          </ul>
         </section>
 
         <section className={styles.closing}>

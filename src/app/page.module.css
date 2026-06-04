@@ -103,6 +103,12 @@
   padding: var(--space-7) var(--space-6) var(--space-8);
 }
 
+.sevenList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
 .sevenHead {
   display: flex;
   align-items: baseline;
