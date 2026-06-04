@@ -65,7 +65,7 @@ export default function LandingPage() {
 
         <section className={styles.closing}>
           <p>
-            the same prompt and task arrive for everyone on a given day.{' '}
+            the same prompt and tiny task arrive for everyone on a given day.{' '}
             ember does not personalize your morning.
           </p>
           <p>
