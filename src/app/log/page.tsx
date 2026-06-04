@@ -79,6 +79,7 @@ export default async function LogPage() {
       <main id="main-content">
       <section className={styles.mosaicWrap}>
         <h1 className={styles.mosaicMeta}>the past 60 days</h1>
+        <a href="#log-content" className="skip-link">skip to entries</a>
         <LogMosaic tiles={tiles} />
         {written > 0 && (
           <p className={styles.mosaicCount}>
@@ -91,7 +92,7 @@ export default async function LogPage() {
         )}
       </section>
 
-      <div className={styles.divider}>
+      <div id="log-content" className={styles.divider}>
         <div className={styles.dividerLine} />
       </div>
 
