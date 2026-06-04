@@ -6,6 +6,18 @@
 
 ## Pending
 
+### [x] [2.4] /settings — prompt variety radio inputs carry no per-option aria-describedby
+- category: a11y
+- impact: 3
+- ease: 8
+- note: scored 2026-06-04 — from critique pass 34 (d754637); the "standard" and "personalized" radio inputs share a single concatenated hint paragraph with no per-option aria-describedby; a screen reader user focused on either radio hears only its name and position ("standard, radio button, 1 of 2") with no programmatic access to the per-option description; fix is to wrap each sentence of the hint in a span with a unique id, then add aria-describedby to each radio input referencing its respective span id
+- observation: the "standard" and "personalized" radio inputs share a single concatenated hint paragraph: "standard: same curated prompt for everyone each day. personalized: a unique prompt generated from recent entries." no per-option aria-describedby links either radio input to its portion of the hint. a screen reader user focused on either radio hears only its name and position ("standard, radio button, 1 of 2") with no programmatic access to the per-option description.
+- evidence: src/app/settings/SettingsForm.tsx: single `<p className={styles.hint}>` carries both descriptions with no id attributes; neither radio input carries aria-describedby. the radiogroup uses aria-label="prompt variety" at group level only.
+- suggested fix: split the hint into two elements with ids (e.g. id="desc-standard" and id="desc-personalized") and add aria-describedby="desc-standard" to the standard radio and aria-describedby="desc-personalized" to the personalized radio.
+- source: /critique pass 34 (commit d754637)
+- issue: [mirror-failed: loop-issue.mjs not present in scripts/]
+- resolution: wrapped each hint sentence in a span with id="desc-standard" / id="desc-personalized"; added aria-describedby to each radio input in SettingsForm.tsx. Shipped at dfa5281.
+
 ### [x] [3.6] / — 7-day prompt preview renders as plain divs with no list semantics
 - category: a11y
 - impact: 4

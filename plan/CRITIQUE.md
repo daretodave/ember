@@ -28,7 +28,7 @@
 - source: browser
 - resolution: changed 'saving...' to 'saving.' in SettingsForm.tsx line 219 and EditEntry.tsx line 138; SettingsForm.test.tsx assertion updated. Shipped at 5699c54.
 
-### [LOW] /settings — prompt variety radio inputs carry no per-option aria-describedby
+### [x] [LOW] /settings — prompt variety radio inputs carry no per-option aria-describedby
 - pass: 34 (commit d754637)
 - viewport: both
 - category: a11y
@@ -36,6 +36,7 @@
 - evidence: src/app/settings/SettingsForm.tsx: single `<p className={styles.hint}>` carries both descriptions with no id attributes; neither radio input carries aria-describedby. the radiogroup uses aria-label="prompt variety" at group level only.
 - suggested fix: split the hint into two elements with ids (e.g. `id="desc-standard"` and `id="desc-personalized"`) and add `aria-describedby="desc-standard"` to the standard radio and `aria-describedby="desc-personalized"` to the personalized radio.
 - source: browser
+- resolution: wrapped each hint sentence in a span with id="desc-standard" / id="desc-personalized"; added aria-describedby to each radio input in SettingsForm.tsx.
 
 ### [x] [LOW] /signin — autoFocus on email input bypasses page context for screen reader users
 - pass: 34 (commit d754637)
