@@ -189,7 +189,7 @@
 - source: browser
 - resolution: added "sign-in links expire after 24 hours." to the 'sent' state confirmation paragraph in src/app/signin/page.tsx. Shipped at 1cb0860.
 
-### [LOW] / — section subheader "this is what arrives each morning." uses "this" as an ambiguous pronoun
+### [x] [LOW] / — section subheader "this is what arrives each morning." uses "this" as an ambiguous pronoun
 - pass: 28 (commit 64a33db)
 - viewport: both
 - category: comprehension
@@ -197,6 +197,7 @@
 - evidence: capture text: "the next seven days\nthis is what arrives each morning.\ntoday\nMon 1 Jun\n\nwhat's the last time you were in a space..." — seven date blocks follow the ambiguous "this."
 - suggested fix: replace with an explicit framing such as "a prompt and a tiny task, arriving each morning — here are the next seven." or simply "one prompt and one tiny task, every morning." to make the daily-delivery model unambiguous before the list.
 - source: browser
+- resolution: changed to "one prompt and one tiny task, every morning." in src/app/page.tsx. Shipped at 6381eb1.
 
 ### [LOW] / — closing paragraph uses "task" where all other occurrences use "tiny task"
 - pass: 27 (commit 43ffddf)

@@ -256,7 +256,7 @@
 - issue: [mirror-failed: loop-issue.mjs not present in scripts/]
 - resolution: changed "forgetting a day is fine." to "a missed day leaves no mark." in src/app/page.tsx. Shipped at 346dd7b.
 
-### [ ] [2.1] / — section subheader "this is what arrives each morning." uses "this" as an ambiguous pronoun
+### [x] [2.1] / — section subheader "this is what arrives each morning." uses "this" as an ambiguous pronoun
 - category: external-critique
 - impact: 3
 - ease: 7
@@ -265,6 +265,8 @@
 - evidence: capture text: "the next seven days\nthis is what arrives each morning.\ntoday\n..." — seven date blocks follow the ambiguous "this."
 - suggested fix: replace with explicit framing such as "one prompt and one tiny task, every morning." to make the daily-delivery model unambiguous before the list.
 - source: /critique pass 28 (commit 64a33db)
+- issue: [mirror-failed: loop-issue.mjs not present in scripts/]
+- resolution: changed "this is what arrives each morning." to "one prompt and one tiny task, every morning." in src/app/page.tsx. Shipped at 6381eb1.
 
 ### [ ] [2.0] / — closing paragraph uses "task" where all other occurrences use "tiny task"
 - category: external-critique
