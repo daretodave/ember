@@ -101,7 +101,7 @@ describe('SettingsForm — unsaved-changes guard', () => {
 })
 
 describe('SettingsForm — save state', () => {
-  it('disables save button and shows "saving..." while request is in flight', async () => {
+  it('disables save button and shows "saving." while request is in flight', async () => {
     let settle: (v: Response) => void
     global.fetch = vi.fn().mockReturnValue(
       new Promise<Response>((r) => {
@@ -113,7 +113,7 @@ describe('SettingsForm — save state', () => {
     fireEvent.submit(document.querySelector('form')!)
 
     await waitFor(() => {
-      expect(screen.getByRole('button', { name: 'saving...' })).toBeDisabled()
+      expect(screen.getByRole('button', { name: 'saving.' })).toBeDisabled()
     })
 
     settle!({ ok: true, json: async () => ({}) } as Response)

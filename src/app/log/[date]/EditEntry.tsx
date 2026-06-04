@@ -135,7 +135,7 @@ export function EditEntry({ date, task, initialEntry }: Props) {
               disabled={saveState === 'saving'}
               onClick={handleSave}
             >
-              {saveState === 'saving' ? 'saving...' : 'save'}
+              {saveState === 'saving' ? 'saving.' : 'save'}
             </button>
           </div>
         </div>

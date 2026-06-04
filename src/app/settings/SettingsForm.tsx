@@ -216,7 +216,7 @@ export function SettingsForm({ displayName, username, timezone, usePersonalizedP
           disabled={saveState === 'saving'}
           title="saves display name, timezone, prompt variety, and username."
         >
-          {saveState === 'saving' ? 'saving...' : 'save'}
+          {saveState === 'saving' ? 'saving.' : 'save'}
         </button>
       </div>
     </form>
