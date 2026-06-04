@@ -164,7 +164,7 @@
 - suggested fix: change aria-label to "an example of 60 days tracked" or "illustrative writing log" to accurately describe the decorative, non-personal nature of the element for screen reader users arriving anonymously.
 - source: browser
 
-### [LOW] /signin — meta description uses second-person possessive "your email"
+### [x] [LOW] /signin — meta description uses second-person possessive "your email"
 - pass: 29 (commit e9a5f15)
 - viewport: both
 - category: seo
@@ -172,6 +172,7 @@
 - evidence: src/app/signin/layout.tsx line 5: `description: 'sign in to ember with a link sent to your email — no password required.'` — "your email" is the only possessive remaining in the site's meta description set.
 - suggested fix: change to "sign in to ember with a link sent by email — no password required." — removes the possessive while preserving the meaning.
 - source: browser
+- resolution: changed "sent to your email" to "sent by email" in src/app/signin/layout.tsx. Shipped at 01c4324.
 
 ### [x] [LOW] / — root layout meta description uses "small task" instead of branded "tiny task"
 - pass: 29 (commit e9a5f15)

@@ -213,16 +213,17 @@
 - issue: [mirror-failed: loop-issue.mjs not present in scripts/]
 - resolution: replaced `<em>intention</em>` with `<span className={styles.pitchAccent}>intention</span>` in src/app/page.tsx; renamed `.pitch em` CSS rule to `.pitchAccent` in page.module.css. Shipped at 81072fa.
 
-### [ ] [2.0] /signin — meta description uses second-person possessive "your email"
+### [x] [3.0] /signin — meta description uses second-person possessive "your email"
 - category: voice
-- impact: 2
+- impact: 3
 - ease: 10
-- note: scored 2026-06-02 — from critique pass 29 (e9a5f15); the /signin meta description reads "sign in to ember with a link sent to your email — no password required." — "your email" is the only possessive remaining in the site's meta description set; all other page meta descriptions now avoid direct address; single string replacement in src/app/signin/layout.tsx
+- note: re-scored 2026-06-04 — impact raised from 2 to 3; the /signin page is the primary auth gateway visited by every user on every sign-in; its meta description appears in search results and bookmarks for all returning users; "your email" is the last remaining possessive in the site's meta description set; all five other page meta descriptions (/today, /log, /settings, /log/[date], root layout) now avoid direct address; originally scored 2026-06-02 from critique pass 29 (e9a5f15)
 - observation: the /signin page meta description reads "sign in to ember with a link sent to your email — no password required." the phrase "your email" is a second-person possessive. the de-possessiving pattern applied to /log, /today, /settings, and /log/[date] meta descriptions was not applied to this description when it was written. every other page meta description on the site now avoids direct address; /signin is the remaining outlier.
 - evidence: src/app/signin/layout.tsx line 5: `description: 'sign in to ember with a link sent to your email — no password required.'` — "your email" is the only possessive remaining in the site's meta description set.
 - suggested fix: change to "sign in to ember with a link sent by email — no password required." — removes the possessive while preserving the meaning.
 - source: /critique pass 29 (commit e9a5f15)
 - issue: [mirror-failed: loop-issue.mjs not present in scripts/]
+- resolution: changed "sent to your email" to "sent by email" in src/app/signin/layout.tsx. Shipped at 01c4324.
 
 ### [ ] [2.0] /settings — "view your public profile" link text uses second-person possessive
 - category: voice
