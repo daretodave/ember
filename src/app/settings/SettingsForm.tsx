@@ -148,7 +148,8 @@ export function SettingsForm({ displayName, username, timezone, usePersonalizedP
       <div className={styles.field}>
         <span className={styles.label}>prompt variety</span>
         <p className={styles.hint}>
-          standard: same curated prompt for everyone each day. personalized: a unique prompt generated from recent entries.
+          <span id="desc-standard">standard: same curated prompt for everyone each day.</span>{' '}
+          <span id="desc-personalized">personalized: a unique prompt generated from recent entries.</span>
         </p>
         <div className={styles.radioGroup} role="radiogroup" aria-label="prompt variety">
           <label className={`${styles.radioOption} ${!personalizedVal ? styles.radioOptionActive : ''}`}>
@@ -159,6 +160,7 @@ export function SettingsForm({ displayName, username, timezone, usePersonalizedP
               checked={!personalizedVal}
               onChange={() => setPersonalizedVal(false)}
               className={styles.radioInput}
+              aria-describedby="desc-standard"
             />
             standard
           </label>
@@ -170,6 +172,7 @@ export function SettingsForm({ displayName, username, timezone, usePersonalizedP
               checked={personalizedVal}
               onChange={() => setPersonalizedVal(true)}
               className={styles.radioInput}
+              aria-describedby="desc-personalized"
             />
             personalized
           </label>
