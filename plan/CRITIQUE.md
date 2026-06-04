@@ -1,12 +1,57 @@
 # External-observer findings — Ember
 
-> Last pass: 2026-06-04 at commit 308df1f
-> Pass count: 33
+> Last pass: 2026-06-04 at commit d754637
+> Pass count: 34
 
 > Written by `/critique` after walking the live site as a
 > fresh-eyes visitor. Drained by `/iterate`.
 
 ## Pending
+
+### [MED] /log — 60-tile mosaic has no bypass mechanism for keyboard-only users
+- pass: 34 (commit d754637)
+- viewport: both
+- category: a11y
+- observation: the /log page renders the 60-day mosaic as 60 individual Link elements. a keyboard-only user must Tab through all 60 links to reach any content below the mosaic (empty-state paragraph or most-recent entry). the skip-to-content link at the top of the page targets #main-content, which begins at the mosaic section — it provides no bypass past the mosaic itself.
+- evidence: src/app/log/LogMosaic.tsx: tiles.map renders 60 Link elements unconditionally, each with aria-label='[date] — [state]'. no skip link, id='log-content', or aria bypass mechanism exists between the mosaic and the content below it.
+- suggested fix: add a visually-hidden skip link immediately before the mosaic (e.g. `<a href="#log-content" className="skipLink">skip to entries</a>`) and add `id="log-content"` to the element wrapping the content below the mosaic.
+- source: browser
+
+### [LOW] /settings — in-flight save button label uses "saving..." (ellipsis) while /today uses "saving." (period)
+- pass: 34 (commit d754637)
+- viewport: both
+- category: voice
+- observation: the settings form save button changes to "saving..." during an in-flight request; the edit-entry save button at /log/[date] does the same. the /today entry form was updated in pass 31 to use "saving." (period, no ellipsis) for voice consistency — SettingsForm.tsx and EditEntry.tsx were not updated in that pass. the result is an inconsistent in-flight label across the product's three save surfaces.
+- evidence: src/app/settings/SettingsForm.tsx:219: `'saving...'`; src/app/log/[date]/EditEntry.tsx:138: `'saving...'` — compare src/app/today/TodayEntry.tsx:212: `'saving.'` (period).
+- suggested fix: change `'saving...'` to `'saving.'` in SettingsForm.tsx line 219 and EditEntry.tsx line 138 to match the /today convention and the voice spec preference for complete sentences with periods.
+- source: browser
+
+### [LOW] /settings — prompt variety radio inputs carry no per-option aria-describedby
+- pass: 34 (commit d754637)
+- viewport: both
+- category: a11y
+- observation: the "standard" and "personalized" radio inputs share a single concatenated hint paragraph: "standard: same curated prompt for everyone each day. personalized: a unique prompt generated from recent entries." no per-option aria-describedby links either radio input to its portion of the hint. a screen reader user focused on either radio hears only its name and position ("standard, radio button, 1 of 2") with no programmatic access to the per-option description.
+- evidence: src/app/settings/SettingsForm.tsx: single `<p className={styles.hint}>` carries both descriptions with no id attributes; neither radio input carries aria-describedby. the radiogroup uses aria-label="prompt variety" at group level only.
+- suggested fix: split the hint into two elements with ids (e.g. `id="desc-standard"` and `id="desc-personalized"`) and add `aria-describedby="desc-standard"` to the standard radio and `aria-describedby="desc-personalized"` to the personalized radio.
+- source: browser
+
+### [LOW] /signin — autoFocus on email input bypasses page context for screen reader users
+- pass: 34 (commit d754637)
+- viewport: both
+- category: a11y
+- observation: the email input on /signin carries the autoFocus attribute, which moves browser focus to the input immediately on page load. a screen reader user arriving at the page never hears the H1 "sign in." or the reassurance paragraph before being announced into the email input — they encounter "email, edit text" with no surrounding page context.
+- evidence: src/app/signin/page.tsx:71: `autoFocus` on the email `<input>`. page structure: H1 "sign in." → autoFocused email input → reassurance paragraph. focus bypasses the heading and context on load.
+- suggested fix: remove autoFocus from the email input; if sighted-user focus convenience is desired, apply it via a useEffect + ref after mount so the heading is announced first, or focus the skip-to-content mechanism instead.
+- source: browser
+
+### [LOW] / — 7-day prompt preview renders as plain divs with no list semantics
+- pass: 34 (commit d754637)
+- viewport: both
+- category: a11y
+- observation: the seven upcoming-day blocks on the landing page are rendered as `<div>` elements inside a `<section>`. no list role is applied to the container and no listitem role to each day. screen reader users cannot use list navigation commands to jump between the seven items or hear the total count ("item 1 of 7").
+- evidence: src/app/page.tsx: `days.map` renders each day as `<div>` inside `<section className={styles.seven}>` — no `<ul>`/`<li>` elements, no `role="list"` on the container, no `role="listitem"` on day elements.
+- suggested fix: change the day container to a `<ul>` (or add `role="list"`) and each day `<div>` to `<li>` (or add `role="listitem"`), so AT users can navigate by list item and hear the item count.
+- source: browser
 
 ### [x] [LOW] /today — prereq hint uses ambiguous pronoun "one" as username referent
 - pass: 33 (commit 308df1f)
