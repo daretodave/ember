@@ -26,7 +26,7 @@
 - suggested fix: verify that the timezone field and its label render visibly at 375px on the live site; if the labels are hidden or the field is not accessible at mobile, restore both; if confirmed as a text-extraction artifact from the combobox component, no code change is needed.
 - source: browser
 
-### [LOW] /signin — "entering an email address for the first time creates an account" on the sign-in page creates returning-user ambiguity
+### [x] [LOW] /signin — "entering an email address for the first time creates an account" on the sign-in page creates returning-user ambiguity
 - pass: 33 (commit 308df1f)
 - viewport: both
 - category: comprehension
@@ -34,6 +34,7 @@
 - evidence: /signin body text: "a sign-in link is sent to this address. no password. no other mail. entering an email address for the first time creates an account." — the "for the first time" conditional does not distinguish existing-account sign-in from new account creation; returning users at the sign-in step read this as ambiguity about their account state.
 - suggested fix: change to two declarative sentences covering both visitor types: "a known address receives a sign-in link. a new address creates an account." — removes the "for the first time" conditional that confuses returning visitors; same fix proposed for "/" in the auth funnel candidate.
 - source: browser
+- resolution: replaced "entering an email address for the first time creates an account." with "a new address creates an account." in src/app/signin/page.tsx. Shipped at ade50e4.
 
 ### [LOW] / — meta description says "one prompt" while page body says "one small prompt"
 - pass: 32 (commit 3f7071a)

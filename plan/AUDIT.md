@@ -6,6 +6,18 @@
 
 ## Pending
 
+### [x] [3.6] /signin — "entering an email address for the first time creates an account" confuses returning users
+- category: external-critique
+- impact: 4
+- ease: 9
+- note: scored 2026-06-04 — from critique pass 33 (308df1f); the reassurance paragraph reads "...entering an email address for the first time creates an account." — the "for the first time" conditional does not distinguish existing-account sign-in from new account creation; returning users at the sign-in step read this as ambiguity about their account state; fix is a single sentence replacement in src/app/signin/page.tsx line 93
+- observation: a returning user who already has an account and is signing in reads "for the first time" and may worry their email address will create a duplicate account. the landing page has a related PHASE_CANDIDATES entry (auth funnel UX clarity candidate) that covers "/" only; /signin is left with the unresolved copy.
+- evidence: src/app/signin/page.tsx line 93: `entering an email address for the first time creates an account.` — the "for the first time" conditional conflates two flows (sign-in vs account creation) into one conditional clause.
+- suggested fix: replace the last sentence of the reassurance paragraph with "a new address creates an account." — removes the "for the first time" phrasing that confuses returning users; retains "a sign-in link is sent to this address. no password. no other mail." which remain accurate for both flows.
+- source: /critique pass 33 (commit 308df1f)
+- issue: [mirror-failed: loop-issue.mjs not present in scripts/]
+- resolution: replaced "entering an email address for the first time creates an account." with "a new address creates an account." in src/app/signin/page.tsx. Shipped at ade50e4.
+
 ### [x] [3.0] / — closing paragraph uses "task" where all other occurrences use "tiny task"
 - category: voice
 - impact: 3
