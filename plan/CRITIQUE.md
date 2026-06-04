@@ -8,7 +8,7 @@
 
 ## Pending
 
-### [LOW] /today — prereq hint uses ambiguous pronoun "one" as username referent
+### [x] [LOW] /today — prereq hint uses ambiguous pronoun "one" as username referent
 - pass: 33 (commit 308df1f)
 - viewport: both
 - category: comprehension
@@ -16,6 +16,7 @@
 - evidence: body text: "no public username is set — published entries will remain private until one is added in settings." — "one" has no explicit antecedent; present in both main view and focus overlay at TodayEntry.tsx lines 219–220 and 282–283.
 - suggested fix: split into two sentences and name the referent explicitly: "no public username is set. published entries will remain private until a username is added in settings."
 - source: browser
+- resolution: split into two sentences with "a username" replacing "one". Shipped at 581f6f2.
 
 ### [LOW] /settings — timezone field label absent from mobile text capture; warrants verification
 - pass: 33 (commit 308df1f)

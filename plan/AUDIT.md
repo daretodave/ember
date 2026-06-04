@@ -6,6 +6,18 @@
 
 ## Pending
 
+### [x] [3.0] /today — prereq hint uses ambiguous pronoun "one" as username referent
+- category: external-critique
+- impact: 3
+- ease: 10
+- note: scored 2026-06-04 — from critique pass 33 (308df1f); the publish prereq hint reads "no public username is set — published entries will remain private until one is added in settings." the pronoun "one" has no explicit antecedent in the sentence — its intended referent is "a public username" but a reader scanning the compound sentence could parse "one" as a count or a person. the em-dash compound structure shifts subject mid-clause: "published entries" (plural) → implied "username" (singular) across the break. fix is to split into two sentences and name the referent explicitly.
+- observation: the publish prereq hint reads "no public username is set — published entries will remain private until one is added in settings." the pronoun "one" lacks a clear antecedent — its intended referent is "a public username" but a reader scanning the compound sentence could momentarily parse "one" as a count or a person. present in both main view and focus overlay.
+- evidence: TodayEntry.tsx lines 219–220 and 282–283: `no public username is set — published entries will remain private until one is added in settings.` — "one" has no explicit antecedent.
+- suggested fix: split into two sentences and name the referent explicitly: "no public username is set. published entries will remain private until a username is added in settings."
+- source: /critique pass 33 (commit 308df1f)
+- issue: #34
+- resolution: split into two sentences and replaced "one" with "a username": "no public username is set. published entries will remain private until a username is added in settings." Changed in both main view and focus overlay of TodayEntry.tsx. Shipped at 581f6f2.
+
 ### [x] [3.6] /signin — "entering an email address for the first time creates an account" confuses returning users
 - category: external-critique
 - impact: 4
