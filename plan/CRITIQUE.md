@@ -17,7 +17,7 @@
 - suggested fix: change meta description to "ember is a daily writing ritual — one small prompt and one tiny task each morning." to match the body phrasing exactly.
 - source: browser
 
-### [LOW] /settings — "leave blank to stay private." uses second-person imperative in the public username hint
+### [x] [LOW] /settings — "leave blank to stay private." uses second-person imperative in the public username hint
 - pass: 32 (commit 3f7071a)
 - viewport: both
 - category: voice
@@ -25,6 +25,7 @@
 - evidence: settings page body text: "your public profile lives at /u/username. leave blank to stay private." — "leave blank" is the imperative construction.
 - suggested fix: change "leave blank to stay private." to "an empty field keeps the profile private." — removes the imperative while preserving the intent.
 - source: browser
+- resolution: rewritten as "a public profile will appear at /u/username. an empty field keeps the profile private." in SettingsForm.tsx. Shipped at a57cc00.
 
 ### [LOW] /settings — "@" prefix on the public username field implies social-media handle format but the URL pattern is "/u/username"
 - pass: 32 (commit 3f7071a)
@@ -103,7 +104,7 @@
 - suggested fix: render a short description element below the focus button in the DOM, parallel to the publish description ("enters a distraction-free writing view."), so touch users see a plain-language explanation without hover.
 - source: browser
 
-### [LOW] /settings — "your public profile lives at /u/username" uses second-person possessive
+### [x] [LOW] /settings — "your public profile lives at /u/username" uses second-person possessive
 - pass: 30 (commit 53cd344)
 - viewport: both
 - category: voice
@@ -111,6 +112,7 @@
 - evidence: settings capture: "your public profile lives at /u/username. leave blank to stay private." — "your public profile" is the possessive portion; "leave blank" is the imperative portion filed separately at pass 14.
 - suggested fix: change to "a public profile will appear at /u/username." to remove the possessive while retaining the url example.
 - source: browser
+- resolution: addressed as part of combined hint rewrite in SettingsForm.tsx. Shipped at a57cc00.
 
 ### [x] [LOW] /signin — "sign-in links expire after 24 hours." appears twice simultaneously after submission
 - pass: 30 (commit 53cd344)

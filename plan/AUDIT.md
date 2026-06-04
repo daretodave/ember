@@ -16,7 +16,7 @@
 - suggested fix: [needs-user-call] (a) add "small" to meta: "ember is a daily writing ritual — one small prompt and one tiny task each morning." or (b) remove "small" from body lede to match meta and closing paragraph — resolves both this and the existing [2.0].
 - source: /critique pass 32 (commit 5d7505e)
 
-### [ ] [2.0] /settings — "leave blank to stay private." uses second-person imperative in public username hint
+### [x] [2.0] /settings — "leave blank to stay private." uses second-person imperative in public username hint
 - category: voice
 - impact: 2
 - ease: 10
@@ -25,6 +25,8 @@
 - evidence: src/app/settings/SettingsForm.tsx line 184: `your public profile lives at /u/username. leave blank to stay private.` — "leave blank" is the imperative clause.
 - suggested fix: change "leave blank to stay private." to "an empty field keeps the profile private." or address both hint sentences together in one change: "a public profile will appear at /u/username. an empty field keeps the profile private."
 - source: /critique pass 32 (commit 5d7505e)
+- issue: [mirror-failed: loop-issue.mjs not present in scripts/]
+- resolution: rewritten as "a public profile will appear at /u/username. an empty field keeps the profile private." in SettingsForm.tsx. Shipped at a57cc00.
 
 ### [x] [3.6] / — footer label "a low-friction writing ritual." uses product-management jargon
 - category: voice
@@ -110,7 +112,7 @@
 - issue: [mirror-failed: loop-issue.mjs not present in scripts/]
 - resolution: conditionally render footer expiry span only when state !== 'sent' in src/app/signin/page.tsx; test added asserting notice appears in role="status" and is absent from footer in sent state. Shipped at fce61a6.
 
-### [ ] [2.0] /settings — hint text "your public profile lives at /u/username" uses second-person possessive
+### [x] [2.0] /settings — hint text "your public profile lives at /u/username" uses second-person possessive
 - category: external-critique
 - impact: 2
 - ease: 10
@@ -119,6 +121,7 @@
 - evidence: settings capture: "your public profile lives at /u/username. leave blank to stay private." — "your public profile" is the possessive portion.
 - suggested fix: change to "a public profile will appear at /u/username." to remove the possessive while retaining the url example.
 - source: /critique pass 30 (commit fd83207)
+- resolution: addressed as part of combined hint rewrite in SettingsForm.tsx. Shipped at a57cc00.
 
 ### [ ] [1.8] / — Twitter card images array lacks alt text
 - category: seo
