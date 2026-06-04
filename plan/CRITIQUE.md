@@ -8,7 +8,7 @@
 
 ## Pending
 
-### [MED] /log — 60-tile mosaic has no bypass mechanism for keyboard-only users
+### [x] [MED] /log — 60-tile mosaic has no bypass mechanism for keyboard-only users
 - pass: 34 (commit d754637)
 - viewport: both
 - category: a11y
@@ -16,6 +16,7 @@
 - evidence: src/app/log/LogMosaic.tsx: tiles.map renders 60 Link elements unconditionally, each with aria-label='[date] — [state]'. no skip link, id='log-content', or aria bypass mechanism exists between the mosaic and the content below it.
 - suggested fix: add a visually-hidden skip link immediately before the mosaic (e.g. `<a href="#log-content" className="skipLink">skip to entries</a>`) and add `id="log-content"` to the element wrapping the content below the mosaic.
 - source: browser
+- resolution: added `<a href="#log-content" className="skip-link">skip to entries</a>` before LogMosaic and id="log-content" on the divider div in src/app/log/page.tsx. Shipped at d53b342.
 
 ### [LOW] /settings — in-flight save button label uses "saving..." (ellipsis) while /today uses "saving." (period)
 - pass: 34 (commit d754637)

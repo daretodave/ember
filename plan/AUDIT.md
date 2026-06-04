@@ -6,6 +6,18 @@
 
 ## Pending
 
+### [x] [5.4] /log — 60-tile mosaic has no bypass mechanism for keyboard-only users
+- category: external-critique
+- impact: 6
+- ease: 9
+- note: scored 2026-06-04 — from critique pass 34 (d754637); the /log page renders the 60-day mosaic as 60 individual Link elements; a keyboard-only user must Tab through all 60 links to reach content below the mosaic; the existing skip-to-content link targets #main-content which begins at the mosaic section, providing no bypass past the mosaic itself
+- observation: keyboard-only users must Tab through all 60 mosaic link elements to reach any content below the mosaic (empty-state paragraph or most-recent entry). the page-level skip link targets #main-content, which begins at the mosaic section — no bypass past the mosaic itself.
+- evidence: src/app/log/LogMosaic.tsx: tiles.map renders 60 Link elements unconditionally. no skip link or id="log-content" bypass mechanism existed between the mosaic and the content below it.
+- suggested fix: add a visually-hidden skip link immediately before the mosaic and add id="log-content" to the element wrapping the content below.
+- source: /critique pass 34 (commit d754637)
+- issue: [mirror-failed: loop-issue.mjs not present in scripts/]
+- resolution: added `<a href="#log-content" className="skip-link">skip to entries</a>` before LogMosaic and id="log-content" on the divider div in src/app/log/page.tsx. Shipped at d53b342.
+
 ### [x] [3.0] /today — prereq hint uses ambiguous pronoun "one" as username referent
 - category: external-critique
 - impact: 3
