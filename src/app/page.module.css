@@ -64,7 +64,7 @@
   max-width: 640px;
 }
 
-.pitch em {
+.pitchAccent {
   font-style: italic;
   color: var(--color-accent-2);
 }

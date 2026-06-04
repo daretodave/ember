@@ -24,7 +24,7 @@ export default function LandingPage() {
       <main id="main-content">
         <section className={styles.hero}>
           <h1 className={styles.pitch}>
-            ten minutes of <em>intention</em> before the day swallows you.
+            ten minutes of <span className={styles.pitchAccent}>intention</span> before the day swallows you.
           </h1>
           <p className={styles.subpitch}>
             one small prompt and one tiny task each morning. a few sentences in
