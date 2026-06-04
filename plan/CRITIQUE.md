@@ -47,7 +47,7 @@
 - source: browser
 - resolution: removed autoFocus attribute from the email input in src/app/signin/page.tsx. Shipped at c1beaba.
 
-### [LOW] / — 7-day prompt preview renders as plain divs with no list semantics
+### [x] [LOW] / — 7-day prompt preview renders as plain divs with no list semantics
 - pass: 34 (commit d754637)
 - viewport: both
 - category: a11y
@@ -55,6 +55,7 @@
 - evidence: src/app/page.tsx: `days.map` renders each day as `<div>` inside `<section className={styles.seven}>` — no `<ul>`/`<li>` elements, no `role="list"` on the container, no `role="listitem"` on day elements.
 - suggested fix: change the day container to a `<ul>` (or add `role="list"`) and each day `<div>` to `<li>` (or add `role="listitem"`), so AT users can navigate by list item and hear the item count.
 - source: browser
+- resolution: wrapped days.map output in ul.sevenList and changed each div to li; CSS reset added in page.module.css. Shipped at 0a4eb73.
 
 ### [x] [LOW] /today — prereq hint uses ambiguous pronoun "one" as username referent
 - pass: 33 (commit 308df1f)

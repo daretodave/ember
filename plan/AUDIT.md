@@ -6,6 +6,18 @@
 
 ## Pending
 
+### [x] [3.6] / — 7-day prompt preview renders as plain divs with no list semantics
+- category: a11y
+- impact: 4
+- ease: 9
+- note: scored 2026-06-04 — from critique pass 34 (d754637); the seven upcoming-day blocks are rendered as div elements; screen reader users cannot use list navigation commands to jump between items or hear the total count ("item 1 of 7"); fix is to wrap the mapped days in a ul element and change each div to li, with CSS reset stripping the list bullet and default padding
+- observation: the seven upcoming-day blocks on the landing page are rendered as div elements inside a section. no list role is applied to the container and no listitem role to each day. screen reader users cannot use list navigation commands to jump between the seven items or hear the total count ("item 1 of 7").
+- evidence: src/app/page.tsx: days.map renders each day as div inside section.seven — no ul/li elements, no role="list" on the container, no role="listitem" on day elements.
+- suggested fix: change the day container to ul (or add role="list") and each day div to li (or add role="listitem"), so AT users can navigate by list item and hear the item count.
+- source: /critique pass 34 (commit d754637)
+- issue: [mirror-failed: 2026-06-04T00:00:00Z]
+- resolution: wrapped days.map output in ul.sevenList and changed each div to li; added .sevenList CSS reset in page.module.css. Shipped at 0a4eb73.
+
 ### [x] [2.7] /settings and /log/[date] — in-flight save button label "saving..." inconsistent with /today "saving."
 - category: external-critique
 - impact: 3
