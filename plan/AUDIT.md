@@ -6,6 +6,18 @@
 
 ## Pending
 
+### [x] [3.6] /signin — autoFocus on email input bypasses page context for screen reader users
+- category: a11y
+- impact: 4
+- ease: 9
+- note: scored 2026-06-04 — from critique pass 34 (d754637); the email input on /signin carries the autoFocus attribute, which moves browser focus to the input immediately on page load; a screen reader user arriving at the page never hears the H1 "sign in." or the reassurance paragraph before being announced into the email input — they encounter "email, edit text" with no surrounding page context; fix is to remove the autoFocus attribute from src/app/signin/page.tsx line 71
+- observation: the email input on /signin carries the autoFocus attribute, which moves browser focus to the input immediately on page load. a screen reader user arriving at the page never hears the H1 "sign in." or the reassurance paragraph before being announced into the email input — they encounter "email, edit text" with no surrounding page context.
+- evidence: src/app/signin/page.tsx:71: `autoFocus` on the email `<input>`. page structure: H1 "sign in." → autoFocused email input → reassurance paragraph. focus bypasses the heading and context on load.
+- suggested fix: remove autoFocus from the email input; if sighted-user focus convenience is desired, apply it via a useEffect + ref after mount so the heading is announced first.
+- source: /critique pass 34 (commit d754637)
+- issue: [mirror-failed: loop-issue.mjs not present in scripts/]
+- resolution: removed autoFocus attribute from the email input in src/app/signin/page.tsx. Shipped at c1beaba.
+
 ### [x] [5.4] /log — 60-tile mosaic has no bypass mechanism for keyboard-only users
 - category: external-critique
 - impact: 6

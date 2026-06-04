@@ -36,7 +36,7 @@
 - suggested fix: split the hint into two elements with ids (e.g. `id="desc-standard"` and `id="desc-personalized"`) and add `aria-describedby="desc-standard"` to the standard radio and `aria-describedby="desc-personalized"` to the personalized radio.
 - source: browser
 
-### [LOW] /signin — autoFocus on email input bypasses page context for screen reader users
+### [x] [LOW] /signin — autoFocus on email input bypasses page context for screen reader users
 - pass: 34 (commit d754637)
 - viewport: both
 - category: a11y
@@ -44,6 +44,7 @@
 - evidence: src/app/signin/page.tsx:71: `autoFocus` on the email `<input>`. page structure: H1 "sign in." → autoFocused email input → reassurance paragraph. focus bypasses the heading and context on load.
 - suggested fix: remove autoFocus from the email input; if sighted-user focus convenience is desired, apply it via a useEffect + ref after mount so the heading is announced first, or focus the skip-to-content mechanism instead.
 - source: browser
+- resolution: removed autoFocus attribute from the email input in src/app/signin/page.tsx. Shipped at c1beaba.
 
 ### [LOW] / — 7-day prompt preview renders as plain divs with no list semantics
 - pass: 34 (commit d754637)
