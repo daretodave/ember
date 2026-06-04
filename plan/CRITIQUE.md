@@ -18,7 +18,7 @@
 - source: browser
 - resolution: added `<a href="#log-content" className="skip-link">skip to entries</a>` before LogMosaic and id="log-content" on the divider div in src/app/log/page.tsx. Shipped at d53b342.
 
-### [LOW] /settings — in-flight save button label uses "saving..." (ellipsis) while /today uses "saving." (period)
+### [x] [LOW] /settings — in-flight save button label uses "saving..." (ellipsis) while /today uses "saving." (period)
 - pass: 34 (commit d754637)
 - viewport: both
 - category: voice
@@ -26,6 +26,7 @@
 - evidence: src/app/settings/SettingsForm.tsx:219: `'saving...'`; src/app/log/[date]/EditEntry.tsx:138: `'saving...'` — compare src/app/today/TodayEntry.tsx:212: `'saving.'` (period).
 - suggested fix: change `'saving...'` to `'saving.'` in SettingsForm.tsx line 219 and EditEntry.tsx line 138 to match the /today convention and the voice spec preference for complete sentences with periods.
 - source: browser
+- resolution: changed 'saving...' to 'saving.' in SettingsForm.tsx line 219 and EditEntry.tsx line 138; SettingsForm.test.tsx assertion updated. Shipped at 5699c54.
 
 ### [LOW] /settings — prompt variety radio inputs carry no per-option aria-describedby
 - pass: 34 (commit d754637)

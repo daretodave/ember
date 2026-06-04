@@ -6,6 +6,18 @@
 
 ## Pending
 
+### [x] [2.7] /settings and /log/[date] — in-flight save button label "saving..." inconsistent with /today "saving."
+- category: external-critique
+- impact: 3
+- ease: 9
+- note: scored 2026-06-04 — from critique pass 34 (d754637); SettingsForm.tsx:219 and EditEntry.tsx:138 both render 'saving...' during an in-flight save; /today was updated in pass 31 (17830b2) to use 'saving.' (period, no ellipsis) for voice consistency; the two remaining save surfaces were not updated in that pass; fix is a string change in two components plus one test assertion
+- observation: the in-flight save label on /settings and /log/[date] uses 'saving...' while /today uses 'saving.' — three save surfaces, two different labels; inconsistent with the voice spec and with each other.
+- evidence: src/app/settings/SettingsForm.tsx:219 and src/app/log/[date]/EditEntry.tsx:138: `'saving...'` — compare src/app/today/TodayEntry.tsx:212: `'saving.'`
+- suggested fix: change 'saving...' to 'saving.' in both files and update the SettingsForm test assertion.
+- source: /critique pass 34 (commit d754637)
+- issue: [mirror-failed: loop-issue.mjs not present in scripts/]
+- resolution: changed 'saving...' to 'saving.' in SettingsForm.tsx and EditEntry.tsx; SettingsForm.test.tsx assertion updated. Shipped at 5699c54.
+
 ### [x] [3.6] /signin — autoFocus on email input bypasses page context for screen reader users
 - category: a11y
 - impact: 4
