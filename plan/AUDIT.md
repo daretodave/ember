@@ -6,6 +6,18 @@
 
 ## Pending
 
+### [x] [3.0] / — closing paragraph uses "task" where all other occurrences use "tiny task"
+- category: voice
+- impact: 3
+- ease: 10
+- note: scored 2026-06-04 — from critique pass 27 (43ffddf); the closing paragraph reads "the same prompt and task arrive for everyone on a given day." but "tiny task" is the branded compound used throughout the page — section subheader ("one prompt and one tiny task, every morning."), seven preview lines ("tiny task — ..."), and sub-pitch ("one small prompt and one tiny task each morning."); single word insertion in src/app/page.tsx line 68
+- observation: the closing paragraph uses the unmodified noun "task" while the product's branded compound "tiny task" appears in the section subheader, all seven preview lines, and the sub-pitch on the same page. a first-time reader sees "tiny task" named consistently and then "task" alone in the summary, creating a minor terminology inconsistency in the product's own copy.
+- evidence: src/app/page.tsx line 68: `the same prompt and task arrive for everyone on a given day.` — compare line 43: "one prompt and one tiny task, every morning." and lines 58-60: "tiny task — {day.task}" (seven occurrences) and line 30: "one small prompt and one tiny task each morning."
+- suggested fix: change "the same prompt and task" to "the same prompt and tiny task" to match the product's labeling throughout the page.
+- source: /critique pass 27 (commit 43ffddf)
+- issue: [mirror-failed: loop-issue.mjs not present in scripts/]
+- resolution: changed "the same prompt and task" to "the same prompt and tiny task" in src/app/page.tsx. Shipped at 68fb212.
+
 ### [ ] [3.0] [needs-user-call] / — meta description "one prompt" while body reads "one small prompt"
 - category: seo
 - impact: 3

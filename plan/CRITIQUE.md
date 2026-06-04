@@ -199,7 +199,7 @@
 - source: browser
 - resolution: changed to "one prompt and one tiny task, every morning." in src/app/page.tsx. Shipped at 6381eb1.
 
-### [LOW] / — closing paragraph uses "task" where all other occurrences use "tiny task"
+### [x] [LOW] / — closing paragraph uses "task" where all other occurrences use "tiny task"
 - pass: 27 (commit 43ffddf)
 - viewport: both
 - category: voice
@@ -207,6 +207,7 @@
 - evidence: body text: "the same prompt and task arrive for everyone on a given day." — compare: "one small prompt and one tiny task each morning." and seven "tiny task —" lines in the 7-day preview.
 - suggested fix: change "the same prompt and task" to "the same prompt and tiny task" to match the product's labeling throughout the page.
 - source: browser
+- resolution: changed "the same prompt and task" to "the same prompt and tiny task" in src/app/page.tsx. Shipped at 68fb212.
 
 ### [x] [LOW] / — "forgetting a day is fine" presupposes an existing practice for a pre-signup visitor
 - pass: 27 (commit 43ffddf)
