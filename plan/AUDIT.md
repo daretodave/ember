@@ -1723,7 +1723,7 @@
 - issue: [mirror-failed: 2026-05-27T22:25:00Z]
 - resolution: added dynamic title attribute (marks today's tiny task as done. / not done.) to the task-done button in TodayEntry.tsx. Shipped at 156c342.
 
-### [ ] [2.1] / — "entering an email address for the first time creates an account" is ambiguous for returning visitors
+### [x] [2.1] / — "entering an email address for the first time creates an account" is ambiguous for returning visitors
 - category: external-critique
 - impact: 3
 - ease: 7
@@ -1731,6 +1731,8 @@
 - evidence: footer CTA: "today's prompt is waiting. entering an email address for the first time creates an account. the link arrives once. no password is set. no other mail is sent." — no copy disambiguates behavior for known email addresses.
 - suggested fix: split into two cases: "a known address receives a sign-in link. a new address creates an account." — covers both visitor types in the same declarative register.
 - source: /critique pass 17 (commit 21ebca6)
+- issue: [mirror-failed: loop-issue.mjs not present in scripts/]
+- resolution: changed "entering an email address for the first time creates an account. no password. no other mail." to "a known address receives a sign-in link. a new address creates an account. no password. no other mail." in src/app/page.tsx. Shipped at 61eca21.
 
 ### [ ] [1.8] /signin — expiry notice appears in the pre-submission state
 - category: external-critique
