@@ -1,12 +1,39 @@
 # External-observer findings — Ember
 
-> Last pass: 2026-06-03 at commit 3f7071a
-> Pass count: 32
+> Last pass: 2026-06-04 at commit 308df1f
+> Pass count: 33
 
 > Written by `/critique` after walking the live site as a
 > fresh-eyes visitor. Drained by `/iterate`.
 
 ## Pending
+
+### [LOW] /today — prereq hint uses ambiguous pronoun "one" as username referent
+- pass: 33 (commit 308df1f)
+- viewport: both
+- category: comprehension
+- observation: the publish prereq hint reads "no public username is set — published entries will remain private until one is added in settings." the pronoun "one" lacks a clear antecedent in the same sentence — its intended referent is "a public username" but a reader scanning the compound sentence could momentarily parse "one" as a count or a person. the em-dash compound structure compounds the ambiguity by shifting subject mid-clause: "published entries" (plural) → implied "username" (singular) across the break.
+- evidence: body text: "no public username is set — published entries will remain private until one is added in settings." — "one" has no explicit antecedent; present in both main view and focus overlay at TodayEntry.tsx lines 219–220 and 282–283.
+- suggested fix: split into two sentences and name the referent explicitly: "no public username is set. published entries will remain private until a username is added in settings."
+- source: browser
+
+### [LOW] /settings — timezone field label absent from mobile text capture; warrants verification
+- pass: 33 (commit 308df1f)
+- viewport: mobile
+- category: comprehension
+- observation: at the 375px viewport, the settings page text capture omits both the "timezone" field label and the "prompt variety" field label. both labels appear in the desktop (1280px) capture. no responsive CSS rule hides these elements at the mobile breakpoint. the discrepancy may be a text-extraction artifact from the TimezoneCombobox interactive component or a layout-timing issue at mobile resolution, or the labels may be visually suppressed at the mobile viewport. warrants verification at the live site.
+- evidence: desktop body text: "display name\n\nshown on published entries on the public profile.\n\ntimezone\nprompt variety\n\nstandard: same curated prompt..." — mobile body text: "display name\n\nshown on published entries on the public profile.\n\nstandard: same curated prompt..." — "timezone" and "prompt variety" labels both absent from mobile sequence; no media query hides .label at ≤480px in settings/page.module.css.
+- suggested fix: verify that the timezone field and its label render visibly at 375px on the live site; if the labels are hidden or the field is not accessible at mobile, restore both; if confirmed as a text-extraction artifact from the combobox component, no code change is needed.
+- source: browser
+
+### [LOW] /signin — "entering an email address for the first time creates an account" on the sign-in page creates returning-user ambiguity
+- pass: 33 (commit 308df1f)
+- viewport: both
+- category: comprehension
+- observation: the /signin page reassurance block includes "entering an email address for the first time creates an account." a returning user who already has an account and is signing in reads "for the first time" and may worry that their email address will create a duplicate account rather than sign them in. this ambiguity was identified on the landing page "/" CTA footer and filed as a PHASE_CANDIDATES finding (auth funnel UX clarity candidate, scope item 1), but the same copy appears on /signin — the page where returning users are most likely to encounter it. the landing page candidate's proposed fix covers "/" only, leaving /signin with the unresolved copy.
+- evidence: /signin body text: "a sign-in link is sent to this address. no password. no other mail. entering an email address for the first time creates an account." — the "for the first time" conditional does not distinguish existing-account sign-in from new account creation; returning users at the sign-in step read this as ambiguity about their account state.
+- suggested fix: change to two declarative sentences covering both visitor types: "a known address receives a sign-in link. a new address creates an account." — removes the "for the first time" conditional that confuses returning visitors; same fix proposed for "/" in the auth funnel candidate.
+- source: browser
 
 ### [LOW] / — meta description says "one prompt" while page body says "one small prompt"
 - pass: 32 (commit 3f7071a)
