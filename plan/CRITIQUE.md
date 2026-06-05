@@ -38,7 +38,7 @@
 - source: browser
 - resolution: changed aria-live conditional to emit 'saving.' during in-flight state; test added. Shipped at 407b9ec.
 
-### [LOW] /signin — in-flight submit label "sending..." uses ellipsis while all other in-progress labels use a terminal period
+### [x] [LOW] /signin — in-flight submit label "sending..." uses ellipsis while all other in-progress labels use a terminal period
 - pass: 36 (commit 0dce6e9)
 - viewport: both
 - category: voice
@@ -46,6 +46,7 @@
 - evidence: src/app/signin/page.tsx:80: `{state === 'sending' ? 'sending...' : 'send the link'}` — ellipsis form. compare src/app/today/TodayEntry.tsx:212: `'saving.'` (period, no ellipsis).
 - suggested fix: change "sending..." to "sending." in src/app/signin/page.tsx line 80.
 - source: browser
+- resolution: changed 'sending...' to 'sending.' in src/app/signin/page.tsx; SigninPage.test.tsx assertion updated. Shipped at 0de53e3.
 
 ### [LOW] /today — "open log" link in day strip uses imperative verb
 - pass: 36 (commit 0dce6e9)

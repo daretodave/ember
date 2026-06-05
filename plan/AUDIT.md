@@ -76,7 +76,7 @@
 - issue: [mirror-failed: loop-issue.mjs not present in scripts/]
 - resolution: changed aria-live conditional to emit 'saving.' during in-flight state and 'saved.' on success; test added asserting aria-live textContent during in-flight. Shipped at 407b9ec.
 
-### [ ] [2.0] /signin — in-flight submit label "sending..." uses ellipsis while all other in-progress labels use a terminal period
+### [x] [2.0] /signin — in-flight submit label "sending..." uses ellipsis while all other in-progress labels use a terminal period
 - category: voice
 - impact: 2
 - ease: 10
@@ -85,6 +85,8 @@
 - evidence: src/app/signin/page.tsx:80: `{state === 'sending' ? 'sending...' : 'send the link'}`.
 - suggested fix: change "sending..." to "sending." in src/app/signin/page.tsx line 80.
 - source: /critique pass 36 (commit 0dce6e9)
+- issue: [mirror-failed: loop-issue.mjs not present in scripts/]
+- resolution: changed 'sending...' to 'sending.' in src/app/signin/page.tsx; SigninPage.test.tsx assertion updated. Shipped at 0de53e3.
 
 ### [ ] [2.0] /today — "open log" link in day strip uses imperative verb
 - category: voice
