@@ -1,12 +1,48 @@
 # External-observer findings — Ember
 
-> Last pass: 2026-06-04 at commit d754637
-> Pass count: 34
+> Last pass: 2026-06-05 at commit 2dad7ef
+> Pass count: 35
 
 > Written by `/critique` after walking the live site as a
 > fresh-eyes visitor. Drained by `/iterate`.
 
 ## Pending
+
+### [LOW] /settings — display name input placeholder uses second-person possessive "your public profile"
+- pass: 35 (commit 2dad7ef)
+- viewport: both
+- category: voice
+- observation: the display name input carries the placeholder "how you appear on your public profile." the phrase "your public profile" is a second-person possessive. prior passes de-possessived the hint text and the "view your public profile" link on the same page; the input placeholder was not updated in those passes.
+- evidence: src/app/settings/SettingsForm.tsx:131: `placeholder="how you appear on your public profile"` — "your public profile" is the same possessive construction addressed in the settings hints (a57cc00) and the page link (still pending in AUDIT.md).
+- suggested fix: change placeholder to "name shown on published entries" — removes direct address while describing the field's purpose in the same register as the adjacent hint text.
+- source: browser
+
+### [LOW] /today — offline save indicator "saved locally — will sync" is a sentence fragment with no terminal period
+- pass: 35 (commit 2dad7ef)
+- viewport: both
+- category: voice
+- observation: the offline save indicator returns "saved locally — will sync" — a fragment with no terminal period and no finite verb. the other four save indicator strings all carry terminal periods: "saving.", "saved.", "draft restored.", "not yet saved." the offline string is inconsistent with the pattern established across the same function.
+- evidence: src/app/today/TodayEntry.tsx:146: `if (!isOnline && saveState !== 'saved') return 'saved locally — will sync'` — no period. compare surrounding cases: lines 145/148/150 all return strings with terminal periods. the string also appears in the aria-live indicator span read aloud by screen readers.
+- suggested fix: change to "saved locally. will sync when online." — two complete sentences with terminal periods, consistent with the surrounding save indicator strings and the voice spec.
+- source: browser
+
+### [LOW] /log — skip link label "skip to entries" sets an unfulfilled expectation in the empty state
+- pass: 35 (commit 2dad7ef)
+- viewport: both
+- category: comprehension
+- observation: the skip link added in pass 34 is labelled "skip to entries" but when the log is empty the destination (#log-content) immediately precedes the empty-state paragraph "the log is empty. today's entry will appear here." a keyboard user who activates the skip link expecting to reach entries lands on an empty region. the label is accurate when the log has entries but misleading in the zero-state that most new users experience first.
+- evidence: src/app/log/page.tsx:82: `<a href="#log-content" className="skip-link">skip to entries</a>` — authenticated capture body text in empty state: "the past 60 days\nskip to entries\n\nthe log is empty. today's entry will appear here."
+- suggested fix: change the skip link label to "skip to log" so it describes the destination region rather than its content state — accurate in both populated and empty states.
+- source: browser
+
+### [LOW] / — "tiny task" label and per-day instruction run together in a single paragraph with no semantic separation
+- pass: 35 (commit 2dad7ef)
+- viewport: both
+- category: a11y
+- observation: in the seven-day preview, each day's task is rendered as a single paragraph element: "tiny task — {day.task}". the recurring label "tiny task" and the unique per-day instruction share one paragraph node with only an em dash as visual separator. AT users and search parsers cannot differentiate the label from the task body; the label is not semantically distinguished from the day-specific content.
+- evidence: src/app/page.tsx:59–60: `<p className={styles.dayTask}>tiny task — {day.task}</p>` — all seven preview blocks follow this pattern. desktop and mobile captures show e.g. "tiny task — write that person's name down, and one thing you learned." with no inner element structure.
+- suggested fix: wrap "tiny task" in a `<span className={styles.taskLabel}>` within the paragraph so the label is semantically and stylistically separable from the task body; update page.module.css to add the corresponding class rule.
+- source: browser
 
 ### [x] [MED] /log — 60-tile mosaic has no bypass mechanism for keyboard-only users
 - pass: 34 (commit d754637)
