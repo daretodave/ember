@@ -119,6 +119,24 @@ describe('SettingsForm — save state', () => {
     settle!({ ok: true, json: async () => ({}) } as Response)
   })
 
+  it('announces "saving." in aria-live region while request is in flight', async () => {
+    let settle: (v: Response) => void
+    global.fetch = vi.fn().mockReturnValue(
+      new Promise<Response>((r) => {
+        settle = r
+      }),
+    )
+
+    render(<SettingsForm {...BASE_PROPS} />)
+    fireEvent.submit(document.querySelector('form')!)
+
+    await waitFor(() => {
+      expect(document.querySelector('[aria-live="polite"]')?.textContent).toBe('saving.')
+    })
+
+    settle!({ ok: true, json: async () => ({}) } as Response)
+  })
+
   it('shows "saved." in aria-live region after successful save', async () => {
     global.fetch = vi.fn().mockResolvedValue({
       ok: true,

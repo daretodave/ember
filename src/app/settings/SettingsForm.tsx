@@ -208,7 +208,7 @@ export function SettingsForm({ displayName, username, timezone, usePersonalizedP
 
       <div className={styles.formFoot}>
         <span aria-live="polite" className={`${styles.saveStatus} ${saveState === 'saved' ? styles.saveStatusVisible : ''}`}>
-          {saveState === 'saved' ? 'saved.' : ''}
+          {saveState === 'saving' ? 'saving.' : saveState === 'saved' ? 'saved.' : ''}
         </span>
         {saveState === 'error' && !errorMsg.includes('username') && (
           <span role="alert" className={styles.saveError}>{errorMsg}</span>
