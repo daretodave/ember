@@ -74,4 +74,28 @@ describe('focus mode', () => {
       'what did you attend to today?',
     )
   })
+
+  it('main form elements are removed from tab order when focus mode is active', () => {
+    render(<TodayEntry {...DEFAULT_PROPS} />)
+
+    const mainTextarea = document.getElementById('today-entry-response')
+    const focusTrigger = screen.getByRole('button', { name: 'enter focus mode' })
+
+    expect(mainTextarea).not.toHaveAttribute('tabindex', '-1')
+    expect(focusTrigger).not.toHaveAttribute('tabindex', '-1')
+
+    fireEvent.click(focusTrigger)
+
+    expect(mainTextarea).toHaveAttribute('tabindex', '-1')
+    expect(document.getElementById('today-entry-response')).toHaveAttribute('tabindex', '-1')
+  })
+
+  it('main form elements are restored to tab order when focus mode exits', () => {
+    render(<TodayEntry {...DEFAULT_PROPS} />)
+    fireEvent.click(screen.getByRole('button', { name: 'enter focus mode' }))
+    fireEvent.click(screen.getByRole('button', { name: 'exit focus mode' }))
+
+    const mainTextarea = document.getElementById('today-entry-response')
+    expect(mainTextarea).not.toHaveAttribute('tabindex', '-1')
+  })
 })

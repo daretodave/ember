@@ -159,6 +159,7 @@ export function TodayEntry({ date, task, prompt, initialEntry, hasUsername = tru
           aria-pressed={taskDone}
           aria-label={taskDone ? "marks today's tiny task as not done." : "marks today's tiny task as done."}
           title={taskDone ? "marks today's tiny task as not done." : "marks today's tiny task as done."}
+          tabIndex={isFocus ? -1 : undefined}
           onClick={() => setTaskDone((v) => !v)}
         />
         <p className={styles.taskBody}>
@@ -175,6 +176,7 @@ export function TodayEntry({ date, task, prompt, initialEntry, hasUsername = tru
         onChange={handleResponseChange}
         placeholder="there is no rush."
         rows={8}
+        tabIndex={isFocus ? -1 : undefined}
       />
 
       <div className={styles.entryMeta}>
@@ -187,6 +189,7 @@ export function TodayEntry({ date, task, prompt, initialEntry, hasUsername = tru
               type="checkbox"
               checked={isPublished}
               onChange={(e) => setIsPublished(e.target.checked)}
+              tabIndex={isFocus ? -1 : undefined}
               aria-describedby="publish-desc"
             />
             publish
@@ -198,6 +201,7 @@ export function TodayEntry({ date, task, prompt, initialEntry, hasUsername = tru
             className={styles.focusTrigger}
             aria-label="enter focus mode"
             title="enters a distraction-free writing view."
+            tabIndex={isFocus ? -1 : undefined}
             onClick={enterFocus}
           >
             focus
@@ -207,6 +211,7 @@ export function TodayEntry({ date, task, prompt, initialEntry, hasUsername = tru
             className={styles.saveBtn}
             disabled={saveState === 'saving'}
             onClick={handleSave}
+            tabIndex={isFocus ? -1 : undefined}
             title="entries are saved privately by default."
           >
             {saveState === 'saving' ? 'saving.' : 'save'}
@@ -217,7 +222,7 @@ export function TodayEntry({ date, task, prompt, initialEntry, hasUsername = tru
       {!hasUsername && (
         <p className={styles.publishHint}>
           no public username is set. published entries will remain private until a username is added in{' '}
-          <Link href="/settings">settings</Link>.
+          <Link href="/settings" tabIndex={isFocus ? -1 : undefined}>settings</Link>.
         </p>
       )}
 
