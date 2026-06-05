@@ -419,7 +419,7 @@
 - source: browser
 - resolution: changed description to "a 60-day writing log — prompts, responses, and published entries." in src/app/log/page.tsx. Shipped at a5181c7.
 
-### [LOW] /signin — H1 "sign in." carries a terminal period no other page heading uses
+### [x] [LOW] /signin — H1 "sign in." carries a terminal period no other page heading uses
 - pass: 23 (commit 4737f15)
 - viewport: both
 - category: voice
@@ -427,6 +427,7 @@
 - evidence: captured H1: "sign in." — compare authenticated page headings ("settings", "the past 60 days") which carry no terminal period. section labels on the home page ("the next seven days", "this is what arrives each morning.") are inconsistent with each other but neither is a page H1.
 - suggested fix: remove the terminal period from the "sign in" H1 in src/app/signin/page.tsx so it reads as a heading label rather than a declarative sentence.
 - source: browser
+- resolution: removed terminal period from H1 in src/app/signin/page.tsx; E2E assertion updated. Shipped at 1b64bf7.
 
 ### [LOW] /signin — "send the link" button uses definite article before any link has been introduced
 - pass: 23 (commit 4737f15)

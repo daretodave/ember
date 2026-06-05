@@ -514,7 +514,7 @@
 - issue: [mirror-failed: loop-issue.mjs not present in scripts/]
 - resolution: changed description to "a 60-day writing log — prompts, responses, and published entries." in src/app/log/page.tsx. Shipped at a5181c7.
 
-### [ ] [2.0] /signin — H1 "sign in." carries a terminal period no other page heading uses
+### [x] [2.0] /signin — H1 "sign in." carries a terminal period no other page heading uses
 - category: external-critique
 - impact: 2
 - ease: 10
@@ -523,6 +523,8 @@
 - evidence: captured H1: "sign in." — compare authenticated page headings ("settings", "the past 60 days") which carry no terminal period.
 - suggested fix: remove the terminal period from the "sign in" H1 in src/app/signin/page.tsx so it reads as a heading label rather than a declarative sentence.
 - source: /critique pass 23 (commit 4737f15)
+- issue: [mirror-failed: loop-issue.mjs not present in scripts/]
+- resolution: removed terminal period from H1 in src/app/signin/page.tsx; E2E assertion updated. Shipped at 1b64bf7.
 
 ### [ ] [1.8] /signin — "send the link" button uses definite article before any link has been introduced
 - category: external-critique
