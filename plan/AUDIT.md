@@ -6,6 +6,18 @@
 
 ## Pending
 
+### [x] [3.0] /today — offline save indicator "saved locally — will sync" is a sentence fragment
+- category: external-critique
+- impact: 3
+- ease: 10
+- note: scored 2026-06-05 — from critique pass 35 (2dad7ef); the offline save indicator returns 'saved locally — will sync' — a fragment with no terminal period and no finite verb; the other four save indicator strings all carry terminal periods: "saving.", "saved.", "draft restored.", "not yet saved."; the string is announced via aria-live and must be consistent with the voice spec
+- observation: the offline save indicator returns "saved locally — will sync" — a fragment with no terminal period and no finite verb. the other four save indicator strings all carry terminal periods: "saving.", "saved.", "draft restored.", "not yet saved." the offline string is inconsistent with the pattern established across the same function.
+- evidence: src/app/today/TodayEntry.tsx:146: `if (!isOnline && saveState !== 'saved') return 'saved locally — will sync'` — no period. compare surrounding cases: lines 145/148/150 all return strings with terminal periods. the string also appears in the aria-live indicator span read aloud by screen readers.
+- suggested fix: change to "saved locally. will sync when online." — two complete sentences with terminal periods, consistent with the surrounding save indicator strings and the voice spec.
+- source: /critique pass 35 (commit 2dad7ef)
+- issue: [mirror-failed: loop-issue.mjs not present in scripts/]
+- resolution: changed 'saved locally — will sync' to 'saved locally. will sync when online.' in TodayEntry.tsx; OfflineDraft.test.tsx assertion updated. Shipped at 83f7625.
+
 ### [x] [2.4] /settings — prompt variety radio inputs carry no per-option aria-describedby
 - category: a11y
 - impact: 3

@@ -17,15 +17,6 @@
 - suggested fix: change placeholder to "name shown on published entries" — removes direct address while describing the field's purpose in the same register as the adjacent hint text.
 - source: browser
 
-### [LOW] /today — offline save indicator "saved locally — will sync" is a sentence fragment with no terminal period
-- pass: 35 (commit 2dad7ef)
-- viewport: both
-- category: voice
-- observation: the offline save indicator returns "saved locally — will sync" — a fragment with no terminal period and no finite verb. the other four save indicator strings all carry terminal periods: "saving.", "saved.", "draft restored.", "not yet saved." the offline string is inconsistent with the pattern established across the same function.
-- evidence: src/app/today/TodayEntry.tsx:146: `if (!isOnline && saveState !== 'saved') return 'saved locally — will sync'` — no period. compare surrounding cases: lines 145/148/150 all return strings with terminal periods. the string also appears in the aria-live indicator span read aloud by screen readers.
-- suggested fix: change to "saved locally. will sync when online." — two complete sentences with terminal periods, consistent with the surrounding save indicator strings and the voice spec.
-- source: browser
-
 ### [LOW] /log — skip link label "skip to entries" sets an unfulfilled expectation in the empty state
 - pass: 35 (commit 2dad7ef)
 - viewport: both
@@ -1251,6 +1242,16 @@
 - resolution: footer now reads "sign-in links expire after 24 hours." — added at dfe1ae4 when the vendor attribution was replaced. Expiry concern addressed.
 
 ## Done
+
+### [x] [LOW] /today — offline save indicator "saved locally — will sync" is a sentence fragment with no terminal period
+- pass: 35 (commit 2dad7ef)
+- viewport: both
+- category: voice
+- observation: the offline save indicator returns "saved locally — will sync" — a fragment with no terminal period and no finite verb. the other four save indicator strings all carry terminal periods: "saving.", "saved.", "draft restored.", "not yet saved." the offline string is inconsistent with the pattern established across the same function.
+- evidence: src/app/today/TodayEntry.tsx:146: `if (!isOnline && saveState !== 'saved') return 'saved locally — will sync'` — no period. compare surrounding cases: lines 145/148/150 all return strings with terminal periods. the string also appears in the aria-live indicator span read aloud by screen readers.
+- suggested fix: change to "saved locally. will sync when online." — two complete sentences with terminal periods, consistent with the surrounding save indicator strings and the voice spec.
+- source: browser
+- resolution: changed to 'saved locally. will sync when online.' in TodayEntry.tsx; OfflineDraft.test.tsx assertion updated. Shipped at 83f7625.
 
 ### [x] [MED] /today — publish prereq hint gives no current-state signal for users with no username
 - pass: 30 (commit 53cd344)
