@@ -339,7 +339,7 @@
 - suggested fix: if the intent is typographic only, replace `<em>` with a `<span>` styled with a CSS italic class (e.g. `styles.pitchAccent`) to remove the semantic stress signal from the accessible tree while preserving the italic rendering.
 - source: browser
 
-### [LOW] / — lede says "one small prompt" but the named concept throughout is "prompt"
+### [x] [LOW] / — lede says "one small prompt" but the named concept throughout is "prompt"
 - pass: 28 (commit 64a33db)
 - viewport: both
 - category: voice
@@ -347,6 +347,7 @@
 - evidence: lede: "one small prompt and one tiny task each morning." — compare 7-day preview items: "tiny task — tidy the surface..." / closing: "the same prompt and tiny task arrive for everyone on a given day." (noting scope item 37 fix pending: task → tiny task in closing paragraph).
 - suggested fix: change "one small prompt and one tiny task each morning." to "one prompt and one tiny task each morning." to match how "prompt" is treated everywhere else on the page.
 - source: browser
+- resolution: changed "one small prompt" to "one prompt" in src/app/page.tsx. Shipped at 28d1d20.
 
 ### [x] [LOW] /signin — expiry notice "sign-in links expire after 24 hours." is in the page footer, separated from the confirmation area
 - pass: 28 (commit 64a33db)

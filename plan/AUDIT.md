@@ -216,7 +216,7 @@
 - issue: [mirror-failed: loop-issue.mjs not present in scripts/]
 - resolution: changed "the same prompt and task" to "the same prompt and tiny task" in src/app/page.tsx. Shipped at 68fb212.
 
-### [ ] [3.0] [needs-user-call] / — meta description "one prompt" while body reads "one small prompt"
+### [x] [3.0] [needs-user-call] / — meta description "one prompt" while body reads "one small prompt"
 - category: seo
 - impact: 3
 - ease: 10
@@ -225,6 +225,7 @@
 - evidence: src/app/layout.tsx line 36: `description: 'ember is a daily writing ritual — one prompt and one tiny task each morning.'`; src/app/page.tsx line 30: `one small prompt and one tiny task each morning.` — "small" present in body, absent in meta.
 - suggested fix: [needs-user-call] (a) add "small" to meta: "ember is a daily writing ritual — one small prompt and one tiny task each morning." or (b) remove "small" from body lede to match meta and closing paragraph — resolves both this and the existing [2.0].
 - source: /critique pass 32 (commit 5d7505e)
+- resolution: resolved via option (b) — removed "small" from body lede in src/app/page.tsx; body now reads "one prompt and one tiny task each morning." matching meta description, 7-day section header, and closing paragraph. Shipped at 28d1d20.
 
 ### [x] [2.0] /settings — "leave blank to stay private." uses second-person imperative in public username hint
 - category: voice
@@ -500,7 +501,7 @@
 - suggested fix: change to "same prompt for everyone each day." — removes the ungrounded assertion while preserving the shared-prompt contrast.
 - source: /critique pass 27 (commit a59273f)
 
-### [ ] [2.0] / — lede says "one small prompt" but the named concept throughout is "prompt"
+### [x] [2.0] / — lede says "one small prompt" but the named concept throughout is "prompt"
 - category: external-critique
 - impact: 2
 - ease: 10
@@ -509,6 +510,8 @@
 - evidence: lede: "one small prompt and one tiny task each morning." — compare 7-day preview items: "tiny task — tidy the surface..." / closing: "the same prompt and tiny task arrive for everyone on a given day."
 - suggested fix: change "one small prompt and one tiny task each morning." to "one prompt and one tiny task each morning." to match how "prompt" is treated everywhere else on the page.
 - source: /critique pass 28 (commit 64a33db)
+- issue: [mirror-failed: loop-issue.mjs not present in scripts/]
+- resolution: changed "one small prompt" to "one prompt" in src/app/page.tsx. Shipped at 28d1d20.
 
 ### [x] [3.0] /u/[username] and /u/[username]/[date] — OG image alt not updated to match root layout fix
 - category: seo
