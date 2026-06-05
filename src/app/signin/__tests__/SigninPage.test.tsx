@@ -22,7 +22,7 @@ describe('SigninPage — initial state', () => {
 })
 
 describe('SigninPage — sending state', () => {
-  it('shows "sending..." and disables submit while request is in flight', async () => {
+  it('shows "sending." and disables submit while request is in flight', async () => {
     let settle: (v: Response) => void
     global.fetch = vi.fn().mockReturnValue(
       new Promise<Response>((r) => {
@@ -37,7 +37,7 @@ describe('SigninPage — sending state', () => {
     fireEvent.submit(document.querySelector('form')!)
 
     await waitFor(() => {
-      expect(screen.getByRole('button', { name: 'sending...' })).toBeDisabled()
+      expect(screen.getByRole('button', { name: 'sending.' })).toBeDisabled()
     })
 
     settle!({ ok: true, json: async () => ({}) } as Response)
