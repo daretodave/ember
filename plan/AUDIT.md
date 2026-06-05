@@ -52,7 +52,7 @@
 - issue: [mirror-failed: loop-issue.mjs not present in scripts/]
 - resolution: added .taskLabel (Inter 14px) to today/page.module.css; wrapped "tiny task" in `<span className={styles.taskLabel}>` in TodayEntry.tsx, matching the landing-page pattern. Shipped at 53e2549.
 
-### [ ] [2.7] /today — task-done button aria-label uses imperative "mark task done" while title uses non-imperative form
+### [x] [2.7] /today — task-done button aria-label uses imperative "mark task done" while title uses non-imperative form
 - category: a11y
 - impact: 3
 - ease: 9
@@ -61,6 +61,8 @@
 - evidence: src/app/today/TodayEntry.tsx:160–161: `aria-label={taskDone ? 'mark task not done' : 'mark task done'}` and `title={taskDone ? "marks today's tiny task as not done." : "marks today's tiny task as done."}`.
 - suggested fix: align aria-label to title's form: `"marks today's tiny task as done."` and `"marks today's tiny task as not done."`.
 - source: /critique pass 36 (commit 0dce6e9)
+- issue: [mirror-failed: loop-issue.mjs not present in scripts/]
+- resolution: changed aria-label in TodayEntry.tsx to "marks today's tiny task as done."/"marks today's tiny task as not done."; same fix applied to EditEntry.tsx; EntrySave.test.tsx assertion updated. Shipped at 4b057a0.
 
 ### [ ] [2.7] /settings — aria-live region announces only "saved." and is silent during "saving." in-flight state
 - category: a11y

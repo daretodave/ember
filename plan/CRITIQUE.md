@@ -18,7 +18,7 @@
 - source: browser
 - resolution: added .taskLabel to today/page.module.css; wrapped "tiny task" in semantic span in TodayEntry.tsx. Shipped at 53e2549.
 
-### [LOW] /today — task-done button aria-label uses imperative "mark task done" while title uses non-imperative "marks today's tiny task as done."
+### [x] [LOW] /today — task-done button aria-label uses imperative "mark task done" while title uses non-imperative "marks today's tiny task as done."
 - pass: 36 (commit 0dce6e9)
 - viewport: both
 - category: a11y
@@ -26,6 +26,7 @@
 - evidence: src/app/today/TodayEntry.tsx:160–161: `aria-label={taskDone ? 'mark task not done' : 'mark task done'}` and `title={taskDone ? "marks today's tiny task as not done." : "marks today's tiny task as done."}` — aria-label uses imperative verb; title uses declarative with branded "tiny task".
 - suggested fix: align aria-label to the title's form — change to `"marks today's tiny task as done."` and `"marks today's tiny task as not done."` — removes the imperative and aligns with voice and with the title.
 - source: browser
+- resolution: changed aria-label in TodayEntry.tsx to declarative form matching title; same fix applied to EditEntry.tsx. Shipped at 4b057a0.
 
 ### [LOW] /settings — aria-live region announces only "saved." and is silent during "saving." in-flight state
 - pass: 36 (commit 0dce6e9)
