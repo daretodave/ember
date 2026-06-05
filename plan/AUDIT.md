@@ -40,7 +40,7 @@
 - suggested fix: change placeholder to "name shown on published entries" — removes direct address while describing the field's purpose in the same register as the adjacent hint text.
 - source: /critique pass 35 (commit 2dad7ef)
 
-### [ ] [2.7] /today — "tiny task" label in TodayEntry lacks semantic wrapper (parallel landing-page fix not applied)
+### [x] [2.7] /today — "tiny task" label in TodayEntry lacks semantic wrapper (parallel landing-page fix not applied)
 - category: a11y
 - impact: 3
 - ease: 9
@@ -49,6 +49,8 @@
 - evidence: src/app/today/TodayEntry.tsx:164–165: `<p className={styles.taskBody}>tiny task{' '}<span className={styles.taskMuted}>— {task}</span></p>` — compare src/app/page.tsx:59–62 where 0101b1b added `<span className={styles.taskLabel}>tiny task</span>`.
 - suggested fix: wrap "tiny task" in `<span className={styles.taskLabel}>tiny task</span>` inside taskBody paragraph in TodayEntry.tsx, matching the landing-page pattern.
 - source: /critique pass 36 (commit 0dce6e9)
+- issue: [mirror-failed: loop-issue.mjs not present in scripts/]
+- resolution: added .taskLabel (Inter 14px) to today/page.module.css; wrapped "tiny task" in `<span className={styles.taskLabel}>` in TodayEntry.tsx, matching the landing-page pattern. Shipped at 53e2549.
 
 ### [ ] [2.7] /today — task-done button aria-label uses imperative "mark task done" while title uses non-imperative form
 - category: a11y

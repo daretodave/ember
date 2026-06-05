@@ -8,7 +8,7 @@
 
 ## Pending
 
-### [LOW] /today — "tiny task" label in TodayEntry lacks semantic wrapper (parallel landing-page fix not applied)
+### [x] [LOW] /today — "tiny task" label in TodayEntry lacks semantic wrapper (parallel landing-page fix not applied)
 - pass: 36 (commit 0dce6e9)
 - viewport: both
 - category: a11y
@@ -16,6 +16,7 @@
 - evidence: src/app/today/TodayEntry.tsx:164–165: `<p className={styles.taskBody}>tiny task{' '}<span className={styles.taskMuted}>— {task}</span></p>` — "tiny task" is unseparated raw text. compare src/app/page.tsx:59–62 where 0101b1b added `<span className={styles.taskLabel}>tiny task</span>`.
 - suggested fix: wrap "tiny task" in `<span className={styles.taskLabel}>tiny task</span>` inside the taskBody paragraph in TodayEntry.tsx, consistent with the landing-page fix.
 - source: browser
+- resolution: added .taskLabel to today/page.module.css; wrapped "tiny task" in semantic span in TodayEntry.tsx. Shipped at 53e2549.
 
 ### [LOW] /today — task-done button aria-label uses imperative "mark task done" while title uses non-imperative "marks today's tiny task as done."
 - pass: 36 (commit 0dce6e9)
