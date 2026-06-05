@@ -6,6 +6,39 @@
 
 ## Pending
 
+### [x] [3.0] /log — skip link label "skip to entries" sets an unfulfilled expectation in the empty state
+- category: external-critique
+- impact: 3
+- ease: 10
+- note: scored 2026-06-05 — from critique pass 35 (2dad7ef); the skip link added in pass 34 is labelled "skip to entries" but when the log is empty the destination (#log-content) immediately precedes the empty-state paragraph; a keyboard user who activates the skip link expecting to reach entries lands on an empty region; the label is accurate when the log has entries but misleading in the zero-state that most new users experience first
+- observation: the skip link added in pass 34 is labelled "skip to entries" but when the log is empty the destination (#log-content) immediately precedes the empty-state paragraph "the log is empty. today's entry will appear here." a keyboard user who activates the skip link expecting to reach entries lands on an empty region. the label is accurate when the log has entries but misleading in the zero-state that most new users experience first.
+- evidence: src/app/log/page.tsx:82: `<a href="#log-content" className="skip-link">skip to entries</a>` — authenticated capture body text in empty state: "the past 60 days\nskip to entries\n\nthe log is empty. today's entry will appear here."
+- suggested fix: change the skip link label to "skip to log" so it describes the destination region rather than its content state — accurate in both populated and empty states.
+- source: /critique pass 35 (commit 2dad7ef)
+- issue: [mirror-failed: 2026-06-05T00:00:00Z]
+- resolution: changed "skip to entries" to "skip to log" in src/app/log/page.tsx. Shipped at f13c754.
+
+### [ ] [2.4] / — "tiny task" label and per-day instruction run together in a single paragraph with no semantic separation
+- category: a11y
+- impact: 3
+- ease: 8
+- note: scored 2026-06-05 — from critique pass 35 (2dad7ef); in the seven-day preview, each day's task is rendered as a single paragraph element: "tiny task — {day.task}"; the recurring label "tiny task" and the unique per-day instruction share one paragraph node with only an em dash as visual separator; AT users and search parsers cannot differentiate the label from the task body
+- observation: in the seven-day preview, each day's task is rendered as a single paragraph element: "tiny task — {day.task}". the recurring label "tiny task" and the unique per-day instruction share one paragraph node with only an em dash as visual separator. AT users and search parsers cannot differentiate the label from the task body; the label is not semantically distinguished from the day-specific content.
+- evidence: src/app/page.tsx:59–60: `<p className={styles.dayTask}>tiny task — {day.task}</p>` — all seven preview blocks follow this pattern.
+- suggested fix: wrap "tiny task" in a `<span className={styles.taskLabel}>` within the paragraph so the label is semantically and stylistically separable from the task body; update page.module.css to add the corresponding class rule.
+- source: /critique pass 35 (commit 2dad7ef)
+
+### [ ] [2.0] /settings — display name input placeholder uses second-person possessive "your public profile"
+- category: voice
+- impact: 2
+- ease: 10
+- note: scored 2026-06-05 — from critique pass 35 (2dad7ef); the display name input carries the placeholder "how you appear on your public profile." the phrase "your public profile" is a second-person possessive; prior passes de-possessived the hint text and the "view your public profile" link on the same page; the input placeholder was not updated in those passes
+- observation: the display name input carries the placeholder "how you appear on your public profile." the phrase "your public profile" is a second-person possessive. prior passes de-possessived the hint text and the "view your public profile" link on the same page; the input placeholder was not updated in those passes.
+- evidence: src/app/settings/SettingsForm.tsx:131: `placeholder="how you appear on your public profile"` — "your public profile" is the same possessive construction addressed in the settings hints (a57cc00) and the page link (still pending in AUDIT.md).
+- suggested fix: change placeholder to "name shown on published entries" — removes direct address while describing the field's purpose in the same register as the adjacent hint text.
+- source: /critique pass 35 (commit 2dad7ef)
+
+
 ### [x] [3.0] /today — offline save indicator "saved locally — will sync" is a sentence fragment
 - category: external-critique
 - impact: 3

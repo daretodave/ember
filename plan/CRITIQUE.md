@@ -17,7 +17,7 @@
 - suggested fix: change placeholder to "name shown on published entries" — removes direct address while describing the field's purpose in the same register as the adjacent hint text.
 - source: browser
 
-### [LOW] /log — skip link label "skip to entries" sets an unfulfilled expectation in the empty state
+### [x] [LOW] /log — skip link label "skip to entries" sets an unfulfilled expectation in the empty state
 - pass: 35 (commit 2dad7ef)
 - viewport: both
 - category: comprehension
@@ -25,6 +25,7 @@
 - evidence: src/app/log/page.tsx:82: `<a href="#log-content" className="skip-link">skip to entries</a>` — authenticated capture body text in empty state: "the past 60 days\nskip to entries\n\nthe log is empty. today's entry will appear here."
 - suggested fix: change the skip link label to "skip to log" so it describes the destination region rather than its content state — accurate in both populated and empty states.
 - source: browser
+- resolution: changed "skip to entries" to "skip to log" in src/app/log/page.tsx. Shipped at f13c754.
 
 ### [LOW] / — "tiny task" label and per-day instruction run together in a single paragraph with no semantic separation
 - pass: 35 (commit 2dad7ef)
