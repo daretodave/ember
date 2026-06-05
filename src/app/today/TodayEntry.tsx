@@ -143,7 +143,7 @@ export function TodayEntry({ date, task, prompt, initialEntry, hasUsername = tru
 
   function saveIndicatorText() {
     if (saveState === 'saving') return 'saving.'
-    if (!isOnline && saveState !== 'saved') return 'saved locally — will sync'
+    if (!isOnline && saveState !== 'saved') return 'saved locally. will sync when online.'
     if (saveState === 'saved' && savedAt) return formatSavedTime(savedAt)
     if (saveState === 'draft') return 'draft restored.'
     if (saveState === 'idle' && response === '') return ''

@@ -77,7 +77,7 @@ describe('offline draft — load on mount', () => {
 })
 
 describe('offline indicator', () => {
-  it('shows "saved locally — will sync" when offline', async () => {
+  it('shows "saved locally. will sync when online." when offline', async () => {
     Object.defineProperty(navigator, 'onLine', { value: false, writable: true, configurable: true })
 
     render(<TodayEntry {...baseProps} />)
@@ -86,7 +86,7 @@ describe('offline indicator', () => {
     window.dispatchEvent(new Event('offline'))
 
     await waitFor(() => {
-      expect(screen.getAllByText('saved locally — will sync').length).toBeGreaterThan(0)
+      expect(screen.getAllByText('saved locally. will sync when online.').length).toBeGreaterThan(0)
     })
   })
 })
