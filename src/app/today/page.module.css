@@ -162,6 +162,11 @@
   margin: 0;
 }
 
+.taskLabel {
+  font-size: var(--type-14);
+  font-family: var(--font-sans);
+}
+
 .taskMuted {
   color: var(--color-ink-muted);
 }

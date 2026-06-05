@@ -162,7 +162,7 @@ export function TodayEntry({ date, task, prompt, initialEntry, hasUsername = tru
           onClick={() => setTaskDone((v) => !v)}
         />
         <p className={styles.taskBody}>
-          tiny task{' '}
+          <span className={styles.taskLabel}>tiny task</span>{' '}
           <span className={styles.taskMuted}>— {task}</span>
         </p>
       </div>
