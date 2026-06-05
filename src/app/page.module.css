@@ -189,6 +189,11 @@
   transform: translateY(2px);
 }
 
+.taskLabel {
+  font-size: var(--type-14);
+  font-family: var(--font-sans);
+}
+
 .dayToday {
   background: var(--color-paper-sunk);
   margin: 0 calc(-1 * var(--space-5));

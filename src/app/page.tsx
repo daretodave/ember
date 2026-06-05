@@ -57,7 +57,11 @@ export default function LandingPage() {
                 <div className={styles.dayBody}>
                   <p className={styles.dayPrompt}>{day.prompt}</p>
                   <p className={styles.dayTask}>
-                    tiny task — {day.task}
+                    <span>
+                      <span className={styles.taskLabel}>tiny task</span>
+                      {' — '}
+                      {day.task}
+                    </span>
                   </p>
                 </div>
               </li>
