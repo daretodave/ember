@@ -64,7 +64,7 @@
 - issue: [mirror-failed: loop-issue.mjs not present in scripts/]
 - resolution: changed aria-label in TodayEntry.tsx to "marks today's tiny task as done."/"marks today's tiny task as not done."; same fix applied to EditEntry.tsx; EntrySave.test.tsx assertion updated. Shipped at 4b057a0.
 
-### [ ] [2.7] /settings — aria-live region announces only "saved." and is silent during "saving." in-flight state
+### [x] [2.7] /settings — aria-live region announces only "saved." and is silent during "saving." in-flight state
 - category: a11y
 - impact: 3
 - ease: 9
@@ -73,6 +73,8 @@
 - evidence: src/app/settings/SettingsForm.tsx:210–211: `{saveState === 'saved' ? 'saved.' : ''}` — empty string for 'saving' state.
 - suggested fix: change to `{saveState === 'saving' ? 'saving.' : saveState === 'saved' ? 'saved.' : ''}`.
 - source: /critique pass 36 (commit 0dce6e9)
+- issue: [mirror-failed: loop-issue.mjs not present in scripts/]
+- resolution: changed aria-live conditional to emit 'saving.' during in-flight state and 'saved.' on success; test added asserting aria-live textContent during in-flight. Shipped at 407b9ec.
 
 ### [ ] [2.0] /signin — in-flight submit label "sending..." uses ellipsis while all other in-progress labels use a terminal period
 - category: voice

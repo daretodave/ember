@@ -28,7 +28,7 @@
 - source: browser
 - resolution: changed aria-label in TodayEntry.tsx to declarative form matching title; same fix applied to EditEntry.tsx. Shipped at 4b057a0.
 
-### [LOW] /settings — aria-live region announces only "saved." and is silent during "saving." in-flight state
+### [x] [LOW] /settings — aria-live region announces only "saved." and is silent during "saving." in-flight state
 - pass: 36 (commit 0dce6e9)
 - viewport: both
 - category: a11y
@@ -36,6 +36,7 @@
 - evidence: src/app/settings/SettingsForm.tsx:210–211: `<span aria-live="polite" ...>{saveState === 'saved' ? 'saved.' : ''}</span>` — empty string for 'saving' state. compare src/app/today/TodayEntry.tsx:181–183 where aria-live renders the full saveIndicatorText() including 'saving.'.
 - suggested fix: change the conditional to `{saveState === 'saving' ? 'saving.' : saveState === 'saved' ? 'saved.' : ''}` to announce the in-flight state to screen reader users.
 - source: browser
+- resolution: changed aria-live conditional to emit 'saving.' during in-flight state; test added. Shipped at 407b9ec.
 
 ### [LOW] /signin — in-flight submit label "sending..." uses ellipsis while all other in-progress labels use a terminal period
 - pass: 36 (commit 0dce6e9)
