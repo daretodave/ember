@@ -27,7 +27,7 @@
 - source: browser
 - resolution: changed "skip to entries" to "skip to log" in src/app/log/page.tsx. Shipped at f13c754.
 
-### [LOW] / — "tiny task" label and per-day instruction run together in a single paragraph with no semantic separation
+### [x] [LOW] / — "tiny task" label and per-day instruction run together in a single paragraph with no semantic separation
 - pass: 35 (commit 2dad7ef)
 - viewport: both
 - category: a11y
@@ -35,6 +35,7 @@
 - evidence: src/app/page.tsx:59–60: `<p className={styles.dayTask}>tiny task — {day.task}</p>` — all seven preview blocks follow this pattern. desktop and mobile captures show e.g. "tiny task — write that person's name down, and one thing you learned." with no inner element structure.
 - suggested fix: wrap "tiny task" in a `<span className={styles.taskLabel}>` within the paragraph so the label is semantically and stylistically separable from the task body; update page.module.css to add the corresponding class rule.
 - source: browser
+- resolution: inner `<span className={styles.taskLabel}>tiny task</span>` added; Inter 14px label vs Source Serif 4 16px task body. Shipped at 0101b1b.
 
 ### [x] [MED] /log — 60-tile mosaic has no bypass mechanism for keyboard-only users
 - pass: 34 (commit d754637)

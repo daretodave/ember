@@ -18,7 +18,7 @@
 - issue: [mirror-failed: 2026-06-05T00:00:00Z]
 - resolution: changed "skip to entries" to "skip to log" in src/app/log/page.tsx. Shipped at f13c754.
 
-### [ ] [2.4] / — "tiny task" label and per-day instruction run together in a single paragraph with no semantic separation
+### [x] [2.4] / — "tiny task" label and per-day instruction run together in a single paragraph with no semantic separation
 - category: a11y
 - impact: 3
 - ease: 8
@@ -27,6 +27,8 @@
 - evidence: src/app/page.tsx:59–60: `<p className={styles.dayTask}>tiny task — {day.task}</p>` — all seven preview blocks follow this pattern.
 - suggested fix: wrap "tiny task" in a `<span className={styles.taskLabel}>` within the paragraph so the label is semantically and stylistically separable from the task body; update page.module.css to add the corresponding class rule.
 - source: /critique pass 35 (commit 2dad7ef)
+- issue: [mirror-failed: loop-issue.mjs not present in scripts/]
+- resolution: wrapped content in outer span (preserving flex item structure); added inner `<span className={styles.taskLabel}>tiny task</span>` for semantic separation; taskLabel uses Inter at 14px vs Source Serif 4 at 16px for task body. Shipped at 0101b1b.
 
 ### [ ] [2.0] /settings — display name input placeholder uses second-person possessive "your public profile"
 - category: voice
