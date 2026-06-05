@@ -8,14 +8,6 @@
 
 ## Pending
 
-### [MED] /today — focus mode overlay lacks focus trap; Tab exits active dialog into obscured main content
-- pass: 37 (commit 562a795)
-- viewport: both
-- category: a11y
-- observation: the focus mode overlay uses role="dialog" and aria-modal={isFocus} but none of the interactive elements in the main form — the response textarea, publish checkbox, focus trigger button, and save button — have their tabIndex set to -1 when focus mode is active. a keyboard user who opens focus mode can Tab out of the overlay into the main form elements, which are visually obscured by the overlay but remain in the tab order. aria-modal alone is insufficient: NVDA+Firefox does not implement it, so screen reader users on that pairing can navigate outside the dialog boundary.
-- evidence: src/app/today/TodayEntry.tsx:232–234 — `aria-hidden={!isFocus}` `aria-modal={isFocus}` on overlay; main textarea at ~line 178 and buttons at ~lines 196, 203 have no conditional tabIndex management.
-- suggested fix: when isFocus is true, set tabIndex={-1} on the main response textarea, publish checkbox, focus trigger button, and save button so keyboard focus is contained within the overlay until focus mode is exited.
-- source: browser
 
 ### [LOW] /signin — "sign-in links expire after 24 hours." is in the footer, separated from the form's explanatory copy
 - pass: 37 (commit 562a795)
@@ -1321,6 +1313,16 @@
 - resolution: footer now reads "sign-in links expire after 24 hours." — added at dfe1ae4 when the vendor attribution was replaced. Expiry concern addressed.
 
 ## Done
+
+### [x] [MED] /today — focus mode overlay lacks focus trap; Tab exits active dialog into obscured main content
+- pass: 37 (commit 562a795)
+- viewport: both
+- category: a11y
+- observation: the focus mode overlay uses role="dialog" and aria-modal={isFocus} but none of the interactive elements in the main form — the response textarea, publish checkbox, focus trigger button, and save button — have their tabIndex set to -1 when focus mode is active. a keyboard user who opens focus mode can Tab out of the overlay into the main form elements, which are visually obscured by the overlay but remain in the tab order. aria-modal alone is insufficient: NVDA+Firefox does not implement it, so screen reader users on that pairing can navigate outside the dialog boundary.
+- evidence: src/app/today/TodayEntry.tsx:232–234 — `aria-hidden={!isFocus}` `aria-modal={isFocus}` on overlay; main textarea at ~line 178 and buttons at ~lines 196, 203 have no conditional tabIndex management.
+- suggested fix: when isFocus is true, set tabIndex={-1} on the main response textarea, publish checkbox, focus trigger button, and save button so keyboard focus is contained within the overlay until focus mode is exited.
+- source: browser
+- resolution: added tabIndex={isFocus ? -1 : undefined} to task-done button, main response textarea, publish checkbox, focus trigger button, main save button, and settings link in TodayEntry.tsx; two FocusMode tests verify enter/exit behavior. Shipped at 8e9244f.
 
 ### [x] [LOW] /today — offline save indicator "saved locally — will sync" is a sentence fragment with no terminal period
 - pass: 35 (commit 2dad7ef)

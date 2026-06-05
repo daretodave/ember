@@ -6,6 +6,18 @@
 
 ## Pending
 
+### [x] [4.2] /today — focus mode overlay lacks focus trap; Tab exits dialog into obscured main content
+- category: a11y
+- impact: 6
+- ease: 7
+- note: scored 2026-06-05 — from critique pass 37 (562a795); the focus mode overlay uses role="dialog" and aria-modal={isFocus} but the main form elements (response textarea, publish checkbox, focus trigger button, save button) have no conditional tabIndex management. when isFocus is true a keyboard user can Tab out of the overlay into main form elements that are visually obscured. aria-modal alone is insufficient: NVDA+Firefox does not implement it, so screen reader users on that pairing can navigate outside the dialog boundary.
+- observation: (see CRITIQUE.md pass 37)
+- evidence: src/app/today/TodayEntry.tsx:171–213 — main textarea, publish checkbox, focus trigger button, and save button have no tabIndex={-1} when isFocus is true; overlay elements at lines 248/261/272/298 already use tabIndex={isFocus ? 0 : -1} correctly
+- suggested fix: add tabIndex={isFocus ? -1 : undefined} to the main response textarea (line 171), publish checkbox input (line 187), focus trigger button (line 195), main save button (line 205), and task-done button (line 156) so keyboard focus is contained within the overlay when focus mode is active.
+- source: /critique pass 37 (commit 562a795)
+- issue: [mirror-failed: 2026-06-05T00:00:00Z]
+- resolution: added tabIndex={isFocus ? -1 : undefined} to task-done button, main response textarea, publish checkbox, focus trigger button, main save button, and settings link in TodayEntry.tsx; two FocusMode tests verify enter/exit behavior. Shipped at 8e9244f.
+
 ### [x] [3.0] /log — skip link label "skip to entries" sets an unfulfilled expectation in the empty state
 - category: external-critique
 - impact: 3
