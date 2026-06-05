@@ -157,7 +157,7 @@ export function TodayEntry({ date, task, prompt, initialEntry, hasUsername = tru
           type="button"
           className={`${styles.taskCheck}${taskDone ? ` ${styles.done}` : ''}`}
           aria-pressed={taskDone}
-          aria-label={taskDone ? 'mark task not done' : 'mark task done'}
+          aria-label={taskDone ? "marks today's tiny task as not done." : "marks today's tiny task as done."}
           title={taskDone ? "marks today's tiny task as not done." : "marks today's tiny task as done."}
           onClick={() => setTaskDone((v) => !v)}
         />

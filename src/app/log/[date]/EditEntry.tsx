@@ -86,7 +86,7 @@ export function EditEntry({ date, task, initialEntry }: Props) {
             type="button"
             className={`${styles.taskCheck}${editTaskDone ? ` ${styles.done}` : ''}`}
             aria-pressed={editTaskDone}
-            aria-label={editTaskDone ? 'mark task not done' : 'mark task done'}
+            aria-label={editTaskDone ? "marks this entry's tiny task as not done." : "marks this entry's tiny task as done."}
             onClick={() => setEditTaskDone((v) => !v)}
           />
           <p className={styles.taskBody}>

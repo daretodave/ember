@@ -94,7 +94,7 @@ describe('EntrySave — payload', () => {
     render(<TodayEntry {...BASE_PROPS} />)
     typeInEntry('text')
 
-    fireEvent.click(screen.getByRole('button', { name: 'mark task done' }))
+    fireEvent.click(screen.getByRole('button', { name: "marks today's tiny task as done." }))
     clickSave()
 
     await waitFor(() => {
