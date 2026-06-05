@@ -5,10 +5,10 @@ test('signin page returns 200', async ({ page }) => {
   expect(response?.status()).toBe(200)
 })
 
-test('signin page has heading "sign in."', async ({ page }) => {
+test('signin page has heading "sign in"', async ({ page }) => {
   await page.goto('/signin')
   const h1 = page.locator('h1')
-  await expect(h1).toContainText('sign in.')
+  await expect(h1).toContainText('sign in')
 })
 
 test('signin page has email input', async ({ page }) => {
