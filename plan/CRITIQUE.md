@@ -1,12 +1,30 @@
 # External-observer findings — Ember
 
-> Last pass: 2026-06-05 at commit 0dce6e9
-> Pass count: 36
+> Last pass: 2026-06-05 at commit 562a795
+> Pass count: 37
 
 > Written by `/critique` after walking the live site as a
 > fresh-eyes visitor. Drained by `/iterate`.
 
 ## Pending
+
+### [MED] /today — focus mode overlay lacks focus trap; Tab exits active dialog into obscured main content
+- pass: 37 (commit 562a795)
+- viewport: both
+- category: a11y
+- observation: the focus mode overlay uses role="dialog" and aria-modal={isFocus} but none of the interactive elements in the main form — the response textarea, publish checkbox, focus trigger button, and save button — have their tabIndex set to -1 when focus mode is active. a keyboard user who opens focus mode can Tab out of the overlay into the main form elements, which are visually obscured by the overlay but remain in the tab order. aria-modal alone is insufficient: NVDA+Firefox does not implement it, so screen reader users on that pairing can navigate outside the dialog boundary.
+- evidence: src/app/today/TodayEntry.tsx:232–234 — `aria-hidden={!isFocus}` `aria-modal={isFocus}` on overlay; main textarea at ~line 178 and buttons at ~lines 196, 203 have no conditional tabIndex management.
+- suggested fix: when isFocus is true, set tabIndex={-1} on the main response textarea, publish checkbox, focus trigger button, and save button so keyboard focus is contained within the overlay until focus mode is exited.
+- source: browser
+
+### [LOW] /signin — "sign-in links expire after 24 hours." is in the footer, separated from the form's explanatory copy
+- pass: 37 (commit 562a795)
+- viewport: both
+- category: comprehension
+- observation: the sign-in form's inline explanatory copy reads "a sign-in link is sent to this address. no password. no other mail. a new address creates an account." the expiry notice "sign-in links expire after 24 hours." appears after the ember wordmark in the footer — a visual break away from the rest of the link behaviour copy. a user looking for caveats near the submit button does not encounter the expiry notice until scrolling past the footer wordmark; the information is present but disconnected from the action it qualifies.
+- evidence: body text order: "a sign-in link is sent to this address. no password. no other mail. a new address creates an account.\n\nember\nsign-in links expire after 24 hours." — the wordmark creates a break between the form copy and the expiry statement.
+- suggested fix: move the expiry sentence into the main form's explanatory paragraph — "a sign-in link is sent to this address. it expires after 24 hours. no password. no other mail. a new address creates an account." — so the caveat and the promise sit in the same reading unit.
+- source: browser
 
 ### [x] [LOW] /today — "tiny task" label in TodayEntry lacks semantic wrapper (parallel landing-page fix not applied)
 - pass: 36 (commit 0dce6e9)
