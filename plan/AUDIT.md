@@ -40,6 +40,65 @@
 - suggested fix: change placeholder to "name shown on published entries" — removes direct address while describing the field's purpose in the same register as the adjacent hint text.
 - source: /critique pass 35 (commit 2dad7ef)
 
+### [ ] [2.7] /today — "tiny task" label in TodayEntry lacks semantic wrapper (parallel landing-page fix not applied)
+- category: a11y
+- impact: 3
+- ease: 9
+- note: scored 2026-06-05 — from critique pass 36 (0dce6e9); the landing-page fix at 0101b1b wrapped "tiny task" in `<span className={styles.taskLabel}>` in page.tsx; TodayEntry.tsx was not updated in that commit; AT users and DOM text consumers on /today cannot differentiate the recurring label from the day-specific task content
+- observation: the /today task paragraph renders "tiny task" as unseparated raw text inside `<p className={styles.taskBody}>`. the equivalent landing-page paragraph now wraps "tiny task" in a semantic span. screen reader users and parsers cannot distinguish the recurring label from the task body.
+- evidence: src/app/today/TodayEntry.tsx:164–165: `<p className={styles.taskBody}>tiny task{' '}<span className={styles.taskMuted}>— {task}</span></p>` — compare src/app/page.tsx:59–62 where 0101b1b added `<span className={styles.taskLabel}>tiny task</span>`.
+- suggested fix: wrap "tiny task" in `<span className={styles.taskLabel}>tiny task</span>` inside taskBody paragraph in TodayEntry.tsx, matching the landing-page pattern.
+- source: /critique pass 36 (commit 0dce6e9)
+
+### [ ] [2.7] /today — task-done button aria-label uses imperative "mark task done" while title uses non-imperative form
+- category: a11y
+- impact: 3
+- ease: 9
+- note: scored 2026-06-05 — from critique pass 36 (0dce6e9); aria-label uses imperative "mark task done" / "mark task not done"; title uses non-imperative "marks today's tiny task as done." / "marks today's tiny task as not done."; screen reader users hear the imperative form; the aria-label diverges from the voice guide and from the title it accompanies
+- observation: the task-done button carries inconsistent accessible name forms — aria-label is imperative, title is non-imperative and includes the branded "tiny" modifier. AT users hear the imperative form that violates the voice guide.
+- evidence: src/app/today/TodayEntry.tsx:160–161: `aria-label={taskDone ? 'mark task not done' : 'mark task done'}` and `title={taskDone ? "marks today's tiny task as not done." : "marks today's tiny task as done."}`.
+- suggested fix: align aria-label to title's form: `"marks today's tiny task as done."` and `"marks today's tiny task as not done."`.
+- source: /critique pass 36 (commit 0dce6e9)
+
+### [ ] [2.7] /settings — aria-live region announces only "saved." and is silent during "saving." in-flight state
+- category: a11y
+- impact: 3
+- ease: 9
+- note: scored 2026-06-05 — from critique pass 36 (0dce6e9); the settings form aria-live region renders empty string for all states other than 'saved'; a screen reader user who submits the form receives no acknowledgment that a save is in progress; the pass-34 fix (5699c54) corrected the visible button label from "saving..." to "saving." but did not update the aria-live conditional
+- observation: SettingsForm.tsx aria-live span only emits text when saveState is 'saved'. in-flight 'saving' state is silent for AT users, unlike /today which announces all save states.
+- evidence: src/app/settings/SettingsForm.tsx:210–211: `{saveState === 'saved' ? 'saved.' : ''}` — empty string for 'saving' state.
+- suggested fix: change to `{saveState === 'saving' ? 'saving.' : saveState === 'saved' ? 'saved.' : ''}`.
+- source: /critique pass 36 (commit 0dce6e9)
+
+### [ ] [2.0] /signin — in-flight submit label "sending..." uses ellipsis while all other in-progress labels use a terminal period
+- category: voice
+- impact: 2
+- ease: 10
+- note: scored 2026-06-05 — from critique pass 36 (0dce6e9); every in-progress label in the product uses a terminal period — "saving." on /today, /settings, /log/[date] — "sending..." is the only remaining ellipsis-form, inconsistent with the established convention
+- observation: the sign-in form submit button renders "sending..." (ellipsis) during the in-flight state. all other in-progress labels use a period.
+- evidence: src/app/signin/page.tsx:80: `{state === 'sending' ? 'sending...' : 'send the link'}`.
+- suggested fix: change "sending..." to "sending." in src/app/signin/page.tsx line 80.
+- source: /critique pass 36 (commit 0dce6e9)
+
+### [ ] [2.0] /today — "open log" link in day strip uses imperative verb
+- category: voice
+- impact: 2
+- ease: 10
+- note: scored 2026-06-05 — from critique pass 36 (0dce6e9); the day strip link to /log uses the imperative label "open log"; the nav bar uses the bare noun "log" for the same destination; the voice guide prohibits second-person imperative copy
+- observation: "open log" is the only navigation link in the product using an imperative verb. the nav bar and all other links use noun-form labels.
+- evidence: src/app/today/DayStrip.tsx:54–55: `<Link href="/log" className={styles.stripLink}>open log</Link>`.
+- suggested fix: change "open log" to "log" to match the nav bar label and remove the imperative construction.
+- source: /critique pass 36 (commit 0dce6e9)
+
+### [ ] [1.8] / — landing page footer region uses a div element instead of a footer landmark
+- category: a11y
+- impact: 2
+- ease: 9
+- note: scored 2026-06-05 — from critique pass 36 (0dce6e9); landing page closing section uses `<div className={styles.footerCredit}>` with no footer landmark; /signin uses `<footer>` for its equivalent region; AT users navigating by landmarks cannot reach the landing page footer
+- observation: the landing page closing section ("ember / a daily writing ritual.") has no footer landmark, unlike /signin which uses `<footer>`. inconsistent landmark structure across the two public-facing pages.
+- evidence: src/app/page.tsx:84: `<div className={styles.footerCredit}>` — no footer element. compare src/app/signin/page.tsx: `<footer className={styles.footer}>`.
+- suggested fix: change `<div className={styles.footerCredit}>` to `<footer className={styles.footerCredit}>` in src/app/page.tsx.
+- source: /critique pass 36 (commit 0dce6e9)
 
 ### [x] [3.0] /today — offline save indicator "saved locally — will sync" is a sentence fragment
 - category: external-critique

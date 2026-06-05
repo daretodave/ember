@@ -1,12 +1,66 @@
 # External-observer findings — Ember
 
-> Last pass: 2026-06-05 at commit 2dad7ef
-> Pass count: 35
+> Last pass: 2026-06-05 at commit 0dce6e9
+> Pass count: 36
 
 > Written by `/critique` after walking the live site as a
 > fresh-eyes visitor. Drained by `/iterate`.
 
 ## Pending
+
+### [LOW] /today — "tiny task" label in TodayEntry lacks semantic wrapper (parallel landing-page fix not applied)
+- pass: 36 (commit 0dce6e9)
+- viewport: both
+- category: a11y
+- observation: the landing-page fix at 0101b1b wrapped "tiny task" in a `<span className={styles.taskLabel}>` in page.tsx so AT users and parsers can differentiate the recurring label from the day-specific task body. TodayEntry.tsx was not updated in the same commit — the task paragraph still renders "tiny task" as unseparated raw text inside `<p className={styles.taskBody}>`. screen reader users and DOM text consumers on /today cannot differentiate the label from the task content.
+- evidence: src/app/today/TodayEntry.tsx:164–165: `<p className={styles.taskBody}>tiny task{' '}<span className={styles.taskMuted}>— {task}</span></p>` — "tiny task" is unseparated raw text. compare src/app/page.tsx:59–62 where 0101b1b added `<span className={styles.taskLabel}>tiny task</span>`.
+- suggested fix: wrap "tiny task" in `<span className={styles.taskLabel}>tiny task</span>` inside the taskBody paragraph in TodayEntry.tsx, consistent with the landing-page fix.
+- source: browser
+
+### [LOW] /today — task-done button aria-label uses imperative "mark task done" while title uses non-imperative "marks today's tiny task as done."
+- pass: 36 (commit 0dce6e9)
+- viewport: both
+- category: a11y
+- observation: the task-done toggle button carries `aria-label="mark task done"` (and "mark task not done" when already marked). the title attribute on the same element correctly uses the non-imperative form "marks today's tiny task as done." and includes the branded "tiny" modifier. screen reader users hear the aria-label as the accessible name — the imperative form — while sighted users hovering on desktop see the title's non-imperative form. the aria-label diverges from the voice guide and from the title it accompanies.
+- evidence: src/app/today/TodayEntry.tsx:160–161: `aria-label={taskDone ? 'mark task not done' : 'mark task done'}` and `title={taskDone ? "marks today's tiny task as not done." : "marks today's tiny task as done."}` — aria-label uses imperative verb; title uses declarative with branded "tiny task".
+- suggested fix: align aria-label to the title's form — change to `"marks today's tiny task as done."` and `"marks today's tiny task as not done."` — removes the imperative and aligns with voice and with the title.
+- source: browser
+
+### [LOW] /settings — aria-live region announces only "saved." and is silent during "saving." in-flight state
+- pass: 36 (commit 0dce6e9)
+- viewport: both
+- category: a11y
+- observation: the settings form aria-live region only emits text when saveState is 'saved'; it renders an empty string for every other state including 'saving'. a screen reader user who submits the settings form receives no spoken acknowledgment that a save is in progress — they hear silence until the server returns. the /today page (TodayEntry.tsx) was updated in pass 31 (17830b2) to announce all save states including "saving."; SettingsForm.tsx was not updated to the same standard in that pass. the pass-34 fix (5699c54) corrected the visible button label from "saving..." to "saving." but did not update the aria-live conditional.
+- evidence: src/app/settings/SettingsForm.tsx:210–211: `<span aria-live="polite" ...>{saveState === 'saved' ? 'saved.' : ''}</span>` — empty string for 'saving' state. compare src/app/today/TodayEntry.tsx:181–183 where aria-live renders the full saveIndicatorText() including 'saving.'.
+- suggested fix: change the conditional to `{saveState === 'saving' ? 'saving.' : saveState === 'saved' ? 'saved.' : ''}` to announce the in-flight state to screen reader users.
+- source: browser
+
+### [LOW] /signin — in-flight submit label "sending..." uses ellipsis while all other in-progress labels use a terminal period
+- pass: 36 (commit 0dce6e9)
+- viewport: both
+- category: voice
+- observation: the sign-in form submit button renders "sending..." during the in-flight state. every other in-progress label in the product uses a terminal period: "saving." on /today, /settings, and /log/[date] (the last two fixed at 5699c54, pass 34). "sending..." is the only remaining ellipsis-form in-progress label, inconsistent with the established convention.
+- evidence: src/app/signin/page.tsx:80: `{state === 'sending' ? 'sending...' : 'send the link'}` — ellipsis form. compare src/app/today/TodayEntry.tsx:212: `'saving.'` (period, no ellipsis).
+- suggested fix: change "sending..." to "sending." in src/app/signin/page.tsx line 80.
+- source: browser
+
+### [LOW] /today — "open log" link in day strip uses imperative verb
+- pass: 36 (commit 0dce6e9)
+- viewport: both
+- category: voice
+- observation: the day strip on /today renders a link to /log with the label "open log". the verb "open" is an imperative construction. the nav bar uses the bare noun "log" for the same destination; "open log" is the only instance of an imperative verb in a navigation link across the product. the voice guide prohibits second-person imperative copy.
+- evidence: src/app/today/DayStrip.tsx:54–55: `<Link href="/log" className={styles.stripLink}>open log</Link>` — body text: "open log" appears between the "the last seven days" heading and the seven strip tiles.
+- suggested fix: change link text from "open log" to "log" to match the nav bar noun form and remove the imperative construction.
+- source: browser
+
+### [LOW] / — landing page footer region uses a div element instead of a footer landmark
+- pass: 36 (commit 0dce6e9)
+- viewport: both
+- category: a11y
+- observation: the landing page closing section ("ember / a daily writing ritual.") is wrapped in `<div className={styles.footerCredit}>` with no semantic footer element. the /signin page uses `<footer className={styles.footer}>` for its equivalent closing region. keyboard and AT users who navigate by landmark cannot reach the landing page's closing region via footer landmark navigation; the two pages are inconsistent in their use of landmark structure.
+- evidence: src/app/page.tsx:84: `<div className={styles.footerCredit}>` — no footer landmark on the landing page. compare src/app/signin/page.tsx: `<footer className={styles.footer}>` landmark.
+- suggested fix: change `<div className={styles.footerCredit}>` to `<footer className={styles.footerCredit}>` (and the closing tag) to add a consistent footer landmark.
+- source: browser
 
 ### [LOW] /settings — display name input placeholder uses second-person possessive "your public profile"
 - pass: 35 (commit 2dad7ef)
