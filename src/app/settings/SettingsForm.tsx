@@ -120,7 +120,7 @@ export function SettingsForm({ displayName, username, timezone, usePersonalizedP
           display name
         </label>
         <p className={styles.hint}>
-          shown on published entries on the public profile.
+          shown on entries when they appear on a public profile.
         </p>
         <input
           id="display-name"
