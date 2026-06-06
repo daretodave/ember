@@ -77,7 +77,7 @@
 - issue: [mirror-failed: loop-issue.mjs not present in scripts/]
 - resolution: added "it expires after 24 hours." after the first sentence of the reassurance paragraph in src/app/signin/page.tsx; removed footer expiry span entirely. Shipped at 51e9c0a.
 
-### [ ] [2.1] /signin — reassurance paragraph is after the submit button in DOM reading order
+### [x] [2.1] /signin — reassurance paragraph is after the submit button in DOM reading order
 - category: comprehension
 - impact: 3
 - ease: 7
@@ -86,6 +86,8 @@
 - evidence: src/app/signin/page.tsx: reassurance <p> rendered at lines 89-94, outside the <form> which closes at line 83; DOM reading order: form > button > (form close) > reassurance paragraph.
 - suggested fix: move the reassurance paragraph inside the <form>, between the email field and the submit button.
 - source: /critique pass 38 (commit f9032a8)
+- issue: [mirror-failed: loop-issue.mjs not present in scripts/]
+- resolution: moved reassurance <p> inside <form> between email field and submit button in src/app/signin/page.tsx; keyboard and screen reader users now encounter explanatory context before the submit action in DOM reading order; test added asserting paragraph index < button index among form children. Shipped at 27e8bf4.
 
 ### [ ] [2.0] /settings — "sign out" button uses second-person imperative label
 - category: voice

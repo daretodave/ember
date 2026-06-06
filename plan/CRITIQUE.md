@@ -18,7 +18,7 @@
 - source: browser
 - resolution: changed <div> to <aside aria-label="sign in"> in src/app/page.tsx. Shipped at af927c1.
 
-### [LOW] /signin — reassurance paragraph is after the submit button in DOM reading order
+### [x] [LOW] /signin — reassurance paragraph is after the submit button in DOM reading order
 - pass: 38 (commit f9032a8)
 - viewport: both
 - category: comprehension
@@ -26,6 +26,7 @@
 - evidence: capture linear reading order: "sign in / email / send the link / a sign-in link is sent to this address. no password. no other mail. a new address creates an account." — the button label "send the link" precedes the explanatory paragraph.
 - suggested fix: move the reassurance paragraph inside the `<form>`, between the email field and the submit button, so explanation precedes the action in linear reading order.
 - source: browser
+- resolution: moved reassurance <p> inside <form> between email field and submit button in src/app/signin/page.tsx. Shipped at 27e8bf4.
 
 ### [x] [LOW] /signin — keyboard focus is not managed after the form-to-confirmation DOM transition
 - pass: 38 (commit f9032a8)
