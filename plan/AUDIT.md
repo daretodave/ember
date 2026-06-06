@@ -113,7 +113,7 @@
 - issue: [mirror-failed: loop-issue.mjs not present in scripts/]
 - resolution: changed description in src/app/signin/layout.tsx from "no password required." to "no password, no other mail." Shipped at bbf0470.
 
-### [ ] [2.4] /settings — display name hint presupposes an active public profile
+### [x] [2.4] /settings — display name hint presupposes an active public profile
 - category: comprehension
 - impact: 3
 - ease: 8
@@ -122,6 +122,8 @@
 - evidence: src/app/settings/SettingsForm.tsx:123: `shown on published entries on the public profile.` — the public username field is lower in the same form; a new account has no public profile.
 - suggested fix: reframe to "shown on entries when they appear on a public profile." — accurate whether or not a username is currently set.
 - source: /critique pass 40 (commit 49e85e6)
+- issue: [mirror-failed: loop-issue.mjs not present in scripts/]
+- resolution: changed hint to "shown on entries when they appear on a public profile." in src/app/settings/SettingsForm.tsx. Shipped at c06f4c7.
 
 ### [ ] [2.0] /settings — "sign out" button uses second-person imperative label
 - category: voice

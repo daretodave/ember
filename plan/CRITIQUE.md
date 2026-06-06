@@ -78,7 +78,7 @@
 - source: browser
 - resolution: false positive — src/app/log/page.tsx already renders `<Link href="/today">today's entry</Link> will appear here.`; the reader captured plain text and could not detect the link. no code change needed.
 
-### [LOW] /settings — display name hint references the public profile before a username is set
+### [x] [LOW] /settings — display name hint references the public profile before a username is set
 - pass: 40 (commit 49e85e6)
 - viewport: both
 - category: comprehension
@@ -86,6 +86,7 @@
 - evidence: settings body text: "display name / shown on published entries on the public profile." — /today confirms: "no public username is set. published entries will remain private until a username is added in settings." — the public profile does not exist for this account.
 - suggested fix: reframe the hint to describe the field's purpose without presupposing an active profile, e.g. "shown on entries when they appear on a public profile." — accurate whether or not a username is currently set.
 - source: browser
+- resolution: changed hint to "shown on entries when they appear on a public profile." in src/app/settings/SettingsForm.tsx. Shipped at c06f4c7.
 
 ### [LOW] /settings — "sign out" uses second-person imperative verb form
 - pass: 38 (commit f9032a8)
