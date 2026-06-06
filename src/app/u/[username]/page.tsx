@@ -82,7 +82,7 @@ export default async function PublicProfilePage({ params }: Props) {
   return (
     <div className={styles.page}>
       <header className={styles.header}>
-        <Link href="/" className={styles.lockup}>
+        <Link href="/" className={styles.lockup} aria-label="ember — home">
           <MosaicGlyph />
           <span className={styles.wordmark}>ember</span>
         </Link>
