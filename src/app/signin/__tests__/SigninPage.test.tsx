@@ -19,6 +19,13 @@ describe('SigninPage — initial state', () => {
     expect(screen.queryByRole('status')).not.toBeInTheDocument()
     expect(screen.queryByRole('alert')).not.toBeInTheDocument()
   })
+
+  it('shows expiry notice in reassurance paragraph, not only in footer', () => {
+    render(<SigninPage />)
+    const reassurance = document.querySelector('main p')
+    expect(reassurance).toHaveTextContent('it expires after 24 hours.')
+    expect(document.querySelector('footer')).not.toHaveTextContent('sign-in links expire after 24 hours.')
+  })
 })
 
 describe('SigninPage — sending state', () => {

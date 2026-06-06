@@ -100,8 +100,8 @@ export default function SigninPage() {
 
           {state !== 'sent' && (
             <p className={styles.reassurance}>
-              a sign-in link is sent to this address. no password. no other mail.{' '}
-              a new address creates an account.
+              a sign-in link is sent to this address. it expires after 24 hours.
+              no password. no other mail. a new address creates an account.
             </p>
           )}
         </div>
@@ -109,7 +109,6 @@ export default function SigninPage() {
 
       <footer className={styles.footer}>
         <span>ember</span>
-        {state !== 'sent' && <span>sign-in links expire after 24 hours.</span>}
       </footer>
     </div>
   )
