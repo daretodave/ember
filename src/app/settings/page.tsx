@@ -55,7 +55,7 @@ export default async function SettingsPage() {
             href={`/u/${profile.username}`}
             className={styles.profileLink}
           >
-            view your public profile
+            view public profile
           </Link>
         )}
       </main>
