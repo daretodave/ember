@@ -6,7 +6,7 @@
 
 ## Pending
 
-### [ ] [2.7] /settings — personalized prompt option gives no indication of when it activates
+### [x] [2.7] /settings — personalized prompt option gives no indication of when it activates
 - category: comprehension
 - impact: 3
 - ease: 9

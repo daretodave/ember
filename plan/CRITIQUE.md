@@ -66,7 +66,7 @@
 - source: browser
 - resolution: added hint paragraph below timezone label in SettingsForm.tsx matching adjacent hint style. Shipped at 505d88f.
 
-### [LOW] /settings — personalized prompt option gives no indication of when it activates
+### [x] [LOW] /settings — personalized prompt option gives no indication of when it activates
 - pass: 39 (commit f36dd96)
 - viewport: both
 - category: comprehension
@@ -74,6 +74,7 @@
 - evidence: settings body text: "personalized: a unique prompt generated from recent entries." — no qualifying clause about activation conditions or fallback behavior; contrast with the standard option which fully describes its behavior in one sentence.
 - suggested fix: append a fallback clause to the personalized description: "personalized: a unique prompt generated from recent entries. falls back to a standard prompt until entries exist." so new users understand the prerequisite before selecting.
 - source: browser
+- resolution: appended "falls back to a standard prompt until entries exist." to desc-personalized span in SettingsForm.tsx. Shipped at 4ddfa2b.
 
 ### [LOW] /signin — "sign-in links expire after 24 hours." is in the footer, separated from the form's explanatory copy
 - pass: 37 (commit 562a795)
