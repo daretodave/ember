@@ -6,6 +6,17 @@
 
 ## Pending
 
+### [ ] [2.7] /settings — personalized prompt option gives no indication of when it activates
+- category: comprehension
+- impact: 3
+- ease: 9
+- note: scored 2026-06-06 — from critique pass 39 (f36dd96); the personalized prompt variety option reads "personalized: a unique prompt generated from recent entries." with no qualifying clause about activation conditions or fallback; a user selecting personalized on a new account with no entries receives no signal that the option is a no-op until a log exists; the standard option fully describes its behavior in one sentence
+- observation: the personalized option description does not mention the prerequisite (having prior entries) or the fallback behavior (standard prompt until entries exist). a new user selecting personalized immediately after sign-up has no signal that the option degrades gracefully rather than producing an error or an empty prompt.
+- evidence: src/app/settings/SettingsForm.tsx:155: `<span id="desc-personalized">personalized: a unique prompt generated from recent entries.</span>` — no fallback clause; the standard option at line 154 fully describes its behavior in one sentence.
+- suggested fix: append a fallback clause to the personalized description: "personalized: a unique prompt generated from recent entries. falls back to a standard prompt until entries exist." so new users understand the prerequisite before selecting.
+- source: /critique pass 39 (commit f36dd96)
+- issue: [mirror-failed: 2026-06-06T00:00:00Z]
+
 ### [x] [3.6] all pages with lockup Link — glyph+wordmark inside link yields "ember ember" accessible name
 - category: a11y
 - impact: 4
