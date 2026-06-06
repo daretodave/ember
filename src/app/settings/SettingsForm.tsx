@@ -137,6 +137,9 @@ export function SettingsForm({ displayName, username, timezone, usePersonalizedP
         <label className={styles.label} htmlFor="timezone">
           timezone
         </label>
+        <p className={styles.hint}>
+          used to determine the current day for prompt delivery and entry dating.
+        </p>
         <TimezoneCombobox
           id="timezone"
           value={tzVal}
