@@ -18,7 +18,7 @@
 - issue: [mirror-failed: 2026-06-06T00:00:00Z]
 - resolution: added aria-label="ember — home" to all 9 lockup Link elements (/signin, /not-found, /error, /today, /log, /log/[date], /settings, /u/[username], /u/[username]/[date]). Shipped at d528c7d.
 
-### [ ] [3.2] /signin — keyboard focus is not managed after the form-to-confirmation DOM transition
+### [x] [3.2] /signin — keyboard focus is not managed after the form-to-confirmation DOM transition
 - category: a11y
 - impact: 4
 - ease: 8
@@ -27,6 +27,8 @@
 - evidence: src/app/signin/page.tsx: when state becomes 'sent', the form element is unmounted and the confirmation <p> is mounted with no programmatic focus movement; no ref or useEffect manages focus after the transition.
 - suggested fix: attach a ref to the confirmation paragraph and call `.focus()` in a useEffect triggered when state becomes 'sent', so keyboard focus moves to the confirmation text immediately on transition.
 - source: /critique pass 38 (commit f9032a8)
+- issue: [mirror-failed: 2026-06-06T02:37:00Z]
+- resolution: added confirmationRef + useEffect in page.tsx that calls .focus() when state becomes 'sent'; tabIndex={-1} on the <p> makes it programmatically focusable; test asserts document.activeElement is the confirmation element after submit. Shipped at 7ca5cc2.
 
 ### [ ] [2.7] / — sticky CTA region carries no ARIA landmark
 - category: a11y

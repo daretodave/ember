@@ -26,7 +26,7 @@
 - suggested fix: move the reassurance paragraph inside the `<form>`, between the email field and the submit button, so explanation precedes the action in linear reading order.
 - source: browser
 
-### [LOW] /signin — keyboard focus is not managed after the form-to-confirmation DOM transition
+### [x] [LOW] /signin — keyboard focus is not managed after the form-to-confirmation DOM transition
 - pass: 38 (commit f9032a8)
 - viewport: both
 - category: a11y
@@ -34,6 +34,7 @@
 - evidence: the confirmation state ("a sign-in link is on its way...") renders in place of the form with no programmatic focus movement to the confirmation element. no focusable element receives focus after the state transition.
 - suggested fix: attach a ref to the confirmation paragraph and call `.focus()` in a `useEffect` triggered when state becomes `'sent'`, so keyboard focus moves to the confirmation text immediately on transition.
 - source: browser
+- resolution: added confirmationRef + useEffect in page.tsx; tabIndex={-1} on confirmation <p>; test verifies focus movement. Shipped at 7ca5cc2.
 
 ### [x] [LOW] /signin — lockup link accessible name is computed as "ember ember" from duplicate nested labels
 - pass: 38 (commit f9032a8)
