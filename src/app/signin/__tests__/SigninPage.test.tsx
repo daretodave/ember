@@ -63,6 +63,24 @@ describe('SigninPage — sent state', () => {
     expect(screen.queryByRole('button', { name: 'send the link' })).not.toBeInTheDocument()
   })
 
+  it('moves focus to the confirmation paragraph after successful send', async () => {
+    global.fetch = vi.fn().mockResolvedValue({
+      ok: true,
+      json: async () => ({}),
+    } as Response)
+
+    render(<SigninPage />)
+    fireEvent.change(screen.getByLabelText('email'), {
+      target: { value: 'user@example.com' },
+    })
+    fireEvent.submit(document.querySelector('form')!)
+
+    await waitFor(() => {
+      expect(screen.getByRole('status')).toBeInTheDocument()
+    })
+    expect(document.activeElement).toBe(screen.getByRole('status'))
+  })
+
   it('shows expiry notice in confirmation, not in footer', async () => {
     global.fetch = vi.fn().mockResolvedValue({
       ok: true,

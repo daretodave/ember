@@ -2,7 +2,7 @@
 
 import { MosaicGlyph } from '@/components/mosaic/MosaicGlyph'
 import Link from 'next/link'
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import styles from './page.module.css'
 
 type State = 'idle' | 'sending' | 'sent' | 'error'
@@ -11,6 +11,13 @@ export default function SigninPage() {
   const [state, setState] = useState<State>('idle')
   const [errorMsg, setErrorMsg] = useState('')
   const inputRef = useRef<HTMLInputElement>(null)
+  const confirmationRef = useRef<HTMLParagraphElement>(null)
+
+  useEffect(() => {
+    if (state === 'sent') {
+      confirmationRef.current?.focus()
+    }
+  }, [state])
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
@@ -51,7 +58,12 @@ export default function SigninPage() {
           <h1 className={styles.title}>sign in</h1>
 
           {state === 'sent' ? (
-            <p className={styles.confirmation} role="status">
+            <p
+              ref={confirmationRef}
+              className={styles.confirmation}
+              role="status"
+              tabIndex={-1}
+            >
               a sign-in link is on its way. the link opens today&apos;s prompt
               directly. sign-in links expire after 24 hours.{' '}
               <em>no password required.</em>
