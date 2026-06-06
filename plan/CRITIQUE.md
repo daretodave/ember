@@ -8,7 +8,7 @@
 
 ## Pending
 
-### [LOW] / — sticky CTA region carries no ARIA landmark
+### [x] [LOW] / — sticky CTA region carries no ARIA landmark
 - pass: 38 (commit f9032a8)
 - viewport: both
 - category: a11y
@@ -16,6 +16,7 @@
 - evidence: capture body text places the CTA ("today's prompt is waiting. a known address receives a sign-in link. a new address creates an account. no password. no other mail. / sign in") after the main content — consistent with a fixed overlay outside `<main>`. no complementary, aside, or named section landmark covers it in the page structure.
 - suggested fix: add `role="complementary"` (or convert to `<aside>`) to the CTA element so AT users can reach the sign-in region via landmark navigation.
 - source: browser
+- resolution: changed <div> to <aside aria-label="sign in"> in src/app/page.tsx. Shipped at af927c1.
 
 ### [LOW] /signin — reassurance paragraph is after the submit button in DOM reading order
 - pass: 38 (commit f9032a8)

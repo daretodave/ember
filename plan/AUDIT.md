@@ -30,7 +30,7 @@
 - issue: [mirror-failed: 2026-06-06T02:37:00Z]
 - resolution: added confirmationRef + useEffect in page.tsx that calls .focus() when state becomes 'sent'; tabIndex={-1} on the <p> makes it programmatically focusable; test asserts document.activeElement is the confirmation element after submit. Shipped at 7ca5cc2.
 
-### [ ] [2.7] / — sticky CTA region carries no ARIA landmark
+### [x] [2.7] / — sticky CTA region carries no ARIA landmark
 - category: a11y
 - impact: 3
 - ease: 9
@@ -39,6 +39,8 @@
 - evidence: landing page capture places CTA ("today's prompt is waiting... sign in") after main content — consistent with a fixed overlay outside <main>; no complementary, aside, or named section landmark covers it.
 - suggested fix: add role="complementary" (or convert to <aside>) to the CTA element so AT users can reach the sign-in region via landmark navigation.
 - source: /critique pass 38 (commit f9032a8)
+- issue: [mirror-failed: loop-issue.mjs not present in scripts/]
+- resolution: changed <div className={styles.cta}> to <aside className={styles.cta} aria-label="sign in"> in src/app/page.tsx; AT users can now reach the sign-in region via landmark navigation (complementary role). Shipped at af927c1.
 
 ### [x] [2.7] /settings — timezone field has no hint text explaining its effect
 - category: comprehension
