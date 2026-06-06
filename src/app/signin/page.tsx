@@ -84,6 +84,10 @@ export default function SigninPage() {
                   disabled={state === 'sending'}
                 />
               </div>
+              <p className={styles.reassurance}>
+                a sign-in link is sent to this address. it expires after 24 hours.
+                no password. no other mail. a new address creates an account.
+              </p>
               <button
                 type="submit"
                 className={styles.submit}
@@ -96,13 +100,6 @@ export default function SigninPage() {
 
           {state === 'error' && (
             <p className={styles.errorMsg} role="alert">{errorMsg}</p>
-          )}
-
-          {state !== 'sent' && (
-            <p className={styles.reassurance}>
-              a sign-in link is sent to this address. it expires after 24 hours.
-              no password. no other mail. a new address creates an account.
-            </p>
           )}
         </div>
       </main>

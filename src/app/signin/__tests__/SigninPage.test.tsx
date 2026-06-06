@@ -26,6 +26,17 @@ describe('SigninPage — initial state', () => {
     expect(reassurance).toHaveTextContent('it expires after 24 hours.')
     expect(document.querySelector('footer')).not.toHaveTextContent('sign-in links expire after 24 hours.')
   })
+
+  it('reassurance paragraph precedes the submit button in DOM reading order', () => {
+    render(<SigninPage />)
+    const form = document.querySelector('form')!
+    const children = Array.from(form.children)
+    const reassuranceIndex = children.findIndex((el) => el.tagName === 'P')
+    const buttonIndex = children.findIndex((el) => el.tagName === 'BUTTON')
+    expect(reassuranceIndex).toBeGreaterThanOrEqual(0)
+    expect(buttonIndex).toBeGreaterThanOrEqual(0)
+    expect(reassuranceIndex).toBeLessThan(buttonIndex)
+  })
 })
 
 describe('SigninPage — sending state', () => {
