@@ -151,7 +151,7 @@ export function SettingsForm({ displayName, username, timezone, usePersonalizedP
       <div className={styles.field}>
         <span className={styles.label}>prompt variety</span>
         <p className={styles.hint}>
-          <span id="desc-standard">standard: same curated prompt for everyone each day.</span>{' '}
+          <span id="desc-standard">standard: same prompt for everyone each day.</span>{' '}
           <span id="desc-personalized">personalized: a unique prompt generated from recent entries. falls back to a standard prompt until entries exist.</span>
         </p>
         <div className={styles.radioGroup} role="radiogroup" aria-label="prompt variety">
