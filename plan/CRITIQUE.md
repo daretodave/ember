@@ -1,13 +1,66 @@
 # External-observer findings — Ember
 
-> Last pass: 2026-06-05 at commit 562a795
-> Pass count: 37
+> Last pass: 2026-06-06 at commit f9032a8
+> Pass count: 38
 
 > Written by `/critique` after walking the live site as a
 > fresh-eyes visitor. Drained by `/iterate`.
 
 ## Pending
 
+### [LOW] / — sticky CTA region carries no ARIA landmark
+- pass: 38 (commit f9032a8)
+- viewport: both
+- category: a11y
+- observation: the primary sign-in CTA is a position:fixed element rendered outside `<main>`. the page landmark inventory is: site navigation header + main content area. AT users navigating by landmark have no programmatic path to the CTA region; the sign-in link is reachable by Tab order but the region itself is absent from the landmark list.
+- evidence: capture body text places the CTA ("today's prompt is waiting. a known address receives a sign-in link. a new address creates an account. no password. no other mail. / sign in") after the main content — consistent with a fixed overlay outside `<main>`. no complementary, aside, or named section landmark covers it in the page structure.
+- suggested fix: add `role="complementary"` (or convert to `<aside>`) to the CTA element so AT users can reach the sign-in region via landmark navigation.
+- source: browser
+
+### [LOW] /signin — reassurance paragraph is after the submit button in DOM reading order
+- pass: 38 (commit f9032a8)
+- viewport: both
+- category: comprehension
+- observation: the paragraph explaining what the button does — "a sign-in link is sent to this address. no password. no other mail. a new address creates an account." — is placed outside and after the form in DOM reading order. a keyboard-only user or screen reader user encounters the submit button before the text that contextualises the action it triggers.
+- evidence: capture linear reading order: "sign in / email / send the link / a sign-in link is sent to this address. no password. no other mail. a new address creates an account." — the button label "send the link" precedes the explanatory paragraph.
+- suggested fix: move the reassurance paragraph inside the `<form>`, between the email field and the submit button, so explanation precedes the action in linear reading order.
+- source: browser
+
+### [LOW] /signin — keyboard focus is not managed after the form-to-confirmation DOM transition
+- pass: 38 (commit f9032a8)
+- viewport: both
+- category: a11y
+- observation: on successful submission the form is replaced by a confirmation paragraph. the previously focused submit button is removed from the DOM; the browser drops focus to the document body. the status region announces to screen readers, but sighted keyboard users lose their focus position and must re-orient by tabbing from the top.
+- evidence: the confirmation state ("a sign-in link is on its way...") renders in place of the form with no programmatic focus movement to the confirmation element. no focusable element receives focus after the state transition.
+- suggested fix: attach a ref to the confirmation paragraph and call `.focus()` in a `useEffect` triggered when state becomes `'sent'`, so keyboard focus moves to the confirmation text immediately on transition.
+- source: browser
+
+### [LOW] /signin — lockup link accessible name is computed as "ember ember" from duplicate nested labels
+- pass: 38 (commit f9032a8)
+- viewport: both
+- category: a11y
+- observation: the header lockup on /signin is a link wrapping the ember glyph (an img with aria-label="ember") and a visible wordmark span ("ember"). both children contribute to the link's computed accessible name, yielding the redundant label "ember ember" rather than a single clean name.
+- evidence: capture header renders "ember" (glyph) adjacent to "ember" (wordmark) inside a single link element. the pattern — role=img aria-label="ember" + visible text "ember" inside one anchor — produces a doubled accessible name in screen reader announcement.
+- suggested fix: add `aria-label="ember — home"` to the link element, or set `aria-hidden="true"` on the glyph element when it is nested inside the link so only the wordmark span contributes to the accessible name.
+- source: browser
+
+### [LOW] /settings — "sign out" uses second-person imperative verb form
+- pass: 38 (commit f9032a8)
+- viewport: both
+- category: voice
+- observation: the sign-out button label is "sign out" — an imperative verb phrase. the voice guide prohibits second-person imperative copy. prior passes corrected equivalent imperative constructions across the product ("leave blank to stay private" → "an empty field keeps the profile private."). "sign out" is the remaining imperative action label in the authenticated settings footer.
+- evidence: settings capture body text: "save / sign out" — "sign out" appears unconditionally at the bottom of every authenticated settings page visit.
+- suggested fix: if the imperative form is intentional as a universal UI idiom, annotate it as exempt in bearings.md to prevent recurrence; otherwise change to a noun phrase such as "sign-out" or reframe the button to a descriptive label consistent with the voice guide.
+- source: browser
+
+### [LOW] /settings — timezone field has no hint text explaining its effect
+- pass: 38 (commit f9032a8)
+- viewport: both
+- category: comprehension
+- observation: the settings form has three fields. display name now carries a hint ("shown on published entries on the public profile.") and public username has a hint ("a public profile will appear at /u/username. an empty field keeps the profile private."). the timezone field is a bare label with no supporting copy. a new user cannot determine from the field alone whether timezone controls prompt delivery time, entry dating, or some other behavior.
+- evidence: settings capture: "display name / shown on published entries on the public profile. / timezone / prompt variety / standard: same curated prompt..." — "timezone" appears with no adjacent description between the display name hint and the prompt variety hint.
+- suggested fix: add a one-sentence hint below the timezone label, e.g. "used to determine the current day for prompt delivery and entry dating." to explain the setting's effect in the same register as the adjacent hints.
+- source: browser
 
 ### [LOW] /signin — "sign-in links expire after 24 hours." is in the footer, separated from the form's explanatory copy
 - pass: 37 (commit 562a795)
