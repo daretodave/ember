@@ -55,7 +55,7 @@
 - suggested fix: if the imperative form is intentional as a universal UI idiom, annotate it as exempt in bearings.md to prevent recurrence; otherwise change to a noun phrase such as "sign-out" or reframe the button to a descriptive label consistent with the voice guide.
 - source: browser
 
-### [LOW] /settings — timezone field has no hint text explaining its effect
+### [x] [LOW] /settings — timezone field has no hint text explaining its effect
 - pass: 38 (commit f9032a8)
 - viewport: both
 - category: comprehension
@@ -63,6 +63,7 @@
 - evidence: settings capture: "display name / shown on published entries on the public profile. / timezone / prompt variety / standard: same curated prompt..." — "timezone" appears with no adjacent description between the display name hint and the prompt variety hint.
 - suggested fix: add a one-sentence hint below the timezone label, e.g. "used to determine the current day for prompt delivery and entry dating." to explain the setting's effect in the same register as the adjacent hints.
 - source: browser
+- resolution: added hint paragraph below timezone label in SettingsForm.tsx matching adjacent hint style. Shipped at 505d88f.
 
 ### [LOW] /signin — "sign-in links expire after 24 hours." is in the footer, separated from the form's explanatory copy
 - pass: 37 (commit 562a795)

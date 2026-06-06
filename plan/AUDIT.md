@@ -40,7 +40,7 @@
 - suggested fix: add role="complementary" (or convert to <aside>) to the CTA element so AT users can reach the sign-in region via landmark navigation.
 - source: /critique pass 38 (commit f9032a8)
 
-### [ ] [2.7] /settings — timezone field has no hint text explaining its effect
+### [x] [2.7] /settings — timezone field has no hint text explaining its effect
 - category: comprehension
 - impact: 3
 - ease: 9
@@ -49,6 +49,8 @@
 - evidence: settings capture: "display name / shown on published entries on the public profile. / timezone / prompt variety..." — "timezone" appears with no adjacent description.
 - suggested fix: add a one-sentence hint below the timezone label, e.g. "used to determine the current day for prompt delivery and entry dating."
 - source: /critique pass 38 (commit f9032a8)
+- issue: [mirror-failed: loop-issue.mjs not present in scripts/]
+- resolution: added hint paragraph "used to determine the current day for prompt delivery and entry dating." below timezone label in SettingsForm.tsx, consistent with display name and public username hint pattern. Shipped at 505d88f.
 
 ### [ ] [2.4] /signin — expiry notice in footer is separated from the form's explanatory copy
 - category: comprehension
