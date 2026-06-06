@@ -87,7 +87,7 @@ export default function LandingPage() {
         </div>
       </main>
 
-      <div className={styles.cta}>
+      <aside className={styles.cta} aria-label="sign in">
         <div className={styles.ctaInner}>
           <p className={styles.ctaCopy}>
             today&apos;s prompt is waiting.{' '}
@@ -97,7 +97,7 @@ export default function LandingPage() {
             sign in
           </Link>
         </div>
-      </div>
+      </aside>
     </div>
   )
 }
