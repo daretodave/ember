@@ -76,7 +76,7 @@
 - source: browser
 - resolution: appended "falls back to a standard prompt until entries exist." to desc-personalized span in SettingsForm.tsx. Shipped at 4ddfa2b.
 
-### [LOW] /signin — "sign-in links expire after 24 hours." is in the footer, separated from the form's explanatory copy
+### [x] [LOW] /signin — "sign-in links expire after 24 hours." is in the footer, separated from the form's explanatory copy
 - pass: 37 (commit 562a795)
 - viewport: both
 - category: comprehension
@@ -84,6 +84,7 @@
 - evidence: body text order: "a sign-in link is sent to this address. no password. no other mail. a new address creates an account.\n\nember\nsign-in links expire after 24 hours." — the wordmark creates a break between the form copy and the expiry statement.
 - suggested fix: move the expiry sentence into the main form's explanatory paragraph — "a sign-in link is sent to this address. it expires after 24 hours. no password. no other mail. a new address creates an account." — so the caveat and the promise sit in the same reading unit.
 - source: browser
+- resolution: added "it expires after 24 hours." into reassurance paragraph in src/app/signin/page.tsx; removed footer expiry span. Shipped at 51e9c0a.
 
 ### [x] [LOW] /today — "tiny task" label in TodayEntry lacks semantic wrapper (parallel landing-page fix not applied)
 - pass: 36 (commit 0dce6e9)

@@ -65,7 +65,7 @@
 - issue: [mirror-failed: loop-issue.mjs not present in scripts/]
 - resolution: added hint paragraph "used to determine the current day for prompt delivery and entry dating." below timezone label in SettingsForm.tsx, consistent with display name and public username hint pattern. Shipped at 505d88f.
 
-### [ ] [2.4] /signin — expiry notice in footer is separated from the form's explanatory copy
+### [x] [2.4] /signin — expiry notice in footer is separated from the form's explanatory copy
 - category: comprehension
 - impact: 3
 - ease: 8
@@ -74,6 +74,8 @@
 - evidence: body text order: "a sign-in link is sent to this address. no password. no other mail. a new address creates an account.\n\nember\nsign-in links expire after 24 hours." — wordmark creates a break between form copy and expiry statement.
 - suggested fix: move the expiry sentence into the main form's explanatory paragraph — "a sign-in link is sent to this address. it expires after 24 hours. no password. no other mail. a new address creates an account."
 - source: /critique pass 37 (commit 562a795)
+- issue: [mirror-failed: loop-issue.mjs not present in scripts/]
+- resolution: added "it expires after 24 hours." after the first sentence of the reassurance paragraph in src/app/signin/page.tsx; removed footer expiry span entirely. Shipped at 51e9c0a.
 
 ### [ ] [2.1] /signin — reassurance paragraph is after the submit button in DOM reading order
 - category: comprehension
