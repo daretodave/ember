@@ -1,7 +1,7 @@
 # External-observer findings — Ember
 
-> Last pass: 2026-06-06 at commit f36dd96
-> Pass count: 39
+> Last pass: 2026-06-06 at commit 49e85e6
+> Pass count: 40
 
 > Written by `/critique` after walking the live site as a
 > fresh-eyes visitor. Drained by `/iterate`.
@@ -47,6 +47,42 @@
 - suggested fix: add `aria-label="ember — home"` to the link element, or set `aria-hidden="true"` on the glyph element when it is nested inside the link so only the wordmark span contributes to the accessible name.
 - source: browser
 - resolution: added aria-label="ember — home" to all 9 lockup Link elements. Shipped at d528c7d.
+
+### [LOW] / — 7-day preview subheader echoes lede with near-identical phrasing
+- pass: 40 (commit 49e85e6)
+- viewport: both
+- category: comprehension
+- observation: the product description lede reads "one prompt and one tiny task each morning." and the 7-day preview section subheader reads "one prompt and one tiny task, every morning." — the same noun structure with only "each" replaced by "every." a first-time reader encounters the near-identical phrase twice within one scroll. the subheader does not frame the seven-day list, clarify its scope, or add new context; it restates what the lede already established.
+- evidence: body text lede: "one prompt and one tiny task each morning." then section header: "the next seven days / one prompt and one tiny task, every morning."
+- suggested fix: replace the subheader with copy that frames the list rather than restating the lede, e.g. "a look at the week ahead." or "the days coming up." so the line earns its position.
+- source: browser
+
+### [LOW] /signin — meta description ends with "no password required" while on-page copy uses "no password."
+- pass: 40 (commit 49e85e6)
+- viewport: both
+- category: voice
+- observation: the /signin meta description reads "sign in to ember with a link sent by email — no password required." the word "required" is a passive-adjective form not used in any visible on-page copy. the page's reassurance paragraph reads "no password. no other mail." — a different register. a search snippet surfaces the "required" form before a visitor reaches the page, while the page itself does not use it.
+- evidence: meta description: "sign in to ember with a link sent by email — no password required." vs. on-page reassurance: "no password. no other mail."
+- suggested fix: change meta description to "sign in to ember with a link sent by email — no password, no other mail." to match the register and exact phrasing of the visible page copy.
+- source: browser
+
+### [LOW] /log — empty state offers no in-body path to create the first entry
+- pass: 40 (commit 49e85e6)
+- viewport: both
+- category: comprehension
+- observation: the /log page in its empty state displays "the log is empty. today's entry will appear here." with no link or call to action pointing to /today. a first-time authenticated user who lands on /log from a bookmark or direct URL sees the empty state message but must infer from the nav bar that "today" is the creation path. the message describes what will happen but gives no direction on how to make it happen.
+- evidence: body text: "the past 60 days / skip to log / the log is empty. today's entry will appear here." — no link to /today in the body content; only the nav bar provides a path forward.
+- suggested fix: link "today's entry" to /today in the empty-state sentence, e.g. "the log is empty. today's entry will appear here once written." so the sentence itself navigates the user to the creation surface.
+- source: browser
+
+### [LOW] /settings — display name hint references the public profile before a username is set
+- pass: 40 (commit 49e85e6)
+- viewport: both
+- category: comprehension
+- observation: the display name field hint reads "shown on published entries on the public profile." for a user who has not yet set a public username — the default state for a new account — there is no public profile. the hint references a destination that does not exist until a username is added lower in the same form, creating an unexplained forward dependency.
+- evidence: settings body text: "display name / shown on published entries on the public profile." — /today confirms: "no public username is set. published entries will remain private until a username is added in settings." — the public profile does not exist for this account.
+- suggested fix: reframe the hint to describe the field's purpose without presupposing an active profile, e.g. "shown on entries when they appear on a public profile." — accurate whether or not a username is currently set.
+- source: browser
 
 ### [LOW] /settings — "sign out" uses second-person imperative verb form
 - pass: 38 (commit f9032a8)
