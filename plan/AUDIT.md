@@ -6,6 +6,18 @@
 
 ## Pending
 
+### [x] [2.4] / — 7-day preview subheader echoes lede with near-identical phrasing
+- category: comprehension
+- impact: 3
+- ease: 8
+- note: scored 2026-06-06 — from critique pass 40 (49e85e6); the lede reads "one prompt and one tiny task each morning." and the 7-day section subheader reads "one prompt and one tiny task, every morning." — the same noun structure with only "each" replaced by "every"; a first-time reader encounters the near-identical phrase twice within one scroll; the subheader does not frame the seven-day list, clarify its scope, or add new context
+- observation: the lede and the 7-day preview section subheader use near-identical phrasing ("one prompt and one tiny task each morning." vs "one prompt and one tiny task, every morning."). the subheader restates what the lede already established — it does not frame the seven-day list or add new context.
+- evidence: src/app/page.tsx:30: "one prompt and one tiny task each morning." (lede); src/app/page.tsx:43: span.sevenMeta "one prompt and one tiny task, every morning." — same noun structure, "each" vs "every" is the only difference; the H2 "the next seven days" already frames the section without the span.
+- suggested fix: remove the sevenMeta span; the H2 "the next seven days" alone frames the list without restating the lede. if a subheader is retained, replace with copy that adds context, e.g. "a look at the days ahead."
+- source: /critique pass 40 (commit 49e85e6)
+- issue: [mirror-failed: loop-issue.mjs not present in scripts/]
+- resolution: removed sevenMeta span and .sevenMeta CSS rule from src/app/page.tsx and page.module.css; simplified .sevenHead to remove flex layout. Shipped at bc1ad45.
+
 ### [x] [2.7] /settings — personalized prompt option gives no indication of when it activates
 - category: comprehension
 - impact: 3

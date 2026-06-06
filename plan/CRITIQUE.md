@@ -48,7 +48,7 @@
 - source: browser
 - resolution: added aria-label="ember — home" to all 9 lockup Link elements. Shipped at d528c7d.
 
-### [LOW] / — 7-day preview subheader echoes lede with near-identical phrasing
+### [x] [LOW] / — 7-day preview subheader echoes lede with near-identical phrasing
 - pass: 40 (commit 49e85e6)
 - viewport: both
 - category: comprehension
@@ -56,6 +56,7 @@
 - evidence: body text lede: "one prompt and one tiny task each morning." then section header: "the next seven days / one prompt and one tiny task, every morning."
 - suggested fix: replace the subheader with copy that frames the list rather than restating the lede, e.g. "a look at the week ahead." or "the days coming up." so the line earns its position.
 - source: browser
+- resolution: removed sevenMeta span entirely; the H2 "the next seven days" alone frames the section. Shipped at bc1ad45.
 
 ### [LOW] /signin — meta description ends with "no password required" while on-page copy uses "no password."
 - pass: 40 (commit 49e85e6)
