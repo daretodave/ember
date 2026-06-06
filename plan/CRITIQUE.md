@@ -35,7 +35,7 @@
 - suggested fix: attach a ref to the confirmation paragraph and call `.focus()` in a `useEffect` triggered when state becomes `'sent'`, so keyboard focus moves to the confirmation text immediately on transition.
 - source: browser
 
-### [LOW] /signin — lockup link accessible name is computed as "ember ember" from duplicate nested labels
+### [x] [LOW] /signin — lockup link accessible name is computed as "ember ember" from duplicate nested labels
 - pass: 38 (commit f9032a8)
 - viewport: both
 - category: a11y
@@ -43,6 +43,7 @@
 - evidence: capture header renders "ember" (glyph) adjacent to "ember" (wordmark) inside a single link element. the pattern — role=img aria-label="ember" + visible text "ember" inside one anchor — produces a doubled accessible name in screen reader announcement.
 - suggested fix: add `aria-label="ember — home"` to the link element, or set `aria-hidden="true"` on the glyph element when it is nested inside the link so only the wordmark span contributes to the accessible name.
 - source: browser
+- resolution: added aria-label="ember — home" to all 9 lockup Link elements. Shipped at d528c7d.
 
 ### [LOW] /settings — "sign out" uses second-person imperative verb form
 - pass: 38 (commit f9032a8)

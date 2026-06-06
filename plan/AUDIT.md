@@ -6,6 +6,78 @@
 
 ## Pending
 
+### [x] [3.6] all pages with lockup Link — glyph+wordmark inside link yields "ember ember" accessible name
+- category: a11y
+- impact: 4
+- ease: 9
+- note: scored 2026-06-06 — from critique pass 38 (f9032a8); MosaicGlyph renders role="img" aria-label="ember"; each lockup Link on 9 pages wraps MosaicGlyph + a wordmark span "ember"; both children contribute to the link's computed accessible name, yielding "ember ember" — a redundant, doubled brand name; the landing page uses a div (not a Link) for its lockup so is not affected
+- observation: every page that has a clickable lockup Link (MosaicGlyph + "ember" wordmark inside a Link to "/") announces "ember ember" to screen readers. the glyph contributes its aria-label "ember" and the wordmark span contributes its text "ember", producing a doubled accessible name.
+- evidence: src/components/mosaic/MosaicGlyph.tsx:26: `role="img" aria-label="ember"` inside a Link that also contains `<span>ember</span>`; affected pages: /signin, /not-found, /error, /today, /log, /log/[date], /settings, /u/[username], /u/[username]/[date]
+- suggested fix: add `aria-label="ember — home"` to each lockup Link element, overriding the computed name from children with a single clean accessible name.
+- source: /critique pass 38 (commit f9032a8)
+- issue: [mirror-failed: 2026-06-06T00:00:00Z]
+- resolution: added aria-label="ember — home" to all 9 lockup Link elements (/signin, /not-found, /error, /today, /log, /log/[date], /settings, /u/[username], /u/[username]/[date]). Shipped at d528c7d.
+
+### [ ] [3.2] /signin — keyboard focus is not managed after the form-to-confirmation DOM transition
+- category: a11y
+- impact: 4
+- ease: 8
+- note: scored 2026-06-06 — from critique pass 38 (f9032a8); on successful submission the form is replaced by a confirmation paragraph; the previously focused submit button is removed from the DOM; the browser drops focus to the document body; sighted keyboard users lose their focus position and must re-orient by tabbing from the top; WCAG 2.4.3 Focus Order
+- observation: on successful submission the form is replaced by a confirmation paragraph. the previously focused submit button is removed from the DOM; the browser drops focus to the document body. the status region announces to screen readers, but sighted keyboard users lose their focus position and must re-orient.
+- evidence: src/app/signin/page.tsx: when state becomes 'sent', the form element is unmounted and the confirmation <p> is mounted with no programmatic focus movement; no ref or useEffect manages focus after the transition.
+- suggested fix: attach a ref to the confirmation paragraph and call `.focus()` in a useEffect triggered when state becomes 'sent', so keyboard focus moves to the confirmation text immediately on transition.
+- source: /critique pass 38 (commit f9032a8)
+
+### [ ] [2.7] / — sticky CTA region carries no ARIA landmark
+- category: a11y
+- impact: 3
+- ease: 9
+- note: scored 2026-06-06 — from critique pass 38 (f9032a8); the primary sign-in CTA is a position:fixed element rendered outside <main>; AT users navigating by landmark have no programmatic path to the CTA region; the sign-in link is reachable by Tab order but the region itself is absent from the landmark list
+- observation: the primary sign-in CTA is a position:fixed element rendered outside <main>. AT users navigating by landmark have no programmatic path to the CTA region; the sign-in link is reachable by Tab but the region is absent from the landmark list.
+- evidence: landing page capture places CTA ("today's prompt is waiting... sign in") after main content — consistent with a fixed overlay outside <main>; no complementary, aside, or named section landmark covers it.
+- suggested fix: add role="complementary" (or convert to <aside>) to the CTA element so AT users can reach the sign-in region via landmark navigation.
+- source: /critique pass 38 (commit f9032a8)
+
+### [ ] [2.7] /settings — timezone field has no hint text explaining its effect
+- category: comprehension
+- impact: 3
+- ease: 9
+- note: scored 2026-06-06 — from critique pass 38 (f9032a8); display name and public username fields both carry hint text; the timezone field is a bare label with no supporting copy; a new user cannot determine whether timezone controls prompt delivery time, entry dating, or some other behavior
+- observation: the settings form has three data fields — display name, timezone, and public username. display name and public username both carry hints. the timezone field has no supporting copy.
+- evidence: settings capture: "display name / shown on published entries on the public profile. / timezone / prompt variety..." — "timezone" appears with no adjacent description.
+- suggested fix: add a one-sentence hint below the timezone label, e.g. "used to determine the current day for prompt delivery and entry dating."
+- source: /critique pass 38 (commit f9032a8)
+
+### [ ] [2.4] /signin — expiry notice in footer is separated from the form's explanatory copy
+- category: comprehension
+- impact: 3
+- ease: 8
+- note: scored 2026-06-06 — from critique pass 37 (562a795); the sign-in form's inline explanatory copy and the expiry notice are separated by the ember wordmark footer; a user reading the form copy and closing the browser tab before scrolling to the footer will miss the expiry caveat
+- observation: the sign-in form's inline explanatory copy reads "a sign-in link is sent to this address. no password. no other mail. a new address creates an account." The expiry notice "sign-in links expire after 24 hours." appears after the ember wordmark in the footer — a visual break away from the rest of the link behaviour copy.
+- evidence: body text order: "a sign-in link is sent to this address. no password. no other mail. a new address creates an account.\n\nember\nsign-in links expire after 24 hours." — wordmark creates a break between form copy and expiry statement.
+- suggested fix: move the expiry sentence into the main form's explanatory paragraph — "a sign-in link is sent to this address. it expires after 24 hours. no password. no other mail. a new address creates an account."
+- source: /critique pass 37 (commit 562a795)
+
+### [ ] [2.1] /signin — reassurance paragraph is after the submit button in DOM reading order
+- category: comprehension
+- impact: 3
+- ease: 7
+- note: scored 2026-06-06 — from critique pass 38 (f9032a8); the paragraph explaining what the button does appears outside and after the form in DOM reading order; keyboard-only users and screen reader users encounter the submit button before the text that contextualises the action it triggers
+- observation: the reassurance paragraph "a sign-in link is sent to this address. no password. no other mail. a new address creates an account." is placed outside and after the form. a keyboard-only user or screen reader user encounters the submit button before the contextual copy.
+- evidence: src/app/signin/page.tsx: reassurance <p> rendered at lines 89-94, outside the <form> which closes at line 83; DOM reading order: form > button > (form close) > reassurance paragraph.
+- suggested fix: move the reassurance paragraph inside the <form>, between the email field and the submit button.
+- source: /critique pass 38 (commit f9032a8)
+
+### [ ] [2.0] /settings — "sign out" button uses second-person imperative label
+- category: voice
+- impact: 2
+- ease: 10
+- note: scored 2026-06-06 — from critique pass 38 (f9032a8); the sign-out button label "sign out" is an imperative verb phrase; prior passes corrected equivalent imperative constructions across the product; if exempt as a universal UI idiom, that exemption should be documented in bearings.md
+- observation: the sign-out button label is "sign out" — an imperative verb phrase. the voice guide prohibits second-person imperative copy. prior passes corrected equivalent imperative constructions across the product.
+- evidence: settings capture body text: "save / sign out" — "sign out" appears unconditionally at the bottom of every authenticated settings page visit.
+- suggested fix: if exempt as a universal UI idiom, annotate it in bearings.md; otherwise change to a noun phrase or descriptive label consistent with the voice guide. [needs-user-call] on whether imperative action labels are exempt.
+- source: /critique pass 38 (commit f9032a8)
+
 ### [x] [4.2] /today — focus mode overlay lacks focus trap; Tab exits dialog into obscured main content
 - category: a11y
 - impact: 6
