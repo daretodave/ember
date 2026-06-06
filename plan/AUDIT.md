@@ -569,7 +569,7 @@
 - issue: [mirror-failed: loop-issue.mjs not present in scripts/]
 - resolution: changed "this is what arrives each morning." to "one prompt and one tiny task, every morning." in src/app/page.tsx. Shipped at 6381eb1.
 
-### [ ] [2.0] / — closing paragraph uses "task" where all other occurrences use "tiny task"
+### [x] [2.0] / — closing paragraph uses "task" where all other occurrences use "tiny task"
 - category: external-critique
 - impact: 2
 - ease: 10
@@ -578,6 +578,7 @@
 - evidence: body text: "the same prompt and task arrive for everyone on a given day." — compare seven "tiny task —" lines in the 7-day preview.
 - suggested fix: change "the same prompt and task" to "the same prompt and tiny task" to match the product's labeling throughout the page.
 - source: /critique pass 27 (commit a59273f)
+- resolution: stale — already resolved at 68fb212 which changed "the same prompt and task" to "the same prompt and tiny task" in src/app/page.tsx. Current code verified 2026-06-06.
 
 ### [ ] [2.0] /settings — "curated" in standard prompt option uses ungrounded editorial register
 - category: external-critique
@@ -1893,7 +1894,7 @@
 - issue: [mirror-failed: loop-issue.mjs not present in scripts/]
 - resolution: changed alt to 'ember — a daily writing ritual' in src/app/layout.tsx openGraph images. Shipped at bb32ff9.
 
-### [ ] [2.7] /settings — public username hint uses second-person imperative "leave blank"
+### [x] [2.7] /settings — public username hint uses second-person imperative "leave blank"
 - category: external-critique
 - impact: 3
 - ease: 9
@@ -1901,6 +1902,7 @@
 - evidence: src/app/settings/SettingsForm.tsx: `your public profile lives at /u/your-handle. leave blank to stay private.`
 - suggested fix: reframe as a declarative: "an empty field keeps your profile private." — removes the imperative and converts to the preferred observational register.
 - source: /critique pass 14 (commit e748b34)
+- resolution: stale — already resolved at a57cc00 which rewrote the full hint as "a public profile will appear at /u/username. an empty field keeps the profile private." Current code verified 2026-06-06.
 
 ### [ ] [2.7] /settings — "@" username prefix conflicts with "/u/" URL structure
 - category: external-critique
