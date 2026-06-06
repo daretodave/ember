@@ -401,7 +401,7 @@
 - source: browser
 - resolution: changed all three occurrences in src/app/layout.tsx. Shipped at 75cf391.
 
-### [LOW] /settings — "view your public profile" link text uses second-person possessive
+### [x] [LOW] /settings — "view your public profile" link text uses second-person possessive
 - pass: 29 (commit e9a5f15)
 - viewport: both
 - category: voice
@@ -409,6 +409,7 @@
 - evidence: src/app/settings/page.tsx line 58: `view your public profile` — rendered only when profile?.username is truthy; the link text is the sole remaining possessive in the settings page visible content.
 - suggested fix: change link text to "view public profile" to remove the possessive while preserving the navigation purpose.
 - source: browser
+- resolution: changed link text from "view your public profile" to "view public profile" in src/app/settings/page.tsx. Shipped at 4d95d36.
 
 ### [LOW] / — H1 uses semantic `<em>` for typographic italics on "intention"
 - pass: 29 (commit e9a5f15)

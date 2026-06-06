@@ -505,7 +505,7 @@
 - issue: [mirror-failed: loop-issue.mjs not present in scripts/]
 - resolution: changed "sent to your email" to "sent by email" in src/app/signin/layout.tsx. Shipped at 01c4324.
 
-### [ ] [2.0] /settings — "view your public profile" link text uses second-person possessive
+### [x] [2.0] /settings — "view your public profile" link text uses second-person possessive
 - category: voice
 - impact: 2
 - ease: 10
@@ -515,6 +515,7 @@
 - suggested fix: change link text to "view public profile" to remove the possessive while preserving the navigation purpose.
 - source: /critique pass 29 (commit e9a5f15)
 - issue: [mirror-failed: loop-issue.mjs not present in scripts/]
+- resolution: changed link text from "view your public profile" to "view public profile" in src/app/settings/page.tsx. Shipped at 4d95d36.
 
 ### [x] [3.0] /u/[username] and /u/[username]/[date] — authenticated nav link reads "your log", inconsistent with authenticated app nav label "log"
 - category: external-critique
