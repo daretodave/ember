@@ -479,7 +479,7 @@
 - source: browser
 - resolution: added "shown on published entries on the public profile." hint below the display name label in SettingsForm.tsx. Shipped at 2e34197.
 
-### [LOW] /settings — "curated" in the standard prompt option description uses ungrounded editorial register
+### [x] [LOW] /settings — "curated" in the standard prompt option description uses ungrounded editorial register
 - pass: 27 (commit 43ffddf)
 - viewport: both
 - category: voice
@@ -487,6 +487,7 @@
 - evidence: capture text: "standard: same curated prompt for everyone each day. personalized: a unique prompt generated from recent entries." — "curated" is the sole ungrounded evaluative word in the settings description block.
 - suggested fix: change to "same prompt for everyone each day." — removes the ungrounded assertion while preserving the shared-prompt contrast with the personalized option.
 - source: browser
+- resolution: removed "curated" from desc-standard span in SettingsForm.tsx. Shipped at 49725d2.
 
 ### [LOW] / — closing statement "ember does not personalize your morning." uses second-person possessive "your morning"
 - pass: 26 (commit 4ab0064)

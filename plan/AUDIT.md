@@ -597,7 +597,7 @@
 - source: /critique pass 27 (commit a59273f)
 - resolution: stale — already resolved at 68fb212 which changed "the same prompt and task" to "the same prompt and tiny task" in src/app/page.tsx. Current code verified 2026-06-06.
 
-### [ ] [2.0] /settings — "curated" in standard prompt option uses ungrounded editorial register
+### [x] [2.0] /settings — "curated" in standard prompt option uses ungrounded editorial register
 - category: external-critique
 - impact: 2
 - ease: 10
@@ -606,6 +606,8 @@
 - evidence: capture text: "standard: same curated prompt for everyone each day."
 - suggested fix: change to "same prompt for everyone each day." — removes the ungrounded assertion while preserving the shared-prompt contrast.
 - source: /critique pass 27 (commit a59273f)
+- issue: [mirror-failed: 2026-06-06T17:07:00Z]
+- resolution: removed "curated" from desc-standard span in SettingsForm.tsx; "same curated prompt for everyone each day." → "same prompt for everyone each day." Shipped at 49725d2.
 
 ### [x] [2.0] / — lede says "one small prompt" but the named concept throughout is "prompt"
 - category: external-critique
