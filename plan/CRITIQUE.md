@@ -1,7 +1,7 @@
 # External-observer findings — Ember
 
-> Last pass: 2026-06-06 at commit f9032a8
-> Pass count: 38
+> Last pass: 2026-06-06 at commit f36dd96
+> Pass count: 39
 
 > Written by `/critique` after walking the live site as a
 > fresh-eyes visitor. Drained by `/iterate`.
@@ -65,6 +65,15 @@
 - suggested fix: add a one-sentence hint below the timezone label, e.g. "used to determine the current day for prompt delivery and entry dating." to explain the setting's effect in the same register as the adjacent hints.
 - source: browser
 - resolution: added hint paragraph below timezone label in SettingsForm.tsx matching adjacent hint style. Shipped at 505d88f.
+
+### [LOW] /settings — personalized prompt option gives no indication of when it activates
+- pass: 39 (commit f36dd96)
+- viewport: both
+- category: comprehension
+- observation: the personalized prompt variety option states it generates "a unique prompt generated from recent entries" but gives no indication of what qualifies as "recent," how many entries are required, or what happens when the option is selected on a new account with no entries. a user selecting personalized immediately after sign-up has no signal that the option is a no-op until a log exists.
+- evidence: settings body text: "personalized: a unique prompt generated from recent entries." — no qualifying clause about activation conditions or fallback behavior; contrast with the standard option which fully describes its behavior in one sentence.
+- suggested fix: append a fallback clause to the personalized description: "personalized: a unique prompt generated from recent entries. falls back to a standard prompt until entries exist." so new users understand the prerequisite before selecting.
+- source: browser
 
 ### [LOW] /signin — "sign-in links expire after 24 hours." is in the footer, separated from the form's explanatory copy
 - pass: 37 (commit 562a795)
@@ -242,7 +251,7 @@
 - source: browser
 - resolution: replaced "entering an email address for the first time creates an account." with "a new address creates an account." in src/app/signin/page.tsx. Shipped at ade50e4.
 
-### [LOW] / — meta description says "one prompt" while page body says "one small prompt"
+### [x] [LOW] / — meta description says "one prompt" while page body says "one small prompt"
 - pass: 32 (commit 3f7071a)
 - viewport: both
 - category: seo
@@ -250,6 +259,7 @@
 - evidence: meta description (src/app/layout.tsx): "ember is a daily writing ritual — one prompt and one tiny task each morning." body text: "one small prompt and one tiny task each morning." — "small" present in body, absent in meta.
 - suggested fix: change meta description to "ember is a daily writing ritual — one small prompt and one tiny task each morning." to match the body phrasing exactly.
 - source: browser
+- resolution: self-resolved — the landing page lede was changed from "one small prompt" to "one prompt" at 28d1d20; both meta and body now read "one prompt and one tiny task each morning."
 
 ### [x] [LOW] /settings — "leave blank to stay private." uses second-person imperative in the public username hint
 - pass: 32 (commit 3f7071a)
