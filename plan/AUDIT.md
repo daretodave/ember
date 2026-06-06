@@ -101,6 +101,28 @@
 - issue: [mirror-failed: loop-issue.mjs not present in scripts/]
 - resolution: moved reassurance <p> inside <form> between email field and submit button in src/app/signin/page.tsx; keyboard and screen reader users now encounter explanatory context before the submit action in DOM reading order; test added asserting paragraph index < button index among form children. Shipped at 27e8bf4.
 
+### [x] [2.7] /signin — meta description uses "no password required" while on-page copy uses "no password."
+- category: voice
+- impact: 3
+- ease: 9
+- note: scored 2026-06-06 — from critique pass 40 (49e85e6); the /signin meta description reads "sign in to ember with a link sent by email — no password required." — "required" is a passive-adjective form not used in any visible on-page copy; the page's reassurance paragraph reads "no password. no other mail." — a different register; a search snippet surfaces the "required" form before a visitor reaches the page
+- observation: the /signin meta description ends with "no password required." while the visible reassurance paragraph reads "no password. no other mail." the word "required" is a passive-adjective form absent from the rest of the page copy.
+- evidence: src/app/signin/layout.tsx:5: `description: 'sign in to ember with a link sent by email — no password required.'` — vs. src/app/signin/page.tsx reassurance paragraph: "no password. no other mail."
+- suggested fix: change meta description to "sign in to ember with a link sent by email — no password, no other mail." to match the register and exact phrasing of the visible page copy.
+- source: /critique pass 40 (commit 49e85e6)
+- issue: [mirror-failed: loop-issue.mjs not present in scripts/]
+- resolution: changed description in src/app/signin/layout.tsx from "no password required." to "no password, no other mail." Shipped at bbf0470.
+
+### [ ] [2.4] /settings — display name hint presupposes an active public profile
+- category: comprehension
+- impact: 3
+- ease: 8
+- note: scored 2026-06-06 — from critique pass 40 (49e85e6); the display name field hint reads "shown on published entries on the public profile." — for a user who has not yet set a public username, there is no public profile; the hint references a destination that does not exist until a username is added lower in the same form, creating an unexplained forward dependency
+- observation: the display name field hint reads "shown on published entries on the public profile." for a new account with no public username set, no public profile exists. the hint references a destination that does not exist, creating an unexplained forward dependency for the most common account state.
+- evidence: src/app/settings/SettingsForm.tsx:123: `shown on published entries on the public profile.` — the public username field is lower in the same form; a new account has no public profile.
+- suggested fix: reframe to "shown on entries when they appear on a public profile." — accurate whether or not a username is currently set.
+- source: /critique pass 40 (commit 49e85e6)
+
 ### [ ] [2.0] /settings — "sign out" button uses second-person imperative label
 - category: voice
 - impact: 2

@@ -58,7 +58,7 @@
 - source: browser
 - resolution: removed sevenMeta span entirely; the H2 "the next seven days" alone frames the section. Shipped at bc1ad45.
 
-### [LOW] /signin — meta description ends with "no password required" while on-page copy uses "no password."
+### [x] [LOW] /signin — meta description ends with "no password required" while on-page copy uses "no password."
 - pass: 40 (commit 49e85e6)
 - viewport: both
 - category: voice
@@ -66,8 +66,9 @@
 - evidence: meta description: "sign in to ember with a link sent by email — no password required." vs. on-page reassurance: "no password. no other mail."
 - suggested fix: change meta description to "sign in to ember with a link sent by email — no password, no other mail." to match the register and exact phrasing of the visible page copy.
 - source: browser
+- resolution: changed description in src/app/signin/layout.tsx to "sign in to ember with a link sent by email — no password, no other mail." Shipped at bbf0470.
 
-### [LOW] /log — empty state offers no in-body path to create the first entry
+### [x] [LOW] /log — empty state offers no in-body path to create the first entry
 - pass: 40 (commit 49e85e6)
 - viewport: both
 - category: comprehension
@@ -75,6 +76,7 @@
 - evidence: body text: "the past 60 days / skip to log / the log is empty. today's entry will appear here." — no link to /today in the body content; only the nav bar provides a path forward.
 - suggested fix: link "today's entry" to /today in the empty-state sentence, e.g. "the log is empty. today's entry will appear here once written." so the sentence itself navigates the user to the creation surface.
 - source: browser
+- resolution: false positive — src/app/log/page.tsx already renders `<Link href="/today">today's entry</Link> will appear here.`; the reader captured plain text and could not detect the link. no code change needed.
 
 ### [LOW] /settings — display name hint references the public profile before a username is set
 - pass: 40 (commit 49e85e6)
