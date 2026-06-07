@@ -231,7 +231,7 @@
 - suggested fix: change the title to a state-independent description of the action, e.g. "saves the current entry." so it remains accurate regardless of the publish toggle state.
 - source: browser
 
-### [LOW] /log — skip link target #log-content has no tabIndex and may not reliably receive focus
+### [x] [LOW] /log — skip link target #log-content has no tabIndex and may not reliably receive focus
 - pass: 41 (commit 438baef)
 - viewport: both
 - category: a11y
@@ -239,6 +239,7 @@
 - evidence: src/app/log/page.tsx:82: `<a href="#log-content" className="skip-link">skip to log</a>`; line 95: `<div id="log-content" className={styles.divider}>` — no tabIndex on the target div. the prior fix (f13c754) corrected the label but not the focus-receive capability of the target.
 - suggested fix: add `tabIndex={-1}` to the `#log-content` div so keyboard focus is programmatically receivable when the skip link is activated.
 - source: browser
+- resolution: added tabIndex={-1} to the #log-content div in src/app/log/page.tsx. Shipped at 6c10116.
 
 ### [x] [LOW] /log — skip link label "skip to entries" sets an unfulfilled expectation in the empty state
 - pass: 35 (commit 2dad7ef)

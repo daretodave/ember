@@ -6,6 +6,62 @@
 
 ## Pending
 
+### [x] [3.0] /log — skip link target #log-content has no tabIndex and may not reliably receive focus
+- category: a11y
+- impact: 3
+- ease: 10
+- note: scored 2026-06-07 — from critique pass 41 (fae3ab2); the skip link "skip to log" targets #log-content via href; the target is a plain div with no tabIndex attribute; non-interactive elements without tabIndex cannot receive programmatic focus in all browsers; activating the skip link moves the URL fragment but does not reliably place keyboard focus on the target element; the prior fix (f13c754) corrected the label but not the focus-receive capability of the target
+- observation: src/app/log/page.tsx:95: `<div id="log-content" className={styles.divider}>` — no tabIndex on the target div. activating the skip link moves the URL fragment but does not reliably place keyboard focus on the target element in all browsers.
+- evidence: src/app/log/page.tsx:82: skip link targets #log-content; line 95: target div has no tabIndex — non-interactive elements without tabIndex cannot receive programmatic focus; fix from f13c754 corrected label only.
+- suggested fix: add tabIndex={-1} to the #log-content div so keyboard focus is programmatically receivable when the skip link is activated.
+- source: /critique pass 41 (commit fae3ab2)
+- issue: [mirror-failed: loop-issue.mjs not present in scripts/]
+- resolution: added tabIndex={-1} to the #log-content div in src/app/log/page.tsx so the skip link target can reliably receive programmatic focus in all browsers. Shipped at 6c10116.
+
+### [ ] [3.0] /today — focus trigger button aria-label uses imperative "enter focus mode" while title uses declarative form
+- category: voice
+- impact: 3
+- ease: 10
+- note: scored 2026-06-07 — from critique pass 41 (fae3ab2); the focus trigger button carries aria-label="enter focus mode" — an imperative construction — while its title reads "enters a distraction-free writing view." in the declarative form; the task-done button had the same mismatch and was corrected at 4b057a0; the focus trigger was not updated in that pass
+- observation: focus trigger button at TodayEntry.tsx:202: aria-label="enter focus mode" (imperative); title="enters a distraction-free writing view." (declarative) — same pattern as task-done fix at 4b057a0.
+- evidence: src/app/today/TodayEntry.tsx:202: aria-label="enter focus mode"; line 203: title="enters a distraction-free writing view."
+- suggested fix: change aria-label to "enters a distraction-free writing view." to match the title and align with the voice guide's non-imperative register.
+- source: /critique pass 41 (commit fae3ab2)
+- issue: [mirror-failed: loop-issue.mjs not present in scripts/]
+
+### [ ] [3.0] /today — exit-focus button aria-label uses imperative "exit focus mode" while visible label is "done writing"
+- category: voice
+- impact: 3
+- ease: 10
+- note: scored 2026-06-07 — from critique pass 41 (fae3ab2); the exit-focus button carries aria-label="exit focus mode" — imperative — while its visible label is "done writing" and title is "exits the distraction-free writing view." — declarative; screen reader users hear the aria-label; accessible name and visible label use different registers
+- observation: exit-focus button at TodayEntry.tsx:300: aria-label="exit focus mode" (imperative); line 301: title="exits the distraction-free writing view." (declarative); line 305: visible text "done writing".
+- evidence: src/app/today/TodayEntry.tsx:300: aria-label="exit focus mode"; 301: title="exits the distraction-free writing view."; 305: "done writing".
+- suggested fix: change aria-label to "exits the distraction-free writing view." to match the declarative register of the title, or "done writing." to match the visible label.
+- source: /critique pass 41 (commit fae3ab2)
+- issue: [mirror-failed: loop-issue.mjs not present in scripts/]
+
+### [ ] [2.7] /today — save button title is inaccurate when publish checkbox is checked
+- category: comprehension
+- impact: 3
+- ease: 9
+- note: scored 2026-06-07 — from critique pass 41 (fae3ab2); the save button carries title="entries are saved privately by default." — accurate in the unchecked default state but contradicts the user's intent when the publish toggle is checked; title appears on both main and focus-mode save buttons
+- observation: src/app/today/TodayEntry.tsx:215: title="entries are saved privately by default." on the save button; same title on focus-mode save at line 278; when publish checkbox is checked, the title contradicts the user's current intent.
+- evidence: TodayEntry.tsx:215 and 278: title="entries are saved privately by default." — accurate only when publish is unchecked.
+- suggested fix: change the title to a state-independent description of the action, e.g. "saves the current entry." so it remains accurate regardless of the publish toggle state.
+- source: /critique pass 41 (commit fae3ab2)
+- issue: [mirror-failed: loop-issue.mjs not present in scripts/]
+
+### [ ] [2.0] /signin — confirmation state uses "no password required." while form copy uses "no password."
+- category: voice
+- impact: 2
+- ease: 10
+- note: scored 2026-06-07 — from critique pass 41 (fae3ab2); after successful sign-in link submission, the confirmation paragraph contains "no password required." — the word "required" is a passive-adjective form absent from all other auth copy; the form's reassurance paragraph reads "no password. no other mail." — the meta description issue was fixed at bbf0470 but the confirmation state itself was not updated
+- observation: src/app/signin/page.tsx:69: `<em>no password required.</em>` in the confirmation paragraph — contrast reassurance copy: "no password. no other mail." — "required" appears in confirmation but nowhere in pre-submission copy.
+- evidence: src/app/signin/page.tsx:69: `<em>no password required.</em>`; reassurance at line 88: "no password. no other mail."
+- suggested fix: change the confirmation phrase to "no password. no other mail." to match the register and phrasing of the form's reassurance paragraph.
+- source: /critique pass 41 (commit fae3ab2)
+- issue: [mirror-failed: loop-issue.mjs not present in scripts/]
+
 ### [x] [2.4] / — 7-day preview subheader echoes lede with near-identical phrasing
 - category: comprehension
 - impact: 3
