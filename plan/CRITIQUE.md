@@ -1,12 +1,57 @@
 # External-observer findings — Ember
 
-> Last pass: 2026-06-07 at commit b9b4b91
-> Pass count: 42
+> Last pass: 2026-06-07 at commit 5e1498c
+> Pass count: 43
 
 > Written by `/critique` after walking the live site as a
 > fresh-eyes visitor. Drained by `/iterate`.
 
 ## Pending
+
+### [LOW] /signin — submit button label "send the link" uses definite article before any link exists
+- pass: 43 (commit 5e1498c)
+- viewport: both
+- category: comprehension
+- observation: the submit button reads "send the link." the definite article "the" presupposes a previously established referent, but the surrounding reassurance copy uses the indefinite article: "a sign-in link is sent to this address." for a first-time visitor the button implies a specific known link rather than the one they are about to request. the article mismatch is subtle but creates a small semantic inconsistency in the form's register.
+- evidence: body text: "send the link" — adjacent reassurance: "a sign-in link is sent to this address. it expires after 24 hours. no password. no other mail." — "a" in the description and "the" in the button label are at odds.
+- suggested fix: change the button label to "send a link" to match the indefinite framing of the surrounding reassurance copy.
+- source: browser
+
+### [LOW] / — closing region uses <div> instead of <footer> element (inconsistent with /signin)
+- pass: 43 (commit 5e1498c)
+- viewport: both
+- category: a11y
+- observation: the landing page closing region ("ember / a daily writing ritual.") is wrapped in <div className={styles.footerCredit}> with no semantic footer element. the /signin page uses <footer className={styles.footer}> for its equivalent closing region. AT users navigating by landmark cannot reach the landing page closing region via footer landmark navigation; the two pages are structurally inconsistent.
+- evidence: src/app/page.tsx line 83: <div className={styles.footerCredit}> — no footer landmark. src/app/signin/page.tsx line 107: <footer className={styles.footer}> — uses semantic footer element for identical structural purpose.
+- suggested fix: change <div className={styles.footerCredit}> to <footer className={styles.footerCredit}> in src/app/page.tsx to add a consistent footer landmark matching /signin.
+- source: browser
+
+### [LOW] /settings — username input placeholder drops "public" qualifier from field label
+- pass: 43 (commit 5e1498c)
+- viewport: both
+- category: voice
+- observation: the public username input carries placeholder="username" while the field label reads "public username." the "public" qualifier — which distinguishes this field from display name — is absent in the placeholder. the display name field uses placeholder="name shown on published entries" which is consistent with its label scope. a user filling the form for the first time sees "username" as the input hint, which does not reinforce the public nature of the field the way the label does.
+- evidence: src/app/settings/SettingsForm.tsx line 203: placeholder="username" — field label: <label htmlFor="username">public username</label> — contrast display name at line 131: placeholder="name shown on published entries" which aligns with label "display name."
+- suggested fix: remove the placeholder entirely (the adjacent hint "a public profile will appear at /u/username." already sets the format expectation) or change to a descriptive example such as "your-handle" that preserves the public framing.
+- source: browser
+
+### [LOW] /today — day strip <section> carries no accessible name; not exposed as named region landmark
+- pass: 43 (commit 5e1498c)
+- viewport: both
+- category: a11y
+- observation: the day strip is wrapped in <section id="day-strip"> with no aria-label or aria-labelledby attribute. per the ARIA spec, a <section> without an accessible name is not exposed as a named region landmark — browsers and screen readers treat it as a generic container. AT users navigating by landmark (F6 in JAWS, rotor in VoiceOver) cannot jump to the day strip; they can reach it only by heading navigation via the H2 inside. the section contains <h2>the last seven days</h2> but the h2 does not automatically promote the section to a named landmark without an explicit association.
+- evidence: src/app/today/DayStrip.tsx line 51: <section id="day-strip" className={styles.strip}> — no aria-label or aria-labelledby attribute present. the section H2 ("the last seven days") is at line 53 with no id assigned for labelledby association.
+- suggested fix: add aria-labelledby="day-strip-heading" to the section element and id="day-strip-heading" to the H2, converting the section to a named region landmark that AT users can navigate to directly.
+- source: browser
+
+### [LOW] /today — publish toggle description is visually hidden on all viewports; sighted mobile users see no explanation
+- pass: 43 (commit 5e1498c)
+- viewport: mobile
+- category: comprehension
+- observation: the publish toggle description "when published, this entry appears on the public profile." is placed in a visually-hidden srOnly span associated to the checkbox via aria-describedby. on all viewports, no visible hint text appears adjacent to the "publish" label for sighted users — the description is AT-only. publish is the primary opt-in gate for public visibility; a sighted touch user on mobile encounters a bare "publish" label and checkbox with no on-screen explanation of what activating it does.
+- evidence: src/app/today/TodayEntry.tsx: <span id="publish-desc" className={styles.srOnly}>when published, this entry appears on the public profile.</span> — srOnly applies position:absolute and clip to hide visually at all viewports. the mobile body text capture shows the description text in DOM order (captured by Playwright innerText) but it is not rendered visibly. the prereq hint below ("no public username is set...") renders as a visible paragraph, creating a visible/invisible inconsistency between the two adjacent explanatory lines.
+- suggested fix: remove the srOnly class from the publish description span so it renders as a visible muted paragraph below the publish label row on all viewports, matching the visible treatment of the prereq hint directly below it.
+- source: browser
 
 ### [x] [HIGH] /today — focus overlay does not trap keyboard focus
 - pass: 42 (commit b9b4b91)
