@@ -1,12 +1,66 @@
 # External-observer findings — Ember
 
-> Last pass: 2026-06-07 at commit 438baef
-> Pass count: 41
+> Last pass: 2026-06-07 at commit b9b4b91
+> Pass count: 42
 
 > Written by `/critique` after walking the live site as a
 > fresh-eyes visitor. Drained by `/iterate`.
 
 ## Pending
+
+### [HIGH] /today — focus overlay does not trap keyboard focus
+- pass: 42 (commit b9b4b91)
+- viewport: desktop
+- category: a11y
+- observation: the focus overlay (role="dialog") does not trap keyboard focus. the header lockup link and all three nav links (today, log, settings) are never assigned tabIndex={-1} when focus mode is active. a keyboard user pressing Shift+Tab from the overlay textarea exits backward through the nav links into the visually-obscured header behind the opaque overlay. aria-modal is a screen-reader hint only; no browser uses it to prevent physical Tab movement.
+- evidence: src/app/today/TodayEntry.tsx: tabIndex suppression applied only to elements within TodayEntry (task check button, main textarea, publish checkbox, focus trigger, save button, settings link). src/app/today/page.tsx: lockup Link and nav Links (today, log, settings) carry no tabIndex prop and remain at default 0. focusOverlay is the last child of TodayEntry fragment in DOM order; backward Tab from the overlay textarea cycles to the nav.
+- suggested fix: lift focus-mode state to page.tsx and add tabIndex={isFocus ? -1 : undefined} to the lockup Link and all three nav Links, or apply the HTML inert attribute to the <header> element when focus mode is active.
+- source: browser
+
+### [MED] /today — duplicate aria-live and role="alert" regions during focus mode
+- pass: 42 (commit b9b4b91)
+- viewport: desktop
+- category: a11y
+- observation: during focus mode, two aria-live="polite" save-state regions and two role="alert" error paragraphs are simultaneously active in the AT tree. the main-view live region and error alert are siblings of the focusOverlay div, not descendants of it; aria-hidden is applied only to the overlay element itself, leaving the outer live regions fully exposed to screen readers while focus mode is open. both outer and inner regions emit the same save state and error message, producing duplicate announcements on every state change.
+- evidence: TodayEntry.tsx line 183: outer <span aria-live="polite"> is a sibling of the overlay, not inside it. aria-hidden applied only to the focusOverlay div itself. outer <p role="alert"> is also outside the overlay. overlay contains identical aria-live and role="alert" duplicates reading the same state variables. when isFocus=true the overlay's aria-hidden is removed, but the outer live/alert regions have no corresponding suppression.
+- suggested fix: wrap the outer (main-view) entry content — task div, outer label, outer textarea, entryMeta row, publishHint, and error paragraph — in a container element and apply aria-hidden={isFocus} to that wrapper when focus mode activates, suppressing all outer live regions while the dialog is open.
+- source: browser
+
+### [LOW] /signin — header contains two successive links pointing to "/"
+- pass: 42 (commit b9b4b91)
+- viewport: both
+- category: a11y
+- observation: the /signin header contains two successive links pointing to "/": the lockup (aria-label="ember — home") and the explicit "back to home" link. screen reader users navigating by link encounter two home links in the same header region with no intervening content, with no indication the first is a logo affordance.
+- evidence: capture linear text: "ember / back to home / sign in" — the lockup link and "back to home" link both appear before the H1. both href="/", both in <header>.
+- suggested fix: add aria-hidden="true" and tabIndex={-1} to the lockup link on /signin so only the explicit "back to home" link is in the tab and AT order, removing the redundant successive home link.
+- source: browser
+
+### [LOW] /settings — save button title abbreviates "public username" field as "username"
+- pass: 42 (commit b9b4b91)
+- viewport: desktop
+- category: voice
+- observation: the save button tooltip title reads "saves display name, timezone, prompt variety, and username." the form labels the fourth field "public username" but the tooltip abbreviates it to "username" — the only mismatch among the four field names listed. the three other field names in the tooltip match their form labels exactly.
+- evidence: src/app/settings/SettingsForm.tsx: title="saves display name, timezone, prompt variety, and username." vs. <label htmlFor="username">public username</label> — "public" is dropped in the tooltip.
+- suggested fix: change title to "saves display name, timezone, prompt variety, and public username." to match the on-page field label exactly.
+- source: browser
+
+### [LOW] /today — focus overlay dialog labeled via aria-labelledby pointing to the full 16-word prompt
+- pass: 42 (commit b9b4b91)
+- viewport: desktop
+- category: a11y
+- observation: the focus overlay dialog is labeled via aria-labelledby="focus-mode-heading" pointing to a <p> element containing the full prompt question. when the dialog opens, screen readers announce the entire prompt sentence as the dialog's accessible name before the user reaches any interactive element. a short, stable label would produce a cleaner opening announcement without removing the visible prompt text.
+- evidence: TodayEntry.tsx: aria-labelledby="focus-mode-heading" on the dialog div; <p id="focus-mode-heading">{prompt}</p> — today's prompt is "what do you find hardest to ask for, even from people who would give it easily?" announced verbatim as the dialog name when focus mode opens.
+- suggested fix: replace aria-labelledby with aria-label="focus mode" on the dialog element, or target a visually-hidden short heading inside the overlay instead of the prompt paragraph.
+- source: browser
+
+### [LOW] /log — entry-list section has no heading in the zero-entry state
+- pass: 42 (commit b9b4b91)
+- viewport: desktop
+- category: a11y
+- observation: the log page has two structural sections — the 60-tile mosaic headed by H1 "the past 60 days" and the entry-list area below the divider — but the entry section carries no heading in the empty state. the H2 for the most recent entry prompt only renders when entries exist. a new user's AT heading outline has one item. there is no heading to orient AT users navigating into the section below the mosaic when the log is empty.
+- evidence: src/app/log/page.tsx: <h1 className={styles.mosaicMeta}>the past 60 days</h1> is the only heading. the H2 inside the recentEntry conditional block is absent in the empty state. the empty-state <p> "the log is empty. today's entry will appear here." is a plain paragraph with no sibling heading.
+- suggested fix: add a persistent visually-muted <h2> to the entry-list section that renders regardless of entry count, e.g., "most recent" or an aria-label on a <section> element, so AT users have a heading destination below the mosaic in all states.
+- source: browser
 
 ### [x] [LOW] / — sticky CTA region carries no ARIA landmark
 - pass: 38 (commit f9032a8)
