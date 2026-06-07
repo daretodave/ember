@@ -229,7 +229,7 @@
 - issue: [mirror-failed: loop-issue.mjs not present in scripts/]
 - resolution: changed 'sending...' to 'sending.' in src/app/signin/page.tsx; SigninPage.test.tsx assertion updated. Shipped at 0de53e3.
 
-### [ ] [2.0] /today — "open log" link in day strip uses imperative verb
+### [x] [2.0] /today — "open log" link in day strip uses imperative verb
 - category: voice
 - impact: 2
 - ease: 10
@@ -238,6 +238,8 @@
 - evidence: src/app/today/DayStrip.tsx:54–55: `<Link href="/log" className={styles.stripLink}>open log</Link>`.
 - suggested fix: change "open log" to "log" to match the nav bar label and remove the imperative construction.
 - source: /critique pass 36 (commit 0dce6e9)
+- issue: [mirror-failed: loop-issue.mjs not present in scripts/]
+- resolution: changed "open log" to "log" in src/app/today/DayStrip.tsx; test assertion updated. Shipped at 66578c4.
 
 ### [ ] [1.8] / — landing page footer region uses a div element instead of a footer landmark
 - category: a11y
