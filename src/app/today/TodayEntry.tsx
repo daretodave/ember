@@ -297,7 +297,7 @@ export function TodayEntry({ date, task, prompt, initialEntry, hasUsername = tru
             <button
               type="button"
               className={styles.focusDone}
-              aria-label="exit focus mode"
+              aria-label="exits the distraction-free writing view."
               title="exits the distraction-free writing view."
               onClick={exitFocus}
               tabIndex={isFocus ? 0 : -1}

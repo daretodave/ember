@@ -39,7 +39,7 @@ describe('focus mode', () => {
   it('"done" button exits focus mode', () => {
     render(<TodayEntry {...DEFAULT_PROPS} />)
     fireEvent.click(screen.getByRole('button', { name: 'enters a distraction-free writing view.' }))
-    fireEvent.click(screen.getByRole('button', { name: 'exit focus mode' }))
+    fireEvent.click(screen.getByRole('button', { name: 'exits the distraction-free writing view.' }))
     const overlay = screen.getByRole('dialog', { hidden: true })
     expect(overlay).toHaveAttribute('aria-hidden', 'true')
   })
@@ -93,7 +93,7 @@ describe('focus mode', () => {
   it('main form elements are restored to tab order when focus mode exits', () => {
     render(<TodayEntry {...DEFAULT_PROPS} />)
     fireEvent.click(screen.getByRole('button', { name: 'enters a distraction-free writing view.' }))
-    fireEvent.click(screen.getByRole('button', { name: 'exit focus mode' }))
+    fireEvent.click(screen.getByRole('button', { name: 'exits the distraction-free writing view.' }))
 
     const mainTextarea = document.getElementById('today-entry-response')
     expect(mainTextarea).not.toHaveAttribute('tabindex', '-1')
