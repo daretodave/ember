@@ -167,83 +167,86 @@ export function TodayEntry({ date, task, prompt, initialEntry, hasUsername = tru
 
   return (
     <>
-      <div className={styles.task}>
-        <button
-          type="button"
-          className={`${styles.taskCheck}${taskDone ? ` ${styles.done}` : ''}`}
-          aria-pressed={taskDone}
-          aria-label={taskDone ? "marks today's tiny task as not done." : "marks today's tiny task as done."}
-          title={taskDone ? "marks today's tiny task as not done." : "marks today's tiny task as done."}
-          tabIndex={isFocus ? -1 : undefined}
-          onClick={() => setTaskDone((v) => !v)}
-        />
-        <p className={styles.taskBody}>
-          <span className={styles.taskLabel}>tiny task</span>{' '}
-          <span className={styles.taskMuted}>— {task}</span>
-        </p>
-      </div>
-
-      <label htmlFor="today-entry-response" className={styles.entryLabel}>response</label>
-      <textarea
-        id="today-entry-response"
-        className={styles.entry}
-        value={response}
-        onChange={handleResponseChange}
-        placeholder="there is no rush."
-        rows={8}
-        tabIndex={isFocus ? -1 : undefined}
-      />
-
-      <div className={styles.entryMeta}>
-        <span className={styles.lastSaved} aria-live="polite">
-          {saveIndicatorText()}
-        </span>
-        <div className={styles.entryActions}>
-          <label className={styles.publishToggle} title="when published, this entry appears on the public profile.">
-            <input
-              type="checkbox"
-              checked={isPublished}
-              onChange={(e) => setIsPublished(e.target.checked)}
-              tabIndex={isFocus ? -1 : undefined}
-              aria-describedby="publish-desc"
-            />
-            publish
-            <span id="publish-desc" className={styles.srOnly}>when published, this entry appears on the public profile.</span>
-          </label>
-          <button
-            ref={focusTriggerRef}
-            type="button"
-            className={styles.focusTrigger}
-            aria-label="enters a distraction-free writing view."
-            title="enters a distraction-free writing view."
-            tabIndex={isFocus ? -1 : undefined}
-            onClick={enterFocus}
-          >
-            focus
-          </button>
+      {/* Suppress outer live regions and error alert from AT tree while focus overlay is open */}
+      <div aria-hidden={isFocus || undefined}>
+        <div className={styles.task}>
           <button
             type="button"
-            className={styles.saveBtn}
-            disabled={saveState === 'saving'}
-            onClick={handleSave}
+            className={`${styles.taskCheck}${taskDone ? ` ${styles.done}` : ''}`}
+            aria-pressed={taskDone}
+            aria-label={taskDone ? "marks today's tiny task as not done." : "marks today's tiny task as done."}
+            title={taskDone ? "marks today's tiny task as not done." : "marks today's tiny task as done."}
             tabIndex={isFocus ? -1 : undefined}
-            title="saves the current entry."
-          >
-            {saveState === 'saving' ? 'saving.' : 'save'}
-          </button>
+            onClick={() => setTaskDone((v) => !v)}
+          />
+          <p className={styles.taskBody}>
+            <span className={styles.taskLabel}>tiny task</span>{' '}
+            <span className={styles.taskMuted}>— {task}</span>
+          </p>
         </div>
+
+        <label htmlFor="today-entry-response" className={styles.entryLabel}>response</label>
+        <textarea
+          id="today-entry-response"
+          className={styles.entry}
+          value={response}
+          onChange={handleResponseChange}
+          placeholder="there is no rush."
+          rows={8}
+          tabIndex={isFocus ? -1 : undefined}
+        />
+
+        <div className={styles.entryMeta}>
+          <span className={styles.lastSaved} aria-live="polite">
+            {saveIndicatorText()}
+          </span>
+          <div className={styles.entryActions}>
+            <label className={styles.publishToggle} title="when published, this entry appears on the public profile.">
+              <input
+                type="checkbox"
+                checked={isPublished}
+                onChange={(e) => setIsPublished(e.target.checked)}
+                tabIndex={isFocus ? -1 : undefined}
+                aria-describedby="publish-desc"
+              />
+              publish
+              <span id="publish-desc" className={styles.srOnly}>when published, this entry appears on the public profile.</span>
+            </label>
+            <button
+              ref={focusTriggerRef}
+              type="button"
+              className={styles.focusTrigger}
+              aria-label="enters a distraction-free writing view."
+              title="enters a distraction-free writing view."
+              tabIndex={isFocus ? -1 : undefined}
+              onClick={enterFocus}
+            >
+              focus
+            </button>
+            <button
+              type="button"
+              className={styles.saveBtn}
+              disabled={saveState === 'saving'}
+              onClick={handleSave}
+              tabIndex={isFocus ? -1 : undefined}
+              title="saves the current entry."
+            >
+              {saveState === 'saving' ? 'saving.' : 'save'}
+            </button>
+          </div>
+        </div>
+
+        {!hasUsername && (
+          <p className={styles.publishHint}>
+            no public username is set. published entries will remain private until a username is added in{' '}
+            <Link href="/settings" tabIndex={isFocus ? -1 : undefined}>settings</Link>.
+          </p>
+        )}
+
+        {saveState === 'error' && errorMsg && (
+          <p className={styles.saveError} role="alert">{errorMsg}</p>
+        )}
       </div>
-
-      {!hasUsername && (
-        <p className={styles.publishHint}>
-          no public username is set. published entries will remain private until a username is added in{' '}
-          <Link href="/settings" tabIndex={isFocus ? -1 : undefined}>settings</Link>.
-        </p>
-      )}
-
-      {saveState === 'error' && errorMsg && (
-        <p className={styles.saveError} role="alert">{errorMsg}</p>
-      )}
 
       {/* Focus mode overlay — always in DOM so opacity transition plays on close */}
       <div

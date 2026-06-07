@@ -121,6 +121,28 @@ describe('focus mode', () => {
     document.body.removeChild(strip)
   })
 
+  it('outer main-view content is hidden from AT while focus mode is active', () => {
+    render(<TodayEntry {...DEFAULT_PROPS} />)
+    const focusTrigger = screen.getByRole('button', { name: 'enters a distraction-free writing view.' })
+
+    // Before focus mode: outer wrapper should not have aria-hidden
+    const mainTextarea = document.getElementById('today-entry-response')
+    expect(mainTextarea?.closest('[aria-hidden="true"]')).toBeNull()
+
+    fireEvent.click(focusTrigger)
+
+    // After focus mode: outer wrapper should carry aria-hidden="true"
+    expect(document.getElementById('today-entry-response')?.closest('[aria-hidden="true"]')).not.toBeNull()
+  })
+
+  it('outer main-view AT suppression is removed when focus mode exits', () => {
+    render(<TodayEntry {...DEFAULT_PROPS} />)
+    fireEvent.click(screen.getByRole('button', { name: 'enters a distraction-free writing view.' }))
+    fireEvent.click(screen.getByRole('button', { name: 'exits the distraction-free writing view.' }))
+
+    expect(document.getElementById('today-entry-response')?.closest('[aria-hidden="true"]')).toBeNull()
+  })
+
   it('page header and strip inert is removed when focus mode exits', () => {
     const header = document.createElement('header')
     header.id = 'page-header'
