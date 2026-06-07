@@ -28,7 +28,7 @@
 - source: browser
 - resolution: wrapped outer main-view content in <div aria-hidden={isFocus || undefined}> in TodayEntry.tsx. Shipped at b6025f1.
 
-### [LOW] /signin — header contains two successive links pointing to "/"
+### [x] [LOW] /signin — header contains two successive links pointing to "/"
 - pass: 42 (commit b9b4b91)
 - viewport: both
 - category: a11y
@@ -36,6 +36,7 @@
 - evidence: capture linear text: "ember / back to home / sign in" — the lockup link and "back to home" link both appear before the H1. both href="/", both in <header>.
 - suggested fix: add aria-hidden="true" and tabIndex={-1} to the lockup link on /signin so only the explicit "back to home" link is in the tab and AT order, removing the redundant successive home link.
 - source: browser
+- resolution: added aria-hidden="true" + tabIndex={-1} to the lockup Link in src/app/signin/page.tsx. Shipped at 567174d.
 
 ### [LOW] /settings — save button title abbreviates "public username" field as "username"
 - pass: 42 (commit b9b4b91)

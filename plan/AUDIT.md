@@ -6,6 +6,48 @@
 
 ## Pending
 
+### [x] [3.6] /signin — header contains two successive links pointing to "/"; AT users encounter redundant home link
+- category: a11y
+- impact: 4
+- ease: 9
+- note: scored 2026-06-07 — from critique pass 42 (b9b4b91); the /signin header contains two successive links both pointing to "/": the lockup Link (aria-label="ember — home") and the explicit "back to home" link; both are in <header> with no intervening content; screen reader users navigating by link encounter duplicate home links; the lockup is decorative in this context since "back to home" already provides the navigation affordance
+- observation: capture linear text: "ember / back to home / sign in" — the lockup link and "back to home" link both appear before the H1. both href="/", both in <header>.
+- evidence: src/app/signin/page.tsx:47 — lockup Link carries aria-label="ember — home"; line 51 — "back to home" Link also carries href="/"; both are siblings in the same <header> element; AT users navigating by link hear two consecutive home links before reaching the H1
+- suggested fix: add aria-hidden="true" and tabIndex={-1} to the lockup link on /signin so only the explicit "back to home" link is in the tab and AT order, removing the redundant successive home link
+- source: /critique pass 42 (commit b9b4b91)
+- issue: [mirror-failed: loop-issue.mjs not present in scripts/]
+- resolution: added aria-hidden="true" + tabIndex={-1} to the lockup Link in src/app/signin/page.tsx; only the explicit "back to home" link remains in the tab and AT order. Shipped at 567174d.
+
+### [ ] [2.7] /today — focus overlay dialog labeled via aria-labelledby pointing to full 16-word prompt paragraph
+- category: a11y
+- impact: 3
+- ease: 9
+- note: scored 2026-06-07 — from critique pass 42 (b9b4b91); the focus overlay dialog uses aria-labelledby="focus-mode-heading" pointing to a <p> element containing the full prompt question; when the dialog opens screen readers announce the entire prompt sentence as the dialog accessible name before the user reaches any interactive element; a short stable label produces a cleaner opening announcement
+- observation: the focus overlay dialog is labeled via aria-labelledby="focus-mode-heading" pointing to a <p> element containing the full prompt question. when the dialog opens, screen readers announce the entire prompt sentence as the dialog's accessible name.
+- evidence: TodayEntry.tsx: aria-labelledby="focus-mode-heading" on the dialog div; <p id="focus-mode-heading">{prompt}</p> — today's prompt is announced verbatim as the dialog name when focus mode opens.
+- suggested fix: replace aria-labelledby with aria-label="focus mode" on the dialog element, or target a visually-hidden short heading inside the overlay instead of the prompt paragraph.
+- source: /critique pass 42 (commit b9b4b91)
+
+### [ ] [2.1] /log — entry-list section has no heading in the zero-entry state
+- category: a11y
+- impact: 3
+- ease: 7
+- note: scored 2026-06-07 — from critique pass 42 (b9b4b91); the log page H2 for the most recent entry only renders when entries exist; in the empty state the AT heading outline has only one item; AT users navigating by heading into the section below the mosaic have no destination
+- observation: the log page has two structural sections — the mosaic headed by H1 "the past 60 days" and the entry-list area below — but the entry section carries no heading in the empty state. the H2 only renders when entries exist.
+- evidence: src/app/log/page.tsx: <h1 className={styles.mosaicMeta}>the past 60 days</h1> is the only heading in the empty state; H2 is inside the recentEntry conditional block; empty-state <p> is a plain paragraph with no sibling heading.
+- suggested fix: add a persistent visually-muted <h2> to the entry-list section that renders regardless of entry count, e.g. "most recent" or an aria-label on a <section> element.
+- source: /critique pass 42 (commit b9b4b91)
+
+### [ ] [2.0] /settings — save button title abbreviates "public username" field as "username"
+- category: voice
+- impact: 2
+- ease: 10
+- note: scored 2026-06-07 — from critique pass 42 (b9b4b91); the save button tooltip reads "saves display name, timezone, prompt variety, and username." but the form labels the fourth field "public username"; the three other field names in the tooltip match their labels exactly; single word insertion
+- observation: the save button tooltip title reads "saves display name, timezone, prompt variety, and username." the form labels the fourth field "public username" but the tooltip abbreviates it to "username" — the only mismatch among the four field names listed.
+- evidence: src/app/settings/SettingsForm.tsx: title="saves display name, timezone, prompt variety, and username." vs. <label htmlFor="username">public username</label>
+- suggested fix: change title to "saves display name, timezone, prompt variety, and public username." to match the on-page field label exactly.
+- source: /critique pass 42 (commit b9b4b91)
+
 ### [x] [4.8] /today — outer aria-live and role="alert" regions are not suppressed when focus mode is active
 - category: a11y
 - impact: 6
