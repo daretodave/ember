@@ -6,6 +6,18 @@
 
 ## Pending
 
+### [x] [3.0] /settings — display name input placeholder uses second-person "you"
+- category: voice
+- impact: 3
+- ease: 10
+- note: scored 2026-06-07 — fresh audit; the display name input placeholder reads "how you appear on your public profile" — second-person "you" form inconsistent with the established voice pattern; adjacent hint text uses third-person noun phrase "shown on entries when they appear on a public profile."; register mismatch within the same field
+- observation: SettingsForm.tsx:131: placeholder="how you appear on your public profile" — "you" form contrasts with hint text which uses neutral noun-phrase form
+- evidence: src/app/settings/SettingsForm.tsx:131: `placeholder="how you appear on your public profile"` — adjacent hint at line 123: "shown on entries when they appear on a public profile." uses no second-person pronoun; placeholder and hint describe the same concept but use different registers
+- suggested fix: change placeholder to "name shown on published entries" to match the noun-phrase register of the hint and the voice guide
+- source: iterate audit 2026-06-07
+- issue: [mirror-failed: loop-issue.mjs not present in scripts/]
+- resolution: changed placeholder from "how you appear on your public profile" to "name shown on published entries" in src/app/settings/SettingsForm.tsx. Shipped at d3e94e8.
+
 ### [x] [3.6] /signin — header contains two successive links pointing to "/"; AT users encounter redundant home link
 - category: a11y
 - impact: 4
