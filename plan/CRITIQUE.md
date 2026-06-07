@@ -18,7 +18,7 @@
 - source: browser
 - resolution: applied inert attribute to #page-header and #day-strip via useEffect in TodayEntry.tsx when isFocus changes. Shipped at 18e5ed5.
 
-### [MED] /today — duplicate aria-live and role="alert" regions during focus mode
+### [x] [MED] /today — duplicate aria-live and role="alert" regions during focus mode
 - pass: 42 (commit b9b4b91)
 - viewport: desktop
 - category: a11y
@@ -26,6 +26,7 @@
 - evidence: TodayEntry.tsx line 183: outer <span aria-live="polite"> is a sibling of the overlay, not inside it. aria-hidden applied only to the focusOverlay div itself. outer <p role="alert"> is also outside the overlay. overlay contains identical aria-live and role="alert" duplicates reading the same state variables. when isFocus=true the overlay's aria-hidden is removed, but the outer live/alert regions have no corresponding suppression.
 - suggested fix: wrap the outer (main-view) entry content — task div, outer label, outer textarea, entryMeta row, publishHint, and error paragraph — in a container element and apply aria-hidden={isFocus} to that wrapper when focus mode activates, suppressing all outer live regions while the dialog is open.
 - source: browser
+- resolution: wrapped outer main-view content in <div aria-hidden={isFocus || undefined}> in TodayEntry.tsx. Shipped at b6025f1.
 
 ### [LOW] /signin — header contains two successive links pointing to "/"
 - pass: 42 (commit b9b4b91)

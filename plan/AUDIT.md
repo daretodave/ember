@@ -6,6 +6,18 @@
 
 ## Pending
 
+### [x] [4.8] /today — outer aria-live and role="alert" regions are not suppressed when focus mode is active
+- category: a11y
+- impact: 6
+- ease: 8
+- note: scored 2026-06-07 — from critique pass 42 (b9b4b91); when focus mode is active the outer main-view aria-live="polite" span and role="alert" error paragraph remain fully exposed to screen readers; the overlay contains identical regions reading the same state variables; both regions emit simultaneously on every save-state change, producing duplicate announcements; aria-hidden is applied to the overlay only, leaving the outer regions unsuppressed
+- observation: TodayEntry.tsx: outer <span aria-live="polite"> (line 198) and <p role="alert"> (line 244) are siblings of the focusOverlay div; aria-hidden is set only on the focusOverlay div; when isFocus=true the overlay is visible but the outer live regions have no suppression
+- evidence: TodayEntry.tsx: outer entryMeta span at line 198, outer error p at line 244; overlay contains duplicate aria-live span at line 272 and duplicate role="alert" p at line 307; both read the same saveState and errorMsg variables simultaneously when isFocus=true
+- suggested fix: wrap the outer main-view content (task div, label, textarea, entryMeta, publishHint, error paragraph) in a container div and apply aria-hidden={isFocus || undefined} to suppress all outer live regions while the dialog is open
+- source: /critique pass 42 (commit b9b4b91)
+- issue: [mirror-failed: loop-issue.mjs not present in scripts/]
+- resolution: wrapped outer main-view content in <div aria-hidden={isFocus || undefined}> in TodayEntry.tsx; outer aria-live and role="alert" regions are suppressed from the AT tree while the focus overlay is open. Two FocusMode tests verify enter/exit behaviour. Shipped at b6025f1.
+
 ### [x] [4.8] /today — focus overlay does not trap keyboard focus; header nav links reachable by backward Tab
 - category: a11y
 - impact: 8
