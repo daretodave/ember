@@ -68,6 +68,21 @@ export function TodayEntry({ date, task, prompt, initialEntry, hasUsername = tru
     }
   }, [isFocus])
 
+  // Suppress all focusable elements outside the overlay when focus mode is active.
+  // `inert` is the correct primitive: it removes descendants from tab order, pointer
+  // events, and the AT tree — no browser implements aria-modal to do this physically.
+  useEffect(() => {
+    const header = document.getElementById('page-header')
+    const strip = document.getElementById('day-strip')
+    if (isFocus) {
+      header?.setAttribute('inert', '')
+      strip?.setAttribute('inert', '')
+    } else {
+      header?.removeAttribute('inert')
+      strip?.removeAttribute('inert')
+    }
+  }, [isFocus])
+
   useEffect(() => {
     if (!isFocus) return
     const onKey = (e: KeyboardEvent) => {

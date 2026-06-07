@@ -48,7 +48,7 @@ export function DayStrip({ todayDate, entries }: Props) {
   })
 
   return (
-    <section className={styles.strip}>
+    <section id="day-strip" className={styles.strip}>
       <div className={styles.stripHead}>
         <h2 className={styles.stripLabel}>the last seven days</h2>
         <Link href="/log" className={styles.stripLink}>

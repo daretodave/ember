@@ -98,4 +98,46 @@ describe('focus mode', () => {
     const mainTextarea = document.getElementById('today-entry-response')
     expect(mainTextarea).not.toHaveAttribute('tabindex', '-1')
   })
+
+  it('page header and strip become inert while focus mode is active', () => {
+    const header = document.createElement('header')
+    header.id = 'page-header'
+    const strip = document.createElement('section')
+    strip.id = 'day-strip'
+    document.body.appendChild(header)
+    document.body.appendChild(strip)
+
+    render(<TodayEntry {...DEFAULT_PROPS} />)
+
+    expect(header).not.toHaveAttribute('inert')
+    expect(strip).not.toHaveAttribute('inert')
+
+    fireEvent.click(screen.getByRole('button', { name: 'enters a distraction-free writing view.' }))
+
+    expect(header).toHaveAttribute('inert')
+    expect(strip).toHaveAttribute('inert')
+
+    document.body.removeChild(header)
+    document.body.removeChild(strip)
+  })
+
+  it('page header and strip inert is removed when focus mode exits', () => {
+    const header = document.createElement('header')
+    header.id = 'page-header'
+    const strip = document.createElement('section')
+    strip.id = 'day-strip'
+    document.body.appendChild(header)
+    document.body.appendChild(strip)
+
+    render(<TodayEntry {...DEFAULT_PROPS} />)
+
+    fireEvent.click(screen.getByRole('button', { name: 'enters a distraction-free writing view.' }))
+    fireEvent.click(screen.getByRole('button', { name: 'exits the distraction-free writing view.' }))
+
+    expect(header).not.toHaveAttribute('inert')
+    expect(strip).not.toHaveAttribute('inert')
+
+    document.body.removeChild(header)
+    document.body.removeChild(strip)
+  })
 })

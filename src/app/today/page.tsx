@@ -56,7 +56,7 @@ export default async function TodayPage() {
 
   return (
     <div className={styles.page}>
-      <header className={styles.header}>
+      <header id="page-header" className={styles.header}>
         <Link href="/" className={styles.lockup} aria-label="ember — home">
           <MosaicGlyph />
           <span className={styles.wordmark}>ember</span>
