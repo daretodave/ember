@@ -92,7 +92,7 @@ export default async function LogPage() {
         )}
       </section>
 
-      <div id="log-content" className={styles.divider}>
+      <div id="log-content" className={styles.divider} tabIndex={-1}>
         <div className={styles.dividerLine} />
       </div>
 
