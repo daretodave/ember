@@ -212,7 +212,7 @@ export function TodayEntry({ date, task, prompt, initialEntry, hasUsername = tru
             disabled={saveState === 'saving'}
             onClick={handleSave}
             tabIndex={isFocus ? -1 : undefined}
-            title="entries are saved privately by default."
+            title="saves the current entry."
           >
             {saveState === 'saving' ? 'saving.' : 'save'}
           </button>
@@ -275,7 +275,7 @@ export function TodayEntry({ date, task, prompt, initialEntry, hasUsername = tru
                 disabled={saveState === 'saving'}
                 onClick={handleSave}
                 tabIndex={isFocus ? 0 : -1}
-                title="entries are saved privately by default."
+                title="saves the current entry."
               >
                 {saveState === 'saving' ? 'saving.' : 'save'}
               </button>
