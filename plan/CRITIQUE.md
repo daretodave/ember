@@ -222,7 +222,7 @@
 - suggested fix: change aria-label to "exits the distraction-free writing view." to match the declarative register of the adjacent focus trigger title, or "done writing." to match the visible label.
 - source: browser
 
-### [LOW] /today — save button title is inaccurate when publish checkbox is checked
+### [x] [LOW] /today — save button title is inaccurate when publish checkbox is checked
 - pass: 41 (commit 438baef)
 - viewport: both
 - category: comprehension
@@ -230,6 +230,7 @@
 - evidence: src/app/today/TodayEntry.tsx:215: `title="entries are saved privately by default."` on the save `<button>`; the publish checkbox at line 187 can be checked; same title appears on the focus-mode save button at line 278 — both carry the inaccurate description when publish is checked.
 - suggested fix: change the title to a state-independent description of the action, e.g. "saves the current entry." so it remains accurate regardless of the publish toggle state.
 - source: browser
+- resolution: changed both save button titles to "saves the current entry." in TodayEntry.tsx. Shipped at 5b83a48.
 
 ### [x] [LOW] /log — skip link target #log-content has no tabIndex and may not reliably receive focus
 - pass: 41 (commit 438baef)

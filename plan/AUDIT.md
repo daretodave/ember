@@ -42,7 +42,7 @@
 - issue: [mirror-failed: loop-issue.mjs not present in scripts/]
 - resolution: changed aria-label to "exits the distraction-free writing view." in src/app/today/TodayEntry.tsx; FocusMode test assertions updated. Shipped at c3e23b0.
 
-### [ ] [2.7] /today — save button title is inaccurate when publish checkbox is checked
+### [x] [2.7] /today — save button title is inaccurate when publish checkbox is checked
 - category: comprehension
 - impact: 3
 - ease: 9
@@ -52,6 +52,7 @@
 - suggested fix: change the title to a state-independent description of the action, e.g. "saves the current entry." so it remains accurate regardless of the publish toggle state.
 - source: /critique pass 41 (commit fae3ab2)
 - issue: [mirror-failed: loop-issue.mjs not present in scripts/]
+- resolution: changed both main and focus-mode save button titles from "entries are saved privately by default." to "saves the current entry." in TodayEntry.tsx. Shipped at 5b83a48.
 
 ### [ ] [2.0] /signin — confirmation state uses "no password required." while form copy uses "no password."
 - category: voice
