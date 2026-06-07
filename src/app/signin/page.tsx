@@ -44,7 +44,7 @@ export default function SigninPage() {
   return (
     <div className={styles.page}>
       <header className={styles.header}>
-        <Link href="/" className={styles.lockup} aria-label="ember — home">
+        <Link href="/" className={styles.lockup} aria-label="ember — home" aria-hidden="true" tabIndex={-1}>
           <MosaicGlyph />
           <span className={styles.wordmark}>ember</span>
         </Link>
