@@ -190,7 +190,7 @@ export function SettingsForm({ displayName, username, timezone, usePersonalizedP
           a public profile will appear at /u/username. an empty field keeps the profile private.
         </p>
         <div className={styles.usernameWrap}>
-          <span className={styles.usernamePrefix}>@</span>
+          <span className={styles.usernamePrefix}>/u/</span>
           <input
             id="username"
             type="text"
