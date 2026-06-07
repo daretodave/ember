@@ -30,7 +30,7 @@
 - issue: [mirror-failed: loop-issue.mjs not present in scripts/]
 - resolution: changed aria-label to "enters a distraction-free writing view." in src/app/today/TodayEntry.tsx; updated FocusMode tests. Shipped at 0867e95.
 
-### [ ] [3.0] /today — exit-focus button aria-label uses imperative "exit focus mode" while visible label is "done writing"
+### [x] [3.0] /today — exit-focus button aria-label uses imperative "exit focus mode" while visible label is "done writing"
 - category: voice
 - impact: 3
 - ease: 10
@@ -40,6 +40,7 @@
 - suggested fix: change aria-label to "exits the distraction-free writing view." to match the declarative register of the title, or "done writing." to match the visible label.
 - source: /critique pass 41 (commit fae3ab2)
 - issue: [mirror-failed: loop-issue.mjs not present in scripts/]
+- resolution: changed aria-label to "exits the distraction-free writing view." in src/app/today/TodayEntry.tsx; FocusMode test assertions updated. Shipped at c3e23b0.
 
 ### [ ] [2.7] /today — save button title is inaccurate when publish checkbox is checked
 - category: comprehension
