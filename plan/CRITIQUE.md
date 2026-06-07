@@ -1,7 +1,7 @@
 # External-observer findings — Ember
 
-> Last pass: 2026-06-06 at commit 49e85e6
-> Pass count: 40
+> Last pass: 2026-06-07 at commit 438baef
+> Pass count: 41
 
 > Written by `/critique` after walking the live site as a
 > fresh-eyes visitor. Drained by `/iterate`.
@@ -167,7 +167,7 @@
 - source: browser
 - resolution: changed 'sending...' to 'sending.' in src/app/signin/page.tsx; SigninPage.test.tsx assertion updated. Shipped at 0de53e3.
 
-### [LOW] /today — "open log" link in day strip uses imperative verb
+### [x] [LOW] /today — "open log" link in day strip uses imperative verb
 - pass: 36 (commit 0dce6e9)
 - viewport: both
 - category: voice
@@ -175,6 +175,7 @@
 - evidence: src/app/today/DayStrip.tsx:54–55: `<Link href="/log" className={styles.stripLink}>open log</Link>` — body text: "open log" appears between the "the last seven days" heading and the seven strip tiles.
 - suggested fix: change link text from "open log" to "log" to match the nav bar noun form and remove the imperative construction.
 - source: browser
+- resolution: changed link text from "open log" to "log" in DayStrip.tsx. Shipped at 66578c4.
 
 ### [LOW] / — landing page footer region uses a div element instead of a footer landmark
 - pass: 36 (commit 0dce6e9)
@@ -192,6 +193,51 @@
 - observation: the display name input carries the placeholder "how you appear on your public profile." the phrase "your public profile" is a second-person possessive. prior passes de-possessived the hint text and the "view your public profile" link on the same page; the input placeholder was not updated in those passes.
 - evidence: src/app/settings/SettingsForm.tsx:131: `placeholder="how you appear on your public profile"` — "your public profile" is the same possessive construction addressed in the settings hints (a57cc00) and the page link (still pending in AUDIT.md).
 - suggested fix: change placeholder to "name shown on published entries" — removes direct address while describing the field's purpose in the same register as the adjacent hint text.
+- source: browser
+
+### [LOW] /signin — confirmation state uses "no password required." while form copy uses "no password."
+- pass: 41 (commit 438baef)
+- viewport: both
+- category: voice
+- observation: after a successful sign-in link submission, the confirmation paragraph contains `<em>no password required.</em>`. the word "required" is a passive-adjective form not present in any other auth copy on the page. the form's reassurance paragraph reads "no password. no other mail." — a terse, period-terminated register. the confirmation state introduces an inconsistent formulation that a reader encounters only after submitting, when the meta description issue (fixed at bbf0470) was the same root problem on the search-snippet side.
+- evidence: src/app/signin/page.tsx:69: `<em>no password required.</em>` in the confirmation paragraph — contrast reassurance copy at line 88: "no password. no other mail. a new address creates an account." — "required" appears in the confirmation but nowhere in the form's visible pre-submission copy.
+- suggested fix: change the confirmation phrase to "no password. no other mail." to match the register and phrasing of the form's reassurance paragraph.
+- source: browser
+
+### [LOW] /today — focus trigger button aria-label uses imperative "enter focus mode" while title uses declarative form
+- pass: 41 (commit 438baef)
+- viewport: both
+- category: voice
+- observation: the focus trigger button carries `aria-label="enter focus mode"` — an imperative construction — while its title attribute reads "enters a distraction-free writing view." in the declarative form. the task-done button had the same imperative/declarative mismatch and was corrected at 4b057a0; the focus trigger was not updated in that pass. screen reader users hear the aria-label as the accessible name — the imperative form — while sighted desktop users see the title's non-imperative form.
+- evidence: src/app/today/TodayEntry.tsx:202: `aria-label="enter focus mode"` — imperative verb; line 203: `title="enters a distraction-free writing view."` — declarative verb. same pattern as task-done fix at 4b057a0.
+- suggested fix: change aria-label to "enters a distraction-free writing view." to match the title and align with the voice guide's non-imperative register.
+- source: browser
+
+### [LOW] /today — exit-focus button aria-label uses imperative "exit focus mode" while visible label is "done writing"
+- pass: 41 (commit 438baef)
+- viewport: both
+- category: voice
+- observation: the button that closes focus mode carries `aria-label="exit focus mode"` — an imperative construction. the button's visible label is "done writing" — a non-imperative, gerund-phrase form. screen reader users hear the aria-label as the accessible name; sighted users read the visible "done writing" label. the accessible name and the visible label use different registers, and the aria-label violates the voice guide's prohibition on imperative copy.
+- evidence: src/app/today/TodayEntry.tsx:300: `aria-label="exit focus mode"` — imperative verb; line 305: visible text "done writing" — non-imperative; line 301: `title="exits the distraction-free writing view."` — declarative form available to align with.
+- suggested fix: change aria-label to "exits the distraction-free writing view." to match the declarative register of the adjacent focus trigger title, or "done writing." to match the visible label.
+- source: browser
+
+### [LOW] /today — save button title is inaccurate when publish checkbox is checked
+- pass: 41 (commit 438baef)
+- viewport: both
+- category: comprehension
+- observation: the save button carries `title="entries are saved privately by default."` — a description of the default privacy posture, not of what pressing save does in the current form state. a user who checks the publish toggle before saving encounters a tooltip that contradicts their current intent: the entry will not be saved privately, it will be published. the title is only accurate in the unchecked default state.
+- evidence: src/app/today/TodayEntry.tsx:215: `title="entries are saved privately by default."` on the save `<button>`; the publish checkbox at line 187 can be checked; same title appears on the focus-mode save button at line 278 — both carry the inaccurate description when publish is checked.
+- suggested fix: change the title to a state-independent description of the action, e.g. "saves the current entry." so it remains accurate regardless of the publish toggle state.
+- source: browser
+
+### [LOW] /log — skip link target #log-content has no tabIndex and may not reliably receive focus
+- pass: 41 (commit 438baef)
+- viewport: both
+- category: a11y
+- observation: the skip link "skip to log" targets `#log-content` via href. the target is a plain `<div>` with no tabIndex attribute. non-interactive elements without tabIndex cannot receive programmatic focus in all browsers; activating the skip link moves the URL fragment but does not reliably place keyboard focus on the target element, leaving keyboard users at an indeterminate focus position.
+- evidence: src/app/log/page.tsx:82: `<a href="#log-content" className="skip-link">skip to log</a>`; line 95: `<div id="log-content" className={styles.divider}>` — no tabIndex on the target div. the prior fix (f13c754) corrected the label but not the focus-receive capability of the target.
+- suggested fix: add `tabIndex={-1}` to the `#log-content` div so keyboard focus is programmatically receivable when the skip link is activated.
 - source: browser
 
 ### [x] [LOW] /log — skip link label "skip to entries" sets an unfulfilled expectation in the empty state
