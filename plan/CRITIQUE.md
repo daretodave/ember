@@ -8,7 +8,7 @@
 
 ## Pending
 
-### [HIGH] /today — focus overlay does not trap keyboard focus
+### [x] [HIGH] /today — focus overlay does not trap keyboard focus
 - pass: 42 (commit b9b4b91)
 - viewport: desktop
 - category: a11y
@@ -16,6 +16,7 @@
 - evidence: src/app/today/TodayEntry.tsx: tabIndex suppression applied only to elements within TodayEntry (task check button, main textarea, publish checkbox, focus trigger, save button, settings link). src/app/today/page.tsx: lockup Link and nav Links (today, log, settings) carry no tabIndex prop and remain at default 0. focusOverlay is the last child of TodayEntry fragment in DOM order; backward Tab from the overlay textarea cycles to the nav.
 - suggested fix: lift focus-mode state to page.tsx and add tabIndex={isFocus ? -1 : undefined} to the lockup Link and all three nav Links, or apply the HTML inert attribute to the <header> element when focus mode is active.
 - source: browser
+- resolution: applied inert attribute to #page-header and #day-strip via useEffect in TodayEntry.tsx when isFocus changes. Shipped at 18e5ed5.
 
 ### [MED] /today — duplicate aria-live and role="alert" regions during focus mode
 - pass: 42 (commit b9b4b91)

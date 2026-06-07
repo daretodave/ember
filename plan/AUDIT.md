@@ -6,6 +6,18 @@
 
 ## Pending
 
+### [x] [4.8] /today — focus overlay does not trap keyboard focus; header nav links reachable by backward Tab
+- category: a11y
+- impact: 8
+- ease: 6
+- note: scored 2026-06-07 — from critique pass 42 (b9b4b91); the focus overlay (role="dialog") does not prevent Tab/Shift+Tab from reaching the header lockup link and three nav links; aria-modal is screen-reader only — no browser implements it to prevent physical Tab movement; backward Tab from the overlay textarea exits through the nav into the visually-obscured header; prior fix (8e9244f) suppressed elements within TodayEntry.tsx but not the header or DayStrip section
+- observation: src/app/today/page.tsx:60-68 — lockup Link and nav Links (today, log, settings) carry no conditional tabIndex; the focusOverlay is last in TodayEntry's fragment so backward Tab from the overlay textarea cycles to the nav
+- evidence: src/app/today/TodayEntry.tsx: tabIndex suppression applied only to elements within TodayEntry. src/app/today/page.tsx: lockup Link and nav Links carry no tabIndex prop and remain at default 0 when focus mode is active
+- suggested fix: apply the HTML inert attribute to the <header> element and <DayStrip> section when focus mode is active via useEffect in TodayEntry.tsx; add stable id attributes to both elements; inert suppresses all focusable descendants without requiring state lifting to the server component
+- source: /critique pass 42 (commit b9b4b91)
+- issue: [mirror-failed: loop-issue.mjs not present in scripts/]
+- resolution: added id="page-header" to page.tsx header; id="day-strip" to DayStrip section; useEffect in TodayEntry.tsx toggles inert on both when isFocus changes; two FocusMode tests verify enter/exit. Shipped at 18e5ed5.
+
 ### [x] [3.0] /log — skip link target #log-content has no tabIndex and may not reliably receive focus
 - category: a11y
 - impact: 3
