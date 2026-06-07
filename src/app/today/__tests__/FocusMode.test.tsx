@@ -23,7 +23,7 @@ describe('focus mode', () => {
 
   it('overlay becomes visible after clicking the focus trigger', () => {
     render(<TodayEntry {...DEFAULT_PROPS} />)
-    const trigger = screen.getByRole('button', { name: 'enter focus mode' })
+    const trigger = screen.getByRole('button', { name: 'enters a distraction-free writing view.' })
     fireEvent.click(trigger)
     const overlay = screen.getByRole('dialog')
     expect(overlay).not.toHaveAttribute('aria-hidden', 'true')
@@ -32,13 +32,13 @@ describe('focus mode', () => {
 
   it('overlay shows the prompt text', () => {
     render(<TodayEntry {...DEFAULT_PROPS} />)
-    fireEvent.click(screen.getByRole('button', { name: 'enter focus mode' }))
+    fireEvent.click(screen.getByRole('button', { name: 'enters a distraction-free writing view.' }))
     expect(screen.getByText('what did you attend to today?')).toBeInTheDocument()
   })
 
   it('"done" button exits focus mode', () => {
     render(<TodayEntry {...DEFAULT_PROPS} />)
-    fireEvent.click(screen.getByRole('button', { name: 'enter focus mode' }))
+    fireEvent.click(screen.getByRole('button', { name: 'enters a distraction-free writing view.' }))
     fireEvent.click(screen.getByRole('button', { name: 'exit focus mode' }))
     const overlay = screen.getByRole('dialog', { hidden: true })
     expect(overlay).toHaveAttribute('aria-hidden', 'true')
@@ -46,7 +46,7 @@ describe('focus mode', () => {
 
   it('Escape key exits focus mode', () => {
     render(<TodayEntry {...DEFAULT_PROPS} />)
-    fireEvent.click(screen.getByRole('button', { name: 'enter focus mode' }))
+    fireEvent.click(screen.getByRole('button', { name: 'enters a distraction-free writing view.' }))
     fireEvent.keyDown(window, { key: 'Escape' })
     const overlay = screen.getByRole('dialog', { hidden: true })
     expect(overlay).toHaveAttribute('aria-hidden', 'true')
@@ -59,7 +59,7 @@ describe('focus mode', () => {
     })
     fireEvent.change(mainTextarea, { target: { value: 'hello world' } })
 
-    fireEvent.click(screen.getByRole('button', { name: 'enter focus mode' }))
+    fireEvent.click(screen.getByRole('button', { name: 'enters a distraction-free writing view.' }))
     const focusTextarea = screen.getByLabelText<HTMLTextAreaElement>('response', {
       selector: '#focus-entry-response',
     })
@@ -79,7 +79,7 @@ describe('focus mode', () => {
     render(<TodayEntry {...DEFAULT_PROPS} />)
 
     const mainTextarea = document.getElementById('today-entry-response')
-    const focusTrigger = screen.getByRole('button', { name: 'enter focus mode' })
+    const focusTrigger = screen.getByRole('button', { name: 'enters a distraction-free writing view.' })
 
     expect(mainTextarea).not.toHaveAttribute('tabindex', '-1')
     expect(focusTrigger).not.toHaveAttribute('tabindex', '-1')
@@ -92,7 +92,7 @@ describe('focus mode', () => {
 
   it('main form elements are restored to tab order when focus mode exits', () => {
     render(<TodayEntry {...DEFAULT_PROPS} />)
-    fireEvent.click(screen.getByRole('button', { name: 'enter focus mode' }))
+    fireEvent.click(screen.getByRole('button', { name: 'enters a distraction-free writing view.' }))
     fireEvent.click(screen.getByRole('button', { name: 'exit focus mode' }))
 
     const mainTextarea = document.getElementById('today-entry-response')
