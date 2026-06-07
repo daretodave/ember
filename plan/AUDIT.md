@@ -2021,7 +2021,7 @@
 - source: /critique pass 14 (commit e748b34)
 - resolution: stale — already resolved at a57cc00 which rewrote the full hint as "a public profile will appear at /u/username. an empty field keeps the profile private." Current code verified 2026-06-06.
 
-### [ ] [2.7] /settings — "@" username prefix conflicts with "/u/" URL structure
+### [x] [2.7] /settings — "@" username prefix conflicts with "/u/" URL structure
 - category: external-critique
 - impact: 3
 - ease: 9
@@ -2029,6 +2029,8 @@
 - evidence: src/app/settings/SettingsForm.tsx: `<span className={styles.usernamePrefix}>@</span>` followed by hint citing "/u/your-handle"
 - suggested fix: replace the "@" prefix with "/u/" to match the actual URL pattern, or remove the prefix entirely and let the hint carry the format context.
 - source: /critique pass 14 (commit e748b34)
+- issue: [mirror-failed: loop-issue.mjs not present in scripts/]
+- resolution: replaced "@" with "/u/" in SettingsForm.tsx so the prefix matches the actual /u/handle URL pattern. Shipped at 145b474.
 
 ### [x] [4.0] /today — TodayEntry handleSave has no test coverage; save payload and error states unguarded
 - category: tests
