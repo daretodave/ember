@@ -128,7 +128,7 @@ export function SettingsForm({ displayName, username, timezone, usePersonalizedP
           className={styles.input}
           value={nameVal}
           onChange={(e) => setNameVal(e.target.value)}
-          placeholder="how you appear on your public profile"
+          placeholder="name shown on published entries"
           maxLength={100}
         />
       </div>
