@@ -18,7 +18,7 @@
 - issue: [mirror-failed: loop-issue.mjs not present in scripts/]
 - resolution: added tabIndex={-1} to the #log-content div in src/app/log/page.tsx so the skip link target can reliably receive programmatic focus in all browsers. Shipped at 6c10116.
 
-### [ ] [3.0] /today — focus trigger button aria-label uses imperative "enter focus mode" while title uses declarative form
+### [x] [3.0] /today — focus trigger button aria-label uses imperative "enter focus mode" while title uses declarative form
 - category: voice
 - impact: 3
 - ease: 10
@@ -28,6 +28,7 @@
 - suggested fix: change aria-label to "enters a distraction-free writing view." to match the title and align with the voice guide's non-imperative register.
 - source: /critique pass 41 (commit fae3ab2)
 - issue: [mirror-failed: loop-issue.mjs not present in scripts/]
+- resolution: changed aria-label to "enters a distraction-free writing view." in src/app/today/TodayEntry.tsx; updated FocusMode tests. Shipped at 0867e95.
 
 ### [ ] [3.0] /today — exit-focus button aria-label uses imperative "exit focus mode" while visible label is "done writing"
 - category: voice
