@@ -132,6 +132,7 @@
 - evidence: src/app/log/page.tsx: <h1 className={styles.mosaicMeta}>the past 60 days</h1> is the only heading in the empty state; H2 is inside the recentEntry conditional block; empty-state <p> is a plain paragraph with no sibling heading.
 - suggested fix: add a persistent visually-muted <h2> to the entry-list section that renders regardless of entry count, e.g. "most recent" or an aria-label on a <section> element.
 - source: /critique pass 42 (commit b9b4b91)
+- issue: #35
 
 ### [ ] [2.0] /settings — save button title abbreviates "public username" field as "username"
 - category: voice

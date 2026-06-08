@@ -96,43 +96,45 @@ export default async function LogPage() {
         <div className={styles.dividerLine} />
       </div>
 
-      {recentEntry && recentPrompt ? (
-        <>
-          <article className={styles.entryView} aria-label="most recent entry">
-            <header className={styles.entryDate}>
-              {formatDisplayDate(recentDate!)}
-              {recentDate === today && ' · today'}
-            </header>
-            <h2 className={styles.entryPrompt}>{recentPrompt.prompt}</h2>
-            <p className={styles.entryTask}>
-              <span
-                className={recentEntry.task_done ? styles.entryTaskCheck : undefined}
-                role="img"
-                aria-label={recentEntry.task_done ? 'task done' : 'task not done'}
-              />
-              {recentPrompt.task}
-            </p>
-            <div className={styles.entryResponse}>
-              {recentEntry.response.split('\n\n').filter(Boolean).map((para, i) => (
-                <p key={i}>{para}</p>
-              ))}
-            </div>
-          </article>
+      <section aria-label="log entries">
+        {recentEntry && recentPrompt ? (
+          <>
+            <article className={styles.entryView} aria-label="most recent entry">
+              <header className={styles.entryDate}>
+                {formatDisplayDate(recentDate!)}
+                {recentDate === today && ' · today'}
+              </header>
+              <h2 className={styles.entryPrompt}>{recentPrompt.prompt}</h2>
+              <p className={styles.entryTask}>
+                <span
+                  className={recentEntry.task_done ? styles.entryTaskCheck : undefined}
+                  role="img"
+                  aria-label={recentEntry.task_done ? 'task done' : 'task not done'}
+                />
+                {recentPrompt.task}
+              </p>
+              <div className={styles.entryResponse}>
+                {recentEntry.response.split('\n\n').filter(Boolean).map((para, i) => (
+                  <p key={i}>{para}</p>
+                ))}
+              </div>
+            </article>
 
-          <footer className={styles.entryFoot}>
-            <span>
-              showing the most recent.{' '}
-              <Link href={`/log/${recentDate}`}>browse by date</Link>
-            </span>
-            <span>{recentEntry.is_published ? 'published' : 'private'}</span>
-          </footer>
-        </>
-      ) : (
-        <p className={styles.emptyState}>
-          the log is empty.{' '}
-          <Link href="/today">today&apos;s entry</Link> will appear here.
-        </p>
-      )}
+            <footer className={styles.entryFoot}>
+              <span>
+                showing the most recent.{' '}
+                <Link href={`/log/${recentDate}`}>browse by date</Link>
+              </span>
+              <span>{recentEntry.is_published ? 'published' : 'private'}</span>
+            </footer>
+          </>
+        ) : (
+          <p className={styles.emptyState}>
+            the log is empty.{' '}
+            <Link href="/today">today&apos;s entry</Link> will appear here.
+          </p>
+        )}
+      </section>
       </main>
     </div>
   )
