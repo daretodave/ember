@@ -1592,7 +1592,7 @@
 - suggested fix: add an openGraph block to src/app/signin/layout.tsx with title, url, and description matching the signin page, so a social share of the signin url produces an accurate open graph card.
 - source: browser
 
-### [LOW] / — seven-day preview section unnamed; not exposed as landmark
+### [x] [LOW] / — seven-day preview section unnamed; not exposed as landmark
 - pass: 44 (commit 6441e65)
 - viewport: both
 - category: a11y
@@ -1600,6 +1600,7 @@
 - evidence: src/app/page.tsx: <section className={styles.seven}> — no aria-label or aria-labelledby. the contained h2 "the next seven days" has no id for association. compare the day-strip fix in DayStrip.tsx: <section id="day-strip" aria-labelledby="day-strip-heading">.
 - suggested fix: add id="seven-days-heading" to the h2 element and aria-labelledby="seven-days-heading" to the section element, exposing the seven-day preview as a named landmark region consistent with the /today day-strip fix.
 - source: browser
+- resolution: added aria-labelledby="seven-days-heading" to <section className={styles.seven}> and id="seven-days-heading" to the H2 in src/app/page.tsx; landmark test added to LandingPage.test.tsx. Shipped at e929d2b.
 
 ### [LOW] / — sign-in cta aside contains no heading element
 - pass: 44 (commit 6441e65)

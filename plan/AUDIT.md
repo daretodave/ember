@@ -6,6 +6,58 @@
 
 ## Pending
 
+### [x] [3.6] / — seven-day preview section unnamed; not exposed as named landmark
+- category: a11y
+- impact: 4
+- ease: 9
+- note: scored 2026-06-08 — from critique pass 44 (6441e65); the seven-day preview is wrapped in <section className={styles.seven}> with no aria-label or aria-labelledby; per ARIA spec a <section> without an accessible name is not exposed as a named region landmark; the identical pattern was corrected on /today for the day-strip section in pass 43 (4f5c4e4); the landing page section was not updated in parallel; impact 4: the landing page is the first page all users see; AT users navigating by landmark cannot jump to the seven-day preview directly
+- observation: src/app/page.tsx: <section className={styles.seven}> — no aria-label or aria-labelledby. The contained h2 "the next seven days" has no id for association. Compare the day-strip fix in DayStrip.tsx: <section id="day-strip" aria-labelledby="day-strip-heading">.
+- evidence: src/app/page.tsx:40 — <section className={styles.seven}> — no accessible name; H2 "the next seven days" at line 42 has no id assigned for labelledby association
+- suggested fix: add id="seven-days-heading" to the h2 element and aria-labelledby="seven-days-heading" to the section element
+- source: /critique pass 44 (commit 6441e65)
+- issue: [mirror-failed: 2026-06-08T00:00:00Z]
+- resolution: added aria-labelledby="seven-days-heading" to <section className={styles.seven}> and id="seven-days-heading" to the H2 in src/app/page.tsx; landmark test added to LandingPage.test.tsx. Shipped at HEAD.
+
+### [ ] [2.7] /signin — layout sets no openGraph or twitter override
+- category: seo
+- impact: 3
+- ease: 9
+- note: scored 2026-06-08 — from critique pass 44 (6441e65); the /signin layout exports only title and description; next.js merges from the root layout for unset keys, so a social share of /signin surfaces the root og:title "ember · a daily writing ritual" and og:url pointing to the root path — neither reflects the sign-in page; every other page with its own layout overrides og metadata
+- observation: src/app/signin/layout.tsx: metadata export contains title and description only — no openGraph or twitter keys. src/app/layout.tsx openGraph.title: "ember · a daily writing ritual", openGraph.url: siteUrl.
+- evidence: src/app/signin/layout.tsx — no openGraph or twitter keys; root layout og metadata does not reflect /signin context
+- suggested fix: add an openGraph block to src/app/signin/layout.tsx with title, url, and description matching the signin page
+- source: /critique pass 44 (commit 6441e65)
+
+### [ ] [1.8] / — sign-in cta aside contains no heading element
+- category: a11y
+- impact: 2
+- ease: 9
+- note: scored 2026-06-08 — from critique pass 44 (6441e65); the sign-in cta is an <aside aria-label="sign in"> landmark reachable by landmark navigation but contains no heading element; AT users navigating by heading cannot reach the aside's content; the first sentence "today's prompt is waiting." functions as a contextual title but is marked as a <p> element
+- observation: src/app/page.tsx: <aside className={styles.cta} aria-label="sign in"> contains <p className={styles.ctaCopy}> and <Link>. No heading element is present inside the aside.
+- evidence: src/app/page.tsx — aside has aria-label "sign in" but no heading child
+- suggested fix: add a visually-hidden heading such as <h2 className="sr-only">sign in</h2> inside the aside
+- source: /critique pass 44 (commit 6441e65)
+
+### [ ] [1.8] /settings — page has no sub-headings for individual setting groups
+- category: a11y
+- impact: 3
+- ease: 6
+- note: scored 2026-06-08 — from critique pass 44 (6441e65); the settings page has a single h1 ("settings") and no sub-headings for the four distinct setting groups (display name, timezone, prompt variety, public username); each group is introduced only by its form label element; screen reader users navigating by heading see only the page title and cannot jump directly to a specific setting group
+- observation: body text: "settings" (h1) followed by "display name", "timezone", "prompt variety", "public username" — each as a label element, not a heading. No h2 or fieldset/legend structure visible.
+- evidence: src/app/settings/SettingsForm.tsx — no h2 or fieldset/legend elements; setting groups separated only by label elements
+- suggested fix: wrap each setting group in a fieldset with a legend, or add a visually-muted h2 above each group
+- source: /critique pass 44 (commit 6441e65)
+
+### [ ] [1.8] / — mosaic preview has no visible caption for sighted users
+- category: comprehension
+- impact: 2
+- ease: 9
+- note: scored 2026-06-08 — from critique pass 44 (6441e65); the mosaic tile grid appears between the lede and the seven-day list with no adjacent caption visible to sighted users; the grid is the only graphic on the page but first-time visitors have no text cue explaining what the tile pattern represents; aria-label "60 days of practice" is AT-only
+- observation: src/app/page.tsx: <section className={styles.previewMark}><MosaicPreview /></section> — no adjacent <p>, <figcaption>, or visible text label in the containing section.
+- evidence: src/app/page.tsx — previewMark section has no visible caption; MosaicPreview aria-label is screen-reader only
+- suggested fix: add a short visible caption in the previewMark section, e.g. a <p> reading "the log, over time."
+- source: /critique pass 44 (commit 6441e65)
+
 ### [x] [4.5] / and /signin — missing alternates.canonical on anonymous-facing routes
 - category: seo
 - impact: 5
