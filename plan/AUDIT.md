@@ -18,7 +18,7 @@
 - issue: [mirror-failed: loop-issue.mjs not present in scripts/]
 - resolution: changed button label from "send the link" to "send a link" in src/app/signin/page.tsx; updated unit test and e2e test. Shipped at 41d6df7.
 
-### [ ] [3.0] / — closing region uses <div> instead of <footer> element (inconsistent with /signin)
+### [x] [3.0] / — closing region uses <div> instead of <footer> element (inconsistent with /signin)
 - category: external-critique
 - impact: 3
 - ease: 10
@@ -27,6 +27,8 @@
 - evidence: src/app/page.tsx:83 — <div className={styles.footerCredit}> — no footer landmark; src/app/signin/page.tsx:107 — <footer className={styles.footer}>
 - suggested fix: change <div className={styles.footerCredit}> to <footer className={styles.footerCredit}> in src/app/page.tsx
 - source: /critique pass 43 (commit 5e1498c)
+- issue: [mirror-failed: loop-issue.mjs not present in scripts/]
+- resolution: changed <div className={styles.footerCredit}> to <footer> in src/app/page.tsx; also fixed pre-existing SigninPage focus test timing (waitFor wrapper). Shipped at HEAD.
 
 ### [ ] [2.7] /today — day strip <section> carries no accessible name; not exposed as named region landmark
 - category: external-critique

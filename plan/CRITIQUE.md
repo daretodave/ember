@@ -8,7 +8,7 @@
 
 ## Pending
 
-### [LOW] / — closing region uses <div> instead of <footer> element (inconsistent with /signin)
+### [x] [LOW] / — closing region uses <div> instead of <footer> element (inconsistent with /signin)
 - pass: 43 (commit 5e1498c)
 - viewport: both
 - category: a11y
@@ -16,6 +16,7 @@
 - evidence: src/app/page.tsx line 83: <div className={styles.footerCredit}> — no footer landmark. src/app/signin/page.tsx line 107: <footer className={styles.footer}> — uses semantic footer element for identical structural purpose.
 - suggested fix: change <div className={styles.footerCredit}> to <footer className={styles.footerCredit}> in src/app/page.tsx to add a consistent footer landmark matching /signin.
 - source: browser
+- resolution: changed <div className={styles.footerCredit}> to <footer className={styles.footerCredit}> in src/app/page.tsx. Shipped at HEAD.
 
 ### [LOW] /settings — username input placeholder drops "public" qualifier from field label
 - pass: 43 (commit 5e1498c)
@@ -270,7 +271,7 @@
 - source: browser
 - resolution: changed link text from "open log" to "log" in DayStrip.tsx. Shipped at 66578c4.
 
-### [LOW] / — landing page footer region uses a div element instead of a footer landmark
+### [x] [LOW] / — landing page footer region uses a div element instead of a footer landmark
 - pass: 36 (commit 0dce6e9)
 - viewport: both
 - category: a11y
@@ -278,6 +279,7 @@
 - evidence: src/app/page.tsx:84: `<div className={styles.footerCredit}>` — no footer landmark on the landing page. compare src/app/signin/page.tsx: `<footer className={styles.footer}>` landmark.
 - suggested fix: change `<div className={styles.footerCredit}>` to `<footer className={styles.footerCredit}>` (and the closing tag) to add a consistent footer landmark.
 - source: browser
+- resolution: changed <div className={styles.footerCredit}> to <footer className={styles.footerCredit}> in src/app/page.tsx. Shipped at HEAD.
 
 ### [LOW] /settings — display name input placeholder uses second-person possessive "your public profile"
 - pass: 35 (commit 2dad7ef)
