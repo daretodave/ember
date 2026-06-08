@@ -18,7 +18,7 @@
 - issue: [mirror-failed: 2026-06-08T00:00:00Z]
 - resolution: added aria-labelledby="seven-days-heading" to <section className={styles.seven}> and id="seven-days-heading" to the H2 in src/app/page.tsx; landmark test added to LandingPage.test.tsx. Shipped at HEAD.
 
-### [ ] [2.7] /signin — layout sets no openGraph or twitter override
+### [x] [2.7] /signin — layout sets no openGraph or twitter override
 - category: seo
 - impact: 3
 - ease: 9
@@ -27,6 +27,7 @@
 - evidence: src/app/signin/layout.tsx — no openGraph or twitter keys; root layout og metadata does not reflect /signin context
 - suggested fix: add an openGraph block to src/app/signin/layout.tsx with title, url, and description matching the signin page
 - source: /critique pass 44 (commit 6441e65)
+- resolution: added openGraph (title, description, url) and twitter (title, description) blocks to src/app/signin/layout.tsx. Shipped at abd5bbd.
 
 ### [ ] [1.8] / — sign-in cta aside contains no heading element
 - category: a11y
