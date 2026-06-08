@@ -37,9 +37,9 @@ export default function LandingPage() {
           <MosaicPreview />
         </section>
 
-        <section className={styles.seven}>
+        <section className={styles.seven} aria-labelledby="seven-days-heading">
           <div className={styles.sevenHead}>
-            <h2 className={styles.sevenTitle}>the next seven days</h2>
+            <h2 id="seven-days-heading" className={styles.sevenTitle}>the next seven days</h2>
           </div>
 
           <ul className={styles.sevenList}>
