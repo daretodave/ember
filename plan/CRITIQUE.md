@@ -1,12 +1,57 @@
 # External-observer findings — Ember
 
-> Last pass: 2026-06-08 at commit 6441e65
-> Pass count: 44
+> Last pass: 2026-06-08 at commit add612f
+> Pass count: 45
 
 > Written by `/critique` after walking the live site as a
 > fresh-eyes visitor. Drained by `/iterate`.
 
 ## Pending
+
+### [LOW] / — 7-day preview section has no framing sentence before the list
+- pass: 45 (commit add612f)
+- viewport: both
+- category: comprehension
+- observation: the "the next seven days" heading immediately precedes the seven dated prompt entries with no sentence explaining what the visitor is looking at. a first-time visitor does not know whether these are sample prompts, personalised previews, or a real shared schedule. the clarifying sentence ("the same prompt and tiny task arrive for everyone on a given day.") exists but appears after all seven entries, not before them.
+- evidence: body text sequence: "the next seven days / today / Mon 8 Jun / [prompt] / tiny task — ..." — the explanation paragraph appears only after the seventh entry.
+- suggested fix: move the explanatory sentence ("the same prompt and tiny task arrive for everyone on a given day. ember does not personalize your morning.") to immediately below the "the next seven days" heading, before the first dated entry.
+- source: browser
+
+### [LOW] / — 7-day prompt day entries lack structural grouping
+- pass: 45 (commit add612f)
+- viewport: both
+- category: a11y
+- observation: each day block in the 7-day preview (day label, date, prompt, tiny task) has no containing element that groups it as a discrete unit. the blocks run as a flat sequence of mixed heading-level labels and paragraphs. screen-reader users navigating by heading or list item have no programmatic way to identify where one day's content ends and the next begins.
+- evidence: body text: "today / Mon 8 Jun / [prompt] / tiny task — ... / tomorrow / Tue 9 Jun / [prompt] / tiny task — ..." — no structural boundary between day entries.
+- suggested fix: wrap each day block (day label, date, prompt, task) in an <article> or <li> element to give AT users a discrete navigable unit per day.
+- source: browser
+
+### [LOW] /signin — page lacks a value proposition sentence for cold visitors
+- pass: 45 (commit add612f)
+- viewport: both
+- category: comprehension
+- observation: a user arriving at /signin via a shared link, search result, or direct navigation sees only the sign-in form with no reminder of what they are signing in for. the reassurance copy covers the mechanics of the magic link but does not restate what ember offers. a cold visitor and a returning visitor with weak recall are treated identically.
+- evidence: full body text: "sign in / email / a sign-in link is sent to this address. it expires after 24 hours. no password. no other mail. a new address creates an account. / send a link / ember"
+- suggested fix: add one short sentence above the form, e.g. "one prompt and one tiny task each morning — sign in to begin."
+- source: browser
+
+### [LOW] /log — empty state gives no description of the 60-day mosaic
+- pass: 45 (commit add612f)
+- viewport: both
+- category: comprehension
+- observation: a new user visiting /log sees only "the log is empty. today's entry will appear here." with no indication of what the log looks like when filled. the 60-day mosaic is the product's primary visual, but the empty state gives no preview or description of it — the user has no sense of what they are building toward.
+- evidence: full body text: "the past 60 days / skip to log / the log is empty. today's entry will appear here."
+- suggested fix: extend the empty-state copy to mention the mosaic, e.g. "the log is empty. entries accumulate here as a 60-day mosaic. today's entry will appear here."
+- source: browser
+
+### [LOW] /settings — display name field has no format hint
+- pass: 45 (commit add612f)
+- viewport: both
+- category: comprehension
+- observation: the display name field shows only "shown on entries when they appear on a public profile." with no guidance on format — whether spaces are allowed, whether it should be a real name or a handle, or what length is acceptable. unlike the public username field (anchored by the "/u/" path prefix), display name has no example or constraint visible in the form.
+- evidence: body text: "display name / shown on entries when they appear on a public profile." — no example, no format hint adjacent to the field.
+- suggested fix: add a one-line hint below the field description, e.g. "any name or alias, such as J. Doe or a pen name."
+- source: browser
 
 ### [x] [LOW] / — closing region uses <div> instead of <footer> element (inconsistent with /signin)
 - pass: 43 (commit 5e1498c)
