@@ -6,6 +6,58 @@
 
 ## Pending
 
+### [x] [3.0] /signin — submit button label "send the link" uses definite article before any link exists
+- category: external-critique
+- impact: 3
+- ease: 10
+- note: scored 2026-06-08 — from critique pass 43 (5e1498c); the submit button reads "send the link" while the adjacent reassurance copy uses the indefinite article: "a sign-in link is sent to this address." — definite "the" presupposes a known referent; changing to "send a link" matches the framing of the surrounding copy
+- observation: body text: "send the link" — adjacent reassurance: "a sign-in link is sent to this address. it expires after 24 hours. no password. no other mail." — article mismatch: "a" in the description and "the" in the button label
+- evidence: src/app/signin/page.tsx:96 — `state === 'sending' ? 'sending.' : 'send the link'` — adjacent reassurance at line 88 uses indefinite "a sign-in link"
+- suggested fix: change button label to "send a link" to match the indefinite framing of the surrounding reassurance copy
+- source: /critique pass 43 (commit 5e1498c)
+- issue: [mirror-failed: loop-issue.mjs not present in scripts/]
+- resolution: changed button label from "send the link" to "send a link" in src/app/signin/page.tsx; updated unit test and e2e test. Shipped at 41d6df7.
+
+### [ ] [3.0] / — closing region uses <div> instead of <footer> element (inconsistent with /signin)
+- category: external-critique
+- impact: 3
+- ease: 10
+- note: scored 2026-06-08 — from critique pass 43 (5e1498c); the landing page closing region is wrapped in <div className={styles.footerCredit}> with no semantic footer element while /signin uses <footer className={styles.footer}> for its equivalent; AT users navigating by landmark cannot reach the landing page closing region via footer landmark navigation
+- observation: src/app/page.tsx line 83: <div className={styles.footerCredit}> — no footer landmark. src/app/signin/page.tsx line 107: <footer className={styles.footer}> — uses semantic footer element for identical structural purpose.
+- evidence: src/app/page.tsx:83 — <div className={styles.footerCredit}> — no footer landmark; src/app/signin/page.tsx:107 — <footer className={styles.footer}>
+- suggested fix: change <div className={styles.footerCredit}> to <footer className={styles.footerCredit}> in src/app/page.tsx
+- source: /critique pass 43 (commit 5e1498c)
+
+### [ ] [2.7] /today — day strip <section> carries no accessible name; not exposed as named region landmark
+- category: external-critique
+- impact: 3
+- ease: 9
+- note: scored 2026-06-08 — from critique pass 43 (5e1498c); <section id="day-strip"> has no aria-label or aria-labelledby; per ARIA spec a <section> without an accessible name is not exposed as a named region landmark; add aria-labelledby="day-strip-heading" to the section and id="day-strip-heading" to the H2
+- observation: src/app/today/DayStrip.tsx line 51: <section id="day-strip" className={styles.strip}> — no aria-label or aria-labelledby attribute present.
+- evidence: src/app/today/DayStrip.tsx:51 — <section id="day-strip" className={styles.strip}> — no accessible name; H2 "the last seven days" has no id for labelledby association
+- suggested fix: add aria-labelledby="day-strip-heading" to the section element and id="day-strip-heading" to the H2
+- source: /critique pass 43 (commit 5e1498c)
+
+### [ ] [2.4] /today — publish toggle description is visually hidden on all viewports; sighted mobile users see no explanation
+- category: external-critique
+- impact: 3
+- ease: 8
+- note: scored 2026-06-08 — from critique pass 43 (5e1498c); the publish toggle description "when published, this entry appears on the public profile." is in a srOnly span visible only to AT; sighted mobile users encounter a bare "publish" label with no on-screen explanation; the prereq hint below is visible, creating a visible/invisible inconsistency
+- observation: src/app/today/TodayEntry.tsx: <span id="publish-desc" className={styles.srOnly}>when published, this entry appears on the public profile.</span> — srOnly hides visually at all viewports
+- evidence: src/app/today/TodayEntry.tsx — publish description in srOnly span; prereq hint "no public username is set…" renders as a visible paragraph, creating visible/invisible inconsistency between the two adjacent explanatory lines
+- suggested fix: remove srOnly from the publish description span so it renders as a visible muted paragraph below the publish label row, matching the visible treatment of the prereq hint
+- source: /critique pass 43 (commit 5e1498c)
+
+### [ ] [1.8] /settings — username input placeholder drops "public" qualifier from field label
+- category: external-critique
+- impact: 2
+- ease: 9
+- note: scored 2026-06-08 — from critique pass 43 (5e1498c); the public username input carries placeholder="username" while the field label reads "public username"; the "public" qualifier distinguishing this field from display name is absent in the placeholder; suggested fix: remove placeholder entirely since adjacent hint text sets format expectation
+- observation: src/app/settings/SettingsForm.tsx line 203: placeholder="username" — field label: <label htmlFor="username">public username</label>
+- evidence: src/app/settings/SettingsForm.tsx:203 — placeholder="username"; label reads "public username"; display name field at line 131 uses placeholder="name shown on published entries" which aligns with label scope
+- suggested fix: remove the placeholder entirely (the adjacent hint "a public profile will appear at /u/username." already sets the format expectation) or change to "your-handle" that preserves the public framing
+- source: /critique pass 43 (commit 5e1498c)
+
 ### [x] [3.0] /settings — display name input placeholder uses second-person "you"
 - category: voice
 - impact: 3

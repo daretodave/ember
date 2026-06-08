@@ -8,15 +8,6 @@
 
 ## Pending
 
-### [LOW] /signin — submit button label "send the link" uses definite article before any link exists
-- pass: 43 (commit 5e1498c)
-- viewport: both
-- category: comprehension
-- observation: the submit button reads "send the link." the definite article "the" presupposes a previously established referent, but the surrounding reassurance copy uses the indefinite article: "a sign-in link is sent to this address." for a first-time visitor the button implies a specific known link rather than the one they are about to request. the article mismatch is subtle but creates a small semantic inconsistency in the form's register.
-- evidence: body text: "send the link" — adjacent reassurance: "a sign-in link is sent to this address. it expires after 24 hours. no password. no other mail." — "a" in the description and "the" in the button label are at odds.
-- suggested fix: change the button label to "send a link" to match the indefinite framing of the surrounding reassurance copy.
-- source: browser
-
 ### [LOW] / — closing region uses <div> instead of <footer> element (inconsistent with /signin)
 - pass: 43 (commit 5e1498c)
 - viewport: both
@@ -1575,6 +1566,16 @@
 - resolution: footer now reads "sign-in links expire after 24 hours." — added at dfe1ae4 when the vendor attribution was replaced. Expiry concern addressed.
 
 ## Done
+
+### [x] [LOW] /signin — submit button label "send the link" uses definite article before any link exists
+- pass: 43 (commit 5e1498c)
+- viewport: both
+- category: comprehension
+- observation: the submit button reads "send the link." the definite article "the" presupposes a previously established referent, but the surrounding reassurance copy uses the indefinite article: "a sign-in link is sent to this address." for a first-time visitor the button implies a specific known link rather than the one they are about to request. the article mismatch is subtle but creates a small semantic inconsistency in the form's register.
+- evidence: body text: "send the link" — adjacent reassurance: "a sign-in link is sent to this address. it expires after 24 hours. no password. no other mail." — "a" in the description and "the" in the button label are at odds.
+- suggested fix: change the button label to "send a link" to match the indefinite framing of the surrounding reassurance copy.
+- source: browser
+- resolution: changed button label from "send the link" to "send a link" in src/app/signin/page.tsx. Shipped at 41d6df7.
 
 ### [x] [MED] /today — focus mode overlay lacks focus trap; Tab exits active dialog into obscured main content
 - pass: 37 (commit 562a795)
