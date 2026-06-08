@@ -66,13 +66,10 @@ describe('focus mode', () => {
     expect(focusTextarea.value).toBe('hello world')
   })
 
-  it('overlay has aria-labelledby pointing at the prompt heading', () => {
+  it('overlay has a concise stable aria-label', () => {
     render(<TodayEntry {...DEFAULT_PROPS} />)
     const overlay = screen.getByRole('dialog', { hidden: true })
-    expect(overlay).toHaveAttribute('aria-labelledby', 'focus-mode-heading')
-    expect(document.getElementById('focus-mode-heading')).toHaveTextContent(
-      'what did you attend to today?',
-    )
+    expect(overlay).toHaveAttribute('aria-label', 'focus mode')
   })
 
   it('main form elements are removed from tab order when focus mode is active', () => {

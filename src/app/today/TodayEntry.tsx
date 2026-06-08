@@ -253,12 +253,12 @@ export function TodayEntry({ date, task, prompt, initialEntry, hasUsername = tru
       <div
         role="dialog"
         aria-modal={isFocus || undefined}
-        aria-labelledby="focus-mode-heading"
+        aria-label="focus mode"
         aria-hidden={!isFocus}
         className={`${styles.focusOverlay}${isFocus ? ` ${styles.focusOverlayActive}` : ''}`}
       >
         <div className={styles.focusContent}>
-          <p id="focus-mode-heading" className={styles.focusPrompt}>{prompt}</p>
+          <p className={styles.focusPrompt}>{prompt}</p>
 
           <label htmlFor="focus-entry-response" className={styles.entryLabel}>response</label>
           <textarea
