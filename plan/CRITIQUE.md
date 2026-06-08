@@ -1,7 +1,7 @@
 # External-observer findings — Ember
 
-> Last pass: 2026-06-07 at commit 5e1498c
-> Pass count: 43
+> Last pass: 2026-06-08 at commit 6441e65
+> Pass count: 44
 
 > Written by `/critique` after walking the live site as a
 > fresh-eyes visitor. Drained by `/iterate`.
@@ -1570,6 +1570,60 @@
 - evidence: captured text: "we email you a sign-in link. no password, no spam." — no expiry or destination copy.
 - suggested fix: add one line such as "the link is valid for 24 hours and drops you straight into today's page" to reduce post-submit uncertainty.
 - resolution: footer now reads "sign-in links expire after 24 hours." — added at dfe1ae4 when the vendor attribution was replaced. Expiry concern addressed.
+
+### [MED] / — root layout and /signin missing alternates.canonical
+- pass: 44 (commit 6441e65)
+- viewport: both
+- category: seo
+- observation: neither the root layout nor the /signin layout sets alternates.canonical, so next.js emits no <link rel="canonical"> tag on either anonymous-facing page. the public-profile routes at /u/[username] and /u/[username]/[date] both set alternates.canonical explicitly. the site is served at a vercel preview hostname as well as the production url; without a canonical tag, search engines may split indexing across the two hostnames.
+- evidence: src/app/layout.tsx: metadata export has no alternates key. src/app/signin/layout.tsx: same. src/app/u/[username]/page.tsx: alternates: { canonical: url } — present for public-profile routes only.
+- suggested fix: add alternates: { canonical: siteUrl } to the metadata export in src/app/layout.tsx and alternates: { canonical: `${siteUrl}/signin` } to src/app/signin/layout.tsx, matching the pattern already used on /u/[username].
+- source: browser
+
+### [LOW] /signin — layout sets no openGraph or twitter override
+- pass: 44 (commit 6441e65)
+- viewport: both
+- category: seo
+- observation: the /signin layout exports only title and description; it sets no openGraph or twitter keys. next.js merges from the root layout for any unset keys, so a social share of the /signin url surfaces the root og:title "ember · a daily writing ritual" and og:url pointing to the root path — neither reflects the sign-in page. every other page with its own layout (settings, log, today, u/[username]) overrides og metadata for its context.
+- evidence: src/app/signin/layout.tsx: metadata export contains title and description only — no openGraph or twitter keys. src/app/layout.tsx openGraph.title: "ember · a daily writing ritual", openGraph.url: siteUrl.
+- suggested fix: add an openGraph block to src/app/signin/layout.tsx with title, url, and description matching the signin page, so a social share of the signin url produces an accurate open graph card.
+- source: browser
+
+### [LOW] / — seven-day preview section unnamed; not exposed as landmark
+- pass: 44 (commit 6441e65)
+- viewport: both
+- category: a11y
+- observation: the seven-day preview is wrapped in <section className={styles.seven}> with no aria-label or aria-labelledby attribute. per the aria spec a section without an accessible name is not exposed as a named region landmark. the section contains an h2 "the next seven days" but the h2 does not grant landmark status to the enclosing section without an explicit aria-labelledby association. the identical pattern was corrected on /today for the day-strip section in a prior pass; the landing-page section was not updated in parallel.
+- evidence: src/app/page.tsx: <section className={styles.seven}> — no aria-label or aria-labelledby. the contained h2 "the next seven days" has no id for association. compare the day-strip fix in DayStrip.tsx: <section id="day-strip" aria-labelledby="day-strip-heading">.
+- suggested fix: add id="seven-days-heading" to the h2 element and aria-labelledby="seven-days-heading" to the section element, exposing the seven-day preview as a named landmark region consistent with the /today day-strip fix.
+- source: browser
+
+### [LOW] / — sign-in cta aside contains no heading element
+- pass: 44 (commit 6441e65)
+- viewport: both
+- category: a11y
+- observation: the sign-in cta is an <aside aria-label="sign in"> landmark reachable by landmark navigation but contains no heading element. at users navigating by heading cannot reach the aside's content; they can only enter it by landmark shortcut and then read linearly. the first sentence of the aside copy ("today's prompt is waiting.") functions as a contextual title but is marked as a <p> element.
+- evidence: src/app/page.tsx: <aside className={styles.cta} aria-label="sign in"> contains <div className={styles.ctaInner}> with <p className={styles.ctaCopy}> and <Link>. no heading element is present inside the aside.
+- suggested fix: add a visually-hidden heading such as <h2 className="sr-only">sign in</h2> inside the aside so the cta region is reachable by both landmark and heading navigation.
+- source: browser
+
+### [LOW] /settings — page has no sub-headings for individual setting groups
+- pass: 44 (commit 6441e65)
+- viewport: both
+- category: a11y
+- observation: the settings page has a single h1 ("settings") and no sub-headings for the four distinct setting groups (display name, timezone, prompt variety, public username). each group is introduced only by its form label element. screen reader users navigating by heading see only the page title and cannot jump directly to a specific setting group.
+- evidence: body text: "settings" (h1) followed by "display name", "timezone", "prompt variety", "public username" — each as a label element, not a heading. no h2 or fieldset/legend structure visible.
+- suggested fix: wrap each setting group in a fieldset with a legend, or add a visually-muted h2 above each group, so heading-based navigation reaches individual groups directly.
+- source: browser
+
+### [LOW] / — mosaic preview has no visible caption for sighted users
+- pass: 44 (commit 6441e65)
+- viewport: both
+- category: comprehension
+- observation: the mosaic tile grid appears between the lede and the seven-day list with no adjacent caption or label visible to sighted users. the grid is the only graphic on the page but first-time visitors have no text cue explaining what the tile pattern represents. the aria-label "60 days of practice" is at-only. a sighted visitor sees an unlabeled tile pattern with no context before reaching the seven-day list.
+- evidence: src/app/page.tsx: <section className={styles.previewMark}><MosaicPreview /></section> — no adjacent <p>, <figcaption>, or visible text label in the containing section. desktop and mobile captures show the mosaic between the hero and the seven-day preview with no visible annotation.
+- suggested fix: add a short visible caption in the previewMark section, e.g. a <p> reading "the log, over time." so sighted first-time visitors understand the graphic's meaning without relying on the at-only aria-label.
+- source: browser
 
 ## Done
 
