@@ -6,6 +6,18 @@
 
 ## Pending
 
+### [x] [4.5] / and /signin — missing alternates.canonical on anonymous-facing routes
+- category: seo
+- impact: 5
+- ease: 9
+- note: scored 2026-06-08 — from critique pass 44 (6441e65); neither root layout nor /signin layout sets alternates.canonical; the public-profile routes (/u/[username]) already set canonical explicitly (pattern established at 8d7d49a); without a canonical tag, search engines may split indexing between the vercel preview hostname and the production url; site is served at both a vercel preview hostname and production; no canonical means link equity may not consolidate on the canonical domain
+- observation: src/app/layout.tsx has no alternates field in the metadata export. src/app/signin/layout.tsx same. src/app/u/[username]/page.tsx sets alternates: { canonical: url } — pattern already established for public-profile routes but not applied to the anonymous-facing entry points (/ and /signin).
+- evidence: src/app/layout.tsx:33 — metadata export has no alternates key; src/app/signin/layout.tsx:3 — same; src/app/u/[username]/page.tsx:28 — alternates: { canonical: url } present
+- suggested fix: add alternates: { canonical: siteUrl } to metadata in src/app/layout.tsx; add alternates: { canonical: '/signin' } to metadata in src/app/signin/layout.tsx
+- source: /critique pass 44 (commit 6441e65)
+- issue: [mirror-failed: 2026-06-08T00:00:00Z]
+- resolution: added alternates: { canonical: siteUrl } to src/app/layout.tsx and alternates: { canonical: '/signin' } to src/app/signin/layout.tsx. Shipped at 73e062b.
+
 ### [x] [3.6] / — Twitter card images array lacks alt text
 - category: seo
 - impact: 4

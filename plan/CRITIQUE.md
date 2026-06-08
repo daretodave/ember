@@ -1572,7 +1572,7 @@
 - suggested fix: add one line such as "the link is valid for 24 hours and drops you straight into today's page" to reduce post-submit uncertainty.
 - resolution: footer now reads "sign-in links expire after 24 hours." — added at dfe1ae4 when the vendor attribution was replaced. Expiry concern addressed.
 
-### [MED] / — root layout and /signin missing alternates.canonical
+### [x] [MED] / — root layout and /signin missing alternates.canonical
 - pass: 44 (commit 6441e65)
 - viewport: both
 - category: seo
@@ -1580,6 +1580,7 @@
 - evidence: src/app/layout.tsx: metadata export has no alternates key. src/app/signin/layout.tsx: same. src/app/u/[username]/page.tsx: alternates: { canonical: url } — present for public-profile routes only.
 - suggested fix: add alternates: { canonical: siteUrl } to the metadata export in src/app/layout.tsx and alternates: { canonical: `${siteUrl}/signin` } to src/app/signin/layout.tsx, matching the pattern already used on /u/[username].
 - source: browser
+- resolution: added alternates: { canonical: siteUrl } to src/app/layout.tsx and alternates: { canonical: '/signin' } to src/app/signin/layout.tsx. Shipped at 73e062b.
 
 ### [LOW] /signin — layout sets no openGraph or twitter override
 - pass: 44 (commit 6441e65)
