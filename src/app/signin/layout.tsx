@@ -4,6 +4,15 @@ export const metadata: Metadata = {
   title: 'ember · sign in',
   description: 'sign in to ember with a link sent by email — no password, no other mail.',
   alternates: { canonical: '/signin' },
+  openGraph: {
+    title: 'ember · sign in',
+    description: 'sign in to ember with a link sent by email — no password, no other mail.',
+    url: '/signin',
+  },
+  twitter: {
+    title: 'ember · sign in',
+    description: 'sign in to ember with a link sent by email — no password, no other mail.',
+  },
 }
 
 export default function SigninLayout({ children }: { children: React.ReactNode }) {
