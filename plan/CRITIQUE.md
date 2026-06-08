@@ -518,7 +518,7 @@
 - source: browser
 - resolution: changed "a low-friction writing ritual." to "a daily writing ritual." in src/app/page.tsx. Shipped at 260eb99.
 
-### [LOW] / — Twitter card images array lacks alt text
+### [x] [LOW] / — Twitter card images array lacks alt text
 - pass: 30 (commit 53cd344)
 - viewport: both
 - category: seo
@@ -526,6 +526,7 @@
 - evidence: src/app/layout.tsx: `twitter: { images: ['/opengraph-image'] }` — plain string, no alt property. compare `openGraph.images: [{ url: '/opengraph-image', width: 1200, height: 630, alt: 'ember — a daily writing ritual' }]` — object with alt.
 - suggested fix: change `twitter.images` to `[{ url: '/opengraph-image', alt: 'ember — a daily writing ritual' }]` to match the opengraph object format and carry an accessible image description in the twitter card.
 - source: browser
+- resolution: changed `twitter.images` to `[{ url: '/opengraph-image', alt: 'ember — a daily writing ritual' }]` in src/app/layout.tsx. Shipped at bac93ea.
 
 ### [LOW] /today — "focus" button has no visible description on mobile (touch devices)
 - pass: 30 (commit 53cd344)
@@ -595,7 +596,7 @@
 - source: browser
 - resolution: changed link text from "view your public profile" to "view public profile" in src/app/settings/page.tsx. Shipped at 4d95d36.
 
-### [LOW] / — H1 uses semantic `<em>` for typographic italics on "intention"
+### [x] [LOW] / — H1 uses semantic `<em>` for typographic italics on "intention"
 - pass: 29 (commit e9a5f15)
 - viewport: both
 - category: a11y
@@ -603,6 +604,7 @@
 - evidence: src/app/page.tsx line 27: `ten minutes of <em>intention</em> before the day swallows you.` — the only `<em>` element in a heading context on the site.
 - suggested fix: if the intent is typographic only, replace `<em>` with a `<span>` styled with a CSS italic class (e.g. `styles.pitchAccent`) to remove the semantic stress signal from the accessible tree while preserving the italic rendering.
 - source: browser
+- resolution: false positive — src/app/page.tsx already uses `<span className={styles.pitchAccent}>intention</span>` (not `<em>`); the semantic stress was removed in a prior pass. No code change needed.
 
 ### [x] [LOW] / — lede says "one small prompt" but the named concept throughout is "prompt"
 - pass: 28 (commit 64a33db)

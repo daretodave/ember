@@ -6,6 +6,18 @@
 
 ## Pending
 
+### [x] [3.6] / — Twitter card images array lacks alt text
+- category: seo
+- impact: 4
+- ease: 9
+- note: scored 2026-06-08 — from critique pass 30 (53cd344); the root layout Twitter card metadata specifies `images` as a plain string array; next.js app router requires an object array `[{ url, alt }]` to emit an alt attribute on the twitter card image; the plain string form produces a twitter card image with no accessible description on social shares; the opengraph image at the same path correctly uses the object format with alt text
+- observation: src/app/layout.tsx: `twitter: { images: ['/opengraph-image'] }` — plain string, no alt property. compare `openGraph.images: [{ url: '/opengraph-image', width: 1200, height: 630, alt: 'ember — a daily writing ritual' }]` — object with alt.
+- evidence: src/app/layout.tsx:54: `images: ['/opengraph-image']` — plain string array; openGraph.images at line 48 uses object format with alt field
+- suggested fix: change `twitter.images` to `[{ url: '/opengraph-image', alt: 'ember — a daily writing ritual' }]` to match the opengraph object format and carry an accessible image description in the twitter card
+- source: /critique pass 30 (commit 53cd344)
+- issue: [mirror-failed: loop-issue.mjs not present in scripts/]
+- resolution: changed `twitter.images` from `['/opengraph-image']` to `[{ url: '/opengraph-image', alt: 'ember — a daily writing ritual' }]` in src/app/layout.tsx. Shipped at bac93ea.
+
 ### [x] [3.0] /signin — submit button label "send the link" uses definite article before any link exists
 - category: external-critique
 - impact: 3
