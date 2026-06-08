@@ -446,11 +446,12 @@
 - issue: [mirror-failed: loop-issue.mjs not present in scripts/]
 - resolution: wrapped content in outer span (preserving flex item structure); added inner `<span className={styles.taskLabel}>tiny task</span>` for semantic separation; taskLabel uses Inter at 14px vs Source Serif 4 at 16px for task body. Shipped at 0101b1b.
 
-### [ ] [2.0] /settings — display name input placeholder uses second-person possessive "your public profile"
+### [x] [2.0] /settings — display name input placeholder uses second-person possessive "your public profile"
 - category: voice
 - impact: 2
 - ease: 10
 - note: scored 2026-06-05 — from critique pass 35 (2dad7ef); the display name input carries the placeholder "how you appear on your public profile." the phrase "your public profile" is a second-person possessive; prior passes de-possessived the hint text and the "view your public profile" link on the same page; the input placeholder was not updated in those passes
+- resolution: placeholder changed to "name shown on published entries" in SettingsForm.tsx. Shipped prior to 2026-06-08 audit.
 - observation: the display name input carries the placeholder "how you appear on your public profile." the phrase "your public profile" is a second-person possessive. prior passes de-possessived the hint text and the "view your public profile" link on the same page; the input placeholder was not updated in those passes.
 - evidence: src/app/settings/SettingsForm.tsx:131: `placeholder="how you appear on your public profile"` — "your public profile" is the same possessive construction addressed in the settings hints (a57cc00) and the page link (still pending in AUDIT.md).
 - suggested fix: change placeholder to "name shown on published entries" — removes direct address while describing the field's purpose in the same register as the adjacent hint text.
@@ -516,11 +517,12 @@
 - issue: [mirror-failed: loop-issue.mjs not present in scripts/]
 - resolution: changed "open log" to "log" in src/app/today/DayStrip.tsx; test assertion updated. Shipped at 66578c4.
 
-### [ ] [1.8] / — landing page footer region uses a div element instead of a footer landmark
+### [x] [1.8] / — landing page footer region uses a div element instead of a footer landmark
 - category: a11y
 - impact: 2
 - ease: 9
 - note: scored 2026-06-05 — from critique pass 36 (0dce6e9); landing page closing section uses `<div className={styles.footerCredit}>` with no footer landmark; /signin uses `<footer>` for its equivalent region; AT users navigating by landmarks cannot reach the landing page footer
+- resolution: <div className={styles.footerCredit}> changed to <footer> in src/app/page.tsx. Shipped prior to 2026-06-08 audit (critique pass 43).
 - observation: the landing page closing section ("ember / a daily writing ritual.") has no footer landmark, unlike /signin which uses `<footer>`. inconsistent landmark structure across the two public-facing pages.
 - evidence: src/app/page.tsx:84: `<div className={styles.footerCredit}>` — no footer element. compare src/app/signin/page.tsx: `<footer className={styles.footer}>`.
 - suggested fix: change `<div className={styles.footerCredit}>` to `<footer className={styles.footerCredit}>` in src/app/page.tsx.
@@ -1714,7 +1716,7 @@
 - issue: [mirror-failed: 2026-05-26T08:04:00Z]
 - resolution: changed "/u/your-handle" to "/u/username" in hint text and input placeholder in SettingsForm.tsx. Shipped at 72dba75.
 
-### [ ] [2.1] /settings — personalized prompt gives no fallback signal for users with no entries
+### [x] [2.1] /settings — personalized prompt gives no fallback signal for users with no entries
 - category: external-critique
 - impact: 3
 - ease: 7
@@ -1722,6 +1724,7 @@
 - evidence: `"personalized: a unique prompt generated for you by Claude, informed by your recent entries."` — no fallback copy follows.
 - suggested fix: add a brief qualifier after the existing description, e.g. "falls back to a standard prompt until entries exist."
 - source: /critique pass 10 (commit 84e0c49)
+- resolution: fallback qualifier "falls back to a standard prompt until entries exist." added to SettingsForm.tsx. Shipped at 4ddfa2b.
 
 ### [x] [3.2] /signin — sign-in page gives no destination context after email submission
 - category: external-critique
