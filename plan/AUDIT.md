@@ -54,7 +54,7 @@
 - issue: [mirror-failed: loop-issue.mjs not present in scripts/]
 - resolution: added aria-labelledby="day-strip-heading" to <section id="day-strip"> and id="day-strip-heading" to the H2 in DayStrip.tsx; region landmark test added to DayStrip.test.tsx. Shipped at 4f5c4e4.
 
-### [ ] [2.4] /today — publish toggle description is visually hidden on all viewports; sighted mobile users see no explanation
+### [x] [2.4] /today — publish toggle description is visually hidden on all viewports; sighted mobile users see no explanation
 - category: external-critique
 - impact: 3
 - ease: 8
@@ -63,6 +63,8 @@
 - evidence: src/app/today/TodayEntry.tsx — publish description in srOnly span; prereq hint "no public username is set…" renders as a visible paragraph, creating visible/invisible inconsistency between the two adjacent explanatory lines
 - suggested fix: remove srOnly from the publish description span so it renders as a visible muted paragraph below the publish label row, matching the visible treatment of the prereq hint
 - source: /critique pass 43 (commit 5e1498c)
+- issue: [mirror-failed: loop-issue.mjs not present in scripts/]
+- resolution: moved description out of srOnly span to a visible <p className={styles.publishHint}> after the action row in both normal and focus-mode views. Shipped at 02aa0fd.
 
 ### [ ] [1.8] /settings — username input placeholder drops "public" qualifier from field label
 - category: external-critique

@@ -37,7 +37,7 @@
 - source: browser
 - resolution: added aria-labelledby="day-strip-heading" to <section id="day-strip"> and id="day-strip-heading" to the H2 in DayStrip.tsx. Shipped at 4f5c4e4.
 
-### [LOW] /today — publish toggle description is visually hidden on all viewports; sighted mobile users see no explanation
+### [x] [LOW] /today — publish toggle description is visually hidden on all viewports; sighted mobile users see no explanation
 - pass: 43 (commit 5e1498c)
 - viewport: mobile
 - category: comprehension
@@ -45,6 +45,7 @@
 - evidence: src/app/today/TodayEntry.tsx: <span id="publish-desc" className={styles.srOnly}>when published, this entry appears on the public profile.</span> — srOnly applies position:absolute and clip to hide visually at all viewports. the mobile body text capture shows the description text in DOM order (captured by Playwright innerText) but it is not rendered visibly. the prereq hint below ("no public username is set...") renders as a visible paragraph, creating a visible/invisible inconsistency between the two adjacent explanatory lines.
 - suggested fix: remove the srOnly class from the publish description span so it renders as a visible muted paragraph below the publish label row on all viewports, matching the visible treatment of the prereq hint directly below it.
 - source: browser
+- resolution: moved description out of srOnly span to a visible <p className={styles.publishHint}> after the action row in both normal and focus-mode views. Shipped at 02aa0fd.
 
 ### [x] [HIGH] /today — focus overlay does not trap keyboard focus
 - pass: 42 (commit b9b4b91)
