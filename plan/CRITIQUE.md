@@ -86,7 +86,7 @@
 - suggested fix: change title to "saves display name, timezone, prompt variety, and public username." to match the on-page field label exactly.
 - source: browser
 
-### [LOW] /today — focus overlay dialog labeled via aria-labelledby pointing to the full 16-word prompt
+### [x] [LOW] /today — focus overlay dialog labeled via aria-labelledby pointing to the full 16-word prompt
 - pass: 42 (commit b9b4b91)
 - viewport: desktop
 - category: a11y
@@ -94,6 +94,7 @@
 - evidence: TodayEntry.tsx: aria-labelledby="focus-mode-heading" on the dialog div; <p id="focus-mode-heading">{prompt}</p> — today's prompt is "what do you find hardest to ask for, even from people who would give it easily?" announced verbatim as the dialog name when focus mode opens.
 - suggested fix: replace aria-labelledby with aria-label="focus mode" on the dialog element, or target a visually-hidden short heading inside the overlay instead of the prompt paragraph.
 - source: browser
+- resolution: replaced aria-labelledby="focus-mode-heading" with aria-label="focus mode" on dialog div; removed unused id from prompt paragraph; unit test updated. Shipped at 43d1502.
 
 ### [LOW] /log — entry-list section has no heading in the zero-entry state
 - pass: 42 (commit b9b4b91)

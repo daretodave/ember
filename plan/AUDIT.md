@@ -100,7 +100,7 @@
 - issue: [mirror-failed: loop-issue.mjs not present in scripts/]
 - resolution: added aria-hidden="true" + tabIndex={-1} to the lockup Link in src/app/signin/page.tsx; only the explicit "back to home" link remains in the tab and AT order. Shipped at 567174d.
 
-### [ ] [2.7] /today — focus overlay dialog labeled via aria-labelledby pointing to full 16-word prompt paragraph
+### [x] [2.7] /today — focus overlay dialog labeled via aria-labelledby pointing to full 16-word prompt paragraph
 - category: a11y
 - impact: 3
 - ease: 9
@@ -109,6 +109,7 @@
 - evidence: TodayEntry.tsx: aria-labelledby="focus-mode-heading" on the dialog div; <p id="focus-mode-heading">{prompt}</p> — today's prompt is announced verbatim as the dialog name when focus mode opens.
 - suggested fix: replace aria-labelledby with aria-label="focus mode" on the dialog element, or target a visually-hidden short heading inside the overlay instead of the prompt paragraph.
 - source: /critique pass 42 (commit b9b4b91)
+- resolution: replaced aria-labelledby="focus-mode-heading" with aria-label="focus mode" on dialog div; removed unused id from prompt paragraph; unit test updated. Shipped at 43d1502.
 
 ### [ ] [2.1] /log — entry-list section has no heading in the zero-entry state
 - category: a11y
