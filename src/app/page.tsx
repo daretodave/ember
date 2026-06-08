@@ -80,10 +80,10 @@ export default function LandingPage() {
           </p>
         </section>
 
-        <div className={styles.footerCredit}>
+        <footer className={styles.footerCredit}>
           <span>ember</span>
           <span>a daily writing ritual.</span>
-        </div>
+        </footer>
       </main>
 
       <aside className={styles.cta} aria-label="sign in">

@@ -96,7 +96,9 @@ describe('SigninPage — sent state', () => {
     await waitFor(() => {
       expect(screen.getByRole('status')).toBeInTheDocument()
     })
-    expect(document.activeElement).toBe(screen.getByRole('status'))
+    await waitFor(() => {
+      expect(document.activeElement).toBe(screen.getByRole('status'))
+    })
   })
 
   it('shows expiry notice in confirmation, not in footer', async () => {
