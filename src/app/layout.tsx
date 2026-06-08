@@ -51,7 +51,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'ember · a daily writing ritual',
     description: 'ember is a daily writing ritual — one prompt and one tiny task each morning.',
-    images: ['/opengraph-image'],
+    images: [{ url: '/opengraph-image', alt: 'ember — a daily writing ritual' }],
   },
 }
 
