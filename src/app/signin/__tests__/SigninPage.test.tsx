@@ -11,7 +11,7 @@ describe('SigninPage — initial state', () => {
   it('renders the email input and submit button', () => {
     render(<SigninPage />)
     expect(screen.getByLabelText('email')).toBeInTheDocument()
-    expect(screen.getByRole('button', { name: 'send the link' })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: 'send a link' })).toBeInTheDocument()
   })
 
   it('does not show confirmation or error on load', () => {
@@ -78,7 +78,7 @@ describe('SigninPage — sent state', () => {
     await waitFor(() => {
       expect(screen.getByRole('status')).toBeInTheDocument()
     })
-    expect(screen.queryByRole('button', { name: 'send the link' })).not.toBeInTheDocument()
+    expect(screen.queryByRole('button', { name: 'send a link' })).not.toBeInTheDocument()
   })
 
   it('moves focus to the confirmation paragraph after successful send', async () => {

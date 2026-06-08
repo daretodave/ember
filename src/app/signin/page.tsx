@@ -93,7 +93,7 @@ export default function SigninPage() {
                 className={styles.submit}
                 disabled={state === 'sending'}
               >
-                {state === 'sending' ? 'sending.' : 'send the link'}
+                {state === 'sending' ? 'sending.' : 'send a link'}
               </button>
             </form>
           )}
