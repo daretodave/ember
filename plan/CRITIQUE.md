@@ -96,7 +96,7 @@
 - source: browser
 - resolution: replaced aria-labelledby="focus-mode-heading" with aria-label="focus mode" on dialog div; removed unused id from prompt paragraph; unit test updated. Shipped at 43d1502.
 
-### [LOW] /log — entry-list section has no heading in the zero-entry state
+### [x] [LOW] /log — entry-list section has no heading in the zero-entry state
 - pass: 42 (commit b9b4b91)
 - viewport: desktop
 - category: a11y
@@ -104,6 +104,7 @@
 - evidence: src/app/log/page.tsx: <h1 className={styles.mosaicMeta}>the past 60 days</h1> is the only heading. the H2 inside the recentEntry conditional block is absent in the empty state. the empty-state <p> "the log is empty. today's entry will appear here." is a plain paragraph with no sibling heading.
 - suggested fix: add a persistent visually-muted <h2> to the entry-list section that renders regardless of entry count, e.g., "most recent" or an aria-label on a <section> element, so AT users have a heading destination below the mosaic in all states.
 - source: browser
+- resolution: wrapped entry conditional in <section aria-label="log entries"> to expose a named region landmark in both populated and empty states. Shipped at 1c922ec.
 
 ### [x] [LOW] / — sticky CTA region carries no ARIA landmark
 - pass: 38 (commit f9032a8)

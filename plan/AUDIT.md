@@ -123,7 +123,7 @@
 - source: /critique pass 42 (commit b9b4b91)
 - resolution: replaced aria-labelledby="focus-mode-heading" with aria-label="focus mode" on dialog div; removed unused id from prompt paragraph; unit test updated. Shipped at 43d1502.
 
-### [ ] [2.1] /log — entry-list section has no heading in the zero-entry state
+### [x] [2.1] /log — entry-list section has no heading in the zero-entry state
 - category: a11y
 - impact: 3
 - ease: 7
@@ -133,6 +133,7 @@
 - suggested fix: add a persistent visually-muted <h2> to the entry-list section that renders regardless of entry count, e.g. "most recent" or an aria-label on a <section> element.
 - source: /critique pass 42 (commit b9b4b91)
 - issue: #35
+- resolution: wrapped entry conditional (article/footer and empty-state paragraph) in <section aria-label="log entries"> so the region is exposed as a named landmark in both populated and empty states. Shipped at 1c922ec.
 
 ### [ ] [2.0] /settings — save button title abbreviates "public username" field as "username"
 - category: voice
