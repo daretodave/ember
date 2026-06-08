@@ -49,6 +49,11 @@ describe('DayStrip', () => {
     expect(screen.getByRole('heading', { name: 'the last seven days' })).toBeInTheDocument()
   })
 
+  it('day strip section is a named region landmark accessible by its heading', () => {
+    render(<DayStrip todayDate={TODAY} entries={new Map()} />)
+    expect(screen.getByRole('region', { name: 'the last seven days' })).toBeInTheDocument()
+  })
+
   it('renders a link to /log', () => {
     render(<DayStrip todayDate={TODAY} entries={new Map()} />)
     expect(screen.getByRole('link', { name: 'log' })).toHaveAttribute('href', '/log')

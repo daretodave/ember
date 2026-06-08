@@ -48,9 +48,9 @@ export function DayStrip({ todayDate, entries }: Props) {
   })
 
   return (
-    <section id="day-strip" className={styles.strip}>
+    <section id="day-strip" className={styles.strip} aria-labelledby="day-strip-heading">
       <div className={styles.stripHead}>
-        <h2 className={styles.stripLabel}>the last seven days</h2>
+        <h2 id="day-strip-heading" className={styles.stripLabel}>the last seven days</h2>
         <Link href="/log" className={styles.stripLink}>
           log
         </Link>
