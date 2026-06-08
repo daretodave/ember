@@ -30,15 +30,17 @@
 - issue: [mirror-failed: loop-issue.mjs not present in scripts/]
 - resolution: changed <div className={styles.footerCredit}> to <footer> in src/app/page.tsx; also fixed pre-existing SigninPage focus test timing (waitFor wrapper). Shipped at HEAD.
 
-### [ ] [2.7] /today — day strip <section> carries no accessible name; not exposed as named region landmark
+### [x] [3.6] /today — day strip <section> carries no accessible name; not exposed as named region landmark
 - category: external-critique
-- impact: 3
+- impact: 4
 - ease: 9
-- note: scored 2026-06-08 — from critique pass 43 (5e1498c); <section id="day-strip"> has no aria-label or aria-labelledby; per ARIA spec a <section> without an accessible name is not exposed as a named region landmark; add aria-labelledby="day-strip-heading" to the section and id="day-strip-heading" to the H2
+- note: scored 2026-06-08, re-scored 2026-06-08 — from critique pass 43 (5e1498c); <section id="day-strip"> has no aria-label or aria-labelledby; per ARIA spec a <section> without an accessible name is not exposed as a named region landmark; /today is the primary daily-use page — all AT users who navigate by landmark cannot reach the day strip; impact raised to 4 (core page, all AT users, section landmark navigation is a common navigation pattern)
 - observation: src/app/today/DayStrip.tsx line 51: <section id="day-strip" className={styles.strip}> — no aria-label or aria-labelledby attribute present.
 - evidence: src/app/today/DayStrip.tsx:51 — <section id="day-strip" className={styles.strip}> — no accessible name; H2 "the last seven days" has no id for labelledby association
 - suggested fix: add aria-labelledby="day-strip-heading" to the section element and id="day-strip-heading" to the H2
 - source: /critique pass 43 (commit 5e1498c)
+- issue: [mirror-failed: loop-issue.mjs not present in scripts/]
+- resolution: added aria-labelledby="day-strip-heading" to <section id="day-strip"> and id="day-strip-heading" to the H2 in DayStrip.tsx; region landmark test added to DayStrip.test.tsx. Shipped at 4f5c4e4.
 
 ### [ ] [2.4] /today — publish toggle description is visually hidden on all viewports; sighted mobile users see no explanation
 - category: external-critique

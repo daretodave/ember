@@ -27,7 +27,7 @@
 - suggested fix: remove the placeholder entirely (the adjacent hint "a public profile will appear at /u/username." already sets the format expectation) or change to a descriptive example such as "your-handle" that preserves the public framing.
 - source: browser
 
-### [LOW] /today — day strip <section> carries no accessible name; not exposed as named region landmark
+### [x] [LOW] /today — day strip <section> carries no accessible name; not exposed as named region landmark
 - pass: 43 (commit 5e1498c)
 - viewport: both
 - category: a11y
@@ -35,6 +35,7 @@
 - evidence: src/app/today/DayStrip.tsx line 51: <section id="day-strip" className={styles.strip}> — no aria-label or aria-labelledby attribute present. the section H2 ("the last seven days") is at line 53 with no id assigned for labelledby association.
 - suggested fix: add aria-labelledby="day-strip-heading" to the section element and id="day-strip-heading" to the H2, converting the section to a named region landmark that AT users can navigate to directly.
 - source: browser
+- resolution: added aria-labelledby="day-strip-heading" to <section id="day-strip"> and id="day-strip-heading" to the H2 in DayStrip.tsx. Shipped at 4f5c4e4.
 
 ### [LOW] /today — publish toggle description is visually hidden on all viewports; sighted mobile users see no explanation
 - pass: 43 (commit 5e1498c)
