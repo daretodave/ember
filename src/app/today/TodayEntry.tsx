@@ -210,7 +210,6 @@ export function TodayEntry({ date, task, prompt, initialEntry, hasUsername = tru
                 aria-describedby="publish-desc"
               />
               publish
-              <span id="publish-desc" className={styles.srOnly}>when published, this entry appears on the public profile.</span>
             </label>
             <button
               ref={focusTriggerRef}
@@ -235,6 +234,8 @@ export function TodayEntry({ date, task, prompt, initialEntry, hasUsername = tru
             </button>
           </div>
         </div>
+
+        <p id="publish-desc" className={styles.publishHint}>when published, this entry appears on the public profile.</p>
 
         {!hasUsername && (
           <p className={styles.publishHint}>
@@ -285,7 +286,6 @@ export function TodayEntry({ date, task, prompt, initialEntry, hasUsername = tru
                   aria-describedby="publish-desc-focus"
                 />
                 publish
-                <span id="publish-desc-focus" className={styles.srOnly}>when published, this entry appears on the public profile.</span>
               </label>
               <button
                 type="button"
@@ -299,6 +299,8 @@ export function TodayEntry({ date, task, prompt, initialEntry, hasUsername = tru
               </button>
             </div>
           </div>
+
+          <p id="publish-desc-focus" className={styles.publishHint}>when published, this entry appears on the public profile.</p>
 
           {!hasUsername && (
             <p className={styles.publishHint}>
