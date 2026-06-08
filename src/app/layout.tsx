@@ -32,6 +32,7 @@ const siteUrl =
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
+  alternates: { canonical: siteUrl },
   title: 'ember · a daily writing ritual',
   description: 'ember is a daily writing ritual — one prompt and one tiny task each morning.',
   manifest: '/manifest.webmanifest',
