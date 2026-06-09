@@ -18,7 +18,7 @@
 - source: browser
 - resolution: changed "a known address" to "a returning address" in src/app/page.tsx:93. Shipped at e819d01.
 
-### [LOW] / — nav and CTA both carry a "sign in" link with identical accessible names
+### [x] [LOW] / — nav and CTA both carry a "sign in" link with identical accessible names
 - pass: 46 (commit 973c2e8)
 - viewport: both
 - category: a11y
@@ -26,6 +26,7 @@
 - evidence: body text: "ember / sign in / … / sign in" — "sign in" appears twice, once in the nav region and once in the aside CTA region. both point to /signin. the aside aria-label "sign in" names the region, not the link, so the link's accessible name remains "sign in" identical to the nav.
 - suggested fix: differentiate the CTA link's accessible name with aria-label="sign in to ember" (or similar) so AT users navigating by link can distinguish the CTA from the header shortcut.
 - source: browser
+- resolution: added aria-label="sign in to ember" to the CTA Link in src/app/page.tsx. Shipped at 4c2d6c7.
 
 ### [LOW] /today — nav "log" link and day-strip "log" link share identical accessible names and href
 - pass: 46 (commit 973c2e8)

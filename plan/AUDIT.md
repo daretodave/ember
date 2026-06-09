@@ -16,14 +16,16 @@
 - source: /critique pass 46 (commit 973c2e8)
 - issue: [mirror-failed: loop-issue.mjs not present in scripts/]
 
-### [ ] [2.7] / — nav and CTA both carry a "sign in" link with identical accessible names
+### [x] [3.6] / — nav and CTA both carry a "sign in" link with identical accessible names
 - category: external-critique
-- impact: 3
+- impact: 4
 - ease: 9
-- note: scored 2026-06-09 — from critique pass 46 (973c2e8); page header nav and closing CTA aside both contain "sign in" links pointing to /signin; screen reader users scanning by link name encounter two identically-named links with no distinction; impact 3 (a11y affects SR users on landing page)
+- note: scored 2026-06-09 — from critique pass 46 (973c2e8); page header nav and closing CTA aside both contain "sign in" links pointing to /signin; screen reader users scanning by link name encounter two identically-named links with no distinction; impact 4 (landing page, affects all SR users — primary acquisition surface)
 - observation: src/app/page.tsx: aside aria-label="sign in" names the region, not the CTA link; the link's accessible name remains "sign in" identical to nav
 - suggested fix: add aria-label="sign in to ember" to the CTA link in the aside to differentiate it from the header shortcut
 - source: /critique pass 46 (commit 973c2e8)
+- issue: [mirror-failed: loop-issue.mjs not present in scripts/]
+- resolution: added aria-label="sign in to ember" to the CTA Link in src/app/page.tsx. Shipped at 4c2d6c7.
 
 ### [ ] [2.7] /today — nav "log" link and day-strip "log" link share identical accessible names and href
 - category: external-critique
