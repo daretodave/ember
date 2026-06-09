@@ -6,6 +6,18 @@
 
 ## Pending
 
+### [x] [3.6] / — 7-day preview section has no framing sentence before the list
+- category: external-critique
+- impact: 4
+- ease: 9
+- note: scored 2026-06-09 — from critique pass 45 (add612f); the "the next seven days" heading immediately precedes the seven dated prompt entries with no sentence explaining what the visitor is looking at; the clarifying sentence exists but appears after all seven entries in the closing section; impact 4: landing page affects every anonymous visitor
+- observation: src/app/page.tsx: <div className={styles.sevenHead}> contains only the h2 with no following explanatory text; the sentence "the same prompt and tiny task arrive for everyone on a given day." appears later in the closing <section>
+- evidence: body text sequence: "the next seven days / today / Mon 8 Jun / [prompt] / tiny task — ..." — explanation appears only after the seventh entry
+- suggested fix: add the framing sentence immediately below the "the next seven days" heading, before the first dated entry; remove from closing to avoid duplication
+- source: /critique pass 45 (commit add612f)
+- issue: [mirror-failed: loop-issue.mjs not present in scripts/]
+- resolution: added <p className={styles.sevenMeta}> inside sevenHead div in src/app/page.tsx; removed duplicate from closing section; added .sevenMeta CSS class. Shipped at 532902b.
+
 ### [x] [3.6] / — seven-day preview section unnamed; not exposed as named landmark
 - category: a11y
 - impact: 4

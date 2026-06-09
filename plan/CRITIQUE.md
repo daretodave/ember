@@ -8,7 +8,7 @@
 
 ## Pending
 
-### [LOW] / — 7-day preview section has no framing sentence before the list
+### [x] [LOW] / — 7-day preview section has no framing sentence before the list
 - pass: 45 (commit add612f)
 - viewport: both
 - category: comprehension
@@ -16,6 +16,7 @@
 - evidence: body text sequence: "the next seven days / today / Mon 8 Jun / [prompt] / tiny task — ..." — the explanation paragraph appears only after the seventh entry.
 - suggested fix: move the explanatory sentence ("the same prompt and tiny task arrive for everyone on a given day. ember does not personalize your morning.") to immediately below the "the next seven days" heading, before the first dated entry.
 - source: browser
+- resolution: added <p className={styles.sevenMeta}> with "the same prompt and tiny task arrive for everyone on a given day." inside sevenHead div in src/app/page.tsx; removed duplicate from closing section; "ember does not personalize your morning." remains standalone. Shipped at 532902b.
 
 ### [LOW] / — 7-day prompt day entries lack structural grouping
 - pass: 45 (commit add612f)
