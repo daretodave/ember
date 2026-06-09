@@ -123,6 +123,14 @@
   margin: 0;
 }
 
+.sevenMeta {
+  font-family: var(--font-serif);
+  font-size: var(--type-16);
+  line-height: var(--leading-prose);
+  color: var(--color-ink-muted);
+  margin: var(--space-3) 0 0;
+}
+
 .day {
   padding: var(--space-5) 0;
   border-bottom: 1px solid var(--color-border-faint);

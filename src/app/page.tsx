@@ -40,6 +40,7 @@ export default function LandingPage() {
         <section className={styles.seven} aria-labelledby="seven-days-heading">
           <div className={styles.sevenHead}>
             <h2 id="seven-days-heading" className={styles.sevenTitle}>the next seven days</h2>
+            <p className={styles.sevenMeta}>the same prompt and tiny task arrive for everyone on a given day.</p>
           </div>
 
           <ul className={styles.sevenList}>
@@ -70,7 +71,6 @@ export default function LandingPage() {
 
         <section className={styles.closing}>
           <p>
-            the same prompt and tiny task arrive for everyone on a given day.{' '}
             ember does not personalize your morning.
           </p>
           <p>
