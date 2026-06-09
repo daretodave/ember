@@ -1773,7 +1773,7 @@
 - issue: [mirror-failed: loop-issue.mjs not present in scripts/]
 - resolution: added "the link opens today's prompt directly." to the sent-state confirmation paragraph in src/app/signin/page.tsx. Shipped at 97821b2.
 
-### [ ] [2.1] /settings — timezone combobox shows no value for accounts with no saved timezone
+### [x] [2.1] /settings — timezone combobox shows no value for accounts with no saved timezone
 - category: external-critique
 - impact: 3
 - ease: 7
@@ -1781,6 +1781,7 @@
 - evidence: settings capture: "timezone" label with no adjacent value; `src/app/settings/SettingsForm.tsx`: auto-detection skipped for non-virgin profiles.
 - suggested fix: expand the timezone auto-detection to run whenever `tzVal === ''` (not only on virgin profiles) so the combobox always shows a detected default rather than blank.
 - source: /critique pass 9 (commit 8c8a92d)
+- resolution: changed condition from `if (virgin)` to `if (virgin || !tzVal)` in SettingsForm.tsx; test added. Shipped at 6dcd76e.
 
 ### [x] [2.7] /settings — "Claude" vendor name in personalized prompt hint
 - category: external-critique
