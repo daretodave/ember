@@ -201,7 +201,7 @@ export function TodayEntry({ date, task, prompt, initialEntry, hasUsername = tru
             {saveIndicatorText()}
           </span>
           <div className={styles.entryActions}>
-            <label className={styles.publishToggle} title="when published, this entry appears on the public profile.">
+            <label className={styles.publishToggle}>
               <input
                 type="checkbox"
                 checked={isPublished}
@@ -277,7 +277,7 @@ export function TodayEntry({ date, task, prompt, initialEntry, hasUsername = tru
               {saveIndicatorText()}
             </span>
             <div className={styles.entryActions}>
-              <label className={styles.publishToggle} title="when published, this entry appears on the public profile.">
+              <label className={styles.publishToggle}>
                 <input
                   type="checkbox"
                   checked={isPublished}
