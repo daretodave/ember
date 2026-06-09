@@ -79,12 +79,12 @@ export default function LandingPage() {
             is, not what isn&apos;t.
           </p>
         </section>
-
-        <footer className={styles.footerCredit}>
-          <span>ember</span>
-          <span>a daily writing ritual.</span>
-        </footer>
       </main>
+
+      <footer className={styles.footerCredit}>
+        <span>ember</span>
+        <span>a daily writing ritual.</span>
+      </footer>
 
       <aside className={styles.cta} aria-label="sign in">
         <div className={styles.ctaInner}>
