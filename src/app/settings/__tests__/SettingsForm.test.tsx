@@ -76,6 +76,22 @@ describe('SettingsForm — save payload (regression: 0419eb3)', () => {
   })
 })
 
+describe('SettingsForm — timezone auto-detection', () => {
+  it('populates timezone combobox from browser when no timezone is saved', async () => {
+    vi.spyOn(Intl.DateTimeFormat.prototype, 'resolvedOptions').mockReturnValue({
+      timeZone: 'Europe/Berlin',
+      locale: 'en',
+      calendar: 'gregory',
+      numberingSystem: 'latn',
+    } as Intl.ResolvedDateTimeFormatOptions)
+    render(<SettingsForm {...BASE_PROPS} timezone="" />)
+    await waitFor(() => {
+      const input = document.querySelector('[role="combobox"]') as HTMLInputElement | null
+      expect(input?.value).toBe('Europe/Berlin')
+    })
+  })
+})
+
 describe('SettingsForm — unsaved-changes guard', () => {
   it('sets window.onbeforeunload when a field is edited', () => {
     render(<SettingsForm {...BASE_PROPS} />)

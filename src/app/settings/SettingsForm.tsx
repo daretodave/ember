@@ -37,9 +37,9 @@ export function SettingsForm({ displayName, username, timezone, usePersonalizedP
     }
   }, [])
 
-  // Suggest browser timezone on virgin profile
+  // Suggest browser timezone on virgin profile or when no timezone is saved
   useEffect(() => {
-    if (virgin) {
+    if (virgin || !tzVal) {
       try {
         const detected = Intl.DateTimeFormat().resolvedOptions().timeZone
         if (detected) setTzVal(detected)
