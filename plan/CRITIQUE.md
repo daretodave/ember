@@ -28,7 +28,7 @@
 - source: browser
 - resolution: false positive — src/app/page.tsx already renders the 7-day preview as <ul className={styles.sevenList}> with each day block in <li>; commit 0a4eb73 added ul/li structure. Reader captured body text and could not detect the list semantics. No code change needed.
 
-### [LOW] /signin — page lacks a value proposition sentence for cold visitors
+### [x] [LOW] /signin — page lacks a value proposition sentence for cold visitors
 - pass: 45 (commit add612f)
 - viewport: both
 - category: comprehension
@@ -36,6 +36,7 @@
 - evidence: full body text: "sign in / email / a sign-in link is sent to this address. it expires after 24 hours. no password. no other mail. a new address creates an account. / send a link / ember"
 - suggested fix: add one short sentence above the form, e.g. "one prompt and one tiny task each morning — sign in to begin."
 - source: browser
+- resolution: added <p className={styles.tagline}>one prompt and one tiny task each morning.</p> after h1 in src/app/signin/page.tsx; added .tagline CSS class (serif, muted, type-17). Shipped at b883615.
 
 ### [x] [LOW] /log — empty state gives no description of the 60-day mosaic
 - pass: 45 (commit add612f)

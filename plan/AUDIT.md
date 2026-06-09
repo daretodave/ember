@@ -6,6 +6,17 @@
 
 ## Pending
 
+### [x] [3.6] /signin — page lacks a value proposition sentence for cold visitors
+- category: external-critique
+- impact: 4
+- ease: 9
+- note: scored 2026-06-09 — from critique pass 45 (add612f); a cold visitor arriving at /signin via a shared link, search result, or direct navigation sees only "sign in" with no reminder of what ember is; the landing page lede is not visible; cold visitors have no context for why they are signing in; /signin is the primary conversion page — impact 4 (all cold-entry /signin visits)
+- observation: src/app/signin/page.tsx: the card begins with <h1>sign in</h1> followed directly by the form; no sentence describes what ember is or what signing in will give access to
+- evidence: full body text at idle state: "sign in / email / a sign-in link is sent to this address. it expires after 24 hours. no password. no other mail. a new address creates an account. / send a link" — no product description visible
+- suggested fix: add a brief value proposition below the h1, e.g. "one prompt and one tiny task each morning." before the form
+- source: /critique pass 45 (commit add612f)
+- issue: [mirror-failed: loop-issue.mjs not present in scripts/]
+
 ### [x] [3.6] / — 7-day preview section has no framing sentence before the list
 - category: external-critique
 - impact: 4
