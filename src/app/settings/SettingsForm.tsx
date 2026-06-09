@@ -120,7 +120,7 @@ export function SettingsForm({ displayName, username, timezone, usePersonalizedP
           display name
         </label>
         <p className={styles.hint}>
-          shown on entries when they appear on a public profile.
+          shown on entries when they appear on a public profile. any name or alias works — a first name, initials, or a pen name.
         </p>
         <input
           id="display-name"
