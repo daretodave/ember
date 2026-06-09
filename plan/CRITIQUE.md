@@ -28,7 +28,7 @@
 - source: browser
 - resolution: added aria-label="about ember" to <section className={styles.closing}> in src/app/page.tsx; landmark test added to LandingPage.test.tsx. Shipped at a2fd84e.
 
-### [LOW] /today — publish label carries a title attribute that duplicates the visible paragraph below it
+### [x] [LOW] /today — publish label carries a title attribute that duplicates the visible paragraph below it
 - pass: 47 (commit 6eee387)
 - viewport: desktop
 - category: a11y
@@ -36,6 +36,7 @@
 - evidence: src/app/today/TodayEntry.tsx line 204: <label className={styles.publishToggle} title="when published, this entry appears on the public profile.">; same text at line 238: <p id="publish-desc" className={styles.publishHint}>when published, this entry appears on the public profile.</p>. repeated at lines 280 and 303.
 - suggested fix: remove the title attribute from both publish <label> elements (main view at line 204 and focus-mode view at line 280) since the description is already visible in the publishHint paragraph and associated to the checkbox via aria-describedby.
 - source: browser
+- resolution: removed title attribute from both publish <label> elements in src/app/today/TodayEntry.tsx. Shipped at faedf1d.
 
 ### [x] [LOW] / — closing CTA "a known address" phrase is ambiguous to first-time visitors
 - pass: 46 (commit 973c2e8)

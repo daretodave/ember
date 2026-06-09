@@ -29,7 +29,7 @@
 - issue: [mirror-failed: 2026-06-09T00:00:00Z]
 - resolution: added aria-label="about ember" to <section className={styles.closing}> in src/app/page.tsx; landmark test added to LandingPage.test.tsx. Shipped at a2fd84e.
 
-### [ ] [2.7] /today — publish label carries a title attribute that duplicates the visible paragraph below it
+### [x] [2.7] /today — publish label carries a title attribute that duplicates the visible paragraph below it
 - category: external-critique
 - impact: 3
 - ease: 9
@@ -38,6 +38,7 @@
 - suggested fix: remove title attribute from both publish <label> elements (main view line 204 and focus-mode view line 280)
 - source: /critique pass 47 (commit 6eee387)
 - issue: [mirror-failed: 2026-06-09T00:00:00Z]
+- resolution: removed title attribute from both publish <label> elements (main view and focus-mode overlay) in src/app/today/TodayEntry.tsx. Shipped at faedf1d.
 
 ### [x] [2.7] /settings — display name field has no format hint
 - category: external-critique
