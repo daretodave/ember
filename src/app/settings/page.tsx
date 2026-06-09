@@ -9,6 +9,15 @@ import styles from './page.module.css'
 export const metadata = {
   title: 'ember · settings',
   description: 'account settings — display name, timezone, prompt variety, and public username.',
+  openGraph: {
+    title: 'ember · settings',
+    description: 'account settings — display name, timezone, prompt variety, and public username.',
+    url: '/settings',
+  },
+  twitter: {
+    title: 'ember · settings',
+    description: 'account settings — display name, timezone, prompt variety, and public username.',
+  },
 }
 
 export default async function SettingsPage() {

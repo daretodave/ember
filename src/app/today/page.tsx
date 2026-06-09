@@ -14,6 +14,15 @@ import styles from './page.module.css'
 export const metadata = {
   title: 'ember · today',
   description: "today's prompt and a space to write.",
+  openGraph: {
+    title: 'ember · today',
+    description: "today's prompt and a space to write.",
+    url: '/today',
+  },
+  twitter: {
+    title: 'ember · today',
+    description: "today's prompt and a space to write.",
+  },
 }
 
 export default async function TodayPage() {

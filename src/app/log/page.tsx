@@ -11,6 +11,15 @@ import styles from './page.module.css'
 export const metadata = {
   title: 'ember · log',
   description: 'a 60-day writing log — prompts, responses, and published entries.',
+  openGraph: {
+    title: 'ember · log',
+    description: 'a 60-day writing log — prompts, responses, and published entries.',
+    url: '/log',
+  },
+  twitter: {
+    title: 'ember · log',
+    description: 'a 60-day writing log — prompts, responses, and published entries.',
+  },
 }
 
 export default async function LogPage() {
