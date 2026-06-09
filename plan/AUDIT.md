@@ -41,6 +41,18 @@
 - source: /critique pass 44 (commit 6441e65)
 - resolution: added openGraph (title, description, url) and twitter (title, description) blocks to src/app/signin/layout.tsx. Shipped at abd5bbd.
 
+### [x] [2.7] /log — empty state gives no description of the 60-day mosaic
+- category: external-critique
+- impact: 3
+- ease: 9
+- note: scored 2026-06-09 — from critique pass 45 (add612f); a new user visiting /log before their first entry sees only "the log is empty. today's entry will appear here." with no indication of what the log looks like when populated; the 60-day mosaic is the product's signature visual and the empty state gives no context about the tile pattern already visible above; the user has no sense of what they are building toward
+- observation: src/app/log/page.tsx emptyState paragraph: "the log is empty. today's entry will appear here." — no mention of the mosaic or its relationship to written entries
+- evidence: full body text at empty state: "the past 60 days / skip to log / the log is empty. today's entry will appear here."
+- suggested fix: extend empty-state copy: "the log is empty. each entry fills a tile in the mosaic above. today's entry will appear here."
+- source: /critique pass 45 (commit add612f)
+- issue: [mirror-failed: loop-issue.mjs not present in scripts/]
+- resolution: changed emptyState paragraph in src/app/log/page.tsx to "the log is empty. each entry fills a tile in the mosaic above. today's entry will appear here." Shipped at HEAD.
+
 ### [ ] [1.8] / — sign-in cta aside contains no heading element
 - category: a11y
 - impact: 2

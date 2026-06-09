@@ -18,7 +18,7 @@
 - source: browser
 - resolution: added <p className={styles.sevenMeta}> with "the same prompt and tiny task arrive for everyone on a given day." inside sevenHead div in src/app/page.tsx; removed duplicate from closing section; "ember does not personalize your morning." remains standalone. Shipped at 532902b.
 
-### [LOW] / — 7-day prompt day entries lack structural grouping
+### [x] [LOW] / — 7-day prompt day entries lack structural grouping
 - pass: 45 (commit add612f)
 - viewport: both
 - category: a11y
@@ -26,6 +26,7 @@
 - evidence: body text: "today / Mon 8 Jun / [prompt] / tiny task — ... / tomorrow / Tue 9 Jun / [prompt] / tiny task — ..." — no structural boundary between day entries.
 - suggested fix: wrap each day block (day label, date, prompt, task) in an <article> or <li> element to give AT users a discrete navigable unit per day.
 - source: browser
+- resolution: false positive — src/app/page.tsx already renders the 7-day preview as <ul className={styles.sevenList}> with each day block in <li>; commit 0a4eb73 added ul/li structure. Reader captured body text and could not detect the list semantics. No code change needed.
 
 ### [LOW] /signin — page lacks a value proposition sentence for cold visitors
 - pass: 45 (commit add612f)
@@ -36,7 +37,7 @@
 - suggested fix: add one short sentence above the form, e.g. "one prompt and one tiny task each morning — sign in to begin."
 - source: browser
 
-### [LOW] /log — empty state gives no description of the 60-day mosaic
+### [x] [LOW] /log — empty state gives no description of the 60-day mosaic
 - pass: 45 (commit add612f)
 - viewport: both
 - category: comprehension
@@ -44,6 +45,7 @@
 - evidence: full body text: "the past 60 days / skip to log / the log is empty. today's entry will appear here."
 - suggested fix: extend the empty-state copy to mention the mosaic, e.g. "the log is empty. entries accumulate here as a 60-day mosaic. today's entry will appear here."
 - source: browser
+- resolution: changed emptyState paragraph in src/app/log/page.tsx to "the log is empty. each entry fills a tile in the mosaic above. today's entry will appear here." Shipped at HEAD.
 
 ### [LOW] /settings — display name field has no format hint
 - pass: 45 (commit add612f)
