@@ -54,9 +54,9 @@ describe('DayStrip', () => {
     expect(screen.getByRole('region', { name: 'the last seven days' })).toBeInTheDocument()
   })
 
-  it('renders a link to /log', () => {
+  it('renders a link to /log with accessible name "writing log"', () => {
     render(<DayStrip todayDate={TODAY} entries={new Map()} />)
-    expect(screen.getByRole('link', { name: 'log' })).toHaveAttribute('href', '/log')
+    expect(screen.getByRole('link', { name: 'writing log' })).toHaveAttribute('href', '/log')
   })
 
   it('today tile with no entry gets "today, Sun 24 May 2026 — no entry" label', () => {
