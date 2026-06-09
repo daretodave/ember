@@ -6,6 +6,43 @@
 
 ## Pending
 
+### [x] [3.6] / — CTA "a known address" phrase is ambiguous to first-time visitors
+- category: external-critique
+- impact: 4
+- ease: 9
+- note: scored 2026-06-09 — from critique pass 46 (973c2e8); closing CTA reads "a known address receives a sign-in link. a new address creates an account." — first-time visitors may read "a known address" as implying a pre-existing account is required; impact 4 (landing page affects every anonymous visitor)
+- observation: src/app/page.tsx:93: <span>a known address receives a sign-in link. a new address creates an account. no password. no other mail.</span>
+- suggested fix: replace "a known address" with "a returning address" to signal prior use
+- source: /critique pass 46 (commit 973c2e8)
+- issue: [mirror-failed: loop-issue.mjs not present in scripts/]
+
+### [ ] [2.7] / — nav and CTA both carry a "sign in" link with identical accessible names
+- category: external-critique
+- impact: 3
+- ease: 9
+- note: scored 2026-06-09 — from critique pass 46 (973c2e8); page header nav and closing CTA aside both contain "sign in" links pointing to /signin; screen reader users scanning by link name encounter two identically-named links with no distinction; impact 3 (a11y affects SR users on landing page)
+- observation: src/app/page.tsx: aside aria-label="sign in" names the region, not the CTA link; the link's accessible name remains "sign in" identical to nav
+- suggested fix: add aria-label="sign in to ember" to the CTA link in the aside to differentiate it from the header shortcut
+- source: /critique pass 46 (commit 973c2e8)
+
+### [ ] [2.7] /today — nav "log" link and day-strip "log" link share identical accessible names and href
+- category: external-critique
+- impact: 3
+- ease: 9
+- note: scored 2026-06-09 — from critique pass 46 (973c2e8); top nav "log" link (/log) and day-strip section header "log" link (/log) have identical accessible names and hrefs; screen reader users navigating by link encounter two indistinguishable "log" entries with no context
+- observation: DayStrip.tsx: day-strip section header Link has no aria-label to distinguish it from the primary nav item
+- suggested fix: add aria-label="writing log" to the day-strip Link in DayStrip.tsx
+- source: /critique pass 46 (commit 973c2e8)
+
+### [ ] [2.7] /today, /log, /settings — no openGraph metadata override; social shares emit root OG title
+- category: external-critique
+- impact: 3
+- ease: 9
+- note: scored 2026-06-09 — from critique pass 46 (973c2e8); /today, /log, /settings export only title + description with no openGraph block; next.js merges root layout og for unset keys, so shares emit og:title "ember · a daily writing ritual" and og:url pointing to root; same gap on /signin was fixed at abd5bbd
+- observation: src/app/today/page.tsx, src/app/log/page.tsx, src/app/settings/page.tsx — no openGraph key in metadata exports
+- suggested fix: add openGraph: { title, description, url } to each page's metadata export mirroring the signin pattern
+- source: /critique pass 46 (commit 973c2e8)
+
 ### [x] [3.6] /signin — page lacks a value proposition sentence for cold visitors
 - category: external-critique
 - impact: 4

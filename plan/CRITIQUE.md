@@ -8,7 +8,7 @@
 
 ## Pending
 
-### [LOW] / — closing CTA "a known address" phrase is ambiguous to first-time visitors
+### [x] [LOW] / — closing CTA "a known address" phrase is ambiguous to first-time visitors
 - pass: 46 (commit 973c2e8)
 - viewport: both
 - category: comprehension
@@ -16,6 +16,7 @@
 - evidence: body text: "today's prompt is waiting. a known address receives a sign-in link. a new address creates an account. no password. no other mail. / sign in"
 - suggested fix: replace "a known address" with "a returning address" (or "a registered address") to signal prior use rather than a system precondition; alternatively, lead with the new-account sentence: "a new address creates an account. a returning address receives a sign-in link."
 - source: browser
+- resolution: changed "a known address" to "a returning address" in src/app/page.tsx:93. Shipped at e819d01.
 
 ### [LOW] / — nav and CTA both carry a "sign in" link with identical accessible names
 - pass: 46 (commit 973c2e8)
