@@ -22,7 +22,7 @@ describe('SigninPage — initial state', () => {
 
   it('shows expiry notice in reassurance paragraph, not only in footer', () => {
     render(<SigninPage />)
-    const reassurance = document.querySelector('main p')
+    const reassurance = document.querySelector('form p')
     expect(reassurance).toHaveTextContent('it expires after 24 hours.')
     expect(document.querySelector('footer')).not.toHaveTextContent('sign-in links expire after 24 hours.')
   })

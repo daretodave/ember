@@ -71,6 +71,14 @@
   line-height: 1.18;
 }
 
+.tagline {
+  font-family: var(--font-serif);
+  font-size: var(--type-17);
+  line-height: var(--leading-snug);
+  color: var(--color-ink-muted);
+  margin: 0;
+}
+
 /* ----------- form ----------- */
 .form {
   display: flex;

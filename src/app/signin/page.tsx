@@ -56,6 +56,7 @@ export default function SigninPage() {
       <main className={styles.main} id="main-content">
         <div className={styles.card}>
           <h1 className={styles.title}>sign in</h1>
+          <p className={styles.tagline}>one prompt and one tiny task each morning.</p>
 
           {state === 'sent' ? (
             <p
