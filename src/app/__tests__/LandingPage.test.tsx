@@ -23,4 +23,9 @@ describe('LandingPage', () => {
     render(<LandingPage />)
     expect(screen.getByRole('region', { name: 'the next seven days' })).toBeInTheDocument()
   })
+
+  it('closing philosophy section is a named region landmark', () => {
+    render(<LandingPage />)
+    expect(screen.getByRole('region', { name: 'about ember' })).toBeInTheDocument()
+  })
 })

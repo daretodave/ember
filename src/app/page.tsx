@@ -69,7 +69,7 @@ export default function LandingPage() {
           </ul>
         </section>
 
-        <section className={styles.closing}>
+        <section className={styles.closing} aria-label="about ember">
           <p>
             ember does not personalize your morning.
           </p>
