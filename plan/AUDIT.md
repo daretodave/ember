@@ -6,6 +6,17 @@
 
 ## Pending
 
+### [x] [2.7] /settings — display name field has no format hint
+- category: external-critique
+- impact: 3
+- ease: 9
+- note: scored 2026-06-09 — from critique pass 45 (add612f); the display name field hint "shown on entries when they appear on a public profile." gives no guidance on format — whether spaces are allowed, whether it should be a real name or a handle, what length is acceptable; the public username field is anchored by the /u/ prefix, but display name has no equivalent visible constraint; a first-time user cannot tell whether "J. Doe", "JD", or "pen name" are valid
+- observation: src/app/settings/SettingsForm.tsx: <p className={styles.hint}>shown on entries when they appear on a public profile.</p> — no format example adjacent to the field
+- evidence: body text: "display name / shown on entries when they appear on a public profile." — no format hint; compare public username which has "/u/" prefix anchoring the input format
+- suggested fix: extend the hint to include a format example, e.g. "shown on entries when they appear on a public profile. any name or alias works — a first name, initials, or a pen name."
+- source: /critique pass 45 (commit add612f)
+- issue: [mirror-failed: 2026-06-09T00:00:00Z]
+
 ### [x] [3.6] / — CTA "a known address" phrase is ambiguous to first-time visitors
 - category: external-critique
 - impact: 4

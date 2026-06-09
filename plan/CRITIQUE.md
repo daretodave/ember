@@ -88,7 +88,7 @@
 - source: browser
 - resolution: changed emptyState paragraph in src/app/log/page.tsx to "the log is empty. each entry fills a tile in the mosaic above. today's entry will appear here." Shipped at HEAD.
 
-### [LOW] /settings — display name field has no format hint
+### [x] [LOW] /settings — display name field has no format hint
 - pass: 45 (commit add612f)
 - viewport: both
 - category: comprehension
@@ -96,6 +96,7 @@
 - evidence: body text: "display name / shown on entries when they appear on a public profile." — no example, no format hint adjacent to the field.
 - suggested fix: add a one-line hint below the field description, e.g. "any name or alias, such as J. Doe or a pen name."
 - source: browser
+- resolution: extended display name hint to "shown on entries when they appear on a public profile. any name or alias works — a first name, initials, or a pen name." in src/app/settings/SettingsForm.tsx. Shipped at 95846fc.
 
 ### [x] [LOW] / — closing region uses <div> instead of <footer> element (inconsistent with /signin)
 - pass: 43 (commit 5e1498c)
