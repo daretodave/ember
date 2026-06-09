@@ -8,7 +8,7 @@
 
 ## Pending
 
-### [LOW] / — landing page footer element is nested inside main, suppressing contentinfo landmark
+### [x] [LOW] / — landing page footer element is nested inside main, suppressing contentinfo landmark
 - pass: 47 (commit 6eee387)
 - viewport: both
 - category: a11y
@@ -16,6 +16,7 @@
 - evidence: src/app/page.tsx: <main id="main-content"> at line 24; <footer className={styles.footerCredit}> at line 83 inside it; </main> at line 87. contrast src/app/signin/page.tsx where <footer> is a sibling of <main> at top-level.
 - suggested fix: move <footer className={styles.footerCredit}> (and its closing tag) to after </main> in src/app/page.tsx so it is a direct child of the <body> element and carries the contentinfo landmark role.
 - source: browser
+- resolution: moved <footer> to after </main> in src/app/page.tsx so it is a sibling of <main>. Shipped at 9ce20c8.
 
 ### [LOW] / — closing philosophy section has no accessible name and is not exposed as a landmark
 - pass: 47 (commit 6eee387)

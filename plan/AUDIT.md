@@ -6,6 +6,38 @@
 
 ## Pending
 
+### [x] [2.7] / — landing page footer element is nested inside main, suppressing contentinfo landmark
+- category: external-critique
+- impact: 3
+- ease: 9
+- note: scored 2026-06-09 — from critique pass 47 (6eee387); <footer className={styles.footerCredit}> is a child of <main id="main-content"> in src/app/page.tsx; a <footer> nested inside <main> carries no landmark role per the ARIA spec (contentinfo requires the element not be a descendant of article/aside/main/nav/section); /signin and /settings correctly place their footer siblings of <main>
+- observation: src/app/page.tsx: <main id="main-content"> at line 24; <footer className={styles.footerCredit}> at line 83 inside it; </main> at line 87
+- evidence: contrast src/app/signin/page.tsx where <footer> is a sibling of <main> at top-level
+- suggested fix: move <footer className={styles.footerCredit}> (and its closing tag) to after </main> in src/app/page.tsx
+- source: /critique pass 47 (commit 6eee387)
+- issue: [mirror-failed: 2026-06-09T00:00:00Z]
+- resolution: moved <footer className={styles.footerCredit}> to after </main> in src/app/page.tsx so it is a sibling of <main>, not a child. Shipped at 9ce20c8.
+
+### [ ] [2.7] / — closing philosophy section has no accessible name and is not exposed as a landmark
+- category: external-critique
+- impact: 3
+- ease: 9
+- note: scored 2026-06-09 — from critique pass 47 (6eee387); <section className={styles.closing}> contains no aria-label, aria-labelledby, or heading element; per the ARIA spec a <section> without an accessible name is not exposed as a named region landmark; the adjacent 7-day preview section uses aria-labelledby="seven-days-heading" as the correct pattern
+- observation: src/app/page.tsx lines 72–81: <section className={styles.closing}> with two <p> elements and no accessible name
+- suggested fix: add aria-label="about ember" to <section className={styles.closing}>
+- source: /critique pass 47 (commit 6eee387)
+- issue: [mirror-failed: 2026-06-09T00:00:00Z]
+
+### [ ] [2.7] /today — publish label carries a title attribute that duplicates the visible paragraph below it
+- category: external-critique
+- impact: 3
+- ease: 9
+- note: scored 2026-06-09 — from critique pass 47 (6eee387); <label> wrapping the publish checkbox carries title="when published, this entry appears on the public profile." — identical text is already rendered as a visible <p id="publish-desc" aria-describedby associated to the checkbox; the title attribute creates a redundant hover-only tooltip for already-visible copy; repeated in the focus-mode overlay
+- observation: src/app/today/TodayEntry.tsx line 204: <label className={styles.publishToggle} title="when published, this entry appears on the public profile.">; same text at line 238
+- suggested fix: remove title attribute from both publish <label> elements (main view line 204 and focus-mode view line 280)
+- source: /critique pass 47 (commit 6eee387)
+- issue: [mirror-failed: 2026-06-09T00:00:00Z]
+
 ### [x] [2.7] /settings — display name field has no format hint
 - category: external-critique
 - impact: 3
