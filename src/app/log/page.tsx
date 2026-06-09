@@ -130,7 +130,7 @@ export default async function LogPage() {
           </>
         ) : (
           <p className={styles.emptyState}>
-            the log is empty.{' '}
+            the log is empty. each entry fills a tile in the mosaic above.{' '}
             <Link href="/today">today&apos;s entry</Link> will appear here.
           </p>
         )}
