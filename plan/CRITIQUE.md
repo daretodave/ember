@@ -18,7 +18,7 @@
 - source: browser
 - resolution: moved <footer> to after </main> in src/app/page.tsx so it is a sibling of <main>. Shipped at 9ce20c8.
 
-### [LOW] / — closing philosophy section has no accessible name and is not exposed as a landmark
+### [x] [LOW] / — closing philosophy section has no accessible name and is not exposed as a landmark
 - pass: 47 (commit 6eee387)
 - viewport: both
 - category: a11y
@@ -26,6 +26,7 @@
 - evidence: src/app/page.tsx lines 72–81: <section className={styles.closing}> with two <p> elements inside and no heading or aria-label attribute.
 - suggested fix: add aria-label="about ember" to <section className={styles.closing}> to expose it as a named region landmark consistent with the adjacent section's pattern.
 - source: browser
+- resolution: added aria-label="about ember" to <section className={styles.closing}> in src/app/page.tsx; landmark test added to LandingPage.test.tsx. Shipped at a2fd84e.
 
 ### [LOW] /today — publish label carries a title attribute that duplicates the visible paragraph below it
 - pass: 47 (commit 6eee387)

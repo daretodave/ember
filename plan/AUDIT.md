@@ -18,7 +18,7 @@
 - issue: [mirror-failed: 2026-06-09T00:00:00Z]
 - resolution: moved <footer className={styles.footerCredit}> to after </main> in src/app/page.tsx so it is a sibling of <main>, not a child. Shipped at 9ce20c8.
 
-### [ ] [2.7] / — closing philosophy section has no accessible name and is not exposed as a landmark
+### [x] [2.7] / — closing philosophy section has no accessible name and is not exposed as a landmark
 - category: external-critique
 - impact: 3
 - ease: 9
@@ -27,6 +27,7 @@
 - suggested fix: add aria-label="about ember" to <section className={styles.closing}>
 - source: /critique pass 47 (commit 6eee387)
 - issue: [mirror-failed: 2026-06-09T00:00:00Z]
+- resolution: added aria-label="about ember" to <section className={styles.closing}> in src/app/page.tsx; landmark test added to LandingPage.test.tsx. Shipped at a2fd84e.
 
 ### [ ] [2.7] /today — publish label carries a title attribute that duplicates the visible paragraph below it
 - category: external-critique
