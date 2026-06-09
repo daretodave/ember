@@ -38,7 +38,7 @@
 - source: browser
 - resolution: added aria-label="writing log" to the day-strip Link in DayStrip.tsx; DayStrip test updated. Shipped at 960072f.
 
-### [LOW] /today, /log, /settings — no openGraph metadata override; social shares emit root OG title
+### [x] [LOW] /today, /log, /settings — no openGraph metadata override; social shares emit root OG title
 - pass: 46 (commit 973c2e8)
 - viewport: desktop
 - category: seo
@@ -46,6 +46,7 @@
 - evidence: src/app/today/page.tsx metadata export: { title: "ember · today", description: "…" } — no openGraph key. same pattern in src/app/log/page.tsx and src/app/settings/page.tsx. root layout openGraph.title: "ember · a daily writing ritual" and openGraph.url: siteUrl remain the defaults for pages without an override.
 - suggested fix: add openGraph: { title, description, url } to the metadata export in src/app/today/page.tsx, src/app/log/page.tsx, and src/app/settings/page.tsx, mirroring the pattern applied to src/app/signin/layout.tsx at abd5bbd.
 - source: browser
+- resolution: added openGraph { title, description, url } and twitter { title, description } to each page's metadata export. Shipped at 90af0b6.
 
 ### [x] [LOW] / — 7-day preview section has no framing sentence before the list
 - pass: 45 (commit add612f)

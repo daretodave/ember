@@ -38,14 +38,15 @@
 - issue: [mirror-failed: 2026-06-09T14:40:00Z]
 - resolution: added aria-label="writing log" to the day-strip Link in DayStrip.tsx; DayStrip test updated. Shipped at 960072f.
 
-### [ ] [2.7] /today, /log, /settings — no openGraph metadata override; social shares emit root OG title
+### [x] [3.6] /today, /log, /settings — no openGraph metadata override; social shares emit root OG title
 - category: external-critique
-- impact: 3
+- impact: 4
 - ease: 9
-- note: scored 2026-06-09 — from critique pass 46 (973c2e8); /today, /log, /settings export only title + description with no openGraph block; next.js merges root layout og for unset keys, so shares emit og:title "ember · a daily writing ritual" and og:url pointing to root; same gap on /signin was fixed at abd5bbd
+- note: scored 2026-06-09 — from critique pass 46 (973c2e8); re-scored 2026-06-09: impact raised from 3→4 because gap affects 3 pages including /today (primary user surface); /today, /log, /settings export only title + description with no openGraph block; next.js merges root layout og for unset keys, so shares emit og:title "ember · a daily writing ritual" and og:url pointing to root; same gap on /signin was fixed at abd5bbd
 - observation: src/app/today/page.tsx, src/app/log/page.tsx, src/app/settings/page.tsx — no openGraph key in metadata exports
 - suggested fix: add openGraph: { title, description, url } to each page's metadata export mirroring the signin pattern
 - source: /critique pass 46 (commit 973c2e8)
+- issue: [mirror-failed: loop-issue.mjs not present in scripts/]
 
 ### [x] [3.6] /signin — page lacks a value proposition sentence for cold visitors
 - category: external-critique
