@@ -1,12 +1,39 @@
 # External-observer findings — Ember
 
-> Last pass: 2026-06-09 at commit 973c2e8
-> Pass count: 46
+> Last pass: 2026-06-09 at commit 6eee387
+> Pass count: 47
 
 > Written by `/critique` after walking the live site as a
 > fresh-eyes visitor. Drained by `/iterate`.
 
 ## Pending
+
+### [LOW] / — landing page footer element is nested inside main, suppressing contentinfo landmark
+- pass: 47 (commit 6eee387)
+- viewport: both
+- category: a11y
+- observation: the <footer className={styles.footerCredit}> element is nested inside <main id="main-content">. per the ARIA spec and the HTML living standard, a <footer> receives the contentinfo landmark role only when it is a top-level sectioning element (a direct descendant of the body, not a descendant of article/aside/main/nav/section). when nested inside <main>, it has no landmark role. prior passes (36 and 43) correctly changed the element from <div> to <footer> but the relocation outside main was never applied. the /signin and /settings pages both place their footer elements as siblings of <main>, consistent with the landmark spec.
+- evidence: src/app/page.tsx: <main id="main-content"> at line 24; <footer className={styles.footerCredit}> at line 83 inside it; </main> at line 87. contrast src/app/signin/page.tsx where <footer> is a sibling of <main> at top-level.
+- suggested fix: move <footer className={styles.footerCredit}> (and its closing tag) to after </main> in src/app/page.tsx so it is a direct child of the <body> element and carries the contentinfo landmark role.
+- source: browser
+
+### [LOW] / — closing philosophy section has no accessible name and is not exposed as a landmark
+- pass: 47 (commit 6eee387)
+- viewport: both
+- category: a11y
+- observation: the <section className={styles.closing}> on the landing page contains the product's no-streak philosophy copy ("ember does not personalize your morning." and the no-notifications paragraph) but has no accessible name — no aria-label, aria-labelledby, or heading element. per the ARIA spec, a <section> without an accessible name is not exposed as a named region landmark. AT users navigating by landmark cannot identify or jump to this region. the adjacent 7-day preview section at line 40 uses aria-labelledby="seven-days-heading" as the correct pattern.
+- evidence: src/app/page.tsx lines 72–81: <section className={styles.closing}> with two <p> elements inside and no heading or aria-label attribute.
+- suggested fix: add aria-label="about ember" to <section className={styles.closing}> to expose it as a named region landmark consistent with the adjacent section's pattern.
+- source: browser
+
+### [LOW] /today — publish label carries a title attribute that duplicates the visible paragraph below it
+- pass: 47 (commit 6eee387)
+- viewport: desktop
+- category: a11y
+- observation: the <label> wrapping the publish checkbox carries title="when published, this entry appears on the public profile." the identical text is already rendered as a visible <p id="publish-desc" className={styles.publishHint}> directly below the action row, associated to the checkbox via aria-describedby="publish-desc". the title on the label creates a redundant hover-only tooltip for copy that is already visible on-screen and already programmatically associated to the input. the same pattern is repeated in the focus-mode overlay (title on the label at line 280, paragraph at line 303).
+- evidence: src/app/today/TodayEntry.tsx line 204: <label className={styles.publishToggle} title="when published, this entry appears on the public profile.">; same text at line 238: <p id="publish-desc" className={styles.publishHint}>when published, this entry appears on the public profile.</p>. repeated at lines 280 and 303.
+- suggested fix: remove the title attribute from both publish <label> elements (main view at line 204 and focus-mode view at line 280) since the description is already visible in the publishHint paragraph and associated to the checkbox via aria-describedby.
+- source: browser
 
 ### [x] [LOW] / — closing CTA "a known address" phrase is ambiguous to first-time visitors
 - pass: 46 (commit 973c2e8)
