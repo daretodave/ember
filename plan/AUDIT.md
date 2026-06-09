@@ -27,7 +27,7 @@
 - issue: [mirror-failed: loop-issue.mjs not present in scripts/]
 - resolution: added aria-label="sign in to ember" to the CTA Link in src/app/page.tsx. Shipped at 4c2d6c7.
 
-### [ ] [2.7] /today — nav "log" link and day-strip "log" link share identical accessible names and href
+### [x] [2.7] /today — nav "log" link and day-strip "log" link share identical accessible names and href
 - category: external-critique
 - impact: 3
 - ease: 9
@@ -35,6 +35,8 @@
 - observation: DayStrip.tsx: day-strip section header Link has no aria-label to distinguish it from the primary nav item
 - suggested fix: add aria-label="writing log" to the day-strip Link in DayStrip.tsx
 - source: /critique pass 46 (commit 973c2e8)
+- issue: [mirror-failed: 2026-06-09T14:40:00Z]
+- resolution: added aria-label="writing log" to the day-strip Link in DayStrip.tsx; DayStrip test updated. Shipped at 960072f.
 
 ### [ ] [2.7] /today, /log, /settings — no openGraph metadata override; social shares emit root OG title
 - category: external-critique

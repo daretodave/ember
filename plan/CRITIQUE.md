@@ -28,7 +28,7 @@
 - source: browser
 - resolution: added aria-label="sign in to ember" to the CTA Link in src/app/page.tsx. Shipped at 4c2d6c7.
 
-### [LOW] /today — nav "log" link and day-strip "log" link share identical accessible names and href
+### [x] [LOW] /today — nav "log" link and day-strip "log" link share identical accessible names and href
 - pass: 46 (commit 973c2e8)
 - viewport: both
 - category: a11y
@@ -36,6 +36,7 @@
 - evidence: body text: "ember / today / log / settings / … the last seven days / log / Wed / Wed 3 Jun 2026 — no entry" — "log" appears twice, once in the nav region and once as the day-strip section header link.
 - suggested fix: add aria-label="writing log" (or similar) to the day-strip Link in DayStrip.tsx so AT users can distinguish the contextual shortcut from the primary nav item.
 - source: browser
+- resolution: added aria-label="writing log" to the day-strip Link in DayStrip.tsx; DayStrip test updated. Shipped at 960072f.
 
 ### [LOW] /today, /log, /settings — no openGraph metadata override; social shares emit root OG title
 - pass: 46 (commit 973c2e8)
