@@ -1,12 +1,48 @@
 # External-observer findings — Ember
 
-> Last pass: 2026-06-08 at commit add612f
-> Pass count: 45
+> Last pass: 2026-06-09 at commit 973c2e8
+> Pass count: 46
 
 > Written by `/critique` after walking the live site as a
 > fresh-eyes visitor. Drained by `/iterate`.
 
 ## Pending
+
+### [LOW] / — closing CTA "a known address" phrase is ambiguous to first-time visitors
+- pass: 46 (commit 973c2e8)
+- viewport: both
+- category: comprehension
+- observation: the closing CTA reads "a known address receives a sign-in link. a new address creates an account." a first-time visitor who has never heard of ember does not have a "known address" in the system — they may read "a known address" as implying they need a pre-existing account. the clarifying sentence follows immediately but a quick scan could miss the second sentence and conclude the form is login-only.
+- evidence: body text: "today's prompt is waiting. a known address receives a sign-in link. a new address creates an account. no password. no other mail. / sign in"
+- suggested fix: replace "a known address" with "a returning address" (or "a registered address") to signal prior use rather than a system precondition; alternatively, lead with the new-account sentence: "a new address creates an account. a returning address receives a sign-in link."
+- source: browser
+
+### [LOW] / — nav and CTA both carry a "sign in" link with identical accessible names
+- pass: 46 (commit 973c2e8)
+- viewport: both
+- category: a11y
+- observation: the page header nav contains a "sign in" link and the closing CTA aside also contains a "sign in" link. both use the same label text and point to the same href (/signin). screen reader users scanning links by name encounter two identically-named "sign in" links with no way to distinguish the header shortcut from the CTA. the aside was given an accessible name ("sign in" via aria-label on the aside wrapper at af927c1) but the link inside it still shares the same label as the nav link.
+- evidence: body text: "ember / sign in / … / sign in" — "sign in" appears twice, once in the nav region and once in the aside CTA region. both point to /signin. the aside aria-label "sign in" names the region, not the link, so the link's accessible name remains "sign in" identical to the nav.
+- suggested fix: differentiate the CTA link's accessible name with aria-label="sign in to ember" (or similar) so AT users navigating by link can distinguish the CTA from the header shortcut.
+- source: browser
+
+### [LOW] /today — nav "log" link and day-strip "log" link share identical accessible names and href
+- pass: 46 (commit 973c2e8)
+- viewport: both
+- category: a11y
+- observation: the top nav carries a "log" link (/log) and the day-strip section header also carries a "log" link (/log). both have identical label text and identical href. screen reader users navigating by link encounter two indistinguishable "log" entries per page with no accessible differentiation of their contexts (site-wide nav shortcut vs. contextual section header).
+- evidence: body text: "ember / today / log / settings / … the last seven days / log / Wed / Wed 3 Jun 2026 — no entry" — "log" appears twice, once in the nav region and once as the day-strip section header link.
+- suggested fix: add aria-label="writing log" (or similar) to the day-strip Link in DayStrip.tsx so AT users can distinguish the contextual shortcut from the primary nav item.
+- source: browser
+
+### [LOW] /today, /log, /settings — no openGraph metadata override; social shares emit root OG title
+- pass: 46 (commit 973c2e8)
+- viewport: desktop
+- category: seo
+- observation: the page-level metadata for /today, /log, and /settings exports only title and description with no openGraph block. next.js merges the root layout's openGraph for unset keys, so a social share of any of these URLs emits og:title "ember · a daily writing ritual" and og:url pointing to the root domain, rather than the page-specific title and path. the identical gap on /signin was resolved at abd5bbd; the three authenticated pages were not updated in that pass.
+- evidence: src/app/today/page.tsx metadata export: { title: "ember · today", description: "…" } — no openGraph key. same pattern in src/app/log/page.tsx and src/app/settings/page.tsx. root layout openGraph.title: "ember · a daily writing ritual" and openGraph.url: siteUrl remain the defaults for pages without an override.
+- suggested fix: add openGraph: { title, description, url } to the metadata export in src/app/today/page.tsx, src/app/log/page.tsx, and src/app/settings/page.tsx, mirroring the pattern applied to src/app/signin/layout.tsx at abd5bbd.
+- source: browser
 
 ### [x] [LOW] / — 7-day preview section has no framing sentence before the list
 - pass: 45 (commit add612f)
