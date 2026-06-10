@@ -130,6 +130,7 @@ export function SettingsForm({ displayName, username, timezone, usePersonalizedP
           onChange={(e) => setNameVal(e.target.value)}
           placeholder="name shown on published entries"
           maxLength={100}
+          autoComplete="name"
         />
       </div>
 
@@ -202,6 +203,7 @@ export function SettingsForm({ displayName, username, timezone, usePersonalizedP
             }}
             placeholder="username"
             maxLength={30}
+            autoComplete="username"
           />
         </div>
         {saveState === 'error' && errorMsg && (
