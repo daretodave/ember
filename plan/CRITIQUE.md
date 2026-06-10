@@ -26,7 +26,7 @@
 - suggested fix: add aria-labelledby pointing to the H1's id (add id="hero-heading" to the <h1>) to expose the hero as a named region landmark consistent with the adjacent sections.
 - source: browser
 
-### [LOW] / — CTA sentence order puts returning-user path first; new-visitor path is buried second
+### [x] [LOW] / — CTA sentence order puts returning-user path first; new-visitor path is buried second
 - pass: 48 (commit 031745d)
 - viewport: both
 - category: comprehension
@@ -34,6 +34,7 @@
 - evidence: src/app/page.tsx line 93: "a returning address receives a sign-in link. a new address creates an account." pass-46 suggested fix included: "alternatively, lead with the new-account sentence: 'a new address creates an account. a returning address receives a sign-in link.'" — the word change was applied but the reorder was not.
 - suggested fix: swap sentence order to "a new address creates an account. a returning address receives a sign-in link." so the relevant path for a first-time visitor appears first.
 - source: browser
+- resolution: swapped sentence order to "a new address creates an account. a returning address receives a sign-in link." in src/app/page.tsx. Shipped at aab597f.
 
 ### [x] [MED] /settings — form has no structural section groupings; fields and account actions are a flat sequence
 - pass: 48 (commit 031745d)

@@ -6,6 +6,37 @@
 
 ## Pending
 
+### [x] [3.6] / — CTA sentence order puts returning-user path first; new-visitor path is buried second
+- category: external-critique
+- impact: 4
+- ease: 9
+- note: scored 2026-06-10 — from critique pass 48 (031745d); CTA reads "a returning address receives a sign-in link. a new address creates an account." — the returning-user path is stated first; a first-time visitor who scans the first sentence may conclude the form is sign-in-only; the relevant path for a new visitor is the second sentence
+- observation: src/app/page.tsx line 93: <span>a returning address receives a sign-in link. a new address creates an account. no password. no other mail.</span>
+- suggested fix: swap sentence order to "a new address creates an account. a returning address receives a sign-in link." so the new-visitor path appears first
+- source: /critique pass 48 (commit 031745d)
+- issue: [mirror-failed: loop-issue.mjs not present in scripts/]
+- resolution: swapped sentence order to "a new address creates an account. a returning address receives a sign-in link." in src/app/page.tsx. Shipped at aab597f.
+
+### [ ] [2.7] / — landing page header lockup glyph and wordmark both exposed to AT, producing double "ember" announcement
+- category: external-critique
+- impact: 3
+- ease: 9
+- note: scored 2026-06-10 — from critique pass 48 (031745d); the landing page lockup div contains MosaicGlyph (role="img" aria-label="ember") and a wordmark span ("ember") with no overriding aria-label on the parent div; AT users encounter both children, producing a double "ember" announcement; the /signin lockup is a Link with aria-label="ember — home" which overrides children — the landing page non-interactive div was not covered by the pass-38 fix
+- observation: src/app/page.tsx line 15: <div className={styles.lockup}> — no aria-label. MosaicGlyph renders <div role="img" aria-label="ember">. Wordmark span: <span className={styles.wordmark}>ember</span>
+- suggested fix: add aria-hidden="true" to the MosaicGlyph call inside the landing page lockup div so only the wordmark span contributes to AT reading
+- source: /critique pass 48 (commit 031745d)
+- issue: [mirror-failed: loop-issue.mjs not present in scripts/]
+
+### [ ] [2.4] / — hero section has no accessible name; not exposed as named region landmark
+- category: external-critique
+- impact: 3
+- ease: 8
+- note: scored 2026-06-10 — from critique pass 48 (031745d); <section className={styles.hero}> has no aria-label or aria-labelledby; per ARIA spec a <section> without an accessible name is not exposed as a named region landmark; the adjacent seven-day preview section uses aria-labelledby="seven-days-heading" as the correct pattern; AT users navigating by landmark cannot jump to the hero
+- observation: src/app/page.tsx line 25: <section className={styles.hero}> — no aria-label or aria-labelledby. H1 tagline is inside but has no id for association.
+- suggested fix: add id="hero-heading" to the <h1> and aria-labelledby="hero-heading" to <section className={styles.hero}>
+- source: /critique pass 48 (commit 031745d)
+- issue: [mirror-failed: loop-issue.mjs not present in scripts/]
+
 ### [x] [4.2] /settings — form has no structural section groupings; fields and account actions are a flat sequence
 - category: external-critique
 - impact: 6
