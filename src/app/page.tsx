@@ -22,8 +22,8 @@ export default function LandingPage() {
       </header>
 
       <main id="main-content">
-        <section className={styles.hero}>
-          <h1 className={styles.pitch}>
+        <section className={styles.hero} aria-labelledby="hero-heading">
+          <h1 id="hero-heading" className={styles.pitch}>
             ten minutes of <span className={styles.pitchAccent}>intention</span> before the day swallows you.
           </h1>
           <p className={styles.subpitch}>

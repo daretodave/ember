@@ -19,6 +19,11 @@ afterEach(() => {
 })
 
 describe('LandingPage', () => {
+  it('hero section is a named region landmark accessible by its heading', () => {
+    render(<LandingPage />)
+    expect(screen.getByRole('region', { name: /ten minutes of intention/i })).toBeInTheDocument()
+  })
+
   it('seven-day preview section is a named region landmark accessible by its heading', () => {
     render(<LandingPage />)
     expect(screen.getByRole('region', { name: 'the next seven days' })).toBeInTheDocument()
