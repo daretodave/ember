@@ -50,7 +50,7 @@ export default async function SettingsPage() {
         </nav>
       </header>
 
-      <main className={styles.main} id="main-content">
+      <main className={styles.main} id="main-content" tabIndex={-1}>
         <h1 className={styles.heading}>settings</h1>
         <SettingsForm
           displayName={profile?.display_name ?? ''}

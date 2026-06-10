@@ -85,7 +85,7 @@ export default async function LogPage() {
         </nav>
       </header>
 
-      <main id="main-content">
+      <main id="main-content" tabIndex={-1}>
       <section className={styles.mosaicWrap}>
         <h1 className={styles.mosaicMeta}>the past 60 days</h1>
         <a href="#log-content" className="skip-link">skip to log</a>

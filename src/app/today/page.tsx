@@ -77,7 +77,7 @@ export default async function TodayPage() {
         </nav>
       </header>
 
-      <main className={styles.main} id="main-content">
+      <main className={styles.main} id="main-content" tabIndex={-1}>
         <p className={styles.dateStamp} id="today-date">{displayDate}</p>
 
         <h1 className={styles.prompt} aria-describedby="today-date">{prompt}</h1>
