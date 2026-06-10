@@ -1,12 +1,66 @@
 # External-observer findings — Ember
 
-> Last pass: 2026-06-10 at commit 031745d
-> Pass count: 48
+> Last pass: 2026-06-10 at commit 247ad7b
+> Pass count: 49
 
 > Written by `/critique` after walking the live site as a
 > fresh-eyes visitor. Drained by `/iterate`.
 
 ## Pending
+
+### [LOW] /today, /log, /settings — global skip link targets <main id="main-content"> elements that have no tabIndex; focus delivery unreliable
+- pass: 49 (commit 247ad7b)
+- viewport: both
+- category: a11y
+- observation: the root layout skip link ("skip to content") targets #main-content via href. the <main id="main-content"> elements on /today, /log, and /settings have no tabIndex attribute. non-interactive elements cannot reliably receive programmatic focus in all browsers when targeted by a skip link. the identical gap was corrected for the <div id="log-content"> secondary skip target on /log in pass 41 (commit 6c10116) by adding tabIndex={-1}, but the primary #main-content target on all three pages was not updated in that same pass.
+- evidence: src/app/layout.tsx line 74: <a href="#main-content" className="skip-link">skip to content</a>. src/app/today/page.tsx line 80: <main className={styles.main} id="main-content"> — no tabIndex. src/app/log/page.tsx line 88: <main id="main-content"> — no tabIndex. src/app/settings/page.tsx line 53: <main className={styles.main} id="main-content"> — no tabIndex. compare src/app/log/page.tsx line 104: <div id="log-content" tabIndex={-1}> — secondary skip target received the fix; primary did not.
+- suggested fix: add tabIndex={-1} to the <main id="main-content"> element in src/app/today/page.tsx, src/app/log/page.tsx, and src/app/settings/page.tsx, mirroring the fix applied to #log-content in pass 41.
+- source: browser
+
+### [LOW] /log — mosaic tile tooltip fires on keyboard focus but carries aria-hidden="true"; excerpt content is invisible to screen readers
+- pass: 49 (commit 247ad7b)
+- viewport: desktop
+- category: a11y
+- observation: the mosaic tile link fires onFocus to show the tooltip, making the entry date and excerpt preview visible to sighted keyboard users. the tooltip div carries aria-hidden="true", so its content — the display date and up to 80 characters of entry text — is excluded from the AT tree. screen reader users receive only the tile's aria-label (date + state, e.g. "Thu 4 Jun 2026 — written") with no excerpt, while sighted keyboard users see the excerpt in the tooltip. a published or written tile has meaningful excerpt content the AT user cannot access at the same focus point.
+- evidence: src/app/log/LogMosaic.tsx line 93: onFocus={(e) => handleFocus(e, tile)} — tooltip renders on keyboard focus. line 100-102: <div className={styles.tooltip} aria-hidden="true"> — content excluded from AT tree. line 90: aria-label={`${tile.displayDate} — ${tileStateLabel(tile.state)}`} on the Link — state only, no excerpt. tileStateLabel returns 'written', 'published', 'no entry', or 'today'.
+- suggested fix: extend the tile link's aria-label to include the excerpt when one exists: aria-label={`${tile.displayDate} — ${tileStateLabel(tile.state)}${tile.excerpt ? '. ' + tile.excerpt : ''}`} so AT users receive the same entry preview context as sighted keyboard users on focus.
+- source: browser
+
+### [LOW] / — <section className={styles.previewMark}> wrapping the mosaic preview has no accessible name; not exposed as a named landmark
+- pass: 49 (commit 247ad7b)
+- viewport: both
+- category: a11y
+- observation: the previewMark section wrapping MosaicPreview on the landing page has no aria-label, aria-labelledby, or heading element. per the ARIA spec, a <section> without an accessible name is not exposed as a named region landmark. all three adjacent sections — hero (aria-labelledby="hero-heading"), seven-days (aria-labelledby="seven-days-heading"), and closing (aria-label="about ember") — are correctly named. previewMark is the only section in the landmark sequence without a name.
+- evidence: src/app/page.tsx line 36: <section className={styles.previewMark}> — no accessible name attribute. line 25: <section className={styles.hero} aria-labelledby="hero-heading"> — named. line 40: <section className={styles.seven} aria-labelledby="seven-days-heading"> — named. line 72: <section className={styles.closing} aria-label="about ember"> — named.
+- suggested fix: add aria-hidden="true" to the section if it is purely decorative and the MosaicPreview's own role="img" aria-label is sufficient, or add aria-label="writing log preview" to expose it as a named landmark consistent with the adjacent sections. the aria-hidden approach is preferable if the mosaic has no navigational purpose for AT users on the landing page.
+- source: browser
+
+### [LOW] /log — <section className={styles.mosaicWrap}> wrapping the mosaic and H1 has no accessible name; not exposed as a named landmark
+- pass: 49 (commit 247ad7b)
+- viewport: both
+- category: a11y
+- observation: the mosaicWrap section on /log wraps the H1, the "skip to log" link, and the LogMosaic component but has no aria-label or aria-labelledby attribute. the adjacent <section aria-label="log entries"> (named in a prior pass) is correctly exposed as a landmark; the mosaic section is not. AT users navigating by landmark cannot jump to the mosaic region by name.
+- evidence: src/app/log/page.tsx line 89: <section className={styles.mosaicWrap}> — no accessible name attribute. line 90: <h1 className={styles.mosaicMeta}>the past 60 days</h1> — H1 has no id for a labelledby reference. compare line 108: <section aria-label="log entries"> — correctly named.
+- suggested fix: add id="mosaic-heading" to the H1 at line 90 and aria-labelledby="mosaic-heading" to the section at line 89, exposing the mosaic region as a named landmark consistent with the log entries section pattern.
+- source: browser
+
+### [LOW] /log — empty-state paragraph uses "the mosaic above" as a spatial reference with no AT-addressable counterpart
+- pass: 49 (commit 247ad7b)
+- viewport: both
+- category: comprehension
+- observation: the empty-state paragraph reads "each entry fills a tile in the mosaic above." the phrase "mosaic above" is a visual-spatial reference. the LogMosaic container carries role="group" aria-label="60-day practice mosaic" but that label does not appear in the empty-state sentence, and the containing mosaicWrap section is unnamed (see companion finding). a screen reader user navigating linearly encounters "above" with no accessible referent.
+- evidence: src/app/log/page.tsx line 141-143: "the log is empty. each entry fills a tile in the mosaic above." — "mosaic above" refers spatially to the LogMosaic component. src/app/log/LogMosaic.tsx line 82: role="group" aria-label="60-day practice mosaic" — accessible label exists on the container but is not referenced from the empty-state text.
+- suggested fix: replace "in the mosaic above" with "in the 60-day mosaic" so the phrase matches the mosaic container's aria-label and removes the directional spatial reference.
+- source: browser
+
+### [LOW] /settings — display name and username inputs have no autocomplete attribute; violates WCAG 1.3.5
+- pass: 49 (commit 247ad7b)
+- viewport: both
+- category: a11y
+- observation: the display name input and the public username input in SettingsForm.tsx have no autocomplete attribute. WCAG 1.3.5 (Identify Input Purpose, Level AA) requires autocomplete tokens on inputs that collect personal information so assistive technology and password managers can assist users. "name" is the correct token for the display name field; "username" is the correct token for the public username field. neither is present.
+- evidence: src/app/settings/SettingsForm.tsx line 125-133: <input id="display-name" type="text" ... > — no autocomplete attribute. line 194-205: <input id="username" type="text" ... > — no autocomplete attribute.
+- suggested fix: add autocomplete="name" to the display name input and autocomplete="username" to the public username input in SettingsForm.tsx.
+- source: browser
 
 ### [x] [LOW] / — landing page header lockup glyph and wordmark both exposed to AT, producing double "ember" announcement
 - pass: 48 (commit 031745d)
