@@ -28,7 +28,7 @@
 - issue: [mirror-failed: loop-issue.mjs not present in scripts/]
 - resolution: added tabIndex={-1} to <main id="main-content"> in src/app/today/page.tsx, src/app/log/page.tsx, and src/app/settings/page.tsx. Shipped at 88f8cb9.
 
-### [ ] [2.8] /log — mosaic tile tooltip fires on keyboard focus but carries aria-hidden="true"; excerpt invisible to screen readers
+### [x] [2.8] /log — mosaic tile tooltip fires on keyboard focus but carries aria-hidden="true"; excerpt invisible to screen readers
 - category: external-critique
 - impact: 4
 - ease: 7
@@ -36,6 +36,8 @@
 - observation: src/app/log/LogMosaic.tsx line 93: onFocus fires tooltip. line 100-102: <div className={styles.tooltip} aria-hidden="true">. line 90: aria-label includes date + state only.
 - suggested fix: extend tile link aria-label to include excerpt when present: aria-label={`${tile.displayDate} — ${tileStateLabel(tile.state)}${tile.excerpt ? '. ' + tile.excerpt : ''}`}
 - source: /critique pass 49 (commit 247ad7b)
+- issue: [mirror-failed: 2026-06-10T00:00:00Z — loop-issue.mjs not present in scripts/]
+- resolution: extended tile Link aria-label to include excerpt when present. Shipped at 04498b9.
 
 ### [ ] [2.7] / — previewMark section wrapping MosaicPreview has no accessible name; not exposed as named landmark
 - category: external-critique

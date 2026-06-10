@@ -18,7 +18,7 @@
 - source: browser
 - resolution: added tabIndex={-1} to <main id="main-content"> in src/app/today/page.tsx, src/app/log/page.tsx, and src/app/settings/page.tsx. Shipped at 88f8cb9.
 
-### [LOW] /log — mosaic tile tooltip fires on keyboard focus but carries aria-hidden="true"; excerpt content is invisible to screen readers
+### [x] [LOW] /log — mosaic tile tooltip fires on keyboard focus but carries aria-hidden="true"; excerpt content is invisible to screen readers
 - pass: 49 (commit 247ad7b)
 - viewport: desktop
 - category: a11y
@@ -26,6 +26,7 @@
 - evidence: src/app/log/LogMosaic.tsx line 93: onFocus={(e) => handleFocus(e, tile)} — tooltip renders on keyboard focus. line 100-102: <div className={styles.tooltip} aria-hidden="true"> — content excluded from AT tree. line 90: aria-label={`${tile.displayDate} — ${tileStateLabel(tile.state)}`} on the Link — state only, no excerpt. tileStateLabel returns 'written', 'published', 'no entry', or 'today'.
 - suggested fix: extend the tile link's aria-label to include the excerpt when one exists: aria-label={`${tile.displayDate} — ${tileStateLabel(tile.state)}${tile.excerpt ? '. ' + tile.excerpt : ''}`} so AT users receive the same entry preview context as sighted keyboard users on focus.
 - source: browser
+- resolution: extended tile Link aria-label to include excerpt when present in src/app/log/LogMosaic.tsx; test added. Shipped at 04498b9.
 
 ### [LOW] / — <section className={styles.previewMark}> wrapping the mosaic preview has no accessible name; not exposed as a named landmark
 - pass: 49 (commit 247ad7b)
