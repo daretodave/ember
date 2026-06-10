@@ -1,12 +1,48 @@
 # External-observer findings — Ember
 
-> Last pass: 2026-06-09 at commit 6eee387
-> Pass count: 47
+> Last pass: 2026-06-10 at commit 031745d
+> Pass count: 48
 
 > Written by `/critique` after walking the live site as a
 > fresh-eyes visitor. Drained by `/iterate`.
 
 ## Pending
+
+### [LOW] / — landing page header lockup glyph and wordmark both exposed to AT, producing double "ember" announcement
+- pass: 48 (commit 031745d)
+- viewport: both
+- category: a11y
+- observation: the landing page header lockup is a plain <div className={styles.lockup}> containing <MosaicGlyph /> (which renders <div role="img" aria-label="ember">) and a <span className={styles.wordmark}>ember</span>. because the parent div has no overriding aria-label, AT users encounter both children in sequence: the glyph announces as "ember, image" and the wordmark span announces as "ember", producing a double "ember" announcement for the same logo group. the pass-38 fix added aria-label="ember — home" to "all 9 lockup Link elements" but the landing page lockup is a non-interactive div, not a Link, so it was not covered by that fix.
+- evidence: src/app/page.tsx line 15: <div className={styles.lockup}> — no aria-label. src/components/mosaic/MosaicGlyph.tsx line 27: <div className={styles.glyph} role="img" aria-label="ember">. compare src/app/signin/page.tsx: lockup is a Link with aria-label="ember — home", which overrides children and removes the duplicate.
+- suggested fix: add aria-hidden="true" to the <MosaicGlyph /> call inside the landing page lockup div so only the wordmark span contributes to AT reading, matching the effective result of the /signin Link fix.
+- source: browser
+
+### [LOW] / — hero section has no accessible name; not exposed as named region landmark
+- pass: 48 (commit 031745d)
+- viewport: both
+- category: a11y
+- observation: the landing page hero section (<section className={styles.hero}>) contains the H1 tagline and sub-pitch but has no aria-label or aria-labelledby attribute. per the ARIA spec, a <section> without an accessible name is not exposed as a named region landmark. AT users navigating by landmark cannot jump to the hero. the identical gap was corrected on the closing section (aria-label="about ember", pass 47) and the seven-day preview section (aria-labelledby="seven-days-heading"), but the hero was not addressed in either pass.
+- evidence: src/app/page.tsx line 25: <section className={styles.hero}> — no aria-label or aria-labelledby. compare line 40: <section className={styles.seven} aria-labelledby="seven-days-heading"> and the closing section fix from pass 47.
+- suggested fix: add aria-labelledby pointing to the H1's id (add id="hero-heading" to the <h1>) to expose the hero as a named region landmark consistent with the adjacent sections.
+- source: browser
+
+### [LOW] / — CTA sentence order puts returning-user path first; new-visitor path is buried second
+- pass: 48 (commit 031745d)
+- viewport: both
+- category: comprehension
+- observation: the sticky CTA copy reads "a returning address receives a sign-in link. a new address creates an account." for a first-time visitor the only applicable sentence is the second — they are a new address. the returning-user path is stated first, so a reader who scans the first sentence and stops may conclude the form is sign-in-only. pass 46 changed "a known address" to "a returning address" but did not apply the alternative ordering the same pass itself proposed: "lead with the new-account sentence."
+- evidence: src/app/page.tsx line 93: "a returning address receives a sign-in link. a new address creates an account." pass-46 suggested fix included: "alternatively, lead with the new-account sentence: 'a new address creates an account. a returning address receives a sign-in link.'" — the word change was applied but the reorder was not.
+- suggested fix: swap sentence order to "a new address creates an account. a returning address receives a sign-in link." so the relevant path for a first-time visitor appears first.
+- source: browser
+
+### [MED] /settings — form has no structural section groupings; fields and account actions are a flat sequence
+- pass: 48 (commit 031745d)
+- viewport: both
+- category: a11y
+- observation: the settings form presents four input areas (display name, timezone, prompt variety, public username) followed by save and sign-out controls as a flat sequence with no heading, fieldset, or landmark structure separating logical groups. the prompt variety radios have a radiogroup with aria-label="prompt variety" but the three text/select fields have no enclosing group and the save/sign-out controls are undifferentiated from the form fields in the AT tree. a screen reader user tabbing through the form has no programmatic way to identify where profile fields end and account actions begin.
+- evidence: settings body text sequence: "display name / [hint] / timezone / [hint] / prompt variety / standard / personalized / public username / [hint] / /u/ / save / sign out" — no visible headings or group boundaries between field areas and actions. src/app/settings/SettingsForm.tsx has no fieldset or section wrapping the profile fields separate from the action row.
+- suggested fix: wrap the save and sign-out controls in a visually-muted <section aria-label="account actions"> (or a <div role="group" aria-label="account actions">) to create a programmatic boundary between form fields and account controls; or add a visually-hidden <h2> before the action row.
+- source: browser
 
 ### [x] [LOW] / — landing page footer element is nested inside main, suppressing contentinfo landmark
 - pass: 47 (commit 6eee387)
