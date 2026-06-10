@@ -17,7 +17,7 @@
 - issue: [mirror-failed: loop-issue.mjs not present in scripts/]
 - resolution: added autocomplete="name" to display name input and autocomplete="username" to username input in src/app/settings/SettingsForm.tsx. Shipped at 69be03d.
 
-### [ ] [4.0] /today, /log, /settings — global skip link targets <main id="main-content"> have no tabIndex; focus delivery unreliable
+### [x] [4.0] /today, /log, /settings — global skip link targets <main id="main-content"> have no tabIndex; focus delivery unreliable
 - category: external-critique
 - impact: 5
 - ease: 8
@@ -25,6 +25,8 @@
 - observation: src/app/today/page.tsx line 80: <main className={styles.main} id="main-content"> — no tabIndex. src/app/log/page.tsx line 88: <main id="main-content"> — no tabIndex. src/app/settings/page.tsx line 53: <main className={styles.main} id="main-content"> — no tabIndex.
 - suggested fix: add tabIndex={-1} to <main id="main-content"> in src/app/today/page.tsx, src/app/log/page.tsx, and src/app/settings/page.tsx
 - source: /critique pass 49 (commit 247ad7b)
+- issue: [mirror-failed: loop-issue.mjs not present in scripts/]
+- resolution: added tabIndex={-1} to <main id="main-content"> in src/app/today/page.tsx, src/app/log/page.tsx, and src/app/settings/page.tsx. Shipped at 88f8cb9.
 
 ### [ ] [2.8] /log — mosaic tile tooltip fires on keyboard focus but carries aria-hidden="true"; excerpt invisible to screen readers
 - category: external-critique

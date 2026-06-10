@@ -8,7 +8,7 @@
 
 ## Pending
 
-### [LOW] /today, /log, /settings — global skip link targets <main id="main-content"> elements that have no tabIndex; focus delivery unreliable
+### [x] [LOW] /today, /log, /settings — global skip link targets <main id="main-content"> elements that have no tabIndex; focus delivery unreliable
 - pass: 49 (commit 247ad7b)
 - viewport: both
 - category: a11y
@@ -16,6 +16,7 @@
 - evidence: src/app/layout.tsx line 74: <a href="#main-content" className="skip-link">skip to content</a>. src/app/today/page.tsx line 80: <main className={styles.main} id="main-content"> — no tabIndex. src/app/log/page.tsx line 88: <main id="main-content"> — no tabIndex. src/app/settings/page.tsx line 53: <main className={styles.main} id="main-content"> — no tabIndex. compare src/app/log/page.tsx line 104: <div id="log-content" tabIndex={-1}> — secondary skip target received the fix; primary did not.
 - suggested fix: add tabIndex={-1} to the <main id="main-content"> element in src/app/today/page.tsx, src/app/log/page.tsx, and src/app/settings/page.tsx, mirroring the fix applied to #log-content in pass 41.
 - source: browser
+- resolution: added tabIndex={-1} to <main id="main-content"> in src/app/today/page.tsx, src/app/log/page.tsx, and src/app/settings/page.tsx. Shipped at 88f8cb9.
 
 ### [LOW] /log — mosaic tile tooltip fires on keyboard focus but carries aria-hidden="true"; excerpt content is invisible to screen readers
 - pass: 49 (commit 247ad7b)
