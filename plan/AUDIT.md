@@ -28,7 +28,7 @@
 - issue: [mirror-failed: loop-issue.mjs not present in scripts/]
 - resolution: added decorative prop to MosaicGlyph; set aria-hidden=true and removed role/aria-label when decorative; applied <MosaicGlyph decorative /> in src/app/page.tsx lockup div. Shipped at 549ebbc.
 
-### [ ] [2.4] / — hero section has no accessible name; not exposed as named region landmark
+### [x] [2.4] / — hero section has no accessible name; not exposed as named region landmark
 - category: external-critique
 - impact: 3
 - ease: 8
@@ -37,6 +37,7 @@
 - suggested fix: add id="hero-heading" to the <h1> and aria-labelledby="hero-heading" to <section className={styles.hero}>
 - source: /critique pass 48 (commit 031745d)
 - issue: [mirror-failed: loop-issue.mjs not present in scripts/]
+- resolution: added id="hero-heading" to the <h1> and aria-labelledby="hero-heading" to <section className={styles.hero}> in src/app/page.tsx; landmark regression test added to LandingPage.test.tsx. Shipped at 18aef81.
 
 ### [x] [4.2] /settings — form has no structural section groupings; fields and account actions are a flat sequence
 - category: external-critique

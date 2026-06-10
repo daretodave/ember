@@ -18,7 +18,7 @@
 - source: browser
 - resolution: added decorative prop to MosaicGlyph; set aria-hidden=true and removed role/aria-label when decorative=true; applied <MosaicGlyph decorative /> in src/app/page.tsx lockup div. Shipped at 549ebbc.
 
-### [LOW] / — hero section has no accessible name; not exposed as named region landmark
+### [x] [LOW] / — hero section has no accessible name; not exposed as named region landmark
 - pass: 48 (commit 031745d)
 - viewport: both
 - category: a11y
@@ -26,6 +26,7 @@
 - evidence: src/app/page.tsx line 25: <section className={styles.hero}> — no aria-label or aria-labelledby. compare line 40: <section className={styles.seven} aria-labelledby="seven-days-heading"> and the closing section fix from pass 47.
 - suggested fix: add aria-labelledby pointing to the H1's id (add id="hero-heading" to the <h1>) to expose the hero as a named region landmark consistent with the adjacent sections.
 - source: browser
+- resolution: added id="hero-heading" to <h1> and aria-labelledby="hero-heading" to <section className={styles.hero}> in src/app/page.tsx. Shipped at 18aef81.
 
 ### [x] [LOW] / — CTA sentence order puts returning-user path first; new-visitor path is buried second
 - pass: 48 (commit 031745d)
