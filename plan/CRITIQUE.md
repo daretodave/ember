@@ -53,7 +53,7 @@
 - suggested fix: replace "in the mosaic above" with "in the 60-day mosaic" so the phrase matches the mosaic container's aria-label and removes the directional spatial reference.
 - source: browser
 
-### [LOW] /settings — display name and username inputs have no autocomplete attribute; violates WCAG 1.3.5
+### [x] [LOW] /settings — display name and username inputs have no autocomplete attribute; violates WCAG 1.3.5
 - pass: 49 (commit 247ad7b)
 - viewport: both
 - category: a11y
@@ -61,6 +61,7 @@
 - evidence: src/app/settings/SettingsForm.tsx line 125-133: <input id="display-name" type="text" ... > — no autocomplete attribute. line 194-205: <input id="username" type="text" ... > — no autocomplete attribute.
 - suggested fix: add autocomplete="name" to the display name input and autocomplete="username" to the public username input in SettingsForm.tsx.
 - source: browser
+- resolution: added autocomplete="name" to display name input and autocomplete="username" to username input in src/app/settings/SettingsForm.tsx. Shipped at 69be03d.
 
 ### [x] [LOW] / — landing page header lockup glyph and wordmark both exposed to AT, producing double "ember" announcement
 - pass: 48 (commit 031745d)

@@ -6,6 +6,62 @@
 
 ## Pending
 
+### [x] [4.5] /settings — display name and username inputs have no autocomplete attribute; violates WCAG 1.3.5
+- category: external-critique
+- impact: 5
+- ease: 9
+- note: scored 2026-06-10 — from critique pass 49 (247ad7b); WCAG 1.3.5 (Identify Input Purpose, Level AA) requires autocomplete tokens on inputs collecting personal information; display name input (id="display-name") needs autocomplete="name"; username input (id="username") needs autocomplete="username"; neither attribute is present
+- observation: src/app/settings/SettingsForm.tsx line 125: <input id="display-name" type="text" ... > — no autocomplete. line 194: <input id="username" type="text" ... > — no autocomplete.
+- suggested fix: add autocomplete="name" to the display name input and autocomplete="username" to the username input in SettingsForm.tsx
+- source: /critique pass 49 (commit 247ad7b)
+- issue: [mirror-failed: loop-issue.mjs not present in scripts/]
+- resolution: added autocomplete="name" to display name input and autocomplete="username" to username input in src/app/settings/SettingsForm.tsx. Shipped at 69be03d.
+
+### [ ] [4.0] /today, /log, /settings — global skip link targets <main id="main-content"> have no tabIndex; focus delivery unreliable
+- category: external-critique
+- impact: 5
+- ease: 8
+- note: scored 2026-06-10 — from critique pass 49 (247ad7b); the root layout skip link targets #main-content; all three pages' <main id="main-content"> elements have no tabIndex attribute; non-interactive elements cannot reliably receive programmatic focus in all browsers; the identical gap was corrected for #log-content in pass 41 (6c10116) but the primary target was not updated
+- observation: src/app/today/page.tsx line 80: <main className={styles.main} id="main-content"> — no tabIndex. src/app/log/page.tsx line 88: <main id="main-content"> — no tabIndex. src/app/settings/page.tsx line 53: <main className={styles.main} id="main-content"> — no tabIndex.
+- suggested fix: add tabIndex={-1} to <main id="main-content"> in src/app/today/page.tsx, src/app/log/page.tsx, and src/app/settings/page.tsx
+- source: /critique pass 49 (commit 247ad7b)
+
+### [ ] [2.8] /log — mosaic tile tooltip fires on keyboard focus but carries aria-hidden="true"; excerpt invisible to screen readers
+- category: external-critique
+- impact: 4
+- ease: 7
+- note: scored 2026-06-10 — from critique pass 49 (247ad7b); the mosaic tile link fires onFocus to show a tooltip with date + up to 80 chars of entry text; the tooltip div carries aria-hidden="true" so its content is excluded from the AT tree; sighted keyboard users see the excerpt; AT users do not; the tile's aria-label carries only date + state with no excerpt
+- observation: src/app/log/LogMosaic.tsx line 93: onFocus fires tooltip. line 100-102: <div className={styles.tooltip} aria-hidden="true">. line 90: aria-label includes date + state only.
+- suggested fix: extend tile link aria-label to include excerpt when present: aria-label={`${tile.displayDate} — ${tileStateLabel(tile.state)}${tile.excerpt ? '. ' + tile.excerpt : ''}`}
+- source: /critique pass 49 (commit 247ad7b)
+
+### [ ] [2.7] / — previewMark section wrapping MosaicPreview has no accessible name; not exposed as named landmark
+- category: external-critique
+- impact: 3
+- ease: 9
+- note: scored 2026-06-10 — from critique pass 49 (247ad7b); the previewMark section has no aria-label, aria-labelledby, or heading; all three adjacent sections (hero, seven-days, closing) are correctly named; previewMark is the only section in the landmark sequence without a name
+- observation: src/app/page.tsx line 36: <section className={styles.previewMark}> — no accessible name. compare line 25: hero named; line 40: seven-days named; closing section named.
+- suggested fix: add aria-hidden="true" to the section (preferred if purely decorative and MosaicPreview role="img" aria-label is sufficient), or add aria-label="writing log preview"
+- source: /critique pass 49 (commit 247ad7b)
+
+### [ ] [2.4] /log — mosaicWrap section wrapping mosaic and H1 has no accessible name; not exposed as named landmark
+- category: external-critique
+- impact: 3
+- ease: 8
+- note: scored 2026-06-10 — from critique pass 49 (247ad7b); the mosaicWrap section wraps the H1, skip link, and LogMosaic but has no aria-label or aria-labelledby; the adjacent <section aria-label="log entries"> is correctly exposed; AT users navigating by landmark cannot jump to the mosaic region
+- observation: src/app/log/page.tsx line 89: <section className={styles.mosaicWrap}> — no accessible name. line 90: <h1> has no id for a labelledby reference.
+- suggested fix: add id="mosaic-heading" to the H1 at line 90 and aria-labelledby="mosaic-heading" to the section at line 89
+- source: /critique pass 49 (commit 247ad7b)
+
+### [ ] [1.8] /log — empty-state paragraph uses "the mosaic above" as a spatial reference with no AT-addressable counterpart
+- category: external-critique
+- impact: 2
+- ease: 9
+- note: scored 2026-06-10 — from critique pass 49 (247ad7b); the empty-state reads "each entry fills a tile in the mosaic above." — "mosaic above" is a visual-spatial reference; the LogMosaic container has aria-label="60-day practice mosaic" but that label is not referenced from the empty-state sentence; a screen reader user navigating linearly encounters "above" with no accessible referent
+- observation: src/app/log/page.tsx line 141-143: "the log is empty. each entry fills a tile in the mosaic above." — directional reference with no accessible counterpart.
+- suggested fix: replace "in the mosaic above" with "in the 60-day mosaic" to match the mosaic container's aria-label and remove the directional spatial reference
+- source: /critique pass 49 (commit 247ad7b)
+
 ### [x] [3.6] / — CTA sentence order puts returning-user path first; new-visitor path is buried second
 - category: external-critique
 - impact: 4
