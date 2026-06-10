@@ -6,6 +6,18 @@
 
 ## Pending
 
+### [x] [4.2] /settings — form has no structural section groupings; fields and account actions are a flat sequence
+- category: external-critique
+- impact: 6
+- ease: 7
+- note: scored 2026-06-10 — from critique pass 48 (031745d); the settings form presents four input areas followed by save and sign-out controls as a flat sequence with no heading, fieldset, or landmark structure separating them; the prompt variety radios have a radiogroup with aria-label="prompt variety" but the profile fields and save action have no enclosing group; a screen reader user tabbing through the form has no programmatic way to identify where profile fields end and account actions begin
+- observation: src/app/settings/SettingsForm.tsx has no fieldset or section wrapping the profile fields separate from the formFoot action row
+- evidence: settings body text sequence: "display name / [hint] / timezone / [hint] / prompt variety / standard / personalized / public username / [hint] / /u/ / save / sign out" — no group boundaries between field areas and actions
+- suggested fix: add role="group" aria-label="account actions" to the formFoot div to create a programmatic boundary between profile fields and account controls
+- source: /critique pass 48 (commit 031745d)
+- issue: [mirror-failed: 2026-06-10T00:00:00Z]
+- resolution: added role="group" aria-label="account actions" to the formFoot div in src/app/settings/SettingsForm.tsx. Shipped at a3e0b8e.
+
 ### [x] [2.7] / — landing page footer element is nested inside main, suppressing contentinfo landmark
 - category: external-critique
 - impact: 3

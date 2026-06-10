@@ -35,7 +35,7 @@
 - suggested fix: swap sentence order to "a new address creates an account. a returning address receives a sign-in link." so the relevant path for a first-time visitor appears first.
 - source: browser
 
-### [MED] /settings — form has no structural section groupings; fields and account actions are a flat sequence
+### [x] [MED] /settings — form has no structural section groupings; fields and account actions are a flat sequence
 - pass: 48 (commit 031745d)
 - viewport: both
 - category: a11y
@@ -43,6 +43,7 @@
 - evidence: settings body text sequence: "display name / [hint] / timezone / [hint] / prompt variety / standard / personalized / public username / [hint] / /u/ / save / sign out" — no visible headings or group boundaries between field areas and actions. src/app/settings/SettingsForm.tsx has no fieldset or section wrapping the profile fields separate from the action row.
 - suggested fix: wrap the save and sign-out controls in a visually-muted <section aria-label="account actions"> (or a <div role="group" aria-label="account actions">) to create a programmatic boundary between form fields and account controls; or add a visually-hidden <h2> before the action row.
 - source: browser
+- resolution: added role="group" aria-label="account actions" to the formFoot div in src/app/settings/SettingsForm.tsx. Shipped at a3e0b8e.
 
 ### [x] [LOW] / — landing page footer element is nested inside main, suppressing contentinfo landmark
 - pass: 47 (commit 6eee387)
