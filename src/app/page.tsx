@@ -13,7 +13,7 @@ export default function LandingPage() {
     <div className={styles.page}>
       <header className={styles.header}>
         <div className={styles.lockup}>
-          <MosaicGlyph />
+          <MosaicGlyph decorative />
           <span className={styles.wordmark}>ember</span>
         </div>
         <nav className={styles.headerNav} aria-label="site navigation">

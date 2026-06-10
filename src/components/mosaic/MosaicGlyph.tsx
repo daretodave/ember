@@ -22,9 +22,14 @@ function tileClass(state: TileState): string {
   return 'tile'
 }
 
-export function MosaicGlyph() {
+export function MosaicGlyph({ decorative }: { decorative?: boolean } = {}) {
   return (
-    <div className={styles.glyph} role="img" aria-label="ember">
+    <div
+      className={styles.glyph}
+      role={decorative ? undefined : 'img'}
+      aria-label={decorative ? undefined : 'ember'}
+      aria-hidden={decorative ? true : undefined}
+    >
       {GLYPH_PATTERN.map((state, i) => (
         <div key={i} className={tileClass(state)} aria-hidden="true" />
       ))}
