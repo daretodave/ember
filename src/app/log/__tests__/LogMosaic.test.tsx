@@ -34,6 +34,21 @@ describe('LogMosaic — tileStateLabel via aria-label', () => {
     render(<LogMosaic tiles={[makeTile('published')]} />)
     expect(screen.getByRole('link', { name: 'Tue 19 May 2026 — published' })).toBeInTheDocument()
   })
+
+  it('tile with excerpt appends excerpt to aria-label', () => {
+    const tile: MosaicTileData = {
+      date: '2026-05-19',
+      state: 'filled',
+      displayDate: 'Tue 19 May 2026',
+      excerpt: 'today was harder than expected.',
+    }
+    render(<LogMosaic tiles={[tile]} />)
+    expect(
+      screen.getByRole('link', {
+        name: 'Tue 19 May 2026 — written. today was harder than expected.',
+      }),
+    ).toBeInTheDocument()
+  })
 })
 
 describe('LogMosaic — tile links', () => {

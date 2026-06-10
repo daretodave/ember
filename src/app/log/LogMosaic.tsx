@@ -87,7 +87,7 @@ export function LogMosaic({ tiles }: Props) {
           href={`/log/${tile.date}`}
           className={`${tileClass(tile.state)} ${styles.mosaicTile}`}
           style={{ animationDelay: `${i * 8}ms` }}
-          aria-label={`${tile.displayDate} — ${tileStateLabel(tile.state)}`}
+          aria-label={`${tile.displayDate} — ${tileStateLabel(tile.state)}${tile.excerpt ? '. ' + tile.excerpt : ''}`}
           onMouseEnter={(e) => handleEnter(e, tile)}
           onMouseLeave={handleLeave}
           onFocus={(e) => handleFocus(e, tile)}
