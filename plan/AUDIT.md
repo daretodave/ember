@@ -392,7 +392,7 @@
 - issue: [mirror-failed: loop-issue.mjs not present in scripts/]
 - resolution: changed both main and focus-mode save button titles from "entries are saved privately by default." to "saves the current entry." in TodayEntry.tsx. Shipped at 5b83a48.
 
-### [ ] [2.0] /signin — confirmation state uses "no password required." while form copy uses "no password."
+### [x] [2.0] /signin — confirmation state uses "no password required." while form copy uses "no password."
 - category: voice
 - impact: 2
 - ease: 10
@@ -401,7 +401,8 @@
 - evidence: src/app/signin/page.tsx:69: `<em>no password required.</em>`; reassurance at line 88: "no password. no other mail."
 - suggested fix: change the confirmation phrase to "no password. no other mail." to match the register and phrasing of the form's reassurance paragraph.
 - source: /critique pass 41 (commit fae3ab2)
-- issue: [mirror-failed: loop-issue.mjs not present in scripts/]
+- issue: [mirror-failed: 2026-06-10T00:00:00Z]
+- resolution: changed `<em>no password required.</em>` to "no password. no other mail." in src/app/signin/page.tsx confirmation paragraph. Shipped at 7650862.
 
 ### [x] [2.4] / — 7-day preview subheader echoes lede with near-identical phrasing
 - category: comprehension

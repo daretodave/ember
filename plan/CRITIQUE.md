@@ -414,7 +414,7 @@
 - suggested fix: change placeholder to "name shown on published entries" — removes direct address while describing the field's purpose in the same register as the adjacent hint text.
 - source: browser
 
-### [LOW] /signin — confirmation state uses "no password required." while form copy uses "no password."
+### [x] [LOW] /signin — confirmation state uses "no password required." while form copy uses "no password."
 - pass: 41 (commit 438baef)
 - viewport: both
 - category: voice
@@ -422,6 +422,7 @@
 - evidence: src/app/signin/page.tsx:69: `<em>no password required.</em>` in the confirmation paragraph — contrast reassurance copy at line 88: "no password. no other mail. a new address creates an account." — "required" appears in the confirmation but nowhere in the form's visible pre-submission copy.
 - suggested fix: change the confirmation phrase to "no password. no other mail." to match the register and phrasing of the form's reassurance paragraph.
 - source: browser
+- resolution: changed `<em>no password required.</em>` to "no password. no other mail." in src/app/signin/page.tsx confirmation paragraph. Shipped at 7650862.
 
 ### [LOW] /today — focus trigger button aria-label uses imperative "enter focus mode" while title uses declarative form
 - pass: 41 (commit 438baef)
