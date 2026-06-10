@@ -209,7 +209,7 @@ export function SettingsForm({ displayName, username, timezone, usePersonalizedP
         )}
       </div>
 
-      <div className={styles.formFoot}>
+      <div className={styles.formFoot} role="group" aria-label="account actions">
         <span aria-live="polite" className={`${styles.saveStatus} ${saveState === 'saved' ? styles.saveStatusVisible : ''}`}>
           {saveState === 'saving' ? 'saving.' : saveState === 'saved' ? 'saved.' : ''}
         </span>
