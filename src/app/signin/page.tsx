@@ -66,8 +66,8 @@ export default function SigninPage() {
               tabIndex={-1}
             >
               a sign-in link is on its way. the link opens today&apos;s prompt
-              directly. sign-in links expire after 24 hours.{' '}
-              <em>no password required.</em>
+              directly. sign-in links expire after 24 hours. no password. no
+              other mail.
             </p>
           ) : (
             <form className={styles.form} onSubmit={handleSubmit}>
