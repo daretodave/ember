@@ -8,7 +8,7 @@
 
 ## Pending
 
-### [LOW] / — landing page header lockup glyph and wordmark both exposed to AT, producing double "ember" announcement
+### [x] [LOW] / — landing page header lockup glyph and wordmark both exposed to AT, producing double "ember" announcement
 - pass: 48 (commit 031745d)
 - viewport: both
 - category: a11y
@@ -16,6 +16,7 @@
 - evidence: src/app/page.tsx line 15: <div className={styles.lockup}> — no aria-label. src/components/mosaic/MosaicGlyph.tsx line 27: <div className={styles.glyph} role="img" aria-label="ember">. compare src/app/signin/page.tsx: lockup is a Link with aria-label="ember — home", which overrides children and removes the duplicate.
 - suggested fix: add aria-hidden="true" to the <MosaicGlyph /> call inside the landing page lockup div so only the wordmark span contributes to AT reading, matching the effective result of the /signin Link fix.
 - source: browser
+- resolution: added decorative prop to MosaicGlyph; set aria-hidden=true and removed role/aria-label when decorative=true; applied <MosaicGlyph decorative /> in src/app/page.tsx lockup div. Shipped at 549ebbc.
 
 ### [LOW] / — hero section has no accessible name; not exposed as named region landmark
 - pass: 48 (commit 031745d)

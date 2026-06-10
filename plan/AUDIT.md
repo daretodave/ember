@@ -17,15 +17,16 @@
 - issue: [mirror-failed: loop-issue.mjs not present in scripts/]
 - resolution: swapped sentence order to "a new address creates an account. a returning address receives a sign-in link." in src/app/page.tsx. Shipped at aab597f.
 
-### [ ] [2.7] / — landing page header lockup glyph and wordmark both exposed to AT, producing double "ember" announcement
+### [x] [3.6] / — landing page header lockup glyph and wordmark both exposed to AT, producing double "ember" announcement
 - category: external-critique
-- impact: 3
+- impact: 4
 - ease: 9
-- note: scored 2026-06-10 — from critique pass 48 (031745d); the landing page lockup div contains MosaicGlyph (role="img" aria-label="ember") and a wordmark span ("ember") with no overriding aria-label on the parent div; AT users encounter both children, producing a double "ember" announcement; the /signin lockup is a Link with aria-label="ember — home" which overrides children — the landing page non-interactive div was not covered by the pass-38 fix
+- note: scored 2026-06-10 — from critique pass 48 (031745d); rescored 2026-06-10: impact raised 3→4 because the landing page is the primary entry surface for every AT user; the landing page lockup div contains MosaicGlyph (role="img" aria-label="ember") and a wordmark span ("ember") with no overriding aria-label on the parent div; AT users encounter both children, producing a double "ember" announcement; the /signin lockup is a Link with aria-label="ember — home" which overrides children — the landing page non-interactive div was not covered by the pass-38 fix
 - observation: src/app/page.tsx line 15: <div className={styles.lockup}> — no aria-label. MosaicGlyph renders <div role="img" aria-label="ember">. Wordmark span: <span className={styles.wordmark}>ember</span>
-- suggested fix: add aria-hidden="true" to the MosaicGlyph call inside the landing page lockup div so only the wordmark span contributes to AT reading
+- suggested fix: add decorative prop to MosaicGlyph call inside the landing page lockup div so only the wordmark span contributes to AT reading
 - source: /critique pass 48 (commit 031745d)
 - issue: [mirror-failed: loop-issue.mjs not present in scripts/]
+- resolution: added decorative prop to MosaicGlyph; set aria-hidden=true and removed role/aria-label when decorative; applied <MosaicGlyph decorative /> in src/app/page.tsx lockup div. Shipped at 549ebbc.
 
 ### [ ] [2.4] / — hero section has no accessible name; not exposed as named region landmark
 - category: external-critique
