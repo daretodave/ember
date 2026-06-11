@@ -1104,7 +1104,7 @@
 - issue: [mirror-failed: loop-issue.mjs not present in scripts/]
 - resolution: changed "your log" to "log" in both src/app/u/[username]/page.tsx and src/app/u/[username]/[date]/page.tsx. Shipped at 077dab3.
 
-### [ ] [3.0] [needs-user-call] / — closing paragraph "ember does not personalize your morning." possessive may be intentional brand rhetoric
+### [x] [3.0] [needs-user-call] / — closing paragraph "ember does not personalize your morning." possessive may be intentional brand rhetoric
 - category: external-critique
 - impact: 3
 - ease: 10
@@ -1113,6 +1113,7 @@
 - evidence: src/app/page.tsx closing paragraph: `ember does not personalize your morning.` — contrast with "your log shows what is" (changed to "the log" at 1c6a9c6) and "your responses accumulate" (changed to "responses" at 7fbde80) which were straightforward presupposition fixes. the "your morning" case is different in that the possessive is the object of the anti-personalization claim.
 - suggested fix: [needs-user-call] if unintentional: change to "ember does not personalize the morning." if intentional for brand contrast: no change needed.
 - source: /critique pass 26 (commit 04acd0a)
+- resolution: user call via /oversight 2026-06-11 — intentional brand rhetoric; the "your morning" / "does not personalize" contrast is the point of the sentence. Keep as-is. Closed without code change; critique should not re-file this phrasing.
 
 ### [x] [2.4] /settings — display name field has no hint text; scope unclear for new user
 - category: external-critique

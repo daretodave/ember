@@ -37,6 +37,21 @@
      phase 19; user chose to drain the top-scored pending candidate. -->
 - [x] Phase 20 — Searchable timezone combobox on `/settings` — b1656b7
 
+<!-- Phases 21-25 promoted via /oversight 2026-06-11 from
+     plan/PHASE_CANDIDATES.md (build plan exhausted at phase 20; all
+     pending audit findings sub-threshold; loop starved). Phases 26-28
+     are oversight-authored experiments per the user's standing
+     preference for feature experiments. Briefs can be refined
+     per-phase with /plan-a-phase before each ships. -->
+- [ ] Phase 21 — Content voice alignment (rewrite prompts.json task copy to participial form)
+- [ ] Phase 22 — Voice coherence sweep (remaining stalled copy scope items)
+- [ ] Phase 23 — Data export (entries as JSON / Markdown via `/api/export`)
+- [ ] Phase 24 — Account deletion (self-service delete account + all data)
+- [ ] Phase 25 — Loop issue mirroring (restore `scripts/loop-issue.mjs`)
+- [ ] Phase 26 — Evening theme (time-aware dark palette) — oversight experiment
+- [ ] Phase 27 — Month in review (quiet monthly recap on `/log`) — oversight experiment
+- [ ] Phase 28 — Shareable entry card (dynamic OG image for public entries) — oversight experiment
+
 ## Per-phase scope
 
 ### Phase 0 — Bootstrap
@@ -196,3 +211,112 @@ removes the scroll-through-hundreds anti-pattern. Bias toward
 a bespoke accessible component over a heavy library; if a
 library is needed, prefer headless (Radix / Downshift) and
 keep the dependency narrow. No new URL family.
+
+### Phase 21 — Content voice alignment
+
+Rewrite all ~101 task entries in `content/prompts.json` from
+second-person imperative form ("tidy the surface you look at
+most often") to gerund or participial form consistent with
+the voice guide in `design/CLAUDE.md` ("the task marked if
+it happened" is the model). Spawn the content-curator
+sub-agent for the bulk rewrite. Content-only — no code
+changes; `prompts.ts` reads the JSON without format
+assumptions; the verify gate must pass with content-only
+changes. Closes the documented voice-guide compliance gap
+visible on every `/today` and in the landing 7-day preview.
+
+### Phase 22 — Voice coherence sweep
+
+Ship the remaining stalled copy scope items from the voice
+coherence candidate (each individually below the iterate
+threshold; numbering per the candidate's scope list):
+(3) `/signin` post-submit destination context sentence
+("the link opens today's prompt."); (6) `/settings` display
+name placeholder to a neutral form; (24) `/settings`
+username prefix "@" vs "/u/" — verify against the public
+profile's @username display convention before changing;
+(27) normalize the "no password" phrasing form across `/`
+and `/signin`; (35) `/signin` H1 "sign in." terminal-period
+register inconsistency; (36) `/` "ten minutes" lede figure —
+ground it or remove it ([needs-user-call]; default: remove);
+(38) `/` "forgetting a day is fine" presupposes existing
+practice for a pre-signup visitor; (39) `/settings`
+"curated" ungrounded editorial register; (40) `/` lede "one
+small prompt" vs the named concept "prompt"; (43)
+`/settings` "view your public profile" → "view public
+profile"; (47) `/signin` confirmation "no password
+required." → "no password."; (48) `/settings` username
+placeholder drops the "public" qualifier. Copy-only; no new
+routes, no schema changes.
+
+### Phase 23 — Data export
+
+`GET /api/export` returns the authenticated user's entries +
+prompts + dates as JSON; `?format=md` returns Markdown. An
+"export your data" link on `/settings`. New route under
+`/api/` only — no new page URL family. Spec deferred this to
+v1.5 from the outset; users with weeks of practice currently
+have no backup or portability path.
+
+### Phase 24 — Account deletion
+
+`DELETE /api/account` route: cascades deletion of entries +
+profile row, then signs out. Confirmation UI on `/settings`
+("delete my account and all my entries") — destructive
+action, so the confirmation must be explicit and separated
+from the save/sign-out controls. Verify or add `ON DELETE
+CASCADE` FK constraints in Supabase migrations if absent
+(may need one minor migration). GDPR right-to-erasure
+closure for a personal-data-collecting app.
+
+### Phase 25 — Loop issue mirroring
+
+Write `scripts/loop-issue.mjs` per the iterate.md §2.5
+contract: (1) `open --severity ... --category ... --source
+... --title "..." --body-file <path>` creates a GitHub issue
+via `gh issue create`, applies the `loop:opened` label,
+echoes the issue number; (2) `close-comment --number N
+--commit <sha> --deploy-url <url>` posts a closing comment.
+Failure is a warning, never a blocker. Load GH_TOKEN /
+GH_REPO from the environment (same pattern as
+`deploy-check.mjs`). 81 AUDIT.md entries currently carry
+`[mirror-failed]`; this reconnects the public loop timeline.
+Script-only — no app code.
+
+### Phase 26 — Evening theme (experiment)
+
+A time-aware dark palette. Honor
+`prefers-color-scheme: dark` with a token-derived dark
+variant of the existing palette (warm, dim — candlelight
+rather than tech-dark), defined in `design/tokens.css` as a
+parallel custom-property set. No toggle UI in v1 of this
+experiment — the OS preference decides. All contrast ratios
+must hold AA against the a11y gate (phase 15 axe scans run
+in both schemes if feasible). Design tokens are the single
+source; no per-component color literals. Flag and stop if
+the design system needs more than a token-layer change.
+
+### Phase 27 — Month in review (experiment)
+
+On `/log`, when a calendar month has just ended (first ~7
+days of a new month), render a single quiet recap line above
+the mosaic for the month that closed: entries written count
+and one observational clause, e.g. "in may — 14 entries.
+the longest sat on the 12th." Voice per `bearings.md`:
+lower-case, observational, no streak language, no praise, no
+exclamation. Renders nothing when the prior month has zero
+entries. No new route, no schema change — derived from the
+entries already fetched for the mosaic.
+
+### Phase 28 — Shareable entry card (experiment)
+
+Dynamic OG image for public entry pages
+(`/u/[username]/[date]`): an `opengraph-image` route that
+renders the entry's opening clause (~80 chars), the author's
+display name, the date, and the mosaic motif on warm cream
+per design tokens — so a shared public entry link carries
+the brand instead of the generic site card. Published
+entries only (the page is already public); no change to the
+publish model or to private data exposure. Reuses the phase
+14 OG pipeline. Cache with standard Next.js image-route
+semantics.
