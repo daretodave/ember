@@ -39,7 +39,7 @@
 - issue: [mirror-failed: 2026-06-10T00:00:00Z — loop-issue.mjs not present in scripts/]
 - resolution: extended tile Link aria-label to include excerpt when present. Shipped at 04498b9.
 
-### [ ] [2.7] / — previewMark section wrapping MosaicPreview has no accessible name; not exposed as named landmark
+### [x] [2.7] / — previewMark section wrapping MosaicPreview has no accessible name; not exposed as named landmark
 - category: external-critique
 - impact: 3
 - ease: 9
@@ -47,6 +47,7 @@
 - observation: src/app/page.tsx line 36: <section className={styles.previewMark}> — no accessible name. compare line 25: hero named; line 40: seven-days named; closing section named.
 - suggested fix: add aria-hidden="true" to the section (preferred if purely decorative and MosaicPreview role="img" aria-label is sufficient), or add aria-label="writing log preview"
 - source: /critique pass 49 (commit 247ad7b)
+- resolution: added aria-hidden="true" to <section className={styles.previewMark}> in src/app/page.tsx; the MosaicPreview is illustrative and has no AT navigational purpose. Shipped at 9ffab40.
 
 ### [ ] [2.4] /log — mosaicWrap section wrapping mosaic and H1 has no accessible name; not exposed as named landmark
 - category: external-critique

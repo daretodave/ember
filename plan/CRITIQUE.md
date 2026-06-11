@@ -28,7 +28,7 @@
 - source: browser
 - resolution: extended tile Link aria-label to include excerpt when present in src/app/log/LogMosaic.tsx; test added. Shipped at 04498b9.
 
-### [LOW] / — <section className={styles.previewMark}> wrapping the mosaic preview has no accessible name; not exposed as a named landmark
+### [x] [LOW] / — <section className={styles.previewMark}> wrapping the mosaic preview has no accessible name; not exposed as a named landmark
 - pass: 49 (commit 247ad7b)
 - viewport: both
 - category: a11y
@@ -36,6 +36,7 @@
 - evidence: src/app/page.tsx line 36: <section className={styles.previewMark}> — no accessible name attribute. line 25: <section className={styles.hero} aria-labelledby="hero-heading"> — named. line 40: <section className={styles.seven} aria-labelledby="seven-days-heading"> — named. line 72: <section className={styles.closing} aria-label="about ember"> — named.
 - suggested fix: add aria-hidden="true" to the section if it is purely decorative and the MosaicPreview's own role="img" aria-label is sufficient, or add aria-label="writing log preview" to expose it as a named landmark consistent with the adjacent sections. the aria-hidden approach is preferable if the mosaic has no navigational purpose for AT users on the landing page.
 - source: browser
+- resolution: added aria-hidden="true" to <section className={styles.previewMark}> in src/app/page.tsx. Shipped at 9ffab40.
 
 ### [LOW] /log — <section className={styles.mosaicWrap}> wrapping the mosaic and H1 has no accessible name; not exposed as a named landmark
 - pass: 49 (commit 247ad7b)
