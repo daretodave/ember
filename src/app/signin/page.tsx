@@ -55,7 +55,7 @@ export default function SigninPage() {
 
       <main className={styles.main} id="main-content">
         <div className={styles.card}>
-          <h1 className={styles.title}>sign in</h1>
+          <h1 className={styles.title}>sign in.</h1>
           <p className={styles.tagline}>one prompt and one tiny task each morning.</p>
 
           {state === 'sent' ? (
@@ -65,9 +65,8 @@ export default function SigninPage() {
               role="status"
               tabIndex={-1}
             >
-              a sign-in link is on its way. the link opens today&apos;s prompt
-              directly. sign-in links expire after 24 hours. no password. no
-              other mail.
+              a sign-in link is on its way. the link opens today&apos;s prompt.
+              sign-in links expire after 24 hours. no password. no other mail.
             </p>
           ) : (
             <form className={styles.form} onSubmit={handleSubmit}>

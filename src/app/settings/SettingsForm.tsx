@@ -128,7 +128,7 @@ export function SettingsForm({ displayName, username, timezone, usePersonalizedP
           className={styles.input}
           value={nameVal}
           onChange={(e) => setNameVal(e.target.value)}
-          placeholder="name shown on published entries"
+          placeholder="name"
           maxLength={100}
           autoComplete="name"
         />
