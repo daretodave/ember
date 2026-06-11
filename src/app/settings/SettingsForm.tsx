@@ -222,7 +222,7 @@ export function SettingsForm({ displayName, username, timezone, usePersonalizedP
           type="submit"
           className={styles.saveBtn}
           disabled={saveState === 'saving'}
-          title="saves display name, timezone, prompt variety, and username."
+          title="saves display name, timezone, prompt variety, and public username."
         >
           {saveState === 'saving' ? 'saving.' : 'save'}
         </button>
