@@ -254,7 +254,7 @@ export function TodayEntry({ date, task, prompt, initialEntry, hasUsername = tru
         role="dialog"
         aria-modal={isFocus || undefined}
         aria-label="focus mode"
-        aria-hidden={!isFocus}
+        aria-hidden={!isFocus || undefined}
         className={`${styles.focusOverlay}${isFocus ? ` ${styles.focusOverlayActive}` : ''}`}
       >
         <div className={styles.focusContent}>
