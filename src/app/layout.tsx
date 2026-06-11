@@ -1,4 +1,4 @@
-import type { Metadata } from 'next'
+import type { Metadata, Viewport } from 'next'
 import { Inter, JetBrains_Mono, Source_Serif_4 } from 'next/font/google'
 import { ServiceWorkerRegistrar } from '@/components/pwa/ServiceWorkerRegistrar'
 import './globals.css'
@@ -29,6 +29,14 @@ const siteUrl =
   (process.env.VERCEL_PROJECT_PRODUCTION_URL
     ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
     : 'https://ember-rust-sigma.vercel.app')
+
+export const viewport: Viewport = {
+  colorScheme: 'light dark',
+  themeColor: [
+    { color: '#c2683f', media: '(prefers-color-scheme: light)' },
+    { color: '#1f1c17', media: '(prefers-color-scheme: dark)' },
+  ],
+}
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),

@@ -5,6 +5,7 @@
    The --font-* variables below are set by applying the next/font
    variable classes to <html> in layout.tsx. */
 :root {
+  color-scheme: light dark;
   --font-serif: var(--font-source-serif-4), "Source Serif 4", "Source Serif Pro", Georgia, "Times New Roman", serif;
   --font-sans: var(--font-inter), "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   --font-mono: var(--font-jetbrains-mono), "JetBrains Mono", "SF Mono", Menlo, Consolas, monospace;
