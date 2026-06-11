@@ -68,7 +68,7 @@
 - source: browser
 - resolution: false-positive — abbreviated day label spans already have aria-hidden="true" at DayStrip.tsx line 64. Playwright innerText captures CSS-visible elements regardless of aria-hidden. AT users see only the srOnly full tileStateLabel. No code change needed; closed without shipping.
 
-### [LOW] /log — <section className={styles.mosaicWrap}> wrapping the mosaic and H1 has no accessible name; not exposed as a named landmark
+### [x] [LOW] /log — <section className={styles.mosaicWrap}> wrapping the mosaic and H1 has no accessible name; not exposed as a named landmark
 - pass: 49 (commit 247ad7b)
 - viewport: both
 - category: a11y
@@ -76,6 +76,7 @@
 - evidence: src/app/log/page.tsx line 89: <section className={styles.mosaicWrap}> — no accessible name attribute. line 90: <h1 className={styles.mosaicMeta}>the past 60 days</h1> — H1 has no id for a labelledby reference. compare line 108: <section aria-label="log entries"> — correctly named.
 - suggested fix: add id="mosaic-heading" to the H1 at line 90 and aria-labelledby="mosaic-heading" to the section at line 89, exposing the mosaic region as a named landmark consistent with the log entries section pattern.
 - source: browser
+- resolution: added id="mosaic-heading" to H1 and aria-labelledby="mosaic-heading" to section in src/app/log/page.tsx. Shipped at 0de5180.
 
 ### [LOW] /log — empty-state paragraph uses "the mosaic above" as a spatial reference with no AT-addressable counterpart
 - pass: 49 (commit 247ad7b)

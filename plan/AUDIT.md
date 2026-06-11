@@ -76,7 +76,7 @@
 - source: /critique pass 49 (commit 247ad7b)
 - resolution: added aria-hidden="true" to <section className={styles.previewMark}> in src/app/page.tsx; the MosaicPreview is illustrative and has no AT navigational purpose. Shipped at 9ffab40.
 
-### [ ] [2.4] /log — mosaicWrap section wrapping mosaic and H1 has no accessible name; not exposed as named landmark
+### [x] [2.4] /log — mosaicWrap section wrapping mosaic and H1 has no accessible name; not exposed as named landmark
 - category: external-critique
 - impact: 3
 - ease: 8
@@ -84,6 +84,8 @@
 - observation: src/app/log/page.tsx line 89: <section className={styles.mosaicWrap}> — no accessible name. line 90: <h1> has no id for a labelledby reference.
 - suggested fix: add id="mosaic-heading" to the H1 at line 90 and aria-labelledby="mosaic-heading" to the section at line 89
 - source: /critique pass 49 (commit 247ad7b)
+- issue: [mirror-failed: 2026-06-11 — loop-issue.mjs not present in scripts/]
+- resolution: added id="mosaic-heading" to H1 and aria-labelledby="mosaic-heading" to section in src/app/log/page.tsx. Shipped at 0de5180.
 
 ### [ ] [1.8] /log — empty-state paragraph uses "the mosaic above" as a spatial reference with no AT-addressable counterpart
 - category: external-critique
