@@ -1,7 +1,7 @@
 # External-observer findings — Ember
 
-> Last pass: 2026-06-11 at commit 0107c11
-> Pass count: 51
+> Last pass: 2026-06-11 at commit b4d3589
+> Pass count: 52
 
 > Written by `/critique` after walking the live site as a
 > fresh-eyes visitor. Drained by `/iterate`.
@@ -60,6 +60,60 @@
 - observation: the settings page <footer> is a top-level sibling of <main>, giving it the contentinfo landmark role. it has no aria-label or aria-labelledby attribute, so AT users navigating to the contentinfo landmark hear only "contentinfo" with no indication the region contains the sign-out control. the sign-out button is the sole interactive element in the footer.
 - evidence: src/app/settings/page.tsx line 71: <footer className={styles.footer}> — no accessible name attribute. contains <form action="/auth/signout" method="POST"><button type="submit">sign out</button></form>.
 - suggested fix: add aria-label="account" to the <footer> element in settings/page.tsx so the contentinfo landmark is identifiable when AT users navigate by landmark.
+- source: browser
+
+### [LOW] / and /signin — <main id="main-content"> missing tabIndex={-1}; skip link focus delivery unreliable on anonymous pages
+- pass: 52 (commit b4d3589)
+- viewport: both
+- category: a11y
+- observation: the skip link in the root layout targets #main-content. the prior fix (pass 49, shipped at 88f8cb9) added tabIndex={-1} to <main id="main-content"> in src/app/today/page.tsx, src/app/log/page.tsx, and src/app/settings/page.tsx — but not the two anonymous-accessible routes. non-interactive elements without tabIndex cannot reliably receive programmatic focus in all browsers when targeted by a skip link.
+- evidence: src/app/page.tsx line 24: <main id="main-content"> — no tabIndex. src/app/signin/page.tsx line 56: <main className={styles.main} id="main-content"> — no tabIndex. compare src/app/today/page.tsx: <main className={styles.main} id="main-content" tabIndex={-1}>.
+- suggested fix: add tabIndex={-1} to <main id="main-content"> in both src/app/page.tsx and src/app/signin/page.tsx, mirroring the fix applied to the authenticated pages at 88f8cb9.
+- source: browser
+
+### [LOW] / and /signin — footer elements have no accessible name; contentinfo landmarks unnamed on anonymous pages
+- pass: 52 (commit b4d3589)
+- viewport: both
+- category: a11y
+- observation: the landing page <footer className={styles.footerCredit}> and the /signin <footer className={styles.footer}> both carry the contentinfo landmark role but have no aria-label or aria-labelledby. AT users navigating to the contentinfo landmark on either anonymous page hear only "contentinfo" with no indication of the region's content. the pending /settings footer finding (pass 51) applies to the same structural gap on all three routes.
+- evidence: src/app/page.tsx line 84: <footer className={styles.footerCredit}> — no accessible name. src/app/signin/page.tsx line 107: <footer className={styles.footer}> — no accessible name. both contain only presentational text spans.
+- suggested fix: add aria-label="ember" to the <footer> element in src/app/page.tsx and src/app/signin/page.tsx, consistent with what the settings footer fix will apply.
+- source: browser
+
+### [LOW] / — sticky CTA <aside> rendered after <footer> in DOM; complementary landmark follows contentinfo in AT landmark order
+- pass: 52 (commit b4d3589)
+- viewport: both
+- category: a11y
+- observation: the sticky CTA bar is <aside aria-label="sign in">, carrying the complementary landmark role. in the DOM it appears after the <footer> (contentinfo). AT users navigating by landmark encounter contentinfo before complementary — unusual sequence that may cause the CTA to be missed, since contentinfo conventionally signals page end.
+- evidence: src/app/page.tsx: <footer className={styles.footerCredit}> at line 84 (closes at 87); <aside className={styles.cta} aria-label="sign in"> at line 89 — after the footer in source order.
+- suggested fix: move the <aside> before the <footer> in src/app/page.tsx DOM source order, or replace <aside> with <div role="none"> (the bar is a conversion affordance, not complementary content) to remove the misplaced landmark entirely.
+- source: browser
+
+### [LOW] /settings — delete-account warning uses second-person possessive "your account"; breaks register within the two-step flow
+- pass: 52 (commit b4d3589)
+- viewport: both
+- category: voice
+- observation: when the delete confirmation panel opens, the warning paragraph reads "permanently delete your account and all entries. there is no undo." the phrase "your account" is second-person possessive. the trigger button uses first-person ownership ("delete my account and all my entries") but the confirmation warning shifts to second person within the same two-step destructive flow.
+- evidence: src/app/settings/DeleteAccountSection.tsx line 44: <p className={styles.deleteWarning}>permanently delete your account and all entries. there is no undo.</p>
+- suggested fix: rewrite as "this will permanently delete the account and all entries. there is no undo." to remove second-person address and use the flat declarative register.
+- source: browser
+
+### [LOW] /settings — DeleteAccountSection has no aria-live region; deletion in-progress state not announced to screen readers
+- pass: 52 (commit b4d3589)
+- viewport: both
+- category: a11y
+- observation: when the confirm button is clicked, the button label changes from "delete account" to "deleting." and disabled is applied. button label changes on disabled buttons are not reliably announced by all screen readers without a dedicated aria-live region. no aria-live element exists in DeleteAccountSection. the SettingsForm pattern — a dedicated aria-live span emitting "saving." / "saved." — is not replicated for this destructive action.
+- evidence: src/app/settings/DeleteAccountSection.tsx lines 58-65: confirm button renders {deleting ? 'deleting.' : 'delete account'} with disabled={deleting}; no aria-live element in the component. contrast src/app/settings/SettingsForm.tsx line 215: <span aria-live="polite" ...>.
+- suggested fix: add <span aria-live="polite" className={styles.srOnly}>{deleting ? 'deleting.' : ''}</span> inside DeleteAccountSection so screen readers announce the in-progress state when deletion begins.
+- source: browser
+
+### [LOW] /settings — "export your data" label uses second-person possessive and imperative verb
+- pass: 52 (commit b4d3589)
+- viewport: both
+- category: voice
+- observation: the export link label "export your data" uses the second-person possessive "your" and the imperative verb "export". the voice guide prohibits second-person imperative copy. every other action label in the settings page footer area avoids second-person address — "delete my account and all my entries" uses first-person; "sign out" is an established UI idiom.
+- evidence: src/app/settings/page.tsx lines 72-76: <a href="/api/export" className={styles.exportLink} download>export your data</a>
+- suggested fix: change label to "export data" to remove both the imperative and the second-person possessive, consistent with the flat noun-phrase register used elsewhere.
 - source: browser
 
 ### [x] [LOW] /today, /log, /settings — global skip link targets <main id="main-content"> elements that have no tabIndex; focus delivery unreliable
