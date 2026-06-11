@@ -46,7 +46,7 @@
 - [x] Phase 21 — Content voice alignment (rewrite prompts.json task copy to participial form) — 25965a8
 - [x] Phase 22 — Voice coherence sweep (remaining stalled copy scope items) — e69536f
 - [x] Phase 23 — Data export (entries as JSON / Markdown via `/api/export`) — e7b86c1
-- [ ] Phase 24 — Account deletion (self-service delete account + all data)
+- [x] Phase 24 — Account deletion (self-service delete account + all data) — 909071e
 - [ ] Phase 25 — Loop issue mirroring (restore `scripts/loop-issue.mjs`)
 - [ ] Phase 26 — Evening theme (time-aware dark palette) — oversight experiment
 - [ ] Phase 27 — Month in review (quiet monthly recap on `/log`) — oversight experiment
