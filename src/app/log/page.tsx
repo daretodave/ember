@@ -1,5 +1,6 @@
 import { MosaicGlyph } from '@/components/mosaic/MosaicGlyph'
 import { get60DayEntries, formatDisplayDate, offsetDate, todayUtcDate } from '@/lib/entries'
+import { getMonthInReview } from '@/lib/monthInReview'
 import { getPromptForDate } from '@/lib/prompts'
 import { createClient } from '@/lib/supabase/server'
 import Link from 'next/link'
@@ -65,6 +66,8 @@ export default async function LogPage() {
   const quiet = 60 - entries.size
   const published = [...entries.values()].filter((e) => e.is_published).length
 
+  const monthInReview = getMonthInReview(entries, today)
+
   // Most recent written entry
   const sortedDates = [...entries.keys()].sort().reverse()
   const recentDate = sortedDates[0] ?? null
@@ -87,6 +90,13 @@ export default async function LogPage() {
 
       <main id="main-content" tabIndex={-1}>
       <section className={styles.mosaicWrap} aria-labelledby="mosaic-heading">
+        {monthInReview && (
+          <p className={styles.monthRecap}>
+            in {monthInReview.monthLabel} — {monthInReview.count}{' '}
+            {monthInReview.count === 1 ? 'entry' : 'entries'}. the longest sat on the{' '}
+            {monthInReview.longestDayOrdinal}.
+          </p>
+        )}
         <h1 id="mosaic-heading" className={styles.mosaicMeta}>the past 60 days</h1>
         <a href="#log-content" className="skip-link">skip to log</a>
         <LogMosaic tiles={tiles} />
