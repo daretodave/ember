@@ -445,7 +445,7 @@
 - issue: #35
 - resolution: wrapped entry conditional (article/footer and empty-state paragraph) in <section aria-label="log entries"> so the region is exposed as a named landmark in both populated and empty states. Shipped at 1c922ec.
 
-### [ ] [2.0] /settings — save button title abbreviates "public username" field as "username"
+### [x] [2.0] /settings — save button title abbreviates "public username" field as "username"
 - category: voice
 - impact: 2
 - ease: 10
@@ -454,6 +454,8 @@
 - evidence: src/app/settings/SettingsForm.tsx: title="saves display name, timezone, prompt variety, and username." vs. <label htmlFor="username">public username</label>
 - suggested fix: change title to "saves display name, timezone, prompt variety, and public username." to match the on-page field label exactly.
 - source: /critique pass 42 (commit b9b4b91)
+- issue: #37
+- resolution: changed title to "saves display name, timezone, prompt variety, and public username." in src/app/settings/SettingsForm.tsx. Shipped at 434edd7.
 
 ### [x] [4.8] /today — outer aria-live and role="alert" regions are not suppressed when focus mode is active
 - category: a11y

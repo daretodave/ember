@@ -326,7 +326,7 @@
 - source: browser
 - resolution: added aria-hidden="true" + tabIndex={-1} to the lockup Link in src/app/signin/page.tsx. Shipped at 567174d.
 
-### [LOW] /settings — save button title abbreviates "public username" field as "username"
+### [x] [LOW] /settings — save button title abbreviates "public username" field as "username"
 - pass: 42 (commit b9b4b91)
 - viewport: desktop
 - category: voice
@@ -334,6 +334,7 @@
 - evidence: src/app/settings/SettingsForm.tsx: title="saves display name, timezone, prompt variety, and username." vs. <label htmlFor="username">public username</label> — "public" is dropped in the tooltip.
 - suggested fix: change title to "saves display name, timezone, prompt variety, and public username." to match the on-page field label exactly.
 - source: browser
+- resolution: changed title to "saves display name, timezone, prompt variety, and public username." in src/app/settings/SettingsForm.tsx. Shipped at 434edd7.
 
 ### [x] [LOW] /today — focus overlay dialog labeled via aria-labelledby pointing to the full 16-word prompt
 - pass: 42 (commit b9b4b91)
