@@ -6,6 +6,33 @@
 
 ## Pending
 
+### [x] [4.5] /today — focus overlay uses aria-hidden={false} when active; prefer aria-hidden={!isFocus || undefined}
+- category: external-critique
+- impact: 5
+- ease: 9
+- note: scored 2026-06-11 — from critique pass 50 (61c7ec5); the focus overlay container at TodayEntry.tsx line 257 has aria-hidden={!isFocus}, which serialises to aria-hidden="false" when isFocus=true; per ARIA best practices the absence of aria-hidden (undefined) is preferred over the string "false" — same pattern corrected for aria-modal at 4db7e74; the existing attr correctly hides the overlay (aria-hidden="true") when isFocus=false
+- observation: src/app/today/TodayEntry.tsx line 257: aria-hidden={!isFocus} — renders aria-hidden="false" on the overlay dialog when focus mode is active
+- suggested fix: change aria-hidden={!isFocus} to aria-hidden={!isFocus || undefined} so the attribute is absent rather than "false" when the overlay is active
+- source: /critique pass 50 (commit 61c7ec5)
+- issue: [mirror-failed: 2026-06-11T04:11:00Z — loop-issue.mjs not present in scripts/]
+- resolution: changed aria-hidden={!isFocus} to aria-hidden={!isFocus || undefined} in src/app/today/TodayEntry.tsx. Shipped at 9c38398.
+
+### [x] [2.7] /today — focus trigger button label "focus" carries no accessible description of the overlay it activates
+- category: external-critique
+- impact: 3
+- ease: 9
+- note: scored 2026-06-11 — from critique pass 50 (61c7ec5); finding is a false-positive — focus trigger already has aria-label="enters a distraction-free writing view." at TodayEntry.tsx line 218 (added at 0867e95); Playwright innerText captures the visible "focus" text regardless of aria-label; AT users receive the full label
+- source: /critique pass 50 (commit 61c7ec5)
+- resolution: already addressed at 0867e95 (a11y: /today focus trigger aria-label); finding is a Playwright innerText false-positive. Closed without code change.
+
+### [x] [2.4] /today — abbreviated weekday labels in DayStrip not wrapped in aria-hidden
+- category: external-critique
+- impact: 3
+- ease: 8
+- note: scored 2026-06-11 — from critique pass 50 (61c7ec5); finding is a false-positive — abbreviated day labels already wrapped in aria-hidden="true" at DayStrip.tsx line 64; Playwright innerText captures CSS-visible elements regardless of aria-hidden; AT users see only the full tileStateLabel via the srOnly span
+- source: /critique pass 50 (commit 61c7ec5)
+- resolution: already addressed in DayStrip.tsx line 64; finding is a Playwright innerText false-positive. Closed without code change.
+
 ### [x] [4.5] /settings — display name and username inputs have no autocomplete attribute; violates WCAG 1.3.5
 - category: external-critique
 - impact: 5

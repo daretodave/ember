@@ -38,7 +38,7 @@
 - source: browser
 - resolution: added aria-hidden="true" to <section className={styles.previewMark}> in src/app/page.tsx. Shipped at 9ffab40.
 
-### [MED] /today — focus mode overlay always in DOM without aria-hidden when inactive; AT users encounter duplicate prompt and controls
+### [x] [MED] /today — focus mode overlay always in DOM without aria-hidden when inactive; AT users encounter duplicate prompt and controls
 - pass: 50 (commit 61c7ec5)
 - viewport: both
 - category: a11y
@@ -46,8 +46,9 @@
 - evidence: authenticated /today body text (desktop): "response\npublish\nfocus\nsave\n\nwhen published, this entry appears on the public profile.\n\nno public username is set. published entries will remain private until a username is added in settings.\n\nwhat's a texture...\n\nresponse\npublish\nsave\n\nwhen published, this entry appears on the public profile.\n\nno public username is set...\n\ndone writing" — the full prompt-and-controls block appears twice, first as the main view (with focus button) and then as the overlay (without focus button, ending with "done writing").
 - suggested fix: add aria-hidden={!isFocus || undefined} to the focus overlay container element in TodayEntry.tsx so the overlay is hidden from the AT tree when focus mode is inactive; mirror the inert approach applied to the header/day-strip at 18e5ed5.
 - source: browser
+- resolution: changed aria-hidden={!isFocus} to aria-hidden={!isFocus || undefined} in TodayEntry.tsx (note: aria-hidden={!isFocus} was already present, so the overlay was already hidden from AT when inactive; the || undefined avoids the aria-hidden="false" anti-pattern when active). Shipped at 9c38398.
 
-### [LOW] /today — 'focus' button label provides no description of the distraction-free mode it activates
+### [x] [LOW] /today — 'focus' button label provides no description of the distraction-free mode it activates
 - pass: 50 (commit 61c7ec5)
 - viewport: both
 - category: a11y
@@ -55,8 +56,9 @@
 - evidence: authenticated /today body text: "response\npublish\nfocus\nsave" — "focus" appears between publish and save with no descriptive copy adjacent; the dialog aria-label "focus mode" is on the overlay (not the trigger).
 - suggested fix: add aria-description="enter distraction-free writing mode" to the focus trigger button, or add a title="enter distraction-free writing mode." attribute (complete sentence with period per voice guide) so AT users and hover users can discover the control's purpose before activating it.
 - source: browser
+- resolution: false-positive — focus trigger already has aria-label="enters a distraction-free writing view." at TodayEntry.tsx line 218 (added at 0867e95). Playwright innerText captures visible text regardless of aria-label, creating apparent duplication. No code change needed; closed without shipping.
 
-### [LOW] /today — abbreviated weekday labels in day strip appear before full date strings; potentially not hidden from AT
+### [x] [LOW] /today — abbreviated weekday labels in day strip appear before full date strings; potentially not hidden from AT
 - pass: 50 (commit 61c7ec5)
 - viewport: both
 - category: a11y
@@ -64,6 +66,7 @@
 - evidence: authenticated /today body text: "Fri\nFri 5 Jun 2026 — no entry\nSat\nSat 6 Jun 2026 — no entry" — standalone "Fri" / "Sat" abbreviations appear before the full date-and-state strings in reading order.
 - suggested fix: wrap the abbreviated day label element in src/app/today/DayStrip.tsx with aria-hidden="true" so AT users hear only the full date string ("Fri 5 Jun 2026 — no entry") from the tile link's accessible label, not the preceding abbreviation.
 - source: browser
+- resolution: false-positive — abbreviated day label spans already have aria-hidden="true" at DayStrip.tsx line 64. Playwright innerText captures CSS-visible elements regardless of aria-hidden. AT users see only the srOnly full tileStateLabel. No code change needed; closed without shipping.
 
 ### [LOW] /log — <section className={styles.mosaicWrap}> wrapping the mosaic and H1 has no accessible name; not exposed as a named landmark
 - pass: 49 (commit 247ad7b)
