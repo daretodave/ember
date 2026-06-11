@@ -33,7 +33,7 @@ export default function LandingPage() {
           </p>
         </section>
 
-        <section className={styles.previewMark}>
+        <section className={styles.previewMark} aria-hidden="true">
           <MosaicPreview />
         </section>
 
