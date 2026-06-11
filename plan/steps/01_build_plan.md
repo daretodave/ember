@@ -48,7 +48,7 @@
 - [x] Phase 23 — Data export (entries as JSON / Markdown via `/api/export`) — e7b86c1
 - [x] Phase 24 — Account deletion (self-service delete account + all data) — 909071e
 - [x] Phase 25 — Loop issue mirroring (restore `scripts/loop-issue.mjs`) — 836db0c
-- [ ] Phase 26 — Evening theme (time-aware dark palette) — oversight experiment
+- [x] Phase 26 — Evening theme (time-aware dark palette) — 7e175dd
 - [ ] Phase 27 — Month in review (quiet monthly recap on `/log`) — oversight experiment
 - [ ] Phase 28 — Shareable entry card (dynamic OG image for public entries) — oversight experiment
 
