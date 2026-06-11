@@ -1,12 +1,66 @@
 # External-observer findings — Ember
 
-> Last pass: 2026-06-11 at commit 61c7ec5
-> Pass count: 50
+> Last pass: 2026-06-11 at commit 0107c11
+> Pass count: 51
 
 > Written by `/critique` after walking the live site as a
 > fresh-eyes visitor. Drained by `/iterate`.
 
 ## Pending
+
+### [MED] /signin — email input has no autocomplete="email"; WCAG 1.3.5 not met
+- pass: 51 (commit 0107c11)
+- viewport: both
+- category: a11y
+- observation: the email input on /signin has no autocomplete attribute. WCAG 1.3.5 (Identify Input Purpose, Level AA) requires autocomplete tokens on inputs that collect personal information so assistive technology and password managers can assist users. the settings form inputs received autocomplete fixes in pass 49 (shipped at 69be03d: autocomplete="name" on display name, autocomplete="username" on username), but the signin email input was not updated in that same pass.
+- evidence: src/app/signin/page.tsx: <input id="email" type="email" placeholder="email address" required ...> — no autocomplete attribute. compare src/app/settings/SettingsForm.tsx which received autocomplete="name" and autocomplete="username" at 69be03d.
+- suggested fix: add autocomplete="email" to the email input in src/app/signin/page.tsx.
+- source: browser
+
+### [LOW] / — .dayTask::before pseudo-element renders a 12×12px checkbox-like square before each task item in the 7-day preview; implies interactivity on read-only content
+- pass: 51 (commit 0107c11)
+- viewport: both
+- category: visual
+- observation: each "tiny task" row in the seven-day preview list has a 12×12px box injected via the .dayTask::before CSS pseudo-element. the marker has a border and border-radius matching the product's form inputs, resembling an empty checkbox. the task rows are read-only preview content with no click, focus, or toggle behavior, but the checkbox-like marker may lead a first-time visitor to attempt interaction.
+- evidence: src/app/page.module.css lines 180–188: .dayTask::before { content: ''; display: inline-block; width: 12px; height: 12px; border: 1px solid var(--color-border); border-radius: var(--radius-1); flex-shrink: 0; transform: translateY(2px); } — rendered before every task paragraph in the landing page seven-day preview.
+- suggested fix: remove the .dayTask::before pseudo-element and rely on the "tiny task —" text prefix as the sole visual differentiator; or replace the checkbox marker with a typographic marker (e.g. a dash or bullet) that does not imply interactivity.
+- source: browser
+
+### [LOW] /signin — confirmation copy "on its way" is colloquial; departs from the flat bookish register
+- pass: 51 (commit 0107c11)
+- viewport: both
+- category: voice
+- observation: after a successful link submission, the confirmation paragraph reads "a sign-in link is on its way." the phrase "on its way" is colloquial and does not match the flat, terse register used throughout the product. the following clause "the link opens today's prompt directly." uses "directly" as a filler adverb adding no information. all other copy uses plain declarative sentences without idiomatic phrasing.
+- evidence: src/app/signin/page.tsx confirmation paragraph: "a sign-in link is on its way. the link opens today's prompt directly. sign-in links expire after 24 hours. no password. no other mail."
+- suggested fix: rewrite as "a sign-in link has been sent. following it opens today's prompt. links expire after 24 hours. no password. no other mail." to restore the flat, plain register.
+- source: browser
+
+### [LOW] /signin — lockup Link carries aria-hidden="true" on a focusable element; ARIA anti-pattern
+- pass: 51 (commit 0107c11)
+- viewport: both
+- category: a11y
+- observation: the header lockup on /signin is a Next.js Link (anchor with href="/") with aria-hidden="true" and tabIndex={-1}. the ARIA authoring practices prohibit aria-hidden="true" on focusable elements: a link can receive programmatic focus via .focus() even when removed from the tab order by tabIndex={-1}. this was added at 567174d (pass 42) to suppress the duplicate lockup/back-to-home link pair, but the fix introduced a new ARIA conformance issue.
+- evidence: src/app/signin/page.tsx line 47: <Link href="/" className={styles.lockup} aria-label="ember — home" aria-hidden="true" tabIndex={-1}> — Link element with href is focusable; aria-hidden="true" must not be applied to focusable elements.
+- suggested fix: replace the lockup Link with a non-interactive <div> or <span> styled identically (removing href), keeping only the "back to home" Link as the navigational element; this removes the ARIA violation without reintroducing the duplicate-link issue that 567174d addressed.
+- source: browser
+
+### [LOW] /today — OnThisDay component renders <aside> with no accessible name; unnamed complementary landmark
+- pass: 51 (commit 0107c11)
+- viewport: both
+- category: a11y
+- observation: the OnThisDay component renders an <aside> element with no aria-label or aria-labelledby attribute. per the ARIA spec, an <aside> without an accessible name is exposed as an unnamed complementary landmark. AT users navigating by landmark encounter "complementary" with no identification of the region's content. the component renders conditionally when a prior-year entry exists on the same calendar day.
+- evidence: src/app/today/OnThisDay.tsx line 32: <aside className={styles.onThisDay}> — no aria-label or aria-labelledby attribute. the component renders a temporal excerpt link of the form "{yearText} — {excerpt}".
+- suggested fix: add aria-label="on this day" to the <aside> element in OnThisDay.tsx so the complementary landmark is identifiable when present.
+- source: browser
+
+### [LOW] /settings — <footer> element has no accessible name; contentinfo landmark is unnamed
+- pass: 51 (commit 0107c11)
+- viewport: both
+- category: a11y
+- observation: the settings page <footer> is a top-level sibling of <main>, giving it the contentinfo landmark role. it has no aria-label or aria-labelledby attribute, so AT users navigating to the contentinfo landmark hear only "contentinfo" with no indication the region contains the sign-out control. the sign-out button is the sole interactive element in the footer.
+- evidence: src/app/settings/page.tsx line 71: <footer className={styles.footer}> — no accessible name attribute. contains <form action="/auth/signout" method="POST"><button type="submit">sign out</button></form>.
+- suggested fix: add aria-label="account" to the <footer> element in settings/page.tsx so the contentinfo landmark is identifiable when AT users navigate by landmark.
+- source: browser
 
 ### [x] [LOW] /today, /log, /settings — global skip link targets <main id="main-content"> elements that have no tabIndex; focus delivery unreliable
 - pass: 49 (commit 247ad7b)
