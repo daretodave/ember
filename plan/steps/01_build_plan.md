@@ -49,7 +49,7 @@
 - [x] Phase 24 — Account deletion (self-service delete account + all data) — 909071e
 - [x] Phase 25 — Loop issue mirroring (restore `scripts/loop-issue.mjs`) — 836db0c
 - [x] Phase 26 — Evening theme (time-aware dark palette) — 7e175dd
-- [ ] Phase 27 — Month in review (quiet monthly recap on `/log`) — oversight experiment
+- [x] Phase 27 — Month in review (quiet monthly recap on `/log`) — bf9d39d
 - [ ] Phase 28 — Shareable entry card (dynamic OG image for public entries) — oversight experiment
 
 ## Per-phase scope
