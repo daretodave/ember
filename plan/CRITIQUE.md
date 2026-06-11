@@ -1,7 +1,7 @@
 # External-observer findings — Ember
 
-> Last pass: 2026-06-10 at commit 247ad7b
-> Pass count: 49
+> Last pass: 2026-06-11 at commit 61c7ec5
+> Pass count: 50
 
 > Written by `/critique` after walking the live site as a
 > fresh-eyes visitor. Drained by `/iterate`.
@@ -37,6 +37,33 @@
 - suggested fix: add aria-hidden="true" to the section if it is purely decorative and the MosaicPreview's own role="img" aria-label is sufficient, or add aria-label="writing log preview" to expose it as a named landmark consistent with the adjacent sections. the aria-hidden approach is preferable if the mosaic has no navigational purpose for AT users on the landing page.
 - source: browser
 - resolution: added aria-hidden="true" to <section className={styles.previewMark}> in src/app/page.tsx. Shipped at 9ffab40.
+
+### [MED] /today — focus mode overlay always in DOM without aria-hidden when inactive; AT users encounter duplicate prompt and controls
+- pass: 50 (commit 61c7ec5)
+- viewport: both
+- category: a11y
+- observation: the focus mode overlay renders in the DOM at all times, not only when focus mode is active. when focus mode is inactive, the overlay lacks aria-hidden, so AT users encounter a duplicate copy of the prompt, response area, publish toggle, save button, publish hint, and username warning, followed by a "done writing" exit control. the prior fix at 18e5ed5 applied inert to #page-header and #day-strip when isFocus=true but did not add aria-hidden to the overlay container when isFocus=false. sighted users are unaffected (CSS hides the overlay visually); AT users receive all overlay content in the reading order.
+- evidence: authenticated /today body text (desktop): "response\npublish\nfocus\nsave\n\nwhen published, this entry appears on the public profile.\n\nno public username is set. published entries will remain private until a username is added in settings.\n\nwhat's a texture...\n\nresponse\npublish\nsave\n\nwhen published, this entry appears on the public profile.\n\nno public username is set...\n\ndone writing" — the full prompt-and-controls block appears twice, first as the main view (with focus button) and then as the overlay (without focus button, ending with "done writing").
+- suggested fix: add aria-hidden={!isFocus || undefined} to the focus overlay container element in TodayEntry.tsx so the overlay is hidden from the AT tree when focus mode is inactive; mirror the inert approach applied to the header/day-strip at 18e5ed5.
+- source: browser
+
+### [LOW] /today — 'focus' button label provides no description of the distraction-free mode it activates
+- pass: 50 (commit 61c7ec5)
+- viewport: both
+- category: a11y
+- observation: the focus mode toggle button label is "focus" with no adjacent hint text, tooltip, or aria-description explaining what activating it does. the button opens a full-viewport distraction-free writing overlay (role="dialog" aria-label="focus mode"), but the trigger itself gives no indication of the UI change it initiates. a first-time visitor or AT user encounters a bare "focus" button adjacent to "publish" and "save" without being able to predict the action.
+- evidence: authenticated /today body text: "response\npublish\nfocus\nsave" — "focus" appears between publish and save with no descriptive copy adjacent; the dialog aria-label "focus mode" is on the overlay (not the trigger).
+- suggested fix: add aria-description="enter distraction-free writing mode" to the focus trigger button, or add a title="enter distraction-free writing mode." attribute (complete sentence with period per voice guide) so AT users and hover users can discover the control's purpose before activating it.
+- source: browser
+
+### [LOW] /today — abbreviated weekday labels in day strip appear before full date strings; potentially not hidden from AT
+- pass: 50 (commit 61c7ec5)
+- viewport: both
+- category: a11y
+- observation: each row in the day strip mini-log begins with a standalone abbreviated weekday label ("Fri", "Sat", etc.) as a separate text node, followed by the full accessible date string ("Fri 5 Jun 2026 — no entry"). if the abbreviated label is not wrapped in an aria-hidden element, AT users hear the day name twice per row: once as the standalone abbreviation and again as part of the full date string on the tile link's accessible label. the pass 43 DayStrip fix (4f5c4e4) addressed section-level landmark labeling but did not specifically address the abbreviated day text nodes.
+- evidence: authenticated /today body text: "Fri\nFri 5 Jun 2026 — no entry\nSat\nSat 6 Jun 2026 — no entry" — standalone "Fri" / "Sat" abbreviations appear before the full date-and-state strings in reading order.
+- suggested fix: wrap the abbreviated day label element in src/app/today/DayStrip.tsx with aria-hidden="true" so AT users hear only the full date string ("Fri 5 Jun 2026 — no entry") from the tile link's accessible label, not the preceding abbreviation.
+- source: browser
 
 ### [LOW] /log — <section className={styles.mosaicWrap}> wrapping the mosaic and H1 has no accessible name; not exposed as a named landmark
 - pass: 49 (commit 247ad7b)
