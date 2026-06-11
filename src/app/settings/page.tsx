@@ -67,6 +67,13 @@ export default async function SettingsPage() {
             view public profile
           </Link>
         )}
+        <a
+          href="/api/export"
+          className={styles.exportLink}
+          download
+        >
+          export your data
+        </a>
       </main>
       <footer className={styles.footer}>
         <form action="/auth/signout" method="POST">
