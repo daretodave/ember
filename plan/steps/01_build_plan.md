@@ -44,7 +44,7 @@
      preference for feature experiments. Briefs can be refined
      per-phase with /plan-a-phase before each ships. -->
 - [x] Phase 21 — Content voice alignment (rewrite prompts.json task copy to participial form) — 25965a8
-- [ ] Phase 22 — Voice coherence sweep (remaining stalled copy scope items)
+- [x] Phase 22 — Voice coherence sweep (remaining stalled copy scope items) — e69536f
 - [ ] Phase 23 — Data export (entries as JSON / Markdown via `/api/export`)
 - [ ] Phase 24 — Account deletion (self-service delete account + all data)
 - [ ] Phase 25 — Loop issue mirroring (restore `scripts/loop-issue.mjs`)
