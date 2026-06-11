@@ -15,6 +15,11 @@ test('GET /api/export?format=md returns 401 for unauthenticated requests', async
   expect(res.status()).toBe(401)
 })
 
+test('DELETE /api/account returns 401 for unauthenticated requests', async ({ request }) => {
+  const res = await request.delete('/api/account')
+  expect(res.status()).toBe(401)
+})
+
 test('/settings redirect has no horizontal overflow at 375px', async ({ page }) => {
   await page.setViewportSize({ width: 375, height: 812 })
   await page.goto('/settings')

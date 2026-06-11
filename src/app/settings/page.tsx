@@ -3,6 +3,7 @@ import { getProfile } from '@/lib/profile'
 import { createClient } from '@/lib/supabase/server'
 import Link from 'next/link'
 import { redirect } from 'next/navigation'
+import { DeleteAccountSection } from './DeleteAccountSection'
 import { SettingsForm } from './SettingsForm'
 import styles from './page.module.css'
 
@@ -74,6 +75,7 @@ export default async function SettingsPage() {
         >
           export your data
         </a>
+        <DeleteAccountSection />
       </main>
       <footer className={styles.footer}>
         <form action="/auth/signout" method="POST">
