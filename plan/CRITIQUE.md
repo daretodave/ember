@@ -1,7 +1,7 @@
 # External-observer findings — Ember
 
-> Last pass: 2026-06-12 at commit 4ca3212
-> Pass count: 54
+> Last pass: 2026-06-12 at commit 988fbcf
+> Pass count: 55
 
 > Written by `/critique` after walking the live site as a
 > fresh-eyes visitor. Drained by `/iterate`.
@@ -61,6 +61,60 @@
 - suggested fix: rewrite as "ember does not personalize the morning." to remove second-person address and stay in the impersonal declarative register of the surrounding copy.
 - source: browser
 - resolution: intentional brand rhetoric — the "your morning" / "does not personalize" contrast is the point of the sentence; keep as-is per /oversight 2026-06-11. Closed without code change.
+
+### [LOW] /signin — account-creation notice is the final sentence in the reassurance paragraph; new visitors may miss it
+- pass: 55 (commit 988fbcf)
+- viewport: both
+- category: comprehension
+- observation: the reassurance paragraph on /signin ends with "a new address creates an account." as the fourth and final sentence. a visitor scanning quickly reads "a sign-in link is sent to this address." (sentence 1) and may assume the form is sign-in-only, missing the account-creation path entirely. the landing page CTA had this sentence order corrected in pass 48 (shipped at aab597f) but the /signin reassurance paragraph was not updated in that same pass.
+- evidence: src/app/signin/page.tsx reassurance paragraph: "a sign-in link is sent to this address. it expires after 24 hours. no password. no other mail. a new address creates an account." — account-creation path is sentence 4 of 4. contrast src/app/page.tsx (post pass-48): "a new address creates an account. a returning address receives a sign-in link." — new-visitor path leads.
+- suggested fix: reorder the reassurance paragraph to lead with the account-creation path: "a new address creates an account. a returning address receives a sign-in link. no password. no other mail. the link expires after 24 hours."
+- source: browser
+
+### [LOW] /signin — expiry statement shifts grammatical register between pre-submission and post-submission states
+- pass: 55 (commit 988fbcf)
+- viewport: both
+- category: voice
+- observation: the reassurance paragraph (pre-submit) reads "it expires after 24 hours." — singular pronoun, refers to the specific link about to be sent. the confirmation paragraph (post-submit) reads "sign-in links expire after 24 hours." — generic plural with no specific referent. the same expiry fact is expressed in two different registers across back-to-back states of the same flow.
+- evidence: src/app/signin/page.tsx pre-submit reassurance: "a sign-in link is sent to this address. it expires after 24 hours." and post-submit confirmation: "sign-in links expire after 24 hours." — singular "it" vs. generic plural "sign-in links" for the same caveat.
+- suggested fix: align the confirmation to the singular definite register: change "sign-in links expire after 24 hours." to "the link expires after 24 hours." to refer to the specific link just sent.
+- source: browser
+
+### [LOW] / — landing page footer aria-label="ember" does not represent the full footer content; tagline absent from landmark name
+- pass: 55 (commit 988fbcf)
+- viewport: both
+- category: a11y
+- observation: the landing page footer has aria-label="ember" but contains two spans: "ember" and "a daily writing ritual." the accessible name reflects only the first span; the tagline is absent from the landmark name. AT users navigating to the contentinfo landmark hear "ember, contentinfo" with no indication the region also contains the product tagline.
+- evidence: src/app/page.tsx: <footer aria-label="ember"><span>ember</span><span>a daily writing ritual.</span></footer>. the pass-52 fix added aria-label="ember" to satisfy the unnamed-landmark finding; the value was not extended to cover both spans.
+- suggested fix: change aria-label to "ember — a daily writing ritual" to represent the full content of the footer region.
+- source: browser
+
+### [LOW] /signin — confirmation paragraph has both role="status" live region and programmatic focus; screen readers double-announce the confirmation
+- pass: 55 (commit 988fbcf)
+- viewport: both
+- category: a11y
+- observation: the confirmation paragraph carries role="status" (aria-live="polite" aria-atomic="true") and also receives programmatic focus via confirmationRef.current?.focus(). screen readers announce a live region update when content populates, then announce the focused element text again when focus arrives — the same confirmation message is spoken twice in rapid succession on VoiceOver and NVDA.
+- evidence: src/app/signin/page.tsx: <p ref={confirmationRef} role="status" tabIndex={-1}> receives .focus() in a useEffect triggered on state==="sent". role="status" and the programmatic focus movement are two separate announcement paths firing on the same state transition.
+- suggested fix: remove role="status" from the confirmation paragraph and rely solely on the programmatic focus delivery to surface the content to AT users, eliminating the duplicate announcement path.
+- source: browser
+
+### [LOW] / — sticky CTA aside has aria-label="sign in"; imperative verb phrase used as a landmark accessible name
+- pass: 55 (commit 988fbcf)
+- viewport: both
+- category: a11y
+- observation: the sticky CTA aside uses aria-label="sign in". landmark accessible names are surfaced directly to AT users via the landmark rotor and landmark navigation shortcuts. "sign in" is an imperative verb phrase — the same register the voice guide prohibits in interactive labels throughout the product. the pass-46 fix gave the link inside the aside aria-label="sign in to ember" but did not change the landmark name on the aside element itself.
+- evidence: src/app/page.tsx: <aside className={styles.cta} aria-label="sign in">. the link inside has aria-label="sign in to ember" (added at a prior pass) but the aside landmark label was not updated.
+- suggested fix: change the aside aria-label to a noun phrase such as "sign-in prompt" or "account access" to remove the imperative verb from the landmark name.
+- source: browser
+
+### [LOW] /log — meta description lists content types absent in the empty state; misleads visitors arriving from search
+- pass: 55 (commit 988fbcf)
+- viewport: both
+- category: comprehension
+- observation: the /log page meta description reads "a 60-day writing log — prompts, responses, and published entries." for a new user with no entries, none of those three content types are present on the page. a visitor arriving from a search result reads a description that lists content the page does not yet contain.
+- evidence: src/app/log/layout.tsx description: "a 60-day writing log — prompts, responses, and published entries." authenticated capture body text: "the log is empty. each entry fills a tile in the mosaic above. today's entry will appear here." — no prompts, responses, or published entries rendered.
+- suggested fix: change the description to "a 60-day writing log — one entry per day, shown as a mosaic and a list." to describe the page structure rather than its content state; holds in both empty and populated states.
+- source: browser
 
 ### [LOW] /signin — submit button label "send a link" is an imperative verb phrase
 - pass: 54 (commit 4ca3212)
