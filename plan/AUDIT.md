@@ -28,7 +28,7 @@
 - issue: #45
 - resolution: changed role="group" to role="alertdialog", added aria-modal="true" and aria-describedby="delete-warning"; added id="delete-warning" to warning paragraph. Shipped at 5fd8c9e.
 
-### [ ] [4.2] /today — H1 is the daily prompt question; no stable in-page page-identity heading
+### [x] [4.2] /today — H1 is the daily prompt question; no stable in-page page-identity heading
 - category: a11y
 - impact: 6
 - ease: 7
@@ -36,6 +36,8 @@
 - observation: src/app/today/page.tsx: <h1 className={styles.prompt} aria-describedby="today-date">{prompt}</h1> — H1 contains the daily prompt question
 - suggested fix: add a visually-styled or sr-only "today" heading inside H1 before the prompt, or promote "today" heading above and demote prompt to h2
 - source: /critique pass 54 (commit 4ca3212)
+- issue: #46
+- resolution: added <span className={styles.srOnly}>today — </span> inside H1 before prompt in src/app/today/page.tsx. Shipped at 8c951ee.
 
 ### [ ] [2.7] /signin — submit button idle label "send a link" is an imperative verb phrase; voice guide violation
 - category: voice

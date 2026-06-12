@@ -30,7 +30,7 @@
 - issue: #44
 - resolution: added .headerNav a:focus-visible and .ctaBtn:focus-visible with outline: 2px solid var(--color-accent); outline-offset: 2px to src/app/page.module.css. Shipped at 32c93fb.
 
-### [MED] /today — H1 is the daily prompt question; no stable in-page page-identity heading
+### [x] [MED] /today — H1 is the daily prompt question; no stable in-page page-identity heading
 - pass: 54 (commit 4ca3212)
 - viewport: both
 - category: a11y
@@ -38,6 +38,8 @@
 - evidence: src/app/today/page.tsx line 83: <h1 className={styles.prompt} aria-describedby="today-date">{prompt}</h1> — the H1 contains the day's prompt question. line 81: <p className={styles.dateStamp} id="today-date">{displayDate}</p> — date is a paragraph, not a heading. the page <title> is "ember · today" but the in-page heading tree has only the prompt question as H1 followed by H2 "the last seven days" in the day strip.
 - suggested fix: add a visually-styled or sr-only <span className={styles.srOnly}>today</span> before the prompt inside the H1 element, or promote a "today" heading above the prompt and demote the prompt to an <h2>, so the heading tree has a stable page identifier followed by the day's question.
 - source: browser
+- issue: #46
+- resolution: added <span className={styles.srOnly}>today — </span> inside H1 before prompt in src/app/today/page.tsx. Shipped at 8c951ee.
 
 ### [MED] /settings — delete confirmation panel uses role="group" instead of role="alertdialog"; warning not announced on panel open
 - pass: 54 (commit 4ca3212)
