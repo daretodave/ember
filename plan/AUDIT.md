@@ -17,7 +17,7 @@
 - issue: #44
 - resolution: added .headerNav a:focus-visible and .ctaBtn:focus-visible with outline: 2px solid var(--color-accent); outline-offset: 2px to src/app/page.module.css. Shipped at 32c93fb.
 
-### [ ] [4.8] /settings — delete confirmation panel uses role="group" instead of role="alertdialog"; warning not announced on open
+### [x] [4.8] /settings — delete confirmation panel uses role="group" instead of role="alertdialog"; warning not announced on open
 - category: a11y
 - impact: 6
 - ease: 8
@@ -25,6 +25,8 @@
 - observation: src/app/settings/DeleteAccountSection.tsx line 42: <div className={styles.deleteConfirm} role="group" aria-label="confirm account deletion"> — role="group" does not carry alertdialog semantics
 - suggested fix: change role="group" to role="alertdialog" and add aria-modal="true" plus aria-describedby pointing to the warning paragraph's id
 - source: /critique pass 54 (commit 4ca3212)
+- issue: #45
+- resolution: changed role="group" to role="alertdialog", added aria-modal="true" and aria-describedby="delete-warning"; added id="delete-warning" to warning paragraph. Shipped at 5fd8c9e.
 
 ### [ ] [4.2] /today — H1 is the daily prompt question; no stable in-page page-identity heading
 - category: a11y
