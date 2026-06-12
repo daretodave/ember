@@ -1,7 +1,7 @@
 # Ember — phase candidates
 
-> Last pass: 2026-06-12 at commit 622e2c6
-> Pass count: 134
+> Last pass: 2026-06-12 at commit 8f0b023
+> Pass count: 135
 
 Candidates proposed by `/expand`. Promotion to `plan/steps/01_build_plan.md`
 happens only via local `/oversight` — never from the cloud loop.
@@ -88,13 +88,13 @@ happens only via local `/oversight` — never from the cloud loop.
 ### [ ] [score 4.0] Sub-threshold polish sweep — SEO, a11y, and semantics micro-fixes orphaned below iterate threshold
 
 - proposed: 2026-06-03, expand pass 90
-- status: 2026-06-12 — 13 scope items pending (2, 3, 5, 20, 21, 22, 23,
-  24, 25, 26, 27, 28, 29). Items 24-27 added from critique passes 51-52;
-  items 28-29 added from critique pass 53 (expand pass 133). Resolved
-  since filing: 1 (37d4e8a), 4 (81072fa), 6 (f13c754), 7 (0101b1b),
-  8 (c3671bd), 9 (af927c1), 10 (567174d), 11 (43d1502), 12 (1c922ec),
-  13 (02aa0fd), 14 (faedf1d), 15 (549ebbc), 16 (18aef81), 17 (04498b9),
-  18 (9ffab40), 19 (0de5180).
+- status: 2026-06-12 — 14 scope items pending (2, 3, 5, 20, 21, 22, 23,
+  24, 25, 26, 27, 28, 29, 30). Items 24-27 added from critique passes 51-52;
+  items 28-29 added from critique pass 53 (expand pass 133); item 30 added
+  from critique pass 54 (expand pass 135). Resolved since filing: 1 (37d4e8a),
+  4 (81072fa), 6 (f13c754), 7 (0101b1b), 8 (c3671bd), 9 (af927c1),
+  10 (567174d), 11 (43d1502), 12 (1c922ec), 13 (02aa0fd), 14 (faedf1d),
+  15 (549ebbc), 16 (18aef81), 17 (04498b9), 18 (9ffab40), 19 (0de5180).
 - source signals (pending items):
   - item 2: / Twitter card images array lacks alt text [1.8] — `twitter.images` is a plain string array; next.js requires object array `[{ url, alt }]` to emit an alt attribute (fix: `twitter: { images: [{ url: '/opengraph-image', alt: 'ember — a daily writing ritual' }] }` in src/app/layout.tsx)
   - item 3: / MosaicPreview aria-label "60 days of practice" misrepresents illustrative content [1.8] (fix: change to "an example of 60 days tracked" in src/components/mosaic/MosaicPreview.tsx)
@@ -109,6 +109,7 @@ happens only via local `/oversight` — never from the cloud loop.
   - item 27: /settings — DeleteAccountSection has no aria-live region; deletion in-progress state not announced to screen readers [1.8] (pass 52) — the SettingsForm pattern (<span aria-live="polite">) is not replicated for the destructive flow; fix: add <span aria-live="polite">{deleting ? 'deleting.' : ''}</span> inside DeleteAccountSection
   - item 28: /signin — openGraph metadata block has no images property; share card renders without brand image [2.4] (pass 53) — next.js per-route openGraph merging replaces the full key when a child page overrides it; the /signin layout's openGraph block omits images so links shared to /signin produce an imageless card; fix: add images: [{ url: '/opengraph-image', width: 1200, height: 630, alt: 'ember — a daily writing ritual' }] to the openGraph block in src/app/signin/layout.tsx and the same twitter.images to the twitter block
   - item 29: /log — entry article header contains date as plain text with no heading element; heading hierarchy inside the article is broken [2.4] (pass 53) — the <header> inside <article aria-label="most recent entry"> contains the date string with no heading element; AT users navigating by heading encounter the prompt h2 as the first and only heading inside the article; fix: wrap the date string in <h2> and demote the prompt line to <p className={styles.entryPrompt}>
+  - item 30: /today — writing surface has no landmark or heading; heading navigation skips directly from H1 (prompt) to H2 (day strip) [2.4] (pass 54) — task check, textarea, and controls render as a flat fragment in TodayEntry.tsx with no section element; AT users navigating by landmark cannot reach the writing surface; fix: wrap TodayEntry outermost content in <section aria-label="today's entry"> (src/app/today/TodayEntry.tsx)
 - rationale: easy-to-fix findings accumulate below the iterate threshold with no resolution path; each is a 1–2 line change. They don't cluster with any other candidate but together form a coherent one-pass batch closing real gaps in SEO metadata, AT accuracy, and touch-device comprehension.
 - proposed scope: 1 phase — ship all pending items above
 - estimated phases: 1
@@ -139,17 +140,18 @@ happens only via local `/oversight` — never from the cloud loop.
 ### [ ] [score 4.0] Voice coherence tail — post-phase 22 copy register gaps on new UI surfaces
 
 - proposed: 2026-06-12, expand pass 132
-- status: 2026-06-12 — 2 scope items added from critique pass 53 (expand pass
-  133): / CTA anthropomorphism and /log "browse by date" imperative. Now 5
-  scope items total; all copy-only changes.
+- status: 2026-06-12 — item 6 added from critique pass 54 (expand pass 135):
+  /signin submit button idle label imperative. Now 6 scope items total; all
+  copy-only changes.
 - source signals:
   - critique pass 51 (commit 0107c11): /signin — confirmation paragraph "a sign-in link is on its way." uses colloquial idiom departing from the flat bookish register; "directly" adverb in following clause adds no information [LOW] — fix: "a sign-in link has been sent. following it opens today's prompt. links expire after 24 hours. no password. no other mail."
   - critique pass 52 (commit b4d3589): /settings — delete-account confirmation warning reads "permanently delete your account" — second-person possessive within the same two-step flow that uses first-person for the trigger button ("delete my account") [LOW] — fix: "this will permanently delete the account and all entries. there is no undo."
   - critique pass 52 (commit b4d3589): /settings — export link "export your data" uses second-person possessive and imperative verb; voice guide prohibits second-person imperative copy [LOW] — fix: "export data" (noun phrase, no direct address)
   - critique pass 53 (commit 3f0847a): / — sticky CTA "today's prompt is waiting." uses mild anthropomorphism inconsistent with the flat declarative register; the prompt does not have agency [LOW] — fix: "today's prompt is ready." (src/app/page.tsx <p className={styles.ctaCopy}>)
   - critique pass 53 (commit 3f0847a): /log — "browse by date" link label uses second-person imperative verb; all other navigational copy uses noun phrases [LOW] — fix: change link text to "all entries" or "full log" (src/app/log/page.tsx <Link href={`/log/${recentDate}`}>browse by date</Link>)
-- rationale: phases 21-22 addressed the voice coherence backlog explicitly. But phases 23-24 (data export, account deletion) shipped new UI surfaces with the same register issues, and /signin + /log accumulated two additional voice violations in critique pass 53. Together these 5 findings span 4 surfaces and form a coherent one-pass close of the voice coherence arc. Copy-only; all five are 1-line changes.
-- proposed scope: 1 phase — ship all five scope items above
+  - critique pass 54 (commit 4ca3212): /signin — submit button idle label "send a link" is a bare imperative verb phrase; voice guide prohibits second-person imperative copy [LOW] — "send" is the only imperative verb in the page UI copy; fix: change idle label to "get a sign-in link" (src/app/signin/page.tsx: idle state of submit button)
+- rationale: phases 21-22 addressed the voice coherence backlog explicitly. But phases 23-24 (data export, account deletion) shipped new UI surfaces with the same register issues, and /signin + /log accumulated additional voice violations in critique passes 53-54. Together these 6 findings span 4 surfaces and form a coherent one-pass close of the voice coherence arc. Copy-only; all are 1-line changes.
+- proposed scope: 1 phase — ship all six scope items above
 - estimated phases: 1
 - conflicts: none — copy-only; no new routes; no schema changes
 
