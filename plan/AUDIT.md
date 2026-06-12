@@ -6,6 +6,52 @@
 
 ## Pending
 
+### [ ] [5.4] / — landing page .headerNav a and .ctaBtn have no :focus-visible styles; keyboard focus invisible
+- category: a11y
+- impact: 6
+- ease: 9
+- note: scored 2026-06-12 — from critique pass 54 (4ca3212); tailwind v4 preflight resets browser default outlines; the header nav link and sticky CTA button have no :focus or :focus-visible rule; keyboard users see no visible focus indicator on either interactive element; identical gap corrected on /signin email input at bd69812 but landing page was not updated in that pass
+- observation: src/app/page.module.css: no :focus or :focus-visible rule for .headerNav a or .ctaBtn; contrast src/app/signin/page.module.css: .fieldInput:focus { outline: 2px solid var(--color-accent); outline-offset: 2px; }
+- suggested fix: add .headerNav a:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 2px; } and .ctaBtn:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 2px; } to src/app/page.module.css
+- source: /critique pass 54 (commit 4ca3212)
+- issue: #44
+
+### [ ] [4.8] /settings — delete confirmation panel uses role="group" instead of role="alertdialog"; warning not announced on open
+- category: a11y
+- impact: 6
+- ease: 8
+- note: scored 2026-06-12 — from critique pass 54 (4ca3212); ARIA authoring practices specify role="alertdialog" for dialogs containing an alert that requires user action; with role="group" the destructive warning is not proactively announced to AT users when the panel opens
+- observation: src/app/settings/DeleteAccountSection.tsx line 42: <div className={styles.deleteConfirm} role="group" aria-label="confirm account deletion"> — role="group" does not carry alertdialog semantics
+- suggested fix: change role="group" to role="alertdialog" and add aria-modal="true" plus aria-describedby pointing to the warning paragraph's id
+- source: /critique pass 54 (commit 4ca3212)
+
+### [ ] [4.2] /today — H1 is the daily prompt question; no stable in-page page-identity heading
+- category: a11y
+- impact: 6
+- ease: 7
+- note: scored 2026-06-12 — from critique pass 54 (4ca3212); H1 contains the day's prompt — changes daily; AT users navigating by heading encounter a different H1 every day with no structural heading indicating page context; date is a plain paragraph before H1
+- observation: src/app/today/page.tsx: <h1 className={styles.prompt} aria-describedby="today-date">{prompt}</h1> — H1 contains the daily prompt question
+- suggested fix: add a visually-styled or sr-only "today" heading inside H1 before the prompt, or promote "today" heading above and demote prompt to h2
+- source: /critique pass 54 (commit 4ca3212)
+
+### [ ] [2.7] /signin — submit button idle label "send a link" is an imperative verb phrase; voice guide violation
+- category: voice
+- impact: 3
+- ease: 9
+- note: scored 2026-06-12 — from critique pass 54 (4ca3212); "send" is a bare imperative verb; the voice guide prohibits second-person imperative copy; button was previously changed from "send the link" to "send a link" at 41d6df7 to fix article framing but imperative verb remains
+- observation: src/app/signin/page.tsx: {state === 'sending' ? 'sending.' : 'send a link'} — idle-state label uses imperative form
+- suggested fix: change idle label to "get a sign-in link" or similar noun-phrase form to match voice guide
+- source: /critique pass 54 (commit 4ca3212)
+
+### [ ] [2.4] /today — writing surface has no landmark or heading; heading navigation skips writing area
+- category: a11y
+- impact: 3
+- ease: 8
+- note: scored 2026-06-12 — from critique pass 54 (4ca3212); task check, textarea, and controls render as flat fragment with no section element; AT users navigating by heading skip the writing surface entirely
+- observation: src/app/today/TodayEntry.tsx renders task, textarea, and controls as flat fragment with no heading or section element between H1 (prompt) and H2 (day strip)
+- suggested fix: wrap TodayEntry outermost content in <section aria-label="today's entry"> so AT users can navigate via landmark rotor
+- source: /critique pass 54 (commit 4ca3212)
+
 ### [x] [3.2] /signin, /today, /settings — error fallback copy uses second-person imperative "try again."; voice guide violation
 - category: voice
 - impact: 4

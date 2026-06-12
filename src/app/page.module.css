@@ -47,6 +47,11 @@
   border-bottom-color: var(--color-ink);
 }
 
+.headerNav a:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
 /* ----------- hero ----------- */
 .hero {
   max-width: 720px;
@@ -299,6 +304,11 @@
 
 .ctaBtn:hover {
   opacity: 0.88;
+}
+
+.ctaBtn:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
 }
 
 /* ----------- responsive ----------- */
