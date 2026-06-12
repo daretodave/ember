@@ -16,6 +16,17 @@
 - source: /critique pass 53 (commit 3f0847a)
 - issue: #42
 
+### [x] [3.6] / and /signin — footer elements have no accessible name; contentinfo landmarks unnamed on anonymous pages
+- category: a11y
+- impact: 4
+- ease: 9
+- note: scored 2026-06-12 — from critique pass 52 (b4d3589); both anonymous-route footers carry the contentinfo landmark role but have no aria-label or aria-labelledby; AT users navigating to the contentinfo landmark hear only "contentinfo" with no indication of the region's content
+- observation: src/app/page.tsx line 84: <footer className={styles.footerCredit}> — no accessible name. src/app/signin/page.tsx line 108: <footer className={styles.footer}> — no accessible name. Both contain only presentational text spans.
+- suggested fix: add aria-label="ember" to the <footer> element in src/app/page.tsx and src/app/signin/page.tsx
+- source: /critique pass 52 (commit b4d3589)
+- issue: #43
+- resolution: added aria-label="ember" to <footer> in src/app/page.tsx and src/app/signin/page.tsx. Shipped this tick.
+
 ### [ ] [2.7] /log — "browse by date" link label uses second-person imperative verb
 - category: voice
 - impact: 3

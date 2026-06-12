@@ -132,7 +132,7 @@
 - issue: #41
 - resolution: added tabIndex={-1} to <main id="main-content"> in src/app/page.tsx and src/app/signin/page.tsx. Shipped at bc52684.
 
-### [LOW] / and /signin — footer elements have no accessible name; contentinfo landmarks unnamed on anonymous pages
+### [x] [LOW] / and /signin — footer elements have no accessible name; contentinfo landmarks unnamed on anonymous pages
 - pass: 52 (commit b4d3589)
 - viewport: both
 - category: a11y
@@ -140,6 +140,8 @@
 - evidence: src/app/page.tsx line 84: <footer className={styles.footerCredit}> — no accessible name. src/app/signin/page.tsx line 107: <footer className={styles.footer}> — no accessible name. both contain only presentational text spans.
 - suggested fix: add aria-label="ember" to the <footer> element in src/app/page.tsx and src/app/signin/page.tsx, consistent with what the settings footer fix will apply.
 - source: browser
+- issue: #43
+- resolution: added aria-label="ember" to <footer> in src/app/page.tsx and src/app/signin/page.tsx. Shipped this tick.
 
 ### [LOW] / — sticky CTA <aside> rendered after <footer> in DOM; complementary landmark follows contentinfo in AT landmark order
 - pass: 52 (commit b4d3589)
