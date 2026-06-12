@@ -53,7 +53,7 @@ export default function SigninPage() {
         </Link>
       </header>
 
-      <main className={styles.main} id="main-content">
+      <main className={styles.main} id="main-content" tabIndex={-1}>
         <div className={styles.card}>
           <h1 className={styles.title}>sign in.</h1>
           <p className={styles.tagline}>one prompt and one tiny task each morning.</p>

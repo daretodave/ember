@@ -21,7 +21,7 @@ export default function LandingPage() {
         </nav>
       </header>
 
-      <main id="main-content">
+      <main id="main-content" tabIndex={-1}>
         <section className={styles.hero} aria-labelledby="hero-heading">
           <h1 id="hero-heading" className={styles.pitch}>
             ten minutes of <span className={styles.pitchAccent}>intention</span> before the day swallows you.
