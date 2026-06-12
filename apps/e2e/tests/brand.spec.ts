@@ -48,3 +48,9 @@ test('root page head contains OG image meta tag', async ({ page }) => {
   const ogImage = page.locator('meta[property="og:image"]')
   await expect(ogImage).toHaveCount(1)
 })
+
+test('per-entry OG image returns 200 with image/png for non-existent entry (fallback)', async ({ request }) => {
+  const res = await request.get('/u/doesnotexist/2026-06-12/opengraph-image')
+  expect(res.status()).toBe(200)
+  expect(res.headers()['content-type']).toContain('image/png')
+})
