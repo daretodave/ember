@@ -1,7 +1,7 @@
 # External-observer findings — Ember
 
-> Last pass: 2026-06-12 at commit 3f0847a
-> Pass count: 53
+> Last pass: 2026-06-12 at commit 4ca3212
+> Pass count: 54
 
 > Written by `/critique` after walking the live site as a
 > fresh-eyes visitor. Drained by `/iterate`.
@@ -18,6 +18,60 @@
 - source: browser
 - issue: #40
 - resolution: added outline: 2px solid var(--color-accent); outline-offset: 2px to .fieldInput:focus in src/app/signin/page.module.css. Shipped at bd69812.
+
+### [MED] / — landing page interactive elements (.headerNav a, .ctaBtn) have no :focus-visible styles; keyboard focus invisible
+- pass: 54 (commit 4ca3212)
+- viewport: both
+- category: a11y
+- observation: the header nav "sign in" link and the sticky CTA "sign in" button have no :focus or :focus-visible rule in src/app/page.module.css. tailwind v4 preflight resets browser default outlines. keyboard users tabbing through the landing page see no visible focus indicator on either interactive element. the identical gap was corrected on the /signin email input in pass 53 (added outline: 2px solid var(--color-accent) to .fieldInput:focus), but the landing page links and button were not updated in that same pass.
+- evidence: src/app/page.module.css: no :focus or :focus-visible rule for .headerNav a or .ctaBtn. src/app/globals.css: @import 'tailwindcss' (v4.1.6) applies preflight that resets outlines. compare src/app/signin/page.module.css: .fieldInput:focus { outline: 2px solid var(--color-accent); outline-offset: 2px; } — explicit outline added at bd69812.
+- suggested fix: add .headerNav a:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 2px; } and .ctaBtn:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 2px; } to src/app/page.module.css.
+- source: browser
+
+### [MED] /today — H1 is the daily prompt question; no stable in-page page-identity heading
+- pass: 54 (commit 4ca3212)
+- viewport: both
+- category: a11y
+- observation: the page H1 is the day's prompt text — a daily-changing question (e.g. "what's the longest you've gone without speaking to someone, and what was it like?"). no static heading identifies the page or the writing surface. AT users navigating by heading encounter a different H1 every day with no structural heading indicating page context. the date is a plain paragraph before the H1, not a heading element.
+- evidence: src/app/today/page.tsx line 83: <h1 className={styles.prompt} aria-describedby="today-date">{prompt}</h1> — the H1 contains the day's prompt question. line 81: <p className={styles.dateStamp} id="today-date">{displayDate}</p> — date is a paragraph, not a heading. the page <title> is "ember · today" but the in-page heading tree has only the prompt question as H1 followed by H2 "the last seven days" in the day strip.
+- suggested fix: add a visually-styled or sr-only <span className={styles.srOnly}>today</span> before the prompt inside the H1 element, or promote a "today" heading above the prompt and demote the prompt to an <h2>, so the heading tree has a stable page identifier followed by the day's question.
+- source: browser
+
+### [MED] /settings — delete confirmation panel uses role="group" instead of role="alertdialog"; warning not announced on panel open
+- pass: 54 (commit 4ca3212)
+- viewport: both
+- category: a11y
+- observation: the two-step account deletion confirmation panel uses role="group" aria-label="confirm account deletion". destructive confirmation panels containing a warning message that requires user decision should use role="alertdialog" so screen readers interrupt reading and announce the panel's warning text when it opens. with role="group", the warning "permanently delete your account and all entries. there is no undo." is not proactively surfaced to AT users when the panel appears.
+- evidence: src/app/settings/DeleteAccountSection.tsx line 42: <div className={styles.deleteConfirm} role="group" aria-label="confirm account deletion"> — role="group" does not carry alertdialog semantics. the ARIA authoring practices specify role="alertdialog" for dialogs that contain an alert message and require user action before continuing.
+- suggested fix: change role="group" to role="alertdialog" and add aria-modal="true" plus aria-describedby pointing to the warning paragraph's id on the confirmation panel div, so screen readers announce the destructive warning when the panel opens.
+- source: browser
+
+### [LOW] / — "ember does not personalize your morning" uses second-person possessive; breaks impersonal register
+- pass: 54 (commit 4ca3212)
+- viewport: both
+- category: voice
+- observation: the first sentence of the closing section reads "ember does not personalize your morning." the word "your" is the only second-person address in the landing page's main content. all surrounding copy uses impersonal declarative framing ("a missed day leaves no mark", "the log shows what is, not what isn't", "there are no streaks to break"). the second-person address is conspicuous in a careful reading.
+- evidence: src/app/page.tsx line 74: <p>ember does not personalize your morning.</p> — "your" is second-person possessive. contrast line 77: "a missed day leaves no mark." — fully impersonal declarative register throughout the rest of the closing section.
+- suggested fix: rewrite as "ember does not personalize the morning." to remove second-person address and stay in the impersonal declarative register of the surrounding copy.
+- source: browser
+
+### [LOW] /signin — submit button label "send a link" is an imperative verb phrase
+- pass: 54 (commit 4ca3212)
+- viewport: both
+- category: voice
+- observation: the form submit button renders the label "send a link" in its idle state. "send" is a bare imperative verb. the voice guide prohibits second-person imperative copy. all other interactive labels on /signin use noun phrases or declarative framing ("sign in", "back to home", "email"). this is the only imperative verb in the page's UI copy.
+- evidence: src/app/signin/page.tsx: {state === 'sending' ? 'sending.' : 'send a link'} — "send a link" is the idle-state label on <button type="submit">. contrast "sending." (in-progress state) which is declarative; the idle state alone uses the imperative form.
+- suggested fix: change the idle label to a noun phrase such as "get a sign-in link" or a declarative form to match the register used throughout the page.
+- source: browser
+
+### [LOW] /today — writing surface has no landmark or heading; heading navigation skips directly from H1 (prompt) to H2 (day strip)
+- pass: 54 (commit 4ca3212)
+- viewport: both
+- category: a11y
+- observation: the heading outline for /today is H1 (prompt question) then H2 "the last seven days" in the day strip. the task check, response textarea, and publish/focus/save controls sit between them in DOM order but are not wrapped in any named section or headed by any element. AT users navigating by heading bypass the entire writing surface. AT users navigating by landmark reach only the main landmark — no sub-region identifies the writing area within it.
+- evidence: src/app/today/page.tsx line 83: <h1>{prompt}</h1>. src/app/today/TodayEntry.tsx renders task, textarea, and controls as a flat fragment with no heading or section element. src/app/today/DayStrip.tsx line 53: <h2 id="day-strip-heading">the last seven days</h2>. nothing between H1 and H2 in the heading tree; no landmark sub-region in main enclosing TodayEntry.
+- suggested fix: wrap TodayEntry's outermost rendered content in <section aria-label="today's entry"> so AT users can navigate directly to the writing surface via the landmark rotor without requiring a visible heading.
+- source: browser
 
 ### [LOW] /signin — openGraph metadata has no images property; share card renders without image
 - pass: 53 (commit 3f0847a)
