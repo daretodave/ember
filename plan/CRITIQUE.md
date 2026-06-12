@@ -1,12 +1,66 @@
 # External-observer findings — Ember
 
-> Last pass: 2026-06-11 at commit b4d3589
-> Pass count: 52
+> Last pass: 2026-06-12 at commit 3f0847a
+> Pass count: 53
 
 > Written by `/critique` after walking the live site as a
 > fresh-eyes visitor. Drained by `/iterate`.
 
 ## Pending
+
+### [MED] /signin — email input removes browser focus outline with no adequate replacement; WCAG 2.4.11 gap
+- pass: 53 (commit 3f0847a)
+- viewport: both
+- category: a11y
+- observation: the email input on /signin sets outline: none and relies solely on a 1px border-bottom color change (from hairline gray to the accent color) as the focus indicator. WCAG 2.4.11 (Focus Appearance, Level AA in 2.2) requires a focus indicator with sufficient minimum area. a single-pixel bottom-border transition does not meet the perimeter-area threshold around the component. this is a distinct gap from the missing autocomplete finding (pass 51) — that addresses input purpose; this addresses keyboard focus visibility.
+- evidence: src/app/signin/page.module.css: .fieldInput { outline: none; } and .fieldInput:focus { border-bottom-color: var(--color-accent); } — no box-shadow, no outline replacement, no ring of sufficient thickness.
+- suggested fix: remove outline: none from .fieldInput and add .fieldInput:focus { outline: 2px solid var(--color-accent); outline-offset: 2px; } to provide a visible focus ring meeting WCAG 2.4.11.
+- source: browser
+
+### [LOW] /signin — openGraph metadata has no images property; share card renders without image
+- pass: 53 (commit 3f0847a)
+- viewport: both
+- category: seo
+- observation: the /signin layout exports an openGraph block with title, description, and url but no images array. Next.js per-route metadata merging replaces the full openGraph key when a child page overrides it, so the root layout's global OG image (/opengraph-image) is not inherited. a link shared to /signin produces an imageless social card rather than the branded OG image that all other pages emit.
+- evidence: src/app/signin/layout.tsx: openGraph: { title: 'ember · sign in', description: '...', url: '/signin' } — no images property. contrast src/app/layout.tsx which sets images: [{ url: '/opengraph-image', width: 1200, height: 630, alt: '...' }].
+- suggested fix: add images: [{ url: '/opengraph-image', width: 1200, height: 630, alt: 'ember — a daily writing ritual' }] to the openGraph block in src/app/signin/layout.tsx and the same twitter.images to the twitter block.
+- source: browser
+
+### [LOW] /signin, /today, /settings — error fallback copy uses second-person imperative "try again."
+- pass: 53 (commit 3f0847a)
+- viewport: both
+- category: voice
+- observation: error messages across three routes use the pattern "something went wrong. try again." and "network error. try again." the phrase "try again" is a second-person imperative verb. the voice guide prohibits second-person imperative copy. all non-error copy on these pages uses declarative framing.
+- evidence: src/app/signin/page.tsx: setErrorMsg(... ?? 'something went wrong. try again.'); src/app/today/TodayEntry.tsx lines 113 and 117: 'something went wrong. try again.' and 'network error. try again.'; src/app/settings/SettingsForm.tsx lines 101 and 105: same pattern.
+- suggested fix: change all three occurrences to "something went wrong. save failed." and "network error. save failed." (or "the link could not be sent." on /signin) to keep the flat declarative register.
+- source: browser
+
+### [LOW] / — sticky CTA "today's prompt is waiting." uses mild anthropomorphism inconsistent with the flat declarative register
+- pass: 53 (commit 3f0847a)
+- viewport: both
+- category: voice
+- observation: the closing sticky CTA opens with "today's prompt is waiting." the phrase implies the prompt has agency — it is doing something. the rest of the landing page uses strictly inanimate declarative phrasing: "one prompt and one tiny task each morning", "a missed day leaves no mark", "the log shows what is, not what isn't." the construction reads as a soft imperative nudge, departing from the flat bookish register established throughout.
+- evidence: src/app/page.tsx: today&apos;s prompt is waiting. — in the <p className={styles.ctaCopy}> preceding the sign-in link.
+- suggested fix: rewrite as "today's prompt is ready." to keep the inanimate declarative register.
+- source: browser
+
+### [LOW] /log — "browse by date" link label uses second-person imperative verb
+- pass: 53 (commit 3f0847a)
+- viewport: both
+- category: voice
+- observation: in the log entries section footer, a link reads "browse by date". "browse" is an imperative verb. the voice guide states no second-person imperative copy. all other navigational copy in the product uses noun phrases or declarative framing ("writing log", "today's entry", "log"). this link navigates to the most recent entry's dated URL (/log/{date}).
+- evidence: src/app/log/page.tsx: <Link href={`/log/${recentDate}`}>browse by date</Link> — inside the entryFoot section below the most recent entry card.
+- suggested fix: change link text to "all entries" or "full log" to replace the imperative verb with a descriptive noun phrase consistent with the product's voice.
+- source: browser
+
+### [LOW] /log — entry article header contains date as plain text with no heading element; heading hierarchy inside article is broken
+- pass: 53 (commit 3f0847a)
+- viewport: both
+- category: a11y
+- observation: the <header> element inside <article aria-label="most recent entry"> contains a plain text date string (e.g. "Thu 12 Jun 2026") with no wrapping heading element. the next heading in the article is <h2> containing the prompt text. AT users navigating by heading inside the article encounter the prompt as the first and only heading — the date appears as plain text with no heading role. the heading hierarchy skips from the article's accessible name directly to the prompt h2 with no date-level structural heading.
+- evidence: src/app/log/page.tsx: <header className={styles.entryDate}>{formatDisplayDate(recentDate!)} {recentDate === today && ' · today'}</header> followed by <h2 className={styles.entryPrompt}>{recentPrompt.prompt}</h2> — the date text inside <header> has no heading wrapper.
+- suggested fix: wrap the date string inside the article <header> in an <h2> element and demote the prompt line to <p className={styles.entryPrompt}>, so the heading sequence within the article is: date (h2) → prompt (paragraph).
+- source: browser
 
 ### [MED] /signin — email input has no autocomplete="email"; WCAG 1.3.5 not met
 - pass: 51 (commit 0107c11)
