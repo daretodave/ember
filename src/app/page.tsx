@@ -81,7 +81,7 @@ export default function LandingPage() {
         </section>
       </main>
 
-      <footer className={styles.footerCredit}>
+      <footer className={styles.footerCredit} aria-label="ember">
         <span>ember</span>
         <span>a daily writing ritual.</span>
       </footer>

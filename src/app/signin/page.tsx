@@ -105,7 +105,7 @@ export default function SigninPage() {
         </div>
       </main>
 
-      <footer className={styles.footer}>
+      <footer className={styles.footer} aria-label="ember">
         <span>ember</span>
       </footer>
     </div>
