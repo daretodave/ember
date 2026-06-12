@@ -79,6 +79,7 @@ export default function SigninPage() {
                   className={styles.fieldInput}
                   id="email"
                   type="email"
+                  autoComplete="email"
                   placeholder="email address"
                   required
                   disabled={state === 'sending'}
