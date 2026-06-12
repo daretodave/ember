@@ -1,7 +1,7 @@
 # Ember — phase candidates
 
-> Last pass: 2026-06-11 at commit 5e4e1ce
-> Pass count: 131
+> Last pass: 2026-06-12 at commit 1102a0d
+> Pass count: 132
 
 Candidates proposed by `/expand`. Promotion to `plan/steps/01_build_plan.md`
 happens only via local `/oversight` — never from the cloud loop.
@@ -31,13 +31,15 @@ happens only via local `/oversight` — never from the cloud loop.
 ### [ ] [score 4.5] E2e authenticated flow coverage
 
 - proposed: 2026-05-21, expand pass 4 (re-evaluated from "Considered below threshold", was score 3.0)
-- status: 2026-06-11 — still zero authenticated e2e coverage. Phases 13–20
-  all shipped without it; ~6 weeks of post-phase iterate fixes likewise.
-  Uncovered risk surface: entry write/save on /today, edit flow on
-  /log/[date], task toggle, focus mode, on-this-day, offline draft
-  persistence (IndexedDB + service worker), timezone combobox
-  open/filter/select. All existing Playwright specs test only
-  anonymous/redirect state.
+- status: 2026-06-12 — still zero authenticated e2e coverage. Phases 13–28
+  all shipped without it; 7+ weeks of post-phase iterate fixes likewise.
+  Uncovered risk surface widened by phases 21-28: entry write/save on
+  /today, edit flow on /log/[date], task toggle, focus mode, on-this-day,
+  offline draft persistence (IndexedDB + service worker), timezone combobox
+  open/filter/select, data export (/api/export), account deletion flow,
+  evening theme dark-mode rendering, month-in-review conditional component,
+  shareable OG image route (/u/[username]/[date]/opengraph-image). All
+  existing Playwright specs still test only anonymous/redirect state.
 - source signals:
   - commit pattern: 20 phases shipped; all Playwright specs still test only anonymous/redirect state — `today.spec.ts` verifies redirect to `/signin` but never the actual write flow
   - phase 19 (PWA + offline): service-worker path and IndexedDB draft persistence have zero e2e coverage; phase 20 (timezone combobox) shipped with unit tests only
@@ -86,11 +88,12 @@ happens only via local `/oversight` — never from the cloud loop.
 ### [ ] [score 4.0] Sub-threshold polish sweep — SEO, a11y, and semantics micro-fixes orphaned below iterate threshold
 
 - proposed: 2026-06-03, expand pass 90
-- status: 2026-06-11 — 7 scope items pending (2, 3, 5, 20, 21, 22, 23).
-  Resolved since filing: 1 (filed in error — already fixed at 37d4e8a),
-  4 (81072fa), 6 (f13c754), 7 (0101b1b), 8 (c3671bd), 9 (af927c1),
-  10 (567174d), 11 (43d1502), 12 (1c922ec), 13 (02aa0fd), 14 (faedf1d),
-  15 (549ebbc), 16 (18aef81), 17 (04498b9), 18 (9ffab40), 19 (0de5180).
+- status: 2026-06-12 — 11 scope items pending (2, 3, 5, 20, 21, 22, 23,
+  24, 25, 26, 27). Items 24-27 added from critique passes 51-52. Resolved
+  since filing: 1 (37d4e8a), 4 (81072fa), 6 (f13c754), 7 (0101b1b),
+  8 (c3671bd), 9 (af927c1), 10 (567174d), 11 (43d1502), 12 (1c922ec),
+  13 (02aa0fd), 14 (faedf1d), 15 (549ebbc), 16 (18aef81), 17 (04498b9),
+  18 (9ffab40), 19 (0de5180).
 - source signals (pending items):
   - item 2: / Twitter card images array lacks alt text [1.8] — `twitter.images` is a plain string array; next.js requires object array `[{ url, alt }]` to emit an alt attribute (fix: `twitter: { images: [{ url: '/opengraph-image', alt: 'ember — a daily writing ritual' }] }` in src/app/layout.tsx)
   - item 3: / MosaicPreview aria-label "60 days of practice" misrepresents illustrative content [1.8] (fix: change to "an example of 60 days tracked" in src/components/mosaic/MosaicPreview.tsx)
@@ -99,10 +102,47 @@ happens only via local `/oversight` — never from the cloud loop.
   - item 21: / sign-in CTA aside contains no heading element [1.8] (fix: visually-hidden h2 "sign in" inside the aside)
   - item 22: /settings page has no sub-headings for individual setting groups [1.8] (fix: fieldset/legend or muted h2 above each group)
   - item 23: / mosaic preview has no visible caption for sighted users [1.8] (fix: short visible caption in previewMark section, e.g. "the log, over time.")
+  - item 24: / — .dayTask::before pseudo-element renders 12×12px checkbox-like square before each task in the 7-day preview [1.8] (pass 51) — read-only preview rows have an empty-checkbox marker that implies interactivity; fix: remove the pseudo-element and rely on the "tiny task —" text prefix (src/app/page.module.css lines 180-188)
+  - item 25: /today — OnThisDay <aside> has no aria-label; complementary landmark is unnamed [1.8] (pass 51) — fix: add aria-label="on this day" to the <aside> element in src/app/today/OnThisDay.tsx
+  - item 26: /settings — <footer> has no accessible name; contentinfo landmark unnamed [1.8] (pass 51) — fix: add aria-label="account" to <footer> in src/app/settings/page.tsx
+  - item 27: /settings — DeleteAccountSection has no aria-live region; deletion in-progress state not announced to screen readers [1.8] (pass 52) — the SettingsForm pattern (<span aria-live="polite">) is not replicated for the destructive flow; fix: add <span aria-live="polite">{deleting ? 'deleting.' : ''}</span> inside DeleteAccountSection
 - rationale: easy-to-fix findings accumulate below the iterate threshold with no resolution path; each is a 1–2 line change. They don't cluster with any other candidate but together form a coherent one-pass batch closing real gaps in SEO metadata, AT accuracy, and touch-device comprehension.
 - proposed scope: 1 phase — ship all pending items above
 - estimated phases: 1
 - conflicts: none — no new routes; no schema changes; metadata and attribute-only changes plus two small visible-copy additions
+
+### [ ] [score 5.0] Anonymous page a11y compliance — WCAG AA and ARIA gaps on / and /signin missed by the authenticated-page passes
+
+- proposed: 2026-06-12, expand pass 132
+- status: 2026-06-12 — new candidate; all 5 scope items from critique passes 51-52
+- source signals:
+  - critique pass 51 (commit 0107c11): /signin — email input has no autocomplete="email" [MED] — WCAG 1.3.5 requires autocomplete tokens on personal-information inputs; settings form inputs received autocomplete fixes at 69be03d but /signin was missed
+  - critique pass 51 (commit 0107c11): /signin — lockup Link carries aria-hidden="true" on a focusable element [LOW] — ARIA authoring practices prohibit aria-hidden on focusable elements; the fix at 567174d addressed the duplicate-link issue but introduced a new conformance violation
+  - critique pass 52 (commit b4d3589): / and /signin — <main id="main-content"> missing tabIndex={-1} [LOW] — the authenticated pages (today, log, settings) received this fix at 88f8cb9 but the two anonymous routes were not updated in that pass
+  - critique pass 52 (commit b4d3589): / and /signin — <footer> elements have no accessible name; contentinfo landmarks unnamed on anonymous pages [LOW] — the same structural gap fixed for /settings in pass 51 scope item 26 applies to the landing page and sign-in page
+  - critique pass 52 (commit b4d3589): / — sticky CTA <aside> rendered after <footer> in DOM; complementary landmark follows contentinfo in AT landmark order [LOW] — AT users navigating by landmark encounter contentinfo (conventionally page-end) before the CTA complementary region, risking the CTA being missed
+- rationale: the authenticated pages (today, log, settings) received systematic a11y compliance passes from passes 38 through 49 — skip link targets, footer landmarks, form autocomplete, aria-hidden patterns. The two anonymous routes (/ and /signin) were missed in each of those passes. Critique passes 51-52 independently surfaced 5 findings across the same URL family. Together they represent a coherent compliance gap on the pages first-time visitors see. One [MED] (WCAG 1.3.5) and one true ARIA violation (aria-hidden on focusable) make this more than sub-threshold polish.
+- proposed scope: 1 phase —
+  (1) /signin: add autocomplete="email" to email input in src/app/signin/page.tsx
+  (2) /signin: replace the lockup Link with a non-interactive <div> styled identically (removing href), keeping only the "back to home" Link navigational, to eliminate the aria-hidden-on-focusable ARIA violation
+  (3) / and /signin: add tabIndex={-1} to <main id="main-content"> in src/app/page.tsx and src/app/signin/page.tsx
+  (4) / and /signin: add aria-label="ember" to <footer> in src/app/page.tsx and src/app/signin/page.tsx
+  (5) /: move the <aside className={styles.cta}> before the <footer> in src/app/page.tsx DOM source order so AT landmark navigation encounters the CTA before contentinfo
+- estimated phases: 1
+- conflicts: none — no new routes; no schema changes; (2) requires care to preserve visual lockup appearance and the "back to home" accessible link
+
+### [ ] [score 4.0] Voice coherence tail — post-phase 22 copy register gaps on new UI surfaces
+
+- proposed: 2026-06-12, expand pass 132
+- status: 2026-06-12 — new candidate; 3 scope items from critique passes 51-52
+- source signals:
+  - critique pass 51 (commit 0107c11): /signin — confirmation paragraph "a sign-in link is on its way." uses colloquial idiom departing from the flat bookish register; "directly" adverb in following clause adds no information [LOW] — fix: "a sign-in link has been sent. following it opens today's prompt. links expire after 24 hours. no password. no other mail."
+  - critique pass 52 (commit b4d3589): /settings — delete-account confirmation warning reads "permanently delete your account" — second-person possessive within the same two-step flow that uses first-person for the trigger button ("delete my account") [LOW] — fix: "this will permanently delete the account and all entries. there is no undo."
+  - critique pass 52 (commit b4d3589): /settings — export link "export your data" uses second-person possessive and imperative verb; voice guide prohibits second-person imperative copy [LOW] — fix: "export data" (noun phrase, no direct address)
+- rationale: phases 21-22 addressed the voice coherence backlog explicitly. But phases 23-24 (data export, account deletion) shipped new UI surfaces with the same register issues, and /signin accumulated one additional colloquialism missed in phase 22's scope. These three findings from two consecutive critique passes form a coherent tail: voice copy on newly-shipped surfaces that phase 22 couldn't have covered because the surfaces didn't exist then. Together they close the voice coherence arc across the full product surface. Copy-only; all three are 1-line changes.
+- proposed scope: 1 phase — ship all three scope items above
+- estimated phases: 1
+- conflicts: none — copy-only; no new routes; no schema changes; /signin confirmation paragraph, DeleteAccountSection.tsx warning text, settings/page.tsx export link label
 
 ## Promoted
 
