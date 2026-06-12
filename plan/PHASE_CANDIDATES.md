@@ -1,7 +1,7 @@
 # Ember — phase candidates
 
-> Last pass: 2026-06-12 at commit 1102a0d
-> Pass count: 132
+> Last pass: 2026-06-12 at commit 590bf2b
+> Pass count: 133
 
 Candidates proposed by `/expand`. Promotion to `plan/steps/01_build_plan.md`
 happens only via local `/oversight` — never from the cloud loop.
@@ -88,8 +88,9 @@ happens only via local `/oversight` — never from the cloud loop.
 ### [ ] [score 4.0] Sub-threshold polish sweep — SEO, a11y, and semantics micro-fixes orphaned below iterate threshold
 
 - proposed: 2026-06-03, expand pass 90
-- status: 2026-06-12 — 11 scope items pending (2, 3, 5, 20, 21, 22, 23,
-  24, 25, 26, 27). Items 24-27 added from critique passes 51-52. Resolved
+- status: 2026-06-12 — 13 scope items pending (2, 3, 5, 20, 21, 22, 23,
+  24, 25, 26, 27, 28, 29). Items 24-27 added from critique passes 51-52;
+  items 28-29 added from critique pass 53 (expand pass 133). Resolved
   since filing: 1 (37d4e8a), 4 (81072fa), 6 (f13c754), 7 (0101b1b),
   8 (c3671bd), 9 (af927c1), 10 (567174d), 11 (43d1502), 12 (1c922ec),
   13 (02aa0fd), 14 (faedf1d), 15 (549ebbc), 16 (18aef81), 17 (04498b9),
@@ -106,43 +107,51 @@ happens only via local `/oversight` — never from the cloud loop.
   - item 25: /today — OnThisDay <aside> has no aria-label; complementary landmark is unnamed [1.8] (pass 51) — fix: add aria-label="on this day" to the <aside> element in src/app/today/OnThisDay.tsx
   - item 26: /settings — <footer> has no accessible name; contentinfo landmark unnamed [1.8] (pass 51) — fix: add aria-label="account" to <footer> in src/app/settings/page.tsx
   - item 27: /settings — DeleteAccountSection has no aria-live region; deletion in-progress state not announced to screen readers [1.8] (pass 52) — the SettingsForm pattern (<span aria-live="polite">) is not replicated for the destructive flow; fix: add <span aria-live="polite">{deleting ? 'deleting.' : ''}</span> inside DeleteAccountSection
+  - item 28: /signin — openGraph metadata block has no images property; share card renders without brand image [2.4] (pass 53) — next.js per-route openGraph merging replaces the full key when a child page overrides it; the /signin layout's openGraph block omits images so links shared to /signin produce an imageless card; fix: add images: [{ url: '/opengraph-image', width: 1200, height: 630, alt: 'ember — a daily writing ritual' }] to the openGraph block in src/app/signin/layout.tsx and the same twitter.images to the twitter block
+  - item 29: /log — entry article header contains date as plain text with no heading element; heading hierarchy inside the article is broken [2.4] (pass 53) — the <header> inside <article aria-label="most recent entry"> contains the date string with no heading element; AT users navigating by heading encounter the prompt h2 as the first and only heading inside the article; fix: wrap the date string in <h2> and demote the prompt line to <p className={styles.entryPrompt}>
 - rationale: easy-to-fix findings accumulate below the iterate threshold with no resolution path; each is a 1–2 line change. They don't cluster with any other candidate but together form a coherent one-pass batch closing real gaps in SEO metadata, AT accuracy, and touch-device comprehension.
 - proposed scope: 1 phase — ship all pending items above
 - estimated phases: 1
 - conflicts: none — no new routes; no schema changes; metadata and attribute-only changes plus two small visible-copy additions
 
-### [ ] [score 5.0] Anonymous page a11y compliance — WCAG AA and ARIA gaps on / and /signin missed by the authenticated-page passes
+### [ ] [score 3.5] Anonymous page a11y compliance — WCAG AA and ARIA gaps on / and /signin missed by the authenticated-page passes
 
 - proposed: 2026-06-12, expand pass 132
-- status: 2026-06-12 — new candidate; all 5 scope items from critique passes 51-52
+- status: 2026-06-12 — rescored 5.0 → 3.5; items 1, 3, 4 resolved by iterate
+  this tick (565a6ee, bc52684, 3794674). 2 scope items remain: (2) /signin
+  lockup Link aria-hidden-on-focusable ARIA violation; (5) / CTA aside
+  DOM order after footer. Rescored: original signal multiplicity still holds
+  but the MED-severity signal (autocomplete) resolved; remaining items are
+  2 LOW findings with no conformance-level upgrade.
 - source signals:
-  - critique pass 51 (commit 0107c11): /signin — email input has no autocomplete="email" [MED] — WCAG 1.3.5 requires autocomplete tokens on personal-information inputs; settings form inputs received autocomplete fixes at 69be03d but /signin was missed
-  - critique pass 51 (commit 0107c11): /signin — lockup Link carries aria-hidden="true" on a focusable element [LOW] — ARIA authoring practices prohibit aria-hidden on focusable elements; the fix at 567174d addressed the duplicate-link issue but introduced a new conformance violation
-  - critique pass 52 (commit b4d3589): / and /signin — <main id="main-content"> missing tabIndex={-1} [LOW] — the authenticated pages (today, log, settings) received this fix at 88f8cb9 but the two anonymous routes were not updated in that pass
-  - critique pass 52 (commit b4d3589): / and /signin — <footer> elements have no accessible name; contentinfo landmarks unnamed on anonymous pages [LOW] — the same structural gap fixed for /settings in pass 51 scope item 26 applies to the landing page and sign-in page
-  - critique pass 52 (commit b4d3589): / — sticky CTA <aside> rendered after <footer> in DOM; complementary landmark follows contentinfo in AT landmark order [LOW] — AT users navigating by landmark encounter contentinfo (conventionally page-end) before the CTA complementary region, risking the CTA being missed
-- rationale: the authenticated pages (today, log, settings) received systematic a11y compliance passes from passes 38 through 49 — skip link targets, footer landmarks, form autocomplete, aria-hidden patterns. The two anonymous routes (/ and /signin) were missed in each of those passes. Critique passes 51-52 independently surfaced 5 findings across the same URL family. Together they represent a coherent compliance gap on the pages first-time visitors see. One [MED] (WCAG 1.3.5) and one true ARIA violation (aria-hidden on focusable) make this more than sub-threshold polish.
+  - critique pass 51 (commit 0107c11): /signin — email input has no autocomplete="email" [MED] — WCAG 1.3.5; RESOLVED at 565a6ee
+  - critique pass 51 (commit 0107c11): /signin — lockup Link carries aria-hidden="true" on a focusable element [LOW] — ARIA authoring practices prohibit aria-hidden on focusable elements; PENDING
+  - critique pass 52 (commit b4d3589): / and /signin — <main id="main-content"> missing tabIndex={-1} [LOW] — RESOLVED at bc52684
+  - critique pass 52 (commit b4d3589): / and /signin — <footer> elements have no accessible name; contentinfo landmarks unnamed on anonymous pages [LOW] — RESOLVED at 3794674
+  - critique pass 52 (commit b4d3589): / — sticky CTA <aside> rendered after <footer> in DOM; complementary landmark follows contentinfo in AT landmark order [LOW] — PENDING
+- rationale: the original 5-item compliance gap has been drained to 2 remaining items. The lockup Link aria-hidden-on-focusable is a true ARIA conformance violation (authoring practices explicitly prohibit aria-hidden on focusable elements); the CTA DOM order issue affects landmark navigation for AT users on the landing page. Together they're still worth a focused pass even at the reduced scope.
 - proposed scope: 1 phase —
-  (1) /signin: add autocomplete="email" to email input in src/app/signin/page.tsx
-  (2) /signin: replace the lockup Link with a non-interactive <div> styled identically (removing href), keeping only the "back to home" Link navigational, to eliminate the aria-hidden-on-focusable ARIA violation
-  (3) / and /signin: add tabIndex={-1} to <main id="main-content"> in src/app/page.tsx and src/app/signin/page.tsx
-  (4) / and /signin: add aria-label="ember" to <footer> in src/app/page.tsx and src/app/signin/page.tsx
-  (5) /: move the <aside className={styles.cta}> before the <footer> in src/app/page.tsx DOM source order so AT landmark navigation encounters the CTA before contentinfo
+  (1) /signin: replace the lockup Link with a non-interactive <div> styled identically (removing href), keeping only the "back to home" Link navigational, to eliminate the aria-hidden-on-focusable ARIA violation (src/app/signin/page.tsx line 47)
+  (2) /: move the <aside className={styles.cta}> before the <footer> in src/app/page.tsx DOM source order so AT landmark navigation encounters the CTA complementary landmark before contentinfo
 - estimated phases: 1
-- conflicts: none — no new routes; no schema changes; (2) requires care to preserve visual lockup appearance and the "back to home" accessible link
+- conflicts: none — no new routes; no schema changes; (1) requires care to preserve visual lockup appearance and the "back to home" accessible link
 
 ### [ ] [score 4.0] Voice coherence tail — post-phase 22 copy register gaps on new UI surfaces
 
 - proposed: 2026-06-12, expand pass 132
-- status: 2026-06-12 — new candidate; 3 scope items from critique passes 51-52
+- status: 2026-06-12 — 2 scope items added from critique pass 53 (expand pass
+  133): / CTA anthropomorphism and /log "browse by date" imperative. Now 5
+  scope items total; all copy-only changes.
 - source signals:
   - critique pass 51 (commit 0107c11): /signin — confirmation paragraph "a sign-in link is on its way." uses colloquial idiom departing from the flat bookish register; "directly" adverb in following clause adds no information [LOW] — fix: "a sign-in link has been sent. following it opens today's prompt. links expire after 24 hours. no password. no other mail."
   - critique pass 52 (commit b4d3589): /settings — delete-account confirmation warning reads "permanently delete your account" — second-person possessive within the same two-step flow that uses first-person for the trigger button ("delete my account") [LOW] — fix: "this will permanently delete the account and all entries. there is no undo."
   - critique pass 52 (commit b4d3589): /settings — export link "export your data" uses second-person possessive and imperative verb; voice guide prohibits second-person imperative copy [LOW] — fix: "export data" (noun phrase, no direct address)
-- rationale: phases 21-22 addressed the voice coherence backlog explicitly. But phases 23-24 (data export, account deletion) shipped new UI surfaces with the same register issues, and /signin accumulated one additional colloquialism missed in phase 22's scope. These three findings from two consecutive critique passes form a coherent tail: voice copy on newly-shipped surfaces that phase 22 couldn't have covered because the surfaces didn't exist then. Together they close the voice coherence arc across the full product surface. Copy-only; all three are 1-line changes.
-- proposed scope: 1 phase — ship all three scope items above
+  - critique pass 53 (commit 3f0847a): / — sticky CTA "today's prompt is waiting." uses mild anthropomorphism inconsistent with the flat declarative register; the prompt does not have agency [LOW] — fix: "today's prompt is ready." (src/app/page.tsx <p className={styles.ctaCopy}>)
+  - critique pass 53 (commit 3f0847a): /log — "browse by date" link label uses second-person imperative verb; all other navigational copy uses noun phrases [LOW] — fix: change link text to "all entries" or "full log" (src/app/log/page.tsx <Link href={`/log/${recentDate}`}>browse by date</Link>)
+- rationale: phases 21-22 addressed the voice coherence backlog explicitly. But phases 23-24 (data export, account deletion) shipped new UI surfaces with the same register issues, and /signin + /log accumulated two additional voice violations in critique pass 53. Together these 5 findings span 4 surfaces and form a coherent one-pass close of the voice coherence arc. Copy-only; all five are 1-line changes.
+- proposed scope: 1 phase — ship all five scope items above
 - estimated phases: 1
-- conflicts: none — copy-only; no new routes; no schema changes; /signin confirmation paragraph, DeleteAccountSection.tsx warning text, settings/page.tsx export link label
+- conflicts: none — copy-only; no new routes; no schema changes
 
 ## Promoted
 
