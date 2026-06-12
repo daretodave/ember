@@ -58,7 +58,7 @@
 - suggested fix: change idle label to "get a sign-in link" or similar noun-phrase form to match voice guide
 - source: /critique pass 54 (commit 4ca3212)
 
-### [ ] [2.4] /today — writing surface has no landmark or heading; heading navigation skips writing area
+### [x] [2.4] /today — writing surface has no landmark or heading; heading navigation skips writing area
 - category: a11y
 - impact: 3
 - ease: 8
@@ -66,6 +66,8 @@
 - observation: src/app/today/TodayEntry.tsx renders task, textarea, and controls as flat fragment with no heading or section element between H1 (prompt) and H2 (day strip)
 - suggested fix: wrap TodayEntry outermost content in <section aria-label="today's entry"> so AT users can navigate via landmark rotor
 - source: /critique pass 54 (commit 4ca3212)
+- issue: #48
+- resolution: converted outer div to <section aria-label="today's entry"> in TodayEntry.tsx. Shipped at 0922be8.
 
 ### [x] [3.2] /signin, /today, /settings — error fallback copy uses second-person imperative "try again."; voice guide violation
 - category: voice

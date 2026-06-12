@@ -71,7 +71,7 @@
 - suggested fix: change the idle label to a noun phrase such as "get a sign-in link" or a declarative form to match the register used throughout the page.
 - source: browser
 
-### [LOW] /today — writing surface has no landmark or heading; heading navigation skips directly from H1 (prompt) to H2 (day strip)
+### [x] [LOW] /today — writing surface has no landmark or heading; heading navigation skips directly from H1 (prompt) to H2 (day strip)
 - pass: 54 (commit 4ca3212)
 - viewport: both
 - category: a11y
@@ -79,6 +79,8 @@
 - evidence: src/app/today/page.tsx line 83: <h1>{prompt}</h1>. src/app/today/TodayEntry.tsx renders task, textarea, and controls as a flat fragment with no heading or section element. src/app/today/DayStrip.tsx line 53: <h2 id="day-strip-heading">the last seven days</h2>. nothing between H1 and H2 in the heading tree; no landmark sub-region in main enclosing TodayEntry.
 - suggested fix: wrap TodayEntry's outermost rendered content in <section aria-label="today's entry"> so AT users can navigate directly to the writing surface via the landmark rotor without requiring a visible heading.
 - source: browser
+- issue: #48
+- resolution: converted outer div to <section aria-label="today's entry"> in TodayEntry.tsx. Shipped at 0922be8.
 
 ### [LOW] /signin — openGraph metadata has no images property; share card renders without image
 - pass: 53 (commit 3f0847a)
