@@ -41,7 +41,7 @@
 - issue: #46
 - resolution: added <span className={styles.srOnly}>today — </span> inside H1 before prompt in src/app/today/page.tsx. Shipped at 8c951ee.
 
-### [MED] /settings — delete confirmation panel uses role="group" instead of role="alertdialog"; warning not announced on panel open
+### [x] [MED] /settings — delete confirmation panel uses role="group" instead of role="alertdialog"; warning not announced on panel open
 - pass: 54 (commit 4ca3212)
 - viewport: both
 - category: a11y
@@ -49,8 +49,10 @@
 - evidence: src/app/settings/DeleteAccountSection.tsx line 42: <div className={styles.deleteConfirm} role="group" aria-label="confirm account deletion"> — role="group" does not carry alertdialog semantics. the ARIA authoring practices specify role="alertdialog" for dialogs that contain an alert message and require user action before continuing.
 - suggested fix: change role="group" to role="alertdialog" and add aria-modal="true" plus aria-describedby pointing to the warning paragraph's id on the confirmation panel div, so screen readers announce the destructive warning when the panel opens.
 - source: browser
+- issue: #45
+- resolution: changed role="group" to role="alertdialog", added aria-modal="true" and aria-describedby="delete-warning"; added id="delete-warning" to warning paragraph. Shipped at 5fd8c9e.
 
-### [LOW] / — "ember does not personalize your morning" uses second-person possessive; breaks impersonal register
+### [x] [LOW] / — "ember does not personalize your morning" uses second-person possessive; breaks impersonal register
 - pass: 54 (commit 4ca3212)
 - viewport: both
 - category: voice
@@ -58,6 +60,7 @@
 - evidence: src/app/page.tsx line 74: <p>ember does not personalize your morning.</p> — "your" is second-person possessive. contrast line 77: "a missed day leaves no mark." — fully impersonal declarative register throughout the rest of the closing section.
 - suggested fix: rewrite as "ember does not personalize the morning." to remove second-person address and stay in the impersonal declarative register of the surrounding copy.
 - source: browser
+- resolution: intentional brand rhetoric — the "your morning" / "does not personalize" contrast is the point of the sentence; keep as-is per /oversight 2026-06-11. Closed without code change.
 
 ### [LOW] /signin — submit button label "send a link" is an imperative verb phrase
 - pass: 54 (commit 4ca3212)
