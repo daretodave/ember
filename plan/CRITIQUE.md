@@ -19,7 +19,7 @@
 - issue: #40
 - resolution: added outline: 2px solid var(--color-accent); outline-offset: 2px to .fieldInput:focus in src/app/signin/page.module.css. Shipped at bd69812.
 
-### [MED] / — landing page interactive elements (.headerNav a, .ctaBtn) have no :focus-visible styles; keyboard focus invisible
+### [x] [MED] / — landing page interactive elements (.headerNav a, .ctaBtn) have no :focus-visible styles; keyboard focus invisible
 - pass: 54 (commit 4ca3212)
 - viewport: both
 - category: a11y
@@ -27,6 +27,8 @@
 - evidence: src/app/page.module.css: no :focus or :focus-visible rule for .headerNav a or .ctaBtn. src/app/globals.css: @import 'tailwindcss' (v4.1.6) applies preflight that resets outlines. compare src/app/signin/page.module.css: .fieldInput:focus { outline: 2px solid var(--color-accent); outline-offset: 2px; } — explicit outline added at bd69812.
 - suggested fix: add .headerNav a:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 2px; } and .ctaBtn:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 2px; } to src/app/page.module.css.
 - source: browser
+- issue: #44
+- resolution: added .headerNav a:focus-visible and .ctaBtn:focus-visible with outline: 2px solid var(--color-accent); outline-offset: 2px to src/app/page.module.css. Shipped at 32c93fb.
 
 ### [MED] /today — H1 is the daily prompt question; no stable in-page page-identity heading
 - pass: 54 (commit 4ca3212)

@@ -6,7 +6,7 @@
 
 ## Pending
 
-### [ ] [5.4] / — landing page .headerNav a and .ctaBtn have no :focus-visible styles; keyboard focus invisible
+### [x] [5.4] / — landing page .headerNav a and .ctaBtn have no :focus-visible styles; keyboard focus invisible
 - category: a11y
 - impact: 6
 - ease: 9
@@ -15,6 +15,7 @@
 - suggested fix: add .headerNav a:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 2px; } and .ctaBtn:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 2px; } to src/app/page.module.css
 - source: /critique pass 54 (commit 4ca3212)
 - issue: #44
+- resolution: added .headerNav a:focus-visible and .ctaBtn:focus-visible with outline: 2px solid var(--color-accent); outline-offset: 2px to src/app/page.module.css. Shipped at 32c93fb.
 
 ### [ ] [4.8] /settings — delete confirmation panel uses role="group" instead of role="alertdialog"; warning not announced on open
 - category: a11y
