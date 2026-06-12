@@ -6,7 +6,7 @@
 
 ## Pending
 
-### [ ] [3.2] /signin, /today, /settings — error fallback copy uses second-person imperative "try again."; voice guide violation
+### [x] [3.2] /signin, /today, /settings — error fallback copy uses second-person imperative "try again."; voice guide violation
 - category: voice
 - impact: 4
 - ease: 8

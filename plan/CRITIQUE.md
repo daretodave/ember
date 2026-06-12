@@ -28,7 +28,7 @@
 - suggested fix: add images: [{ url: '/opengraph-image', width: 1200, height: 630, alt: 'ember — a daily writing ritual' }] to the openGraph block in src/app/signin/layout.tsx and the same twitter.images to the twitter block.
 - source: browser
 
-### [LOW] /signin, /today, /settings — error fallback copy uses second-person imperative "try again."
+### [x] [LOW] /signin, /today, /settings — error fallback copy uses second-person imperative "try again."
 - pass: 53 (commit 3f0847a)
 - viewport: both
 - category: voice
@@ -36,6 +36,7 @@
 - evidence: src/app/signin/page.tsx: setErrorMsg(... ?? 'something went wrong. try again.'); src/app/today/TodayEntry.tsx lines 113 and 117: 'something went wrong. try again.' and 'network error. try again.'; src/app/settings/SettingsForm.tsx lines 101 and 105: same pattern.
 - suggested fix: change all three occurrences to "something went wrong. save failed." and "network error. save failed." (or "the link could not be sent." on /signin) to keep the flat declarative register.
 - source: browser
+- resolution: /signin fallback changed to "the link could not be sent."; /today, /settings, /log/[date], DeleteAccountSection fallbacks changed to "save failed."/"deletion failed." suffix variants. Shipped at 6b2fb77.
 
 ### [LOW] / — sticky CTA "today's prompt is waiting." uses mild anthropomorphism inconsistent with the flat declarative register
 - pass: 53 (commit 3f0847a)
