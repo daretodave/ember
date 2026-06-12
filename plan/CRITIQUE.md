@@ -137,7 +137,7 @@
 - issue: #39
 - resolution: added autocomplete="email" to the email input in src/app/signin/page.tsx. Shipped at 565a6ee.
 
-### [LOW] / — .dayTask::before pseudo-element renders a 12×12px checkbox-like square before each task item in the 7-day preview; implies interactivity on read-only content
+### [x] [LOW] / — .dayTask::before pseudo-element renders a 12×12px checkbox-like square before each task item in the 7-day preview; implies interactivity on read-only content
 - pass: 51 (commit 0107c11)
 - viewport: both
 - category: visual
@@ -145,6 +145,8 @@
 - evidence: src/app/page.module.css lines 180–188: .dayTask::before { content: ''; display: inline-block; width: 12px; height: 12px; border: 1px solid var(--color-border); border-radius: var(--radius-1); flex-shrink: 0; transform: translateY(2px); } — rendered before every task paragraph in the landing page seven-day preview.
 - suggested fix: remove the .dayTask::before pseudo-element and rely on the "tiny task —" text prefix as the sole visual differentiator; or replace the checkbox marker with a typographic marker (e.g. a dash or bullet) that does not imply interactivity.
 - source: browser
+- issue: #47
+- resolution: removed .dayTask::before rule from src/app/page.module.css. Shipped at 8905030.
 
 ### [LOW] /signin — confirmation copy "on its way" is colloquial; departs from the flat bookish register
 - pass: 51 (commit 0107c11)

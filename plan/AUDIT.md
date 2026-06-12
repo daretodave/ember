@@ -6,6 +6,16 @@
 
 ## Pending
 
+### [x] [4.5] / — .dayTask::before pseudo-element renders checkbox-like marker on read-only 7-day preview tasks; implies interactivity
+- category: visual
+- impact: 5
+- ease: 9
+- note: scored 2026-06-12 — from critique pass 51 (0107c11); the 12×12px pseudo-element has a border and border-radius matching form inputs; the task rows are read-only; the "tiny task —" text prefix already differentiates the row; the checkbox marker is redundant and misleading
+- observation: src/app/page.module.css lines 185–194: .dayTask::before { content: ''; display: inline-block; width: 12px; height: 12px; border: 1px solid var(--color-border); border-radius: var(--radius-1); flex-shrink: 0; transform: translateY(2px); }
+- suggested fix: remove .dayTask::before rule; "tiny task —" text label is the correct differentiator
+- source: /critique pass 51 (commit 0107c11)
+- issue: #47
+
 ### [x] [5.4] / — landing page .headerNav a and .ctaBtn have no :focus-visible styles; keyboard focus invisible
 - category: a11y
 - impact: 6
