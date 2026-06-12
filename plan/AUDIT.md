@@ -6,6 +6,17 @@
 
 ## Pending
 
+### [x] [3.6] / and /signin — <main id="main-content"> missing tabIndex={-1}; skip link focus delivery unreliable on anonymous pages
+- category: external-critique
+- impact: 4
+- ease: 9
+- note: scored 2026-06-12 — from critique pass 52 (b4d3589); the authenticated pages (today, log, settings) received tabIndex={-1} on <main id="main-content"> at 88f8cb9 but the two anonymous-accessible routes were not updated in that pass; non-interactive elements without tabIndex cannot reliably receive programmatic focus in all browsers when targeted by a skip link
+- observation: src/app/page.tsx line 24: <main id="main-content"> — no tabIndex. src/app/signin/page.tsx line 56: <main className={styles.main} id="main-content"> — no tabIndex. compare src/app/today/page.tsx: <main className={styles.main} id="main-content" tabIndex={-1}>.
+- suggested fix: add tabIndex={-1} to <main id="main-content"> in both src/app/page.tsx and src/app/signin/page.tsx, mirroring the fix applied to the authenticated pages at 88f8cb9
+- source: /critique pass 52 (commit b4d3589)
+- issue: #41
+- resolution: added tabIndex={-1} to <main id="main-content"> in src/app/page.tsx and src/app/signin/page.tsx. Shipped at bc52684.
+
 ### [x] [5.4] /signin — email input focus outline suppressed with no adequate replacement; WCAG 2.4.11 gap
 - category: external-critique
 - impact: 6

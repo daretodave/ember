@@ -120,7 +120,7 @@
 - suggested fix: add aria-label="account" to the <footer> element in settings/page.tsx so the contentinfo landmark is identifiable when AT users navigate by landmark.
 - source: browser
 
-### [LOW] / and /signin — <main id="main-content"> missing tabIndex={-1}; skip link focus delivery unreliable on anonymous pages
+### [x] [LOW] / and /signin — <main id="main-content"> missing tabIndex={-1}; skip link focus delivery unreliable on anonymous pages
 - pass: 52 (commit b4d3589)
 - viewport: both
 - category: a11y
@@ -128,6 +128,8 @@
 - evidence: src/app/page.tsx line 24: <main id="main-content"> — no tabIndex. src/app/signin/page.tsx line 56: <main className={styles.main} id="main-content"> — no tabIndex. compare src/app/today/page.tsx: <main className={styles.main} id="main-content" tabIndex={-1}>.
 - suggested fix: add tabIndex={-1} to <main id="main-content"> in both src/app/page.tsx and src/app/signin/page.tsx, mirroring the fix applied to the authenticated pages at 88f8cb9.
 - source: browser
+- issue: #41
+- resolution: added tabIndex={-1} to <main id="main-content"> in src/app/page.tsx and src/app/signin/page.tsx. Shipped at bc52684.
 
 ### [LOW] / and /signin — footer elements have no accessible name; contentinfo landmarks unnamed on anonymous pages
 - pass: 52 (commit b4d3589)
