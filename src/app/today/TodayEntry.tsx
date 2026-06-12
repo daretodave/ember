@@ -168,7 +168,7 @@ export function TodayEntry({ date, task, prompt, initialEntry, hasUsername = tru
   return (
     <>
       {/* Suppress outer live regions and error alert from AT tree while focus overlay is open */}
-      <div aria-hidden={isFocus || undefined}>
+      <section aria-label="today's entry" aria-hidden={isFocus || undefined}>
         <div className={styles.task}>
           <button
             type="button"
@@ -247,7 +247,7 @@ export function TodayEntry({ date, task, prompt, initialEntry, hasUsername = tru
         {saveState === 'error' && errorMsg && (
           <p className={styles.saveError} role="alert">{errorMsg}</p>
         )}
-      </div>
+      </section>
 
       {/* Focus mode overlay — always in DOM so opacity transition plays on close */}
       <div
