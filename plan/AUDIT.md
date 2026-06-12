@@ -6,6 +6,17 @@
 
 ## Pending
 
+### [x] [5.4] /signin — email input focus outline suppressed with no adequate replacement; WCAG 2.4.11 gap
+- category: external-critique
+- impact: 6
+- ease: 9
+- note: scored 2026-06-12 — from critique pass 53 (3f0847a); .fieldInput sets outline: none with no ring replacement; only a 1px border-bottom colour change signals focus; WCAG 2.4.11 (Focus Appearance, AA) minimum-area threshold not met
+- observation: src/app/signin/page.module.css: .fieldInput { outline: none; } and .fieldInput:focus { border-bottom-color: var(--color-accent); } — no outline replacement
+- suggested fix: add outline: 2px solid var(--color-accent); outline-offset: 2px to .fieldInput:focus
+- source: /critique pass 53 (commit 3f0847a)
+- issue: #40
+- resolution: added outline: 2px solid var(--color-accent); outline-offset: 2px to .fieldInput:focus in src/app/signin/page.module.css. Shipped at bd69812.
+
 ### [x] [5.4] /signin — email input missing autocomplete="email"; WCAG 1.3.5 not met
 - category: external-critique
 - impact: 6

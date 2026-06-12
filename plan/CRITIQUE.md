@@ -8,7 +8,7 @@
 
 ## Pending
 
-### [MED] /signin — email input removes browser focus outline with no adequate replacement; WCAG 2.4.11 gap
+### [x] [MED] /signin — email input removes browser focus outline with no adequate replacement; WCAG 2.4.11 gap
 - pass: 53 (commit 3f0847a)
 - viewport: both
 - category: a11y
@@ -16,6 +16,8 @@
 - evidence: src/app/signin/page.module.css: .fieldInput { outline: none; } and .fieldInput:focus { border-bottom-color: var(--color-accent); } — no box-shadow, no outline replacement, no ring of sufficient thickness.
 - suggested fix: remove outline: none from .fieldInput and add .fieldInput:focus { outline: 2px solid var(--color-accent); outline-offset: 2px; } to provide a visible focus ring meeting WCAG 2.4.11.
 - source: browser
+- issue: #40
+- resolution: added outline: 2px solid var(--color-accent); outline-offset: 2px to .fieldInput:focus in src/app/signin/page.module.css. Shipped at bd69812.
 
 ### [LOW] /signin — openGraph metadata has no images property; share card renders without image
 - pass: 53 (commit 3f0847a)
