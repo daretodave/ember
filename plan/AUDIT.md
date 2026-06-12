@@ -6,6 +6,17 @@
 
 ## Pending
 
+### [x] [5.4] /signin — email input missing autocomplete="email"; WCAG 1.3.5 not met
+- category: external-critique
+- impact: 6
+- ease: 9
+- note: scored 2026-06-12 — from critique pass 51 (0107c11); WCAG 1.3.5 (Identify Input Purpose, Level AA) requires autocomplete tokens on inputs collecting personal information; settings inputs received the fix at 69be03d but signin email was missed
+- observation: src/app/signin/page.tsx email input has no autocomplete attribute
+- suggested fix: add autocomplete="email" to the email input
+- source: /critique pass 51 (commit 0107c11)
+- issue: #39
+- resolution: added autocomplete="email" to the email input in src/app/signin/page.tsx. Shipped at 565a6ee.
+
 ### [x] [4.5] /today — focus overlay uses aria-hidden={false} when active; prefer aria-hidden={!isFocus || undefined}
 - category: external-critique
 - impact: 5

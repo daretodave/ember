@@ -62,7 +62,7 @@
 - suggested fix: wrap the date string inside the article <header> in an <h2> element and demote the prompt line to <p className={styles.entryPrompt}>, so the heading sequence within the article is: date (h2) → prompt (paragraph).
 - source: browser
 
-### [MED] /signin — email input has no autocomplete="email"; WCAG 1.3.5 not met
+### [x] [MED] /signin — email input has no autocomplete="email"; WCAG 1.3.5 not met
 - pass: 51 (commit 0107c11)
 - viewport: both
 - category: a11y
@@ -70,6 +70,8 @@
 - evidence: src/app/signin/page.tsx: <input id="email" type="email" placeholder="email address" required ...> — no autocomplete attribute. compare src/app/settings/SettingsForm.tsx which received autocomplete="name" and autocomplete="username" at 69be03d.
 - suggested fix: add autocomplete="email" to the email input in src/app/signin/page.tsx.
 - source: browser
+- issue: #39
+- resolution: added autocomplete="email" to the email input in src/app/signin/page.tsx. Shipped at 565a6ee.
 
 ### [LOW] / — .dayTask::before pseudo-element renders a 12×12px checkbox-like square before each task item in the 7-day preview; implies interactivity on read-only content
 - pass: 51 (commit 0107c11)
