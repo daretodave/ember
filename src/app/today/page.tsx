@@ -80,7 +80,9 @@ export default async function TodayPage() {
       <main className={styles.main} id="main-content" tabIndex={-1}>
         <p className={styles.dateStamp} id="today-date">{displayDate}</p>
 
-        <h1 className={styles.prompt} aria-describedby="today-date">{prompt}</h1>
+        <h1 className={styles.prompt} aria-describedby="today-date">
+          <span className={styles.srOnly}>today — </span>{prompt}
+        </h1>
 
         <TodayEntry date={date} initialEntry={todayEntry} task={task} prompt={prompt} hasUsername={Boolean(profile?.username)} />
 
