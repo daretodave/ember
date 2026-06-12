@@ -174,7 +174,7 @@ describe('EditEntry — save flow', () => {
     fireEvent.click(screen.getByRole('button', { name: 'save' }))
 
     await waitFor(() => {
-      expect(screen.getByRole('alert')).toHaveTextContent('network error. try again.')
+      expect(screen.getByRole('alert')).toHaveTextContent('network error. save failed.')
     })
   })
 })

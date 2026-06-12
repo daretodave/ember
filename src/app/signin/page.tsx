@@ -36,7 +36,7 @@ export default function SigninPage() {
       setState('sent')
     } else {
       const data = await res.json().catch(() => ({}))
-      setErrorMsg((data as { error?: string }).error ?? 'something went wrong. try again.')
+      setErrorMsg((data as { error?: string }).error ?? 'the link could not be sent.')
       setState('error')
     }
   }

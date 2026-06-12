@@ -98,11 +98,11 @@ export function SettingsForm({ displayName, username, timezone, usePersonalizedP
         setSaveState('saved')
       } else {
         const data = (await res.json().catch(() => ({}))) as { error?: string }
-        setErrorMsg(data.error ?? 'something went wrong. try again.')
+        setErrorMsg(data.error ?? 'something went wrong. save failed.')
         setSaveState('error')
       }
     } catch {
-      setErrorMsg('network error. try again.')
+      setErrorMsg('network error. save failed.')
       setSaveState('error')
     }
   }, [nameVal, usernameVal, tzVal, personalizedVal])

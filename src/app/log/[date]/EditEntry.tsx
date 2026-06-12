@@ -69,11 +69,11 @@ export function EditEntry({ date, task, initialEntry }: Props) {
         setIsEditing(false)
       } else {
         const data = (await res.json().catch(() => ({}))) as { error?: string }
-        setErrorMsg(data.error ?? 'something went wrong. try again.')
+        setErrorMsg(data.error ?? 'something went wrong. save failed.')
         setSaveState('error')
       }
     } catch {
-      setErrorMsg('network error. try again.')
+      setErrorMsg('network error. save failed.')
       setSaveState('error')
     }
   }, [date, editResponse, editTaskDone, editIsPublished])

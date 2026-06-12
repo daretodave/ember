@@ -6,6 +6,52 @@
 
 ## Pending
 
+### [ ] [3.2] /signin, /today, /settings — error fallback copy uses second-person imperative "try again."; voice guide violation
+- category: voice
+- impact: 4
+- ease: 8
+- note: scored 2026-06-12 — from critique pass 53 (3f0847a); the phrase "try again" is a second-person imperative verb; the voice guide prohibits second-person imperative copy; all non-error copy on these pages uses declarative framing; affects 5 occurrences across 3 files
+- observation: src/app/signin/page.tsx line 39: 'something went wrong. try again.'; src/app/today/TodayEntry.tsx lines 113 and 117: 'something went wrong. try again.' and 'network error. try again.'; src/app/settings/SettingsForm.tsx lines 101 and 105: same pattern
+- suggested fix: change to 'the link could not be sent.' on /signin; change 'something went wrong. try again.' → 'something went wrong. save failed.' and 'network error. try again.' → 'network error. save failed.' on /today and /settings
+- source: /critique pass 53 (commit 3f0847a)
+- issue: #42
+
+### [ ] [2.7] /log — "browse by date" link label uses second-person imperative verb
+- category: voice
+- impact: 3
+- ease: 9
+- note: scored 2026-06-12 — from critique pass 53 (3f0847a); "browse" is a second-person imperative verb; voice guide prohibits second-person imperative copy; the link navigates to the most recent entry's dated URL (/log/{date}); all other navigational copy uses noun phrases
+- observation: src/app/log/page.tsx: <Link href={`/log/${recentDate}`}>browse by date</Link> — inside the entryFoot section
+- suggested fix: change link text to "all entries" or "full log" to replace the imperative verb with a noun phrase
+- source: /critique pass 53 (commit 3f0847a)
+
+### [ ] [2.4] /signin — openGraph metadata has no images property; share card renders without image
+- category: seo
+- impact: 3
+- ease: 8
+- note: scored 2026-06-12 — from critique pass 53 (3f0847a); the /signin layout exports openGraph with title, description, and url but no images array; next.js per-route metadata merging replaces the full openGraph key when a child page overrides it, so the root layout's global OG image is not inherited; a link shared to /signin produces an imageless social card
+- observation: src/app/signin/layout.tsx: openGraph: { title, description, url } — no images property; contrast src/app/layout.tsx which sets images: [{ url: '/opengraph-image', width: 1200, height: 630, alt: '...' }]
+- suggested fix: add images: [{ url: '/opengraph-image', width: 1200, height: 630, alt: 'ember — a daily writing ritual' }] to the openGraph block in src/app/signin/layout.tsx and the same twitter.images to the twitter block
+- source: /critique pass 53 (commit 3f0847a)
+
+### [ ] [2.4] /log — entry article header contains date as plain text with no heading element; heading hierarchy inside article is broken
+- category: a11y
+- impact: 3
+- ease: 8
+- note: scored 2026-06-12 — from critique pass 53 (3f0847a); the <header> inside <article aria-label="most recent entry"> contains a plain text date string with no heading element; AT users navigating by heading encounter the prompt as the first and only heading inside the article; the date appears as plain text with no heading role
+- observation: src/app/log/page.tsx: <header className={styles.entryDate}>{formatDisplayDate(recentDate!)} {recentDate === today && ' · today'}</header> followed by <h2 className={styles.entryPrompt}>{recentPrompt.prompt}</h2> — no heading wrapper on date
+- suggested fix: wrap the date string inside the article <header> in an <h2> element and demote the prompt line to <p>, so heading sequence within the article is: date (h2) → prompt (paragraph)
+- source: /critique pass 53 (commit 3f0847a)
+
+### [ ] [2.1] /signin — lockup Link carries aria-hidden="true" on a focusable element; ARIA anti-pattern
+- category: a11y
+- impact: 3
+- ease: 7
+- note: scored 2026-06-12 — from critique pass 51 (0107c11); ARIA authoring practices prohibit aria-hidden="true" on focusable elements; the lockup Link has href="/" (making it focusable) plus aria-hidden="true" plus tabIndex={-1}; a link can receive programmatic focus via .focus() even when removed from the tab order; this was introduced at 567174d to suppress the duplicate lockup/back-to-home link pair
+- observation: src/app/signin/page.tsx line 47: <Link href="/" className={styles.lockup} aria-label="ember — home" aria-hidden="true" tabIndex={-1}> — Link element with href is focusable; aria-hidden="true" must not be applied to focusable elements
+- suggested fix: replace the lockup Link with a non-interactive <div> or <span> styled identically (removing href), keeping only the "back to home" Link as the navigational element
+- source: /critique pass 51 (commit 0107c11)
+
 ### [x] [3.6] / and /signin — <main id="main-content"> missing tabIndex={-1}; skip link focus delivery unreliable on anonymous pages
 - category: external-critique
 - impact: 4

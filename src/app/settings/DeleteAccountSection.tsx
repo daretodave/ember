@@ -19,11 +19,11 @@ export function DeleteAccountSection() {
         router.push('/')
       } else {
         const data = (await res.json().catch(() => ({}))) as { error?: string }
-        setErrorMsg(data.error ?? 'something went wrong. try again.')
+        setErrorMsg(data.error ?? 'something went wrong. deletion failed.')
         setDeleting(false)
       }
     } catch {
-      setErrorMsg('network error. try again.')
+      setErrorMsg('network error. deletion failed.')
       setDeleting(false)
     }
   }

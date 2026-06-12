@@ -154,7 +154,7 @@ describe('SigninPage — error state', () => {
     fireEvent.submit(document.querySelector('form')!)
 
     await waitFor(() => {
-      expect(screen.getByRole('alert').textContent).toBe('something went wrong. try again.')
+      expect(screen.getByRole('alert').textContent).toBe('the link could not be sent.')
     })
   })
 })

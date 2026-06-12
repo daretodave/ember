@@ -201,7 +201,7 @@ describe('EntrySave — save state', () => {
     })
   })
 
-  it('shows "network error. try again." on fetch rejection', async () => {
+  it('shows "network error. save failed." on fetch rejection', async () => {
     global.fetch = vi.fn().mockRejectedValue(new Error('network failure'))
 
     render(<TodayEntry {...BASE_PROPS} />)
@@ -210,7 +210,7 @@ describe('EntrySave — save state', () => {
 
     await waitFor(() => {
       const alerts = screen.getAllByRole('alert')
-      expect(alerts.some((el) => el.textContent === 'network error. try again.')).toBe(true)
+      expect(alerts.some((el) => el.textContent === 'network error. save failed.')).toBe(true)
     })
   })
 })

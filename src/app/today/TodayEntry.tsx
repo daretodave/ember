@@ -110,11 +110,11 @@ export function TodayEntry({ date, task, prompt, initialEntry, hasUsername = tru
         clearDraft(date)
       } else {
         const data = (await res.json().catch(() => ({}))) as { error?: string }
-        setErrorMsg(data.error ?? 'something went wrong. try again.')
+        setErrorMsg(data.error ?? 'something went wrong. save failed.')
         setSaveState('error')
       }
     } catch {
-      setErrorMsg('network error. try again.')
+      setErrorMsg('network error. save failed.')
       setSaveState('error')
     }
   }, [date, response, taskDone, isPublished])
