@@ -52,6 +52,25 @@
 - [x] Phase 27 — Month in review (quiet monthly recap on `/log`) — bf9d39d
 - [x] Phase 28 — Shareable entry card (dynamic OG image for public entries) — 94db9f2
 
+<!-- Phases 29-39 promoted/authored via /oversight 2026-06-14. Build plan
+     was exhausted at phase 28 and the audit fully drained; the only
+     remaining work was sub-threshold LOW a11y/voice polish. Per the user's
+     standing preference for feature experiments over audit churn, this set
+     promotes the two strongest pending /expand candidates (29-30) and
+     authors nine feature experiments (31-39). Briefs can be refined
+     per-phase with /plan-a-phase before each ships. -->
+- [ ] Phase 29 — E2e authenticated flow coverage (sign-in, write, edit, persist)
+- [ ] Phase 30 — Authentication funnel UX clarity (`/signin` pre/post-submit states)
+- [ ] Phase 31 — Entry search (full-text search across past entries)
+- [ ] Phase 32 — Year in review (quiet annual recap on `/log`)
+- [ ] Phase 33 — Daily reminder (opt-in email nudge to write)
+- [ ] Phase 34 — One-word check-in (optional per-entry mood/weather word)
+- [ ] Phase 35 — Entry tags + themed browsing
+- [ ] Phase 36 — Markdown rendering in entries (plain storage, rendered view)
+- [ ] Phase 37 — Weekly reflection (opt-in Anthropic synthesis of the week)
+- [ ] Phase 38 — Prompt packs (selectable themed prompt collections)
+- [ ] Phase 39 — Bound export ("your book" — typeset printable compilation)
+
 ## Per-phase scope
 
 ### Phase 0 — Bootstrap
@@ -320,3 +339,204 @@ entries only (the page is already public); no change to the
 publish model or to private data exposure. Reuses the phase
 14 OG pipeline. Cache with standard Next.js image-route
 semantics.
+
+### Phase 29 — E2e authenticated flow coverage
+
+Promoted from `plan/PHASE_CANDIDATES.md` [score 4.5]. Every
+Playwright spec still tests only anonymous/redirect state;
+28 phases shipped without a single authenticated assertion,
+so a regression in the core write flow would pass all gates.
+Add specs that sign in with a test account (Supabase
+test-role user or a dedicated seeded user — credentials wired
+via CI secrets, mirroring the `mint-cookie.mjs` path the
+cloud loop already uses for /critique), then exercise: the
+write flow on `/today` (compose, save, assert persistence),
+entry visibility on `/log` (the new entry appears in the
+mosaic + most-recent article), and the edit flow on
+`/log/[date]` (edit, save, assert updated text + `updated_at`
+moved). Optionally cover the offline-draft path (phase 19)
+with a network-intercept stub. Ships this FIRST among the new
+phases so the feature work that follows (31-39) lands on top
+of real authenticated coverage. Test-only addition — no app
+code changes. May require a one-time test-user seed step in
+the CI environment; document it in `apps/e2e`.
+
+### Phase 30 — Authentication funnel UX clarity
+
+Promoted from `plan/PHASE_CANDIDATES.md` [score 5.0]. Tighten
+the `/signin` pre/post-submission states so first-time
+visitors are guided cleanly. Scope: (1) resolve the standing
+`[needs-user-call]` on the expiry notice — DEFAULT decision:
+the expiry line ("links expire after 24 hours.") reads as
+context for a link already sent, so it belongs in the
+post-submission confirmation, not the pre-submission form;
+move it accordingly and remove any duplicate pre-submission
+instance. (2) Fold in the adjacent unresolved `/signin`
+register findings clustered in critique passes 51-55: the
+confirmation copy "on its way" colloquialism, the
+double-announcement (both `role="status"` live region and
+programmatic focus on the confirmation), and the
+imperative-verb submit label — so the funnel ships as one
+coherent voice-and-clarity pass rather than leaving siblings
+for the iterate tail. Confirm scope item 3 (post-submit
+destination context) actually landed with Phase 22; if not,
+include it. Copy + conditional-render changes on `/signin`
+only; no new routes, no schema changes.
+
+### Phase 31 — Entry search (experiment)
+
+The one capability the spec deferred from the outset
+("Search (defer)") and the obvious gap for anyone with weeks
+of practice: there is no way to find a past entry except by
+scrolling the mosaic or guessing a date URL. Add a search
+surface (a quiet input on `/log`, or a dedicated `/log`
+sub-affordance) that full-text-searches the authenticated
+user's own entries by body text and prompt. Server-side query
+against Postgres — prefer a `tsvector`/`websearch_to_tsquery`
+full-text index over naive `ILIKE` (add the generated column
++ GIN index in a migration); fall back to trigram if FTS
+proves heavy. Results list links to each matching
+`/log/[date]` with a short matched-text excerpt. Own entries
+only — RLS already scopes this; no cross-user search, no
+public search. Voice per `bearings.md` (lower-case, no
+result-count gamification). Empty query renders nothing;
+no-results renders one quiet line. New behavior on an
+existing route family — no new public URL.
+
+### Phase 32 — Year in review (experiment)
+
+Extend the month-in-review pattern (phase 27) to the calendar
+year. On `/log`, in the first ~7 days of a new year (or as a
+linkable `/log/[year]` recap — pick the lighter touch), render
+a single quiet recap block for the year that just closed:
+total entries written, the months that carried the most
+practice, and one observational clause in the same register
+("in 2025 — 213 entries. the quietest stretch was august.").
+Voice per `bearings.md`: lower-case, observational, no streak
+language, no praise, no exclamation, no charts that imply a
+scoreboard. Renders nothing when the prior year has zero
+entries. Derived from entries already queryable for the
+mosaic — no new schema. Reuses the month-in-review component
+shape where it can.
+
+### Phase 33 — Daily reminder (experiment)
+
+An opt-in daily email nudge to write today's entry. OFF by
+default — a setting on `/settings` ("daily reminder: off /
+on", with the send time honoring the user's saved timezone).
+A scheduled job (extend the existing GitHub Actions cadence or
+a Supabase scheduled function / pg_cron) selects users who
+opted in and have not yet written today, and sends one short
+plain-text reminder via the project's existing mail path
+(the Supabase auth mailer or a transactional provider —
+choose the path already wired, document if a new secret is
+needed). Voice per `bearings.md`: no pressure, no streak
+framing, no guilt copy — one quiet line and a link to
+`/today`. Strict anti-spam: at most one reminder per user per
+day, never if today's entry already exists, instant
+unsubscribe honored. New `reminder_opt_in` + `reminder_hour`
+columns (migration). Flag and stop if no transactional mail
+path is available without new paid infra.
+
+### Phase 34 — One-word check-in (experiment)
+
+An optional single-word check-in per entry — a mood or
+weather word ("steady", "rain", "frayed") captured alongside
+the day's writing. A small, skippable input on `/today` near
+the entry surface; never required to save. The word surfaces
+subtly: as a quiet annotation on the `/log/[date]` view and,
+if it reads well without becoming a scoreboard, as a faint
+textural cue on the mosaic tile (color or glyph — must hold
+the a11y contrast gate and must not imply a rating). Voice
+per `bearings.md`: it is a note to self, not a metric — no
+aggregation, no "mood trends", no charts in v1. New nullable
+`checkin_word` column (migration); free-text, length-capped,
+sanitized. Renders nothing when absent.
+
+### Phase 35 — Entry tags + themed browsing (experiment)
+
+Let an entry carry lightweight tags (e.g. "work", "family",
+"travel") so a practitioner can trace a theme across time.
+Add a tag input on `/today` and on the `/log/[date]` edit
+surface (comma or chip entry; create-on-type; length-capped;
+sanitized). Browse by tag: a filter affordance on `/log` that
+narrows the mosaic + entry list to a chosen tag, and a
+`/log?tag=` (or `/log/tag/[tag]`) view linking each tagged
+entry. Schema: a normalized `tags` + `entry_tags` join, or a
+`text[]` column with a GIN index — choose based on the search
+work in phase 31 (reuse the indexing approach). Own entries
+only; tags are private (not shown on public profiles in v1).
+Voice per `bearings.md`: tags are quiet organization, not
+gamified collections — no counts-as-achievement framing.
+Migration required.
+
+### Phase 36 — Markdown rendering in entries (experiment)
+
+Entries are stored as plain text today and rendered verbatim.
+Let the rendered views interpret a safe subset of Markdown —
+emphasis, lists, blockquotes, links, headings — while storage
+stays plain text (no format lock-in, fully reversible).
+Render on `/log/[date]`, the public `/u/[username]/[date]`,
+and the most-recent article on `/log`; the `/today` compose
+textarea stays plain (optionally a low-key preview toggle).
+Use a vetted, sanitizing Markdown pipeline (e.g.
+`react-markdown` + `rehype-sanitize`, or `marked` +
+`DOMPurify`) — untrusted user content, so the sanitizer is
+non-negotiable and links get `rel="ugc nofollow"`. Typography
+must stay within the design tokens (no raw HTML passthrough,
+constrained heading scale). No schema change — pure render
+layer. Flag if sanitization adds meaningful bundle weight on
+the public path.
+
+### Phase 37 — Weekly reflection (experiment)
+
+An opt-in, quiet weekly synthesis composed by Claude. When a
+user has opted in (a `/settings` toggle, OFF by default) and
+has written at least N entries in the past week, surface a
+short reflective paragraph — read back, not advice — that
+notices threads across the week's entries ("this week kept
+returning to rest, and to a conversation you hadn't had
+yet."). Reuse the project's existing Anthropic wiring from
+phase 12; before implementing, consult the `claude-api` skill
+and use the latest Claude model. Generate server-side, cache
+the result per user per ISO week (a `weekly_reflections`
+table keyed by user + week — never regenerate on every view;
+respect cost), and gate generation behind the opt-in so no
+entry text is sent to the model without consent. Voice per
+`bearings.md`: observational, lower-case, no praise, no
+prescriptions, no scoring. Show a clear "written by ember
+from your week" provenance line. Flag and stop if the
+moderation/consent path is unclear. Migration required.
+
+### Phase 38 — Prompt packs (experiment)
+
+Today the daily prompt comes from one ~101-entry seed list.
+Let a user opt into a themed prompt pack — alternate curated
+collections (e.g. "gratitude", "craft", "stoic", "grief")
+selectable on `/settings` ("prompt source: standard / <pack>")
+— so the daily ritual can take a chosen register. Packs are
+content files alongside `content/prompts.json` (one JSON per
+pack, same shape, voice-aligned per `design/CLAUDE.md`);
+spawn the content-curator sub-agent to author the pack copy.
+Selection is per-user (a `prompt_pack` column, default
+`standard`); the deterministic date-based selection logic
+(phase 5) reads from the chosen pack. Composes with phase 12
+personalization as a precedence decision (pack vs personalized
+— document the order). No new public route. Migration for the
+preference column; the rest is content + a settings control.
+
+### Phase 39 — Bound export ("your book") (experiment)
+
+Beyond the raw JSON/Markdown data export (phase 23), give a
+practitioner a readable artifact: a typeset, chronological
+compilation of all their entries — "your book" — rendered as
+a clean print-stylesheet HTML page (`/export/book` or a
+`/settings` action) that the browser prints to PDF, with a
+title page, date headers, prompts, and entry bodies set in the
+brand typography. Print CSS (`@media print`) is the v1 path —
+no server-side PDF dependency unless trivial. Optional cover
+using the mosaic motif. Honors Markdown rendering (phase 36)
+if shipped. Own entries only, authenticated. Voice + type per
+`design/CLAUDE.md`. No schema change — derives entirely from
+existing entries. Flag if print fidelity across browsers
+proves too fragile for a clean v1.

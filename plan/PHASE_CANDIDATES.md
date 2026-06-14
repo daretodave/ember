@@ -28,26 +28,6 @@ happens only via local `/oversight` — never from the cloud loop.
 - estimated phases: 1
 - conflicts: none — no new routes, no schema changes; requires care around the CSS opacity transition (outer div stays, inner content conditionally renders)
 
-### [ ] [score 4.5] E2e authenticated flow coverage
-
-- proposed: 2026-05-21, expand pass 4 (re-evaluated from "Considered below threshold", was score 3.0)
-- status: 2026-06-12 — still zero authenticated e2e coverage. Phases 13–28
-  all shipped without it; 7+ weeks of post-phase iterate fixes likewise.
-  Uncovered risk surface widened by phases 21-28: entry write/save on
-  /today, edit flow on /log/[date], task toggle, focus mode, on-this-day,
-  offline draft persistence (IndexedDB + service worker), timezone combobox
-  open/filter/select, data export (/api/export), account deletion flow,
-  evening theme dark-mode rendering, month-in-review conditional component,
-  shareable OG image route (/u/[username]/[date]/opengraph-image). All
-  existing Playwright specs still test only anonymous/redirect state.
-- source signals:
-  - commit pattern: 20 phases shipped; all Playwright specs still test only anonymous/redirect state — `today.spec.ts` verifies redirect to `/signin` but never the actual write flow
-  - phase 19 (PWA + offline): service-worker path and IndexedDB draft persistence have zero e2e coverage; phase 20 (timezone combobox) shipped with unit tests only
-- rationale: the gap between what the app does and what e2e verifies has grown with every phase. A regression in the authenticated write flow would ship undetected through all gates. The complexity concern (auth mocking or test credentials) is outweighed by the risk surface; Supabase test-role credentials already in CI secrets are a viable path.
-- proposed scope: 1 phase — add Playwright specs that sign in with a test account (Supabase test-role or a dedicated test user), exercise the core write flow on /today, verify entry persistence on /log, and verify the edit flow on /log/[date]; optionally cover the offline draft path with network-intercept stubs
-- estimated phases: 1 (may require provisioning a test-user seed in the CI environment)
-- conflicts: none — test-only addition
-
 ### [ ] [score 4.0] Settings and profile UX friction — sign-out separation, timezone default for existing accounts
 
 - proposed: 2026-05-27, expand pass 33
@@ -63,27 +43,6 @@ happens only via local `/oversight` — never from the cloud loop.
 - proposed scope: 1 phase — (1) /settings: add a short horizontal rule and "session" section label above the sign-out form so it reads as a separate action from the form save, reducing misfire risk on mobile; (2) /settings: expand timezone auto-detection to run whenever tzVal === '' (not only for virgin profiles) so returning users with no saved timezone see a detected default rather than a blank combobox
 - estimated phases: 1
 - conflicts: none — UI-only changes; no new routes; no schema changes; sign-out section styling is CSS-only; timezone auto-detection is client-side only
-
-### [ ] [score 5.0] Authentication funnel UX clarity — sign-in expiry notice placement, post-submission destination context
-
-- proposed: 2026-05-27, expand pass 35
-- status: 2026-06-11 — 2 core scope items remain (2 and 3). Items 1
-  (/ CTA returning-user ambiguity, 61eca21 + ade50e4), 4 ("send the
-  link" → "send a link", 41d6df7), and 5 (reassurance paragraph DOM
-  order, 27e8bf4) resolved via iterate. NOTE: scope item 3 (post-submit
-  destination context) is now also scope item 3 of promoted Phase 22
-  (voice coherence sweep) — if Phase 22 ships it, only item 2 remains
-  here. Item 2 carries a [needs-user-call]: critique pass 37 suggested
-  moving expiry INTO the inline pre-submission copy (shipped at 51e9c0a),
-  which conflicts with this candidate's direction (show expiry only
-  post-submission).
-- source signals:
-  - critique pass 17 (commit 88f37cf): /signin — expiry notice "sign-in links expire after 24 hours." appears in the pre-submission state [LOW] — its position implies time-pressure urgency before a link has even been requested
-  - iterate audit (AUDIT.md [2.4]): /signin — sign-in page gives no destination context after email submission [LOW] — the post-submit confirmation never says where the link leads
-- rationale: the findings cluster on the authentication funnel — the sign-in pre/post-submission states do not clearly guide first-time users. Individually below the iterate threshold; together a coherent UX gap in one flow.
-- proposed scope: 1 phase — (1) /signin: render the expiry notice only in the post-submission confirmation view so it reads as context for a link already sent (resolve the [needs-user-call] on placement first); (2) /signin post-submission: add one sentence with destination context, e.g. "the link opens today's prompt directly."
-- estimated phases: 1
-- conflicts: scope overlap with promoted Phase 22 (item 3) — reconcile at promotion time; otherwise none — conditional rendering on /signin with no new routes and no schema changes
 
 ### [ ] [score 4.0] Sub-threshold polish sweep — SEO, a11y, and semantics micro-fixes orphaned below iterate threshold
 
@@ -176,6 +135,17 @@ happens only via local `/oversight` — never from the cloud loop.
 - Evening theme (time-aware dark palette) → **Phase 26** — oversight-authored experiment (2026-06-11)
 - Month in review (quiet monthly recap on `/log`) → **Phase 27** — oversight-authored experiment (2026-06-11)
 - Shareable entry card (dynamic OG image for public entries) → **Phase 28** — oversight-authored experiment (2026-06-11)
+- [score 4.5] E2e authenticated flow coverage → **Phase 29** (promoted via `/oversight` 2026-06-14)
+- [score 5.0] Authentication funnel UX clarity → **Phase 30** (promoted via `/oversight` 2026-06-14; expiry-placement [needs-user-call] resolved to post-submission per the build plan's Phase 30 brief)
+- Entry search → **Phase 31** — oversight-authored experiment (2026-06-14)
+- Year in review → **Phase 32** — oversight-authored experiment (2026-06-14)
+- Daily reminder (opt-in) → **Phase 33** — oversight-authored experiment (2026-06-14)
+- One-word check-in → **Phase 34** — oversight-authored experiment (2026-06-14)
+- Entry tags + themed browsing → **Phase 35** — oversight-authored experiment (2026-06-14)
+- Markdown rendering in entries → **Phase 36** — oversight-authored experiment (2026-06-14)
+- Weekly reflection (opt-in Anthropic synthesis) → **Phase 37** — oversight-authored experiment (2026-06-14)
+- Prompt packs (themed collections) → **Phase 38** — oversight-authored experiment (2026-06-14)
+- Bound export ("your book") → **Phase 39** — oversight-authored experiment (2026-06-14)
 
 ## Resolved
 
