@@ -12,6 +12,8 @@ const BASE_PROPS = {
   username: 'ada',
   timezone: 'America/New_York',
   usePersonalizedPrompts: false,
+  reminderOptIn: false,
+  reminderHour: 8,
   virgin: false,
 }
 
@@ -52,6 +54,8 @@ describe('SettingsForm — save payload (regression: 0419eb3)', () => {
             username: 'ada',
             timezone: 'America/New_York',
             use_personalized_prompts: true,
+            reminder_opt_in: false,
+            reminder_hour: 8,
           }),
         }),
       )
@@ -72,6 +76,45 @@ describe('SettingsForm — save payload (regression: 0419eb3)', () => {
         (global.fetch as ReturnType<typeof vi.fn>).mock.calls[0][1].body as string,
       ) as Record<string, unknown>
       expect(body.use_personalized_prompts).toBe(false)
+    })
+  })
+
+  it('sends reminder_opt_in: false and reminder_hour: 8 by default', async () => {
+    global.fetch = vi.fn().mockResolvedValue({
+      ok: true,
+      json: async () => ({}),
+    } as Response)
+    render(<SettingsForm {...BASE_PROPS} />)
+
+    fireEvent.submit(document.querySelector('form')!)
+
+    await waitFor(() => {
+      const body = JSON.parse(
+        (global.fetch as ReturnType<typeof vi.fn>).mock.calls[0][1].body as string,
+      ) as Record<string, unknown>
+      expect(body.reminder_opt_in).toBe(false)
+      expect(body.reminder_hour).toBe(8)
+    })
+  })
+
+  it('sends reminder_opt_in: true after enabling the reminder', async () => {
+    global.fetch = vi.fn().mockResolvedValue({
+      ok: true,
+      json: async () => ({}),
+    } as Response)
+    render(<SettingsForm {...BASE_PROPS} />)
+
+    // Turn reminder on
+    const onRadio = screen.getByRole('radio', { name: 'on' })
+    fireEvent.click(onRadio)
+
+    fireEvent.submit(document.querySelector('form')!)
+
+    await waitFor(() => {
+      const body = JSON.parse(
+        (global.fetch as ReturnType<typeof vi.fn>).mock.calls[0][1].body as string,
+      ) as Record<string, unknown>
+      expect(body.reminder_opt_in).toBe(true)
     })
   })
 })

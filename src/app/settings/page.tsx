@@ -58,6 +58,8 @@ export default async function SettingsPage() {
           username={profile?.username ?? ''}
           timezone={profile?.timezone ?? 'UTC'}
           usePersonalizedPrompts={profile?.use_personalized_prompts ?? false}
+          reminderOptIn={profile?.reminder_opt_in ?? false}
+          reminderHour={profile?.reminder_hour ?? 8}
           virgin={virgin}
         />
         {profile?.username && (

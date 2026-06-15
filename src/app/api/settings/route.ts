@@ -8,6 +8,8 @@ type SettingsPayload = {
   username?: string | null
   timezone?: string
   use_personalized_prompts?: boolean
+  reminder_opt_in?: boolean
+  reminder_hour?: number
 }
 
 export async function POST(request: Request) {
@@ -28,7 +30,7 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: 'invalid json' }, { status: 400 })
   }
 
-  const { display_name, username, timezone, use_personalized_prompts } = body
+  const { display_name, username, timezone, use_personalized_prompts, reminder_opt_in, reminder_hour } = body
 
   // Validate username if provided (empty string or null → clear it)
   const normalizedUsername =
@@ -56,6 +58,12 @@ export async function POST(request: Request) {
   }
   if (use_personalized_prompts !== undefined && typeof use_personalized_prompts === 'boolean') {
     patch.use_personalized_prompts = use_personalized_prompts
+  }
+  if (reminder_opt_in !== undefined && typeof reminder_opt_in === 'boolean') {
+    patch.reminder_opt_in = reminder_opt_in
+  }
+  if (reminder_hour !== undefined && typeof reminder_hour === 'number' && Number.isInteger(reminder_hour) && reminder_hour >= 0 && reminder_hour <= 23) {
+    patch.reminder_hour = reminder_hour
   }
 
   const { data, error } = await supabase

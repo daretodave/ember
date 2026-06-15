@@ -11,20 +11,45 @@ type Props = {
   username: string
   timezone: string
   usePersonalizedPrompts: boolean
+  reminderOptIn: boolean
+  reminderHour: number
   virgin: boolean
 }
 
-export function SettingsForm({ displayName, username, timezone, usePersonalizedPrompts, virgin }: Props) {
+function formatHour(h: number): string {
+  if (h === 0) return '12am'
+  if (h < 12) return `${h}am`
+  if (h === 12) return '12pm'
+  return `${h - 12}pm`
+}
+
+export function SettingsForm({
+  displayName,
+  username,
+  timezone,
+  usePersonalizedPrompts,
+  reminderOptIn,
+  reminderHour,
+  virgin,
+}: Props) {
   const [nameVal, setNameVal] = useState(displayName)
   const [usernameVal, setUsernameVal] = useState(username)
   const [tzVal, setTzVal] = useState(timezone)
   const [personalizedVal, setPersonalizedVal] = useState(usePersonalizedPrompts)
+  const [reminderOptInVal, setReminderOptInVal] = useState(reminderOptIn)
+  const [reminderHourVal, setReminderHourVal] = useState(reminderHour)
   const [timezones, setTimezones] = useState<string[]>([])
   const [saveState, setSaveState] = useState<SaveState>('idle')
   const [errorMsg, setErrorMsg] = useState('')
 
-  // Track last-saved values to detect unsaved changes
-  const savedSnapshotRef = useRef({ nameVal: displayName, usernameVal: username, tzVal: timezone, personalizedVal: usePersonalizedPrompts })
+  const savedSnapshotRef = useRef({
+    nameVal: displayName,
+    usernameVal: username,
+    tzVal: timezone,
+    personalizedVal: usePersonalizedPrompts,
+    reminderOptInVal: reminderOptIn,
+    reminderHourVal: reminderHour,
+  })
 
   // Populate timezone list from browser
   useEffect(() => {
@@ -56,12 +81,13 @@ export function SettingsForm({ displayName, username, timezone, usePersonalizedP
     return () => clearTimeout(t)
   }, [saveState])
 
-  // Warn before unload when there are unsaved changes
   const isDirty =
     nameVal !== savedSnapshotRef.current.nameVal ||
     usernameVal !== savedSnapshotRef.current.usernameVal ||
     tzVal !== savedSnapshotRef.current.tzVal ||
-    personalizedVal !== savedSnapshotRef.current.personalizedVal
+    personalizedVal !== savedSnapshotRef.current.personalizedVal ||
+    reminderOptInVal !== savedSnapshotRef.current.reminderOptInVal ||
+    reminderHourVal !== savedSnapshotRef.current.reminderHourVal
 
   useEffect(() => {
     if (!isDirty || saveState === 'saving') {
@@ -90,11 +116,20 @@ export function SettingsForm({ displayName, username, timezone, usePersonalizedP
           username: usernameVal,
           timezone: tzVal,
           use_personalized_prompts: personalizedVal,
+          reminder_opt_in: reminderOptInVal,
+          reminder_hour: reminderHourVal,
         }),
       })
 
       if (res.ok) {
-        savedSnapshotRef.current = { nameVal, usernameVal, tzVal, personalizedVal }
+        savedSnapshotRef.current = {
+          nameVal,
+          usernameVal,
+          tzVal,
+          personalizedVal,
+          reminderOptInVal,
+          reminderHourVal,
+        }
         setSaveState('saved')
       } else {
         const data = (await res.json().catch(() => ({}))) as { error?: string }
@@ -105,7 +140,7 @@ export function SettingsForm({ displayName, username, timezone, usePersonalizedP
       setErrorMsg('network error. save failed.')
       setSaveState('error')
     }
-  }, [nameVal, usernameVal, tzVal, personalizedVal])
+  }, [nameVal, usernameVal, tzVal, personalizedVal, reminderOptInVal, reminderHourVal])
 
   return (
     <form
@@ -184,6 +219,59 @@ export function SettingsForm({ displayName, username, timezone, usePersonalizedP
       </div>
 
       <div className={styles.field}>
+        <span className={styles.label}>daily reminder</span>
+        <p className={styles.hint} id="desc-reminder-off">
+          a quiet email at your chosen time to write today's entry. never sent if you have already written.
+        </p>
+        <div className={styles.radioGroup} role="radiogroup" aria-label="daily reminder">
+          <label className={`${styles.radioOption} ${!reminderOptInVal ? styles.radioOptionActive : ''}`}>
+            <input
+              type="radio"
+              name="reminder"
+              value="off"
+              checked={!reminderOptInVal}
+              onChange={() => setReminderOptInVal(false)}
+              className={styles.radioInput}
+              aria-describedby="desc-reminder-off"
+            />
+            off
+          </label>
+          <label className={`${styles.radioOption} ${reminderOptInVal ? styles.radioOptionActive : ''}`}>
+            <input
+              type="radio"
+              name="reminder"
+              value="on"
+              checked={reminderOptInVal}
+              onChange={() => setReminderOptInVal(true)}
+              className={styles.radioInput}
+              aria-describedby="desc-reminder-off"
+            />
+            on
+          </label>
+        </div>
+      </div>
+
+      {reminderOptInVal && (
+        <div className={styles.field}>
+          <label className={styles.label} htmlFor="reminder-hour">
+            send at
+          </label>
+          <select
+            id="reminder-hour"
+            className={styles.select}
+            value={reminderHourVal}
+            onChange={(e) => setReminderHourVal(Number(e.target.value))}
+          >
+            {Array.from({ length: 24 }, (_, h) => (
+              <option key={h} value={h}>
+                {formatHour(h)}
+              </option>
+            ))}
+          </select>
+        </div>
+      )}
+
+      <div className={styles.field}>
         <label className={styles.label} htmlFor="username">
           public username
         </label>
@@ -222,7 +310,7 @@ export function SettingsForm({ displayName, username, timezone, usePersonalizedP
           type="submit"
           className={styles.saveBtn}
           disabled={saveState === 'saving'}
-          title="saves display name, timezone, prompt variety, and public username."
+          title="saves display name, timezone, prompt variety, daily reminder, and public username."
         >
           {saveState === 'saving' ? 'saving.' : 'save'}
         </button>

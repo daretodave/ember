@@ -40,13 +40,25 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: 'response must be a string' }, { status: 400 })
   }
 
-  const allowed = await checkRateLimit({
-    key: `entry:${user.id}:${today}`,
-    windowStart: utcDayStart(),
-    max: 10,
-  })
-  if (!allowed) {
-    return NextResponse.json({ error: 'rate limit exceeded' }, { status: 429 })
+  // Only rate-limit new entry creation, not updates to an already-existing entry.
+  // The limit (10 new entry dates per UTC day) guards against bulk-backdating abuse
+  // while allowing unlimited saves to the same entry date (e.g. auto-save).
+  const { data: existingEntry } = await supabase
+    .from('entries')
+    .select('user_id')
+    .eq('user_id', user.id)
+    .eq('date', date)
+    .maybeSingle()
+
+  if (!existingEntry) {
+    const allowed = await checkRateLimit({
+      key: `entry:${user.id}:${today}`,
+      windowStart: utcDayStart(),
+      max: 10,
+    })
+    if (!allowed) {
+      return NextResponse.json({ error: 'rate limit exceeded' }, { status: 429 })
+    }
   }
 
   const { data, error } = await supabase

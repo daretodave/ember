@@ -6,6 +6,9 @@ export type ProfileRow = {
   username: string | null
   timezone: string
   use_personalized_prompts: boolean
+  reminder_opt_in: boolean
+  reminder_hour: number
+  last_reminder_sent_at: string | null
   created_at: string
   updated_at: string
 }
