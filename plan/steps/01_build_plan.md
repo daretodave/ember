@@ -68,7 +68,7 @@
 - [x] Phase 35 — Entry tags + themed browsing — 559cc56
 - [x] Phase 36 — Markdown rendering in entries (plain storage, rendered view) — f34518e
 - [x] Phase 37 — Weekly reflection (opt-in Anthropic synthesis of the week) — 74ebfea
-- [ ] Phase 38 — Prompt packs (selectable themed prompt collections)
+- [x] Phase 38 — Prompt packs (selectable themed prompt collections) — ed0d41a
 - [ ] Phase 39 — Bound export ("your book" — typeset printable compilation)
 
 ## Per-phase scope
