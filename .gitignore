@@ -20,3 +20,6 @@ apps/e2e/playwright-report/
 
 # Minted critique session cookie — holds a live Supabase session
 .cache/
+
+# Playwright auth storage state — holds a live session for e2e tests
+apps/e2e/.auth/
