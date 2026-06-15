@@ -60,7 +60,7 @@
      authors nine feature experiments (31-39). Briefs can be refined
      per-phase with /plan-a-phase before each ships. -->
 - [x] Phase 29 — E2e authenticated flow coverage (sign-in, write, edit, persist) — 83ec0bf
-- [ ] Phase 30 — Authentication funnel UX clarity (`/signin` pre/post-submit states)
+- [x] Phase 30 — Authentication funnel UX clarity (`/signin` pre/post-submit states) — 4cfb1d8
 - [ ] Phase 31 — Entry search (full-text search across past entries)
 - [ ] Phase 32 — Year in review (quiet annual recap on `/log`)
 - [ ] Phase 33 — Daily reminder (opt-in email nudge to write)
