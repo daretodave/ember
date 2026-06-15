@@ -2,12 +2,14 @@ import { createClient } from '@/lib/supabase/server'
 import { NextResponse } from 'next/server'
 
 const USERNAME_RE = /^[a-z][a-z0-9-]{2,29}$/
+const VALID_PACKS = new Set(['standard', 'gratitude', 'craft', 'stoic', 'grief'])
 
 type SettingsPayload = {
   display_name?: string | null
   username?: string | null
   timezone?: string
   use_personalized_prompts?: boolean
+  prompt_pack?: string
   reminder_opt_in?: boolean
   reminder_hour?: number
   weekly_reflection_opt_in?: boolean
@@ -31,7 +33,7 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: 'invalid json' }, { status: 400 })
   }
 
-  const { display_name, username, timezone, use_personalized_prompts, reminder_opt_in, reminder_hour, weekly_reflection_opt_in } = body
+  const { display_name, username, timezone, use_personalized_prompts, prompt_pack, reminder_opt_in, reminder_hour, weekly_reflection_opt_in } = body
 
   // Validate username if provided (empty string or null → clear it)
   const normalizedUsername =
@@ -59,6 +61,9 @@ export async function POST(request: Request) {
   }
   if (use_personalized_prompts !== undefined && typeof use_personalized_prompts === 'boolean') {
     patch.use_personalized_prompts = use_personalized_prompts
+  }
+  if (prompt_pack !== undefined && typeof prompt_pack === 'string' && VALID_PACKS.has(prompt_pack)) {
+    patch.prompt_pack = prompt_pack
   }
   if (reminder_opt_in !== undefined && typeof reminder_opt_in === 'boolean') {
     patch.reminder_opt_in = reminder_opt_in

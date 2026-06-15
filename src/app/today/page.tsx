@@ -45,10 +45,11 @@ export default async function TodayPage() {
     getOnThisDay(supabase, user.id, date),
   ])
 
-  // Resolve today's prompt: personalized (opt-in) or deterministic seed
+  // Resolve today's prompt: personalized (opt-in) > pack > standard
   let prompt: string
   let task: string
-  const seedPreview = getSevenDayPreview(new Date())[0]
+  const pack = profile?.prompt_pack ?? 'standard'
+  const seedPreview = getSevenDayPreview(new Date(), pack)[0]
 
   if (profile?.use_personalized_prompts) {
     const recentResponses = Array.from(recentEntries.values())

@@ -153,4 +153,41 @@ describe('POST /api/settings', () => {
       expect.any(Object),
     )
   })
+
+  it('passes a valid prompt_pack through to upsert', async () => {
+    mockGetUser.mockResolvedValue({ data: { user: { id: 'user-1' } } })
+    for (const pack of ['standard', 'gratitude', 'craft', 'stoic', 'grief']) {
+      vi.clearAllMocks()
+      mockSingle.mockResolvedValue({ data: { user_id: 'user-1' }, error: null })
+      mockSelect.mockReturnValue({ single: mockSingle })
+      mockUpsert.mockReturnValue({ select: mockSelect })
+      mockFrom.mockReturnValue({ upsert: mockUpsert })
+      const req = new Request('http://localhost/api/settings', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ prompt_pack: pack }),
+      })
+      const res = await POST(req)
+      expect(res.status).toBe(200)
+      expect(mockUpsert).toHaveBeenCalledWith(
+        expect.objectContaining({ prompt_pack: pack }),
+        expect.any(Object),
+      )
+    }
+  })
+
+  it('ignores an unknown prompt_pack value', async () => {
+    mockGetUser.mockResolvedValue({ data: { user: { id: 'user-1' } } })
+    const req = new Request('http://localhost/api/settings', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ prompt_pack: 'unknown-pack' }),
+    })
+    const res = await POST(req)
+    expect(res.status).toBe(200)
+    expect(mockUpsert).toHaveBeenCalledWith(
+      expect.not.objectContaining({ prompt_pack: expect.anything() }),
+      expect.any(Object),
+    )
+  })
 })

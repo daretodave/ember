@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { TimezoneCombobox } from '@/components/timezone/TimezoneCombobox'
+import { PROMPT_PACKS, type PromptPack } from '@/lib/prompts'
 import styles from './page.module.css'
 
 type SaveState = 'idle' | 'saving' | 'saved' | 'error'
@@ -11,6 +12,7 @@ type Props = {
   username: string
   timezone: string
   usePersonalizedPrompts: boolean
+  promptPack: PromptPack
   reminderOptIn: boolean
   reminderHour: number
   weeklyReflectionOptIn: boolean
@@ -29,6 +31,7 @@ export function SettingsForm({
   username,
   timezone,
   usePersonalizedPrompts,
+  promptPack,
   reminderOptIn,
   reminderHour,
   weeklyReflectionOptIn,
@@ -38,6 +41,7 @@ export function SettingsForm({
   const [usernameVal, setUsernameVal] = useState(username)
   const [tzVal, setTzVal] = useState(timezone)
   const [personalizedVal, setPersonalizedVal] = useState(usePersonalizedPrompts)
+  const [promptPackVal, setPromptPackVal] = useState<PromptPack>(promptPack)
   const [reminderOptInVal, setReminderOptInVal] = useState(reminderOptIn)
   const [reminderHourVal, setReminderHourVal] = useState(reminderHour)
   const [weeklyReflectionVal, setWeeklyReflectionVal] = useState(weeklyReflectionOptIn)
@@ -50,6 +54,7 @@ export function SettingsForm({
     usernameVal: username,
     tzVal: timezone,
     personalizedVal: usePersonalizedPrompts,
+    promptPackVal: promptPack,
     reminderOptInVal: reminderOptIn,
     reminderHourVal: reminderHour,
     weeklyReflectionVal: weeklyReflectionOptIn,
@@ -90,6 +95,7 @@ export function SettingsForm({
     usernameVal !== savedSnapshotRef.current.usernameVal ||
     tzVal !== savedSnapshotRef.current.tzVal ||
     personalizedVal !== savedSnapshotRef.current.personalizedVal ||
+    promptPackVal !== savedSnapshotRef.current.promptPackVal ||
     reminderOptInVal !== savedSnapshotRef.current.reminderOptInVal ||
     reminderHourVal !== savedSnapshotRef.current.reminderHourVal ||
     weeklyReflectionVal !== savedSnapshotRef.current.weeklyReflectionVal
@@ -121,6 +127,7 @@ export function SettingsForm({
           username: usernameVal,
           timezone: tzVal,
           use_personalized_prompts: personalizedVal,
+          prompt_pack: promptPackVal,
           reminder_opt_in: reminderOptInVal,
           reminder_hour: reminderHourVal,
           weekly_reflection_opt_in: weeklyReflectionVal,
@@ -133,6 +140,7 @@ export function SettingsForm({
           usernameVal,
           tzVal,
           personalizedVal,
+          promptPackVal,
           reminderOptInVal,
           reminderHourVal,
           weeklyReflectionVal,
@@ -147,7 +155,7 @@ export function SettingsForm({
       setErrorMsg('network error. save failed.')
       setSaveState('error')
     }
-  }, [nameVal, usernameVal, tzVal, personalizedVal, reminderOptInVal, reminderHourVal, weeklyReflectionVal])
+  }, [nameVal, usernameVal, tzVal, personalizedVal, promptPackVal, reminderOptInVal, reminderHourVal, weeklyReflectionVal])
 
   return (
     <form
@@ -223,6 +231,29 @@ export function SettingsForm({
             personalized
           </label>
         </div>
+      </div>
+
+      <div className={styles.field}>
+        <label className={styles.label} htmlFor="prompt-pack">
+          prompt source
+        </label>
+        <p className={styles.hint} id="desc-prompt-pack">
+          choose a themed collection for your daily prompt. personalized variety overrides this selection.
+        </p>
+        <select
+          id="prompt-pack"
+          className={styles.select}
+          value={promptPackVal}
+          onChange={(e) => setPromptPackVal(e.target.value as PromptPack)}
+          aria-describedby="desc-prompt-pack"
+          disabled={personalizedVal}
+        >
+          {(Object.keys(PROMPT_PACKS) as PromptPack[]).map((key) => (
+            <option key={key} value={key}>
+              {PROMPT_PACKS[key].label} — {PROMPT_PACKS[key].description}
+            </option>
+          ))}
+        </select>
       </div>
 
       <div className={styles.field}>
