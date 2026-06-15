@@ -69,7 +69,7 @@
 - [x] Phase 36 — Markdown rendering in entries (plain storage, rendered view) — f34518e
 - [x] Phase 37 — Weekly reflection (opt-in Anthropic synthesis of the week) — 74ebfea
 - [x] Phase 38 — Prompt packs (selectable themed prompt collections) — ed0d41a
-- [ ] Phase 39 — Bound export ("your book" — typeset printable compilation)
+- [x] Phase 39 — Bound export ("your book" — typeset printable compilation) — 0af49f2
 
 ## Per-phase scope
 
