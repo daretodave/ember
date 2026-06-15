@@ -79,6 +79,12 @@ export default async function SettingsPage() {
         >
           export your data
         </a>
+        <Link
+          href="/export/book"
+          className={styles.exportLink}
+        >
+          print your book
+        </Link>
         <DeleteAccountSection />
       </main>
       <footer className={styles.footer}>
