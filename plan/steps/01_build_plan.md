@@ -62,7 +62,7 @@
 - [x] Phase 29 — E2e authenticated flow coverage (sign-in, write, edit, persist) — 83ec0bf
 - [x] Phase 30 — Authentication funnel UX clarity (`/signin` pre/post-submit states) — 4cfb1d8
 - [x] Phase 31 — Entry search (full-text search across past entries) — bd77eca
-- [ ] Phase 32 — Year in review (quiet annual recap on `/log`)
+- [x] Phase 32 — Year in review (quiet annual recap on `/log`) — 1d48c85
 - [ ] Phase 33 — Daily reminder (opt-in email nudge to write)
 - [ ] Phase 34 — One-word check-in (optional per-entry mood/weather word)
 - [ ] Phase 35 — Entry tags + themed browsing
