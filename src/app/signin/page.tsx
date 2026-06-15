@@ -62,11 +62,11 @@ export default function SigninPage() {
             <p
               ref={confirmationRef}
               className={styles.confirmation}
-              role="status"
+              data-testid="signin-confirmation"
               tabIndex={-1}
             >
-              a sign-in link is on its way. the link opens today&apos;s prompt.
-              sign-in links expire after 24 hours. no password. no other mail.
+              a sign-in link has been sent. the link opens today&apos;s prompt.
+              the link expires after 24 hours. no password. no other mail.
             </p>
           ) : (
             <form className={styles.form} onSubmit={handleSubmit}>
@@ -80,21 +80,20 @@ export default function SigninPage() {
                   id="email"
                   type="email"
                   autoComplete="email"
-                  placeholder="email address"
                   required
                   disabled={state === 'sending'}
                 />
               </div>
               <p className={styles.reassurance}>
-                a sign-in link is sent to this address. it expires after 24 hours.
-                no password. no other mail. a new address creates an account.
+                a new address creates an account. a returning address receives a
+                sign-in link. no password. no other mail.
               </p>
               <button
                 type="submit"
                 className={styles.submit}
                 disabled={state === 'sending'}
               >
-                {state === 'sending' ? 'sending.' : 'send a link'}
+                {state === 'sending' ? 'sending.' : 'send link.'}
               </button>
             </form>
           )}

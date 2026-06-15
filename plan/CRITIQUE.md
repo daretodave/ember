@@ -62,7 +62,7 @@
 - source: browser
 - resolution: intentional brand rhetoric — the "your morning" / "does not personalize" contrast is the point of the sentence; keep as-is per /oversight 2026-06-11. Closed without code change.
 
-### [LOW] /signin — account-creation notice is the final sentence in the reassurance paragraph; new visitors may miss it
+### [x] [LOW] /signin — account-creation notice is the final sentence in the reassurance paragraph; new visitors may miss it
 - pass: 55 (commit 988fbcf)
 - viewport: both
 - category: comprehension
@@ -70,8 +70,9 @@
 - evidence: src/app/signin/page.tsx reassurance paragraph: "a sign-in link is sent to this address. it expires after 24 hours. no password. no other mail. a new address creates an account." — account-creation path is sentence 4 of 4. contrast src/app/page.tsx (post pass-48): "a new address creates an account. a returning address receives a sign-in link." — new-visitor path leads.
 - suggested fix: reorder the reassurance paragraph to lead with the account-creation path: "a new address creates an account. a returning address receives a sign-in link. no password. no other mail. the link expires after 24 hours."
 - source: browser
+- resolution: reordered reassurance to lead with account-creation; removed expiry sentence from pre-submit (moved to confirmation). Shipped in Phase 30.
 
-### [LOW] /signin — expiry statement shifts grammatical register between pre-submission and post-submission states
+### [x] [LOW] /signin — expiry statement shifts grammatical register between pre-submission and post-submission states
 - pass: 55 (commit 988fbcf)
 - viewport: both
 - category: voice
@@ -79,6 +80,7 @@
 - evidence: src/app/signin/page.tsx pre-submit reassurance: "a sign-in link is sent to this address. it expires after 24 hours." and post-submit confirmation: "sign-in links expire after 24 hours." — singular "it" vs. generic plural "sign-in links" for the same caveat.
 - suggested fix: align the confirmation to the singular definite register: change "sign-in links expire after 24 hours." to "the link expires after 24 hours." to refer to the specific link just sent.
 - source: browser
+- resolution: removed expiry from pre-submit; changed post-submit to "the link expires after 24 hours." Shipped in Phase 30.
 
 ### [LOW] / — landing page footer aria-label="ember" does not represent the full footer content; tagline absent from landmark name
 - pass: 55 (commit 988fbcf)
@@ -89,7 +91,7 @@
 - suggested fix: change aria-label to "ember — a daily writing ritual" to represent the full content of the footer region.
 - source: browser
 
-### [LOW] /signin — confirmation paragraph has both role="status" live region and programmatic focus; screen readers double-announce the confirmation
+### [x] [LOW] /signin — confirmation paragraph has both role="status" live region and programmatic focus; screen readers double-announce the confirmation
 - pass: 55 (commit 988fbcf)
 - viewport: both
 - category: a11y
@@ -97,6 +99,7 @@
 - evidence: src/app/signin/page.tsx: <p ref={confirmationRef} role="status" tabIndex={-1}> receives .focus() in a useEffect triggered on state==="sent". role="status" and the programmatic focus movement are two separate announcement paths firing on the same state transition.
 - suggested fix: remove role="status" from the confirmation paragraph and rely solely on the programmatic focus delivery to surface the content to AT users, eliminating the duplicate announcement path.
 - source: browser
+- resolution: removed role="status" from confirmation paragraph; kept tabIndex={-1} and programmatic focus. Added data-testid="signin-confirmation" for testability. Shipped in Phase 30.
 
 ### [LOW] / — sticky CTA aside has aria-label="sign in"; imperative verb phrase used as a landmark accessible name
 - pass: 55 (commit 988fbcf)
@@ -143,7 +146,7 @@
 - suggested fix: add a visually-hidden <span className="sr-only">ember — </span> prefix inside the H1 element in src/app/page.tsx, mirroring the approach used for /today's page-identity sr-only prefix shipped in pass 54 at 8c951ee.
 - source: browser
 
-### [LOW] /signin — email input placeholder "email address" duplicates the label "email" in a slightly different register
+### [x] [LOW] /signin — email input placeholder "email address" duplicates the label "email" in a slightly different register
 - pass: 56 (commit 5fac7a3)
 - viewport: both
 - category: voice
@@ -151,6 +154,7 @@
 - evidence: anonymous /signin capture: "email\n\na sign-in link is sent to this address..." — label "email" followed by placeholder text "email address" on the input. the body capture does not render placeholder text but the page.tsx source would show <input placeholder="email address" />.
 - suggested fix: remove the placeholder attribute from the email input in src/app/signin/page.tsx; the "email" label is sufficient and its removal is consistent with the site's minimal register.
 - source: browser
+- resolution: removed placeholder="email address" from email input. Shipped in Phase 30.
 
 ### [LOW] /today — focus-mode exit button "done writing" uses a participial phrase; breaks the product's noun-phrase register
 - pass: 56 (commit 5fac7a3)
@@ -161,7 +165,7 @@
 - suggested fix: change the label to "done" in src/app/today/TodayEntry.tsx to match the spare noun-phrase register used throughout; "done" is unambiguous in a single-control overlay context where the only action is closing.
 - source: browser
 
-### [LOW] /signin — submit button label "send a link" is an imperative verb phrase
+### [x] [LOW] /signin — submit button label "send a link" is an imperative verb phrase
 - pass: 54 (commit 4ca3212)
 - viewport: both
 - category: voice
@@ -169,6 +173,7 @@
 - evidence: src/app/signin/page.tsx: {state === 'sending' ? 'sending.' : 'send a link'} — "send a link" is the idle-state label on <button type="submit">. contrast "sending." (in-progress state) which is declarative; the idle state alone uses the imperative form.
 - suggested fix: change the idle label to a noun phrase such as "get a sign-in link" or a declarative form to match the register used throughout the page.
 - source: browser
+- resolution: changed idle label to "send link." — terse, period-terminated, parallels "sending." in-progress state. Shipped in Phase 30.
 
 ### [x] [LOW] /today — writing surface has no landmark or heading; heading navigation skips directly from H1 (prompt) to H2 (day strip)
 - pass: 54 (commit 4ca3212)

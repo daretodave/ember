@@ -11,20 +11,20 @@ describe('SigninPage — initial state', () => {
   it('renders the email input and submit button', () => {
     render(<SigninPage />)
     expect(screen.getByLabelText('email')).toBeInTheDocument()
-    expect(screen.getByRole('button', { name: 'send a link' })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: 'send link.' })).toBeInTheDocument()
   })
 
   it('does not show confirmation or error on load', () => {
     render(<SigninPage />)
-    expect(screen.queryByRole('status')).not.toBeInTheDocument()
+    expect(screen.queryByTestId('signin-confirmation')).not.toBeInTheDocument()
     expect(screen.queryByRole('alert')).not.toBeInTheDocument()
   })
 
-  it('shows expiry notice in reassurance paragraph, not only in footer', () => {
+  it('reassurance paragraph leads with account-creation path and has no expiry sentence', () => {
     render(<SigninPage />)
     const reassurance = document.querySelector('form p')
-    expect(reassurance).toHaveTextContent('it expires after 24 hours.')
-    expect(document.querySelector('footer')).not.toHaveTextContent('sign-in links expire after 24 hours.')
+    expect(reassurance).toHaveTextContent('a new address creates an account.')
+    expect(reassurance).not.toHaveTextContent('expires after 24 hours')
   })
 
   it('reassurance paragraph precedes the submit button in DOM reading order', () => {
@@ -63,7 +63,7 @@ describe('SigninPage — sending state', () => {
 })
 
 describe('SigninPage — sent state', () => {
-  it('shows confirmation with role="status" after successful send', async () => {
+  it('shows confirmation paragraph after successful send', async () => {
     global.fetch = vi.fn().mockResolvedValue({
       ok: true,
       json: async () => ({}),
@@ -76,9 +76,9 @@ describe('SigninPage — sent state', () => {
     fireEvent.submit(document.querySelector('form')!)
 
     await waitFor(() => {
-      expect(screen.getByRole('status')).toBeInTheDocument()
+      expect(screen.getByTestId('signin-confirmation')).toBeInTheDocument()
     })
-    expect(screen.queryByRole('button', { name: 'send a link' })).not.toBeInTheDocument()
+    expect(screen.queryByRole('button', { name: 'send link.' })).not.toBeInTheDocument()
   })
 
   it('moves focus to the confirmation paragraph after successful send', async () => {
@@ -94,14 +94,14 @@ describe('SigninPage — sent state', () => {
     fireEvent.submit(document.querySelector('form')!)
 
     await waitFor(() => {
-      expect(screen.getByRole('status')).toBeInTheDocument()
+      expect(screen.getByTestId('signin-confirmation')).toBeInTheDocument()
     })
     await waitFor(() => {
-      expect(document.activeElement).toBe(screen.getByRole('status'))
+      expect(document.activeElement).toBe(screen.getByTestId('signin-confirmation'))
     })
   })
 
-  it('shows expiry notice in confirmation, not in footer', async () => {
+  it('shows expiry notice in confirmation with singular definite register', async () => {
     global.fetch = vi.fn().mockResolvedValue({
       ok: true,
       json: async () => ({}),
@@ -114,11 +114,11 @@ describe('SigninPage — sent state', () => {
     fireEvent.submit(document.querySelector('form')!)
 
     await waitFor(() => {
-      expect(screen.getByRole('status')).toBeInTheDocument()
+      expect(screen.getByTestId('signin-confirmation')).toBeInTheDocument()
     })
 
-    expect(screen.getByRole('status')).toHaveTextContent('sign-in links expire after 24 hours.')
-    expect(document.querySelector('footer')).not.toHaveTextContent('sign-in links expire after 24 hours.')
+    expect(screen.getByTestId('signin-confirmation')).toHaveTextContent('the link expires after 24 hours.')
+    expect(document.querySelector('footer')).not.toHaveTextContent('expires after 24 hours')
   })
 })
 
