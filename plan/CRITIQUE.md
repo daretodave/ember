@@ -1,7 +1,7 @@
 # External-observer findings — Ember
 
-> Last pass: 2026-06-15 at commit 5fac7a3
-> Pass count: 56
+> Last pass: 2026-06-15 at commit ee8ddd0
+> Pass count: 57
 
 > Written by `/critique` after walking the live site as a
 > fresh-eyes visitor. Drained by `/iterate`.
@@ -2218,6 +2218,42 @@
 - observation: the mosaic tile grid appears between the lede and the seven-day list with no adjacent caption or label visible to sighted users. the grid is the only graphic on the page but first-time visitors have no text cue explaining what the tile pattern represents. the aria-label "60 days of practice" is at-only. a sighted visitor sees an unlabeled tile pattern with no context before reaching the seven-day list.
 - evidence: src/app/page.tsx: <section className={styles.previewMark}><MosaicPreview /></section> — no adjacent <p>, <figcaption>, or visible text label in the containing section. desktop and mobile captures show the mosaic between the hero and the seven-day preview with no visible annotation.
 - suggested fix: add a short visible caption in the previewMark section, e.g. a <p> reading "the log, over time." so sighted first-time visitors understand the graphic's meaning without relying on the at-only aria-label.
+- source: browser
+
+### [MED] /log — "59 days quiet" stat line implies a performance score; contradicts "a missed day leaves no mark" philosophy
+- pass: 57 (commit ee8ddd0)
+- viewport: both
+- category: voice
+- observation: the /log summary reads "1 day written. 59 days quiet. 0 days published." placing the quiet-day count as a headline figure alongside written days renders the two as a comparative score. the landing page and bearings.md both state "a missed day leaves no mark" and "the log shows what is, not what isn't." a stat line that reports 59 quiet days is the opposite — it shows exactly what isn't. a new user with one entry reads their log as 1 written vs 59 absent, which is soft streak-shaming through arithmetic.
+- evidence: authenticated /log capture: "1 day written. 59 days quiet. 0 days published." — the quiet-day count is derived and prominently displayed.
+- suggested fix: remove the "N days quiet" figure from the stat line. show only "N days written. N days published." so the line reports practice without counting absence.
+- source: browser
+
+### [LOW] /today — save timestamp "last saved · 06:36" shows time only; no date context when session persists across midnight
+- pass: 57 (commit ee8ddd0)
+- viewport: both
+- category: comprehension
+- observation: the save indicator on /today shows "last saved · 06:36" — a clock time with no date qualifier. a user who leaves the tab open overnight, or who opens the page after midnight before the prompt rolls over, cannot distinguish today's save from a prior session's autosave. the ambiguity is bounded (the page is entry-per-day), but the site's register of careful precision makes a bare time stamp feel incomplete.
+- evidence: authenticated /today capture: "last saved · 06:36" — time only, no relative date ("today" / "yesterday").
+- suggested fix: when the save timestamp's date is the current calendar day, show the time only; when it is a prior day, append a short qualifier: "last saved · 06:36 yesterday" or "last saved · 06:36, Sun 14 Jun". today is the common case so this change only activates in the edge case.
+- source: browser
+
+### [LOW] /log — "private" label on entry listing is free-floating text with no programmatic association to its entry
+- pass: 57 (commit ee8ddd0)
+- viewport: both
+- category: a11y
+- observation: the /log entry list item ends with the word "private" as a trailing label. in the accessible text stream it appears after the entry preview and before "showing the most recent. browse by date" — spatially ambiguous and not linked to the entry element via aria-describedby or similar. a screen reader user moving through entries by article or heading would encounter "private" as orphaned text.
+- evidence: authenticated /log capture: "e2e write test — today (edited)\n\nshowing the most recent. browse by date\nprivate" — "private" trails the next paragraph rather than the entry element.
+- suggested fix: associate the "private" badge with its parent entry container via aria-describedby, or wrap it in a <span> with a visually-hidden context prefix ("visibility: private") placed inside the article element it describes.
+- source: browser
+
+### [LOW] /settings — "personalized" prompt description does not state the minimum entry threshold
+- pass: 57 (commit ee8ddd0)
+- viewport: both
+- category: comprehension
+- observation: the prompt variety option reads "personalized: a unique prompt generated from recent entries. falls back to a standard prompt until entries exist." "until entries exist" is vague — a user with one entry cannot tell whether personalisation is active or whether the fallback is still in use. the setting appears consequential but offers no signal about when it actually activates.
+- evidence: authenticated /settings capture: "personalized: a unique prompt generated from recent entries. falls back to a standard prompt until entries exist."
+- suggested fix: specify a concrete threshold, e.g. "personalized: a unique prompt generated from your recent entries. requires a few entries to take effect — uses the standard prompt until then." if the threshold is defined in code, echo it here.
 - source: browser
 
 ## Done
