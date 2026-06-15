@@ -7,6 +7,7 @@ import Link from 'next/link'
 import { redirect } from 'next/navigation'
 import type { MosaicTileData } from './LogMosaic'
 import { LogMosaic } from './LogMosaic'
+import { LogSearch } from './LogSearch'
 import styles from './page.module.css'
 
 export const metadata = {
@@ -116,6 +117,7 @@ export default async function LogPage() {
       </div>
 
       <section aria-label="log entries">
+        <LogSearch />
         {recentEntry && recentPrompt ? (
           <>
             <article className={styles.entryView} aria-label="most recent entry">

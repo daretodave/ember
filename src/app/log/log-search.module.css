@@ -1,0 +1,105 @@
+/* LogSearch — search input + results, rendered on /log */
+
+.searchWrap {
+  max-width: 720px;
+  margin: 0 auto;
+  width: 100%;
+  padding: var(--space-4) var(--space-6) var(--space-6);
+}
+
+.label {
+  display: block;
+  font-family: var(--font-sans);
+  font-size: var(--type-12);
+  letter-spacing: 0.04em;
+  color: var(--color-ink-muted);
+  margin-bottom: var(--space-3);
+}
+
+.input {
+  width: 100%;
+  font-family: var(--font-serif);
+  font-size: var(--type-17);
+  color: var(--color-ink);
+  background: var(--color-paper);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-2);
+  padding: var(--space-3) var(--space-4);
+  outline: none;
+  box-sizing: border-box;
+}
+
+.input:focus {
+  border-color: var(--color-accent);
+}
+
+.input::placeholder {
+  color: var(--color-ink-faint);
+  font-style: italic;
+}
+
+/* Safari/Chrome render a cancel button in type=search — keep it subtle */
+.input::-webkit-search-cancel-button {
+  opacity: 0.4;
+}
+
+.noResults {
+  font-family: var(--font-serif);
+  font-size: var(--type-17);
+  color: var(--color-ink-muted);
+  font-style: italic;
+  margin: var(--space-4) 0 0;
+}
+
+.results {
+  list-style: none;
+  margin: var(--space-4) 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.result {
+  border-top: 1px solid var(--color-border-faint);
+  padding-top: var(--space-3);
+  margin-top: var(--space-3);
+}
+
+.result:first-child {
+  border-top: none;
+  margin-top: 0;
+  padding-top: 0;
+}
+
+.resultLink {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  text-decoration: none;
+  color: inherit;
+}
+
+.resultDate {
+  font-family: var(--font-mono);
+  font-size: var(--type-12);
+  letter-spacing: 0.08em;
+  color: var(--color-ink-muted);
+}
+
+.resultExcerpt {
+  font-family: var(--font-serif);
+  font-size: var(--type-17);
+  color: var(--color-ink-muted);
+  transition: color var(--motion-fade) var(--easing);
+  line-height: var(--leading-snug);
+}
+
+.resultLink:hover .resultExcerpt {
+  color: var(--color-ink);
+}
+
+@media (max-width: 480px) {
+  .searchWrap {
+    padding: var(--space-4) var(--space-4) var(--space-5);
+  }
+}

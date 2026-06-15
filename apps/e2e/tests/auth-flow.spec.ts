@@ -75,6 +75,26 @@ test.describe.serial('authenticated flows', () => {
     await expect(article).toContainText(WRITE_CONTENT)
   })
 
+  test('/log — search input visible and returns results', async ({ page }) => {
+    const cookies = await page.context().cookies()
+    skipIfNoAuth(cookies)
+
+    await page.goto('/log')
+    await expect(page).toHaveURL(/\/log$/)
+
+    // Search input must be present
+    const searchInput = page.locator('#log-search')
+    await expect(searchInput).toBeVisible()
+
+    // Type the sentinel string written in test 1
+    await searchInput.fill('e2e write test')
+
+    // Wait for debounce + API response — a result linking to today's entry should appear
+    await expect(page.locator('ul[aria-label="search results"]')).toBeVisible({ timeout: 10_000 })
+    const resultLink = page.locator(`ul[aria-label="search results"] a[href="/log/${TODAY}"]`)
+    await expect(resultLink).toBeVisible({ timeout: 10_000 })
+  })
+
   test('/log/[date] — edit flow updates entry text', async ({ page }) => {
     const cookies = await page.context().cookies()
     skipIfNoAuth(cookies)
