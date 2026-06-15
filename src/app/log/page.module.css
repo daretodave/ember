@@ -283,6 +283,33 @@
   font-style: italic;
 }
 
+/* ----------- weekly reflection ----------- */
+.weeklyReflection {
+  width: 100%;
+  max-width: 560px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  text-align: center;
+}
+
+.weeklyReflectionText {
+  font-family: var(--font-serif);
+  font-size: var(--type-17);
+  line-height: var(--leading-prose);
+  color: var(--color-ink);
+  font-style: italic;
+  margin: 0;
+}
+
+.weeklyReflectionLabel {
+  font-family: var(--font-sans);
+  font-size: var(--type-12);
+  letter-spacing: 0.04em;
+  color: var(--color-ink-muted);
+  margin: 0;
+}
+
 /* ----------- tag filter label + entry list ----------- */
 .tagFilterLabel {
   max-width: 720px;

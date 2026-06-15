@@ -13,6 +13,7 @@ type Props = {
   usePersonalizedPrompts: boolean
   reminderOptIn: boolean
   reminderHour: number
+  weeklyReflectionOptIn: boolean
   virgin: boolean
 }
 
@@ -30,6 +31,7 @@ export function SettingsForm({
   usePersonalizedPrompts,
   reminderOptIn,
   reminderHour,
+  weeklyReflectionOptIn,
   virgin,
 }: Props) {
   const [nameVal, setNameVal] = useState(displayName)
@@ -38,6 +40,7 @@ export function SettingsForm({
   const [personalizedVal, setPersonalizedVal] = useState(usePersonalizedPrompts)
   const [reminderOptInVal, setReminderOptInVal] = useState(reminderOptIn)
   const [reminderHourVal, setReminderHourVal] = useState(reminderHour)
+  const [weeklyReflectionVal, setWeeklyReflectionVal] = useState(weeklyReflectionOptIn)
   const [timezones, setTimezones] = useState<string[]>([])
   const [saveState, setSaveState] = useState<SaveState>('idle')
   const [errorMsg, setErrorMsg] = useState('')
@@ -49,6 +52,7 @@ export function SettingsForm({
     personalizedVal: usePersonalizedPrompts,
     reminderOptInVal: reminderOptIn,
     reminderHourVal: reminderHour,
+    weeklyReflectionVal: weeklyReflectionOptIn,
   })
 
   // Populate timezone list from browser
@@ -87,7 +91,8 @@ export function SettingsForm({
     tzVal !== savedSnapshotRef.current.tzVal ||
     personalizedVal !== savedSnapshotRef.current.personalizedVal ||
     reminderOptInVal !== savedSnapshotRef.current.reminderOptInVal ||
-    reminderHourVal !== savedSnapshotRef.current.reminderHourVal
+    reminderHourVal !== savedSnapshotRef.current.reminderHourVal ||
+    weeklyReflectionVal !== savedSnapshotRef.current.weeklyReflectionVal
 
   useEffect(() => {
     if (!isDirty || saveState === 'saving') {
@@ -118,6 +123,7 @@ export function SettingsForm({
           use_personalized_prompts: personalizedVal,
           reminder_opt_in: reminderOptInVal,
           reminder_hour: reminderHourVal,
+          weekly_reflection_opt_in: weeklyReflectionVal,
         }),
       })
 
@@ -129,6 +135,7 @@ export function SettingsForm({
           personalizedVal,
           reminderOptInVal,
           reminderHourVal,
+          weeklyReflectionVal,
         }
         setSaveState('saved')
       } else {
@@ -140,7 +147,7 @@ export function SettingsForm({
       setErrorMsg('network error. save failed.')
       setSaveState('error')
     }
-  }, [nameVal, usernameVal, tzVal, personalizedVal, reminderOptInVal, reminderHourVal])
+  }, [nameVal, usernameVal, tzVal, personalizedVal, reminderOptInVal, reminderHourVal, weeklyReflectionVal])
 
   return (
     <form
@@ -270,6 +277,39 @@ export function SettingsForm({
           </select>
         </div>
       )}
+
+      <div className={styles.field}>
+        <span className={styles.label}>weekly reflection</span>
+        <p className={styles.hint} id="desc-reflection-off">
+          a short paragraph written by ember from your week's entries, visible on your log. generated once per week; never shown if you wrote fewer than three entries.
+        </p>
+        <div className={styles.radioGroup} role="radiogroup" aria-label="weekly reflection">
+          <label className={`${styles.radioOption} ${!weeklyReflectionVal ? styles.radioOptionActive : ''}`}>
+            <input
+              type="radio"
+              name="weekly-reflection"
+              value="off"
+              checked={!weeklyReflectionVal}
+              onChange={() => setWeeklyReflectionVal(false)}
+              className={styles.radioInput}
+              aria-describedby="desc-reflection-off"
+            />
+            off
+          </label>
+          <label className={`${styles.radioOption} ${weeklyReflectionVal ? styles.radioOptionActive : ''}`}>
+            <input
+              type="radio"
+              name="weekly-reflection"
+              value="on"
+              checked={weeklyReflectionVal}
+              onChange={() => setWeeklyReflectionVal(true)}
+              className={styles.radioInput}
+              aria-describedby="desc-reflection-off"
+            />
+            on
+          </label>
+        </div>
+      </div>
 
       <div className={styles.field}>
         <label className={styles.label} htmlFor="username">

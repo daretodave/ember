@@ -3,8 +3,10 @@ import { EntryMarkdown } from '@/components/entry/EntryMarkdown'
 import { get60DayEntries, getYearEntries, formatDisplayDate, offsetDate, todayUtcDate, sanitizeTag } from '@/lib/entries'
 import { getMonthInReview } from '@/lib/monthInReview'
 import { getYearInReview } from '@/lib/yearInReview'
+import { getProfile } from '@/lib/profile'
 import { getPromptForDate } from '@/lib/prompts'
 import { createClient } from '@/lib/supabase/server'
+import { getWeeklyReflection } from '@/lib/weeklyReflection'
 import Link from 'next/link'
 import { redirect } from 'next/navigation'
 import type { MosaicTileData } from './LogMosaic'
@@ -45,7 +47,10 @@ export default async function LogPage({ searchParams }: Props) {
   const activeTag = rawTag ? sanitizeTag(rawTag) : null
 
   const today = todayUtcDate()
-  const entries = await get60DayEntries(supabase, user.id)
+  const [entries, profile] = await Promise.all([
+    get60DayEntries(supabase, user.id),
+    getProfile(supabase, user.id),
+  ])
 
   // Collect distinct tags from the 60-day window for the filter UI
   const allTags = Array.from(
@@ -100,6 +105,11 @@ export default async function LogPage({ searchParams }: Props) {
     yearInReview = getYearInReview(yearEntries, today)
   }
 
+  // Weekly reflection: fetch only when opted in
+  const weeklyReflection = profile?.weekly_reflection_opt_in
+    ? await getWeeklyReflection(supabase, user.id)
+    : null
+
   // Most recent written entry (from full entries, not filtered)
   const sortedDates = [...entries.keys()].sort().reverse()
   const recentDate = sortedDates[0] ?? null
@@ -138,6 +148,12 @@ export default async function LogPage({ searchParams }: Props) {
             {monthInReview.count === 1 ? 'entry' : 'entries'}. the longest sat on the{' '}
             {monthInReview.longestDayOrdinal}.
           </p>
+        )}
+        {weeklyReflection && (
+          <div className={styles.weeklyReflection} aria-label="weekly reflection">
+            <p className={styles.weeklyReflectionText}>{weeklyReflection}</p>
+            <p className={styles.weeklyReflectionLabel}>written by ember from your week</p>
+          </div>
         )}
         <h1 id="mosaic-heading" className={styles.mosaicMeta}>the past 60 days</h1>
         <a href="#log-content" className="skip-link">skip to log</a>

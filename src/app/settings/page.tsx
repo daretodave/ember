@@ -60,6 +60,7 @@ export default async function SettingsPage() {
           usePersonalizedPrompts={profile?.use_personalized_prompts ?? false}
           reminderOptIn={profile?.reminder_opt_in ?? false}
           reminderHour={profile?.reminder_hour ?? 8}
+          weeklyReflectionOptIn={profile?.weekly_reflection_opt_in ?? false}
           virgin={virgin}
         />
         {profile?.username && (

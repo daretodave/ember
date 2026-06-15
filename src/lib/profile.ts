@@ -9,6 +9,7 @@ export type ProfileRow = {
   reminder_opt_in: boolean
   reminder_hour: number
   last_reminder_sent_at: string | null
+  weekly_reflection_opt_in: boolean
   created_at: string
   updated_at: string
 }

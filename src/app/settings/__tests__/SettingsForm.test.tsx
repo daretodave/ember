@@ -1,4 +1,4 @@
-import { cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react'
+import { cleanup, fireEvent, render, screen, waitFor, within } from '@testing-library/react'
 import { afterEach, describe, expect, it, vi } from 'vitest'
 import { SettingsForm } from '../SettingsForm'
 
@@ -14,6 +14,7 @@ const BASE_PROPS = {
   usePersonalizedPrompts: false,
   reminderOptIn: false,
   reminderHour: 8,
+  weeklyReflectionOptIn: false,
   virgin: false,
 }
 
@@ -56,6 +57,7 @@ describe('SettingsForm — save payload (regression: 0419eb3)', () => {
             use_personalized_prompts: true,
             reminder_opt_in: false,
             reminder_hour: 8,
+            weekly_reflection_opt_in: false,
           }),
         }),
       )
@@ -104,8 +106,10 @@ describe('SettingsForm — save payload (regression: 0419eb3)', () => {
     } as Response)
     render(<SettingsForm {...BASE_PROPS} />)
 
-    // Turn reminder on
-    const onRadio = screen.getByRole('radio', { name: 'on' })
+    // Turn reminder on — scope to the "daily reminder" radiogroup to avoid the
+    // "weekly reflection" radiogroup's "on" radio matching too
+    const reminderGroup = screen.getByRole('radiogroup', { name: 'daily reminder' })
+    const onRadio = within(reminderGroup).getByRole('radio', { name: 'on' })
     fireEvent.click(onRadio)
 
     fireEvent.submit(document.querySelector('form')!)
