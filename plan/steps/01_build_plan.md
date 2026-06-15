@@ -64,7 +64,7 @@
 - [x] Phase 31 — Entry search (full-text search across past entries) — bd77eca
 - [x] Phase 32 — Year in review (quiet annual recap on `/log`) — 1d48c85
 - [x] Phase 33 — Daily reminder (opt-in email nudge to write) — 5820332
-- [ ] Phase 34 — One-word check-in (optional per-entry mood/weather word)
+- [x] Phase 34 — One-word check-in (optional per-entry mood/weather word) — cfd75da
 - [ ] Phase 35 — Entry tags + themed browsing
 - [ ] Phase 36 — Markdown rendering in entries (plain storage, rendered view)
 - [ ] Phase 37 — Weekly reflection (opt-in Anthropic synthesis of the week)
