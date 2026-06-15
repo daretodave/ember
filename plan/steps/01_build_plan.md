@@ -59,7 +59,7 @@
      promotes the two strongest pending /expand candidates (29-30) and
      authors nine feature experiments (31-39). Briefs can be refined
      per-phase with /plan-a-phase before each ships. -->
-- [ ] Phase 29 — E2e authenticated flow coverage (sign-in, write, edit, persist)
+- [x] Phase 29 — E2e authenticated flow coverage (sign-in, write, edit, persist) — 83ec0bf
 - [ ] Phase 30 — Authentication funnel UX clarity (`/signin` pre/post-submit states)
 - [ ] Phase 31 — Entry search (full-text search across past entries)
 - [ ] Phase 32 — Year in review (quiet annual recap on `/log`)
