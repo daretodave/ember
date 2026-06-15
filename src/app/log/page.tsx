@@ -1,6 +1,7 @@
 import { MosaicGlyph } from '@/components/mosaic/MosaicGlyph'
-import { get60DayEntries, formatDisplayDate, offsetDate, todayUtcDate } from '@/lib/entries'
+import { get60DayEntries, getYearEntries, formatDisplayDate, offsetDate, todayUtcDate } from '@/lib/entries'
 import { getMonthInReview } from '@/lib/monthInReview'
+import { getYearInReview } from '@/lib/yearInReview'
 import { getPromptForDate } from '@/lib/prompts'
 import { createClient } from '@/lib/supabase/server'
 import Link from 'next/link'
@@ -69,6 +70,17 @@ export default async function LogPage() {
 
   const monthInReview = getMonthInReview(entries, today)
 
+  // Year-in-review: only query when in January 1-7 to avoid extra DB round-trips
+  const todayMonth = parseInt(today.slice(5, 7), 10)
+  const todayDay = parseInt(today.slice(8, 10), 10)
+  const isNewYearWindow = todayMonth === 1 && todayDay <= 7
+  let yearInReview = null
+  if (isNewYearWindow) {
+    const prevYear = parseInt(today.slice(0, 4), 10) - 1
+    const yearEntries = await getYearEntries(supabase, user.id, prevYear)
+    yearInReview = getYearInReview(yearEntries, today)
+  }
+
   // Most recent written entry
   const sortedDates = [...entries.keys()].sort().reverse()
   const recentDate = sortedDates[0] ?? null
@@ -91,6 +103,13 @@ export default async function LogPage() {
 
       <main id="main-content" tabIndex={-1}>
       <section className={styles.mosaicWrap} aria-labelledby="mosaic-heading">
+        {yearInReview && (
+          <p className={styles.yearRecap}>
+            in {yearInReview.yearLabel} — {yearInReview.count}{' '}
+            {yearInReview.count === 1 ? 'entry' : 'entries'}. the quietest stretch was{' '}
+            {yearInReview.quietestMonth}.
+          </p>
+        )}
         {monthInReview && (
           <p className={styles.monthRecap}>
             in {monthInReview.monthLabel} — {monthInReview.count}{' '}

@@ -274,6 +274,35 @@ export async function getOnThisDay(
 }
 
 /**
+ * Fetch all entries for a given calendar year for the authenticated user.
+ * Used by the year-in-review feature (the 60-day mosaic window is too short
+ * to cover a full prior year when today is in early January).
+ */
+export async function getYearEntries(
+  supabase: SupabaseClient,
+  userId: string,
+  year: number,
+): Promise<Map<string, Entry>> {
+  const { data, error } = await supabase
+    .from('entries')
+    .select('*')
+    .eq('user_id', userId)
+    .gte('date', `${year}-01-01`)
+    .lte('date', `${year}-12-31`)
+
+  if (error) {
+    console.error('getYearEntries error:', error.message)
+    return new Map()
+  }
+
+  const map = new Map<string, Entry>()
+  for (const row of (data ?? []) as Entry[]) {
+    map.set(row.date, row)
+  }
+  return map
+}
+
+/**
  * Return the previous and next published entry dates for navigation.
  * Fetches all published dates for the user (chronological order).
  */

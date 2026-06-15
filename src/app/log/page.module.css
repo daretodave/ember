@@ -78,6 +78,15 @@
   gap: var(--space-6);
 }
 
+.yearRecap {
+  font-family: var(--font-serif);
+  font-size: var(--type-17);
+  color: var(--color-ink-muted);
+  font-style: italic;
+  margin: 0;
+  text-align: center;
+}
+
 .monthRecap {
   font-family: var(--font-serif);
   font-size: var(--type-17);

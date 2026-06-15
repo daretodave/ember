@@ -71,9 +71,11 @@ ties resolved by picking the earliest calendar month.
 - **Separate query (`getYearEntries`)** because the 60-day mosaic window covers
   only ~Nov–Jan when today is early January, missing most of the prior year.
   Query is conditional (only executed when in the January 1–7 window).
-- **"Quietest" = fewest entries in a calendar month**, earliest month on ties.
-  Months with zero entries are eligible — a month entirely skipped is quieter
-  than any written month.
+- **"Quietest" = fewest entries among calendar months that have at least one
+  entry**, earliest month on ties. Entirely-skipped months (0 entries) are
+  excluded — "the quietest stretch was X" implies X was a period of practice,
+  just lighter than others. If only one month has entries, that month is
+  quietest by default.
 - **Ordinal suffix not used for years** — voice is "in 2025" not "the year 2025".
 - No `[needs-user-call]` for the case where all 12 months have equal counts:
   January (index 0) wins the tie and the recap still renders.
