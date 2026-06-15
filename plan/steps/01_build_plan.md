@@ -67,7 +67,7 @@
 - [x] Phase 34 — One-word check-in (optional per-entry mood/weather word) — cfd75da
 - [x] Phase 35 — Entry tags + themed browsing — 559cc56
 - [x] Phase 36 — Markdown rendering in entries (plain storage, rendered view) — f34518e
-- [ ] Phase 37 — Weekly reflection (opt-in Anthropic synthesis of the week)
+- [x] Phase 37 — Weekly reflection (opt-in Anthropic synthesis of the week) — 74ebfea
 - [ ] Phase 38 — Prompt packs (selectable themed prompt collections)
 - [ ] Phase 39 — Bound export ("your book" — typeset printable compilation)
 
