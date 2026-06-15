@@ -8,11 +8,42 @@ export type Entry = {
   task_done: boolean
   is_published: boolean
   checkin_word: string | null
+  tags: string[]
   created_at: string
   updated_at: string
 }
 
 export type EntryRow = Entry
+
+const TAG_RE = /^[a-z0-9][a-z0-9-]*$/
+
+/** Sanitize a single tag: lowercase, strip whitespace, validate pattern. */
+export function sanitizeTag(raw: string): string | null {
+  const t = raw.trim().toLowerCase()
+  if (!t || t.length > 30) return null
+  if (!TAG_RE.test(t)) return null
+  return t
+}
+
+/** Sanitize an array of raw tag strings: dedupe, validate, cap at 5. */
+export function sanitizeTags(raw: string[]): string[] {
+  const seen = new Set<string>()
+  const result: string[] = []
+  for (const r of raw) {
+    const t = sanitizeTag(r)
+    if (t && !seen.has(t)) {
+      seen.add(t)
+      result.push(t)
+      if (result.length >= 5) break
+    }
+  }
+  return result
+}
+
+/** Parse a comma-separated tag string into sanitized tags. */
+export function parseTagInput(raw: string): string[] {
+  return sanitizeTags(raw.split(',').map((s) => s.trim()).filter(Boolean))
+}
 
 /** UTC calendar date as YYYY-MM-DD */
 export function todayUtcDate(): string {

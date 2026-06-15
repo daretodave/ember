@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
 import type { Entry } from '@/lib/entries'
-import { formatSavedTime } from '@/lib/entries'
+import { formatSavedTime, parseTagInput } from '@/lib/entries'
 import { clearDraft, getDraft, saveDraft } from '@/lib/draft-store'
 import styles from './page.module.css'
 
@@ -22,6 +22,7 @@ export function TodayEntry({ date, task, prompt, initialEntry, hasUsername = tru
   const [taskDone, setTaskDone] = useState(initialEntry?.task_done ?? false)
   const [isPublished, setIsPublished] = useState(initialEntry?.is_published ?? false)
   const [checkinWord, setCheckinWord] = useState(initialEntry?.checkin_word ?? '')
+  const [tagsRaw, setTagsRaw] = useState((initialEntry?.tags ?? []).join(', '))
   const [saveState, setSaveState] = useState<SaveState>(initialEntry !== null ? 'saved' : 'idle')
   const [savedAt, setSavedAt] = useState<string | null>(initialEntry?.updated_at ?? null)
   const [errorMsg, setErrorMsg] = useState('')
@@ -56,6 +57,7 @@ export function TodayEntry({ date, task, prompt, initialEntry, hasUsername = tru
         setResponse(draft.response)
         setTaskDone(draft.taskDone)
         setCheckinWord(draft.checkinWord ?? '')
+        setTagsRaw(draft.tagsRaw ?? '')
         setSaveState('draft')
       }
     })
@@ -108,6 +110,7 @@ export function TodayEntry({ date, task, prompt, initialEntry, hasUsername = tru
           task_done: taskDone,
           is_published: isPublished,
           checkin_word: checkinWord.trim() || null,
+          tags: parseTagInput(tagsRaw),
         }),
       })
 
@@ -115,6 +118,7 @@ export function TodayEntry({ date, task, prompt, initialEntry, hasUsername = tru
         const data = (await res.json()) as Entry
         setSavedAt(data.updated_at)
         setCheckinWord(data.checkin_word ?? '')
+        setTagsRaw((data.tags ?? []).join(', '))
         setSaveState('saved')
         clearDraft(date)
       } else {
@@ -161,9 +165,9 @@ export function TodayEntry({ date, task, prompt, initialEntry, hasUsername = tru
     // Debounce-save to IndexedDB
     if (draftTimerRef.current) clearTimeout(draftTimerRef.current)
     draftTimerRef.current = setTimeout(() => {
-      saveDraft(date, { response: value, taskDone, checkinWord })
+      saveDraft(date, { response: value, taskDone, checkinWord, tagsRaw })
     }, 500)
-  }, [date, saveState, taskDone, checkinWord])
+  }, [date, saveState, taskDone, checkinWord, tagsRaw])
 
   function saveIndicatorText() {
     if (saveState === 'saving') return 'saving.'
@@ -212,6 +216,25 @@ export function TodayEntry({ date, task, prompt, initialEntry, hasUsername = tru
           />
         </div>
         <p id="checkin-desc" className={styles.checkinHint}>optional. a mood or weather word for this day.</p>
+
+        <div className={styles.checkinRow}>
+          <label htmlFor="today-tags" className={styles.checkinLabel}>tags</label>
+          <input
+            id="today-tags"
+            type="text"
+            className={styles.checkinInput}
+            value={tagsRaw}
+            onChange={(e) => {
+              setTagsRaw(e.target.value)
+              if (saveState === 'saved') setSaveState('idle')
+            }}
+            placeholder="word, word."
+            maxLength={200}
+            tabIndex={isFocus ? -1 : undefined}
+            aria-describedby="tags-desc"
+          />
+        </div>
+        <p id="tags-desc" className={styles.checkinHint}>optional. up to five tags, comma-separated.</p>
 
         <label htmlFor="today-entry-response" className={styles.entryLabel}>response</label>
         <textarea
@@ -301,6 +324,23 @@ export function TodayEntry({ date, task, prompt, initialEntry, hasUsername = tru
               }}
               placeholder="one word."
               maxLength={30}
+              tabIndex={isFocus ? 0 : -1}
+            />
+          </div>
+
+          <div className={styles.checkinRow}>
+            <label htmlFor="focus-tags" className={styles.checkinLabel}>tags</label>
+            <input
+              id="focus-tags"
+              type="text"
+              className={styles.checkinInput}
+              value={tagsRaw}
+              onChange={(e) => {
+                setTagsRaw(e.target.value)
+                if (saveState === 'saved') setSaveState('idle')
+              }}
+              placeholder="word, word."
+              maxLength={200}
               tabIndex={isFocus ? 0 : -1}
             />
           </div>

@@ -1,5 +1,5 @@
 import { MosaicGlyph } from '@/components/mosaic/MosaicGlyph'
-import { get60DayEntries, getYearEntries, formatDisplayDate, offsetDate, todayUtcDate } from '@/lib/entries'
+import { get60DayEntries, getYearEntries, formatDisplayDate, offsetDate, todayUtcDate, sanitizeTag } from '@/lib/entries'
 import { getMonthInReview } from '@/lib/monthInReview'
 import { getYearInReview } from '@/lib/yearInReview'
 import { getPromptForDate } from '@/lib/prompts'
@@ -9,6 +9,7 @@ import { redirect } from 'next/navigation'
 import type { MosaicTileData } from './LogMosaic'
 import { LogMosaic } from './LogMosaic'
 import { LogSearch } from './LogSearch'
+import { LogTagFilter } from './LogTagFilter'
 import styles from './page.module.css'
 
 export const metadata = {
@@ -25,7 +26,11 @@ export const metadata = {
   },
 }
 
-export default async function LogPage() {
+type Props = {
+  searchParams: Promise<{ tag?: string }>
+}
+
+export default async function LogPage({ searchParams }: Props) {
   const supabase = await createClient()
   const {
     data: { user },
@@ -35,17 +40,32 @@ export default async function LogPage() {
     redirect('/signin')
   }
 
+  const { tag: rawTag } = await searchParams
+  const activeTag = rawTag ? sanitizeTag(rawTag) : null
+
   const today = todayUtcDate()
   const entries = await get60DayEntries(supabase, user.id)
+
+  // Collect distinct tags from the 60-day window for the filter UI
+  const allTags = Array.from(
+    new Set(
+      [...entries.values()].flatMap((e) => e.tags ?? []),
+    ),
+  ).sort()
+
+  // When a tag filter is active, narrow entries to those carrying that tag
+  const visibleEntries = activeTag
+    ? new Map([...entries].filter(([, e]) => (e.tags ?? []).includes(activeTag)))
+    : entries
 
   // Build 60 tiles oldest-first (index 0 = 59 days ago, index 59 = today)
   const tiles: MosaicTileData[] = Array.from({ length: 60 }, (_, i) => {
     const date = offsetDate(i - 59)
-    const entry = entries.get(date)
+    const entry = visibleEntries.get(date)
     const isToday = date === today
 
     let state: MosaicTileData['state'] = 'empty'
-    if (isToday) {
+    if (isToday && !activeTag) {
       state = 'today'
     } else if (entry?.is_published) {
       state = 'published'
@@ -61,9 +81,7 @@ export default async function LogPage() {
     }
   })
 
-  // Counts for the summary line — derived from entries map, not tile state,
-  // because today's tile is always state='today' regardless of whether it's
-  // written or published, which causes tile-based counts to be wrong.
+  // Counts for the summary line — derived from full entries map, not tile state
   const written = entries.size
   const quiet = 60 - entries.size
   const published = [...entries.values()].filter((e) => e.is_published).length
@@ -81,11 +99,14 @@ export default async function LogPage() {
     yearInReview = getYearInReview(yearEntries, today)
   }
 
-  // Most recent written entry
+  // Most recent written entry (from full entries, not filtered)
   const sortedDates = [...entries.keys()].sort().reverse()
   const recentDate = sortedDates[0] ?? null
   const recentEntry = recentDate ? entries.get(recentDate) ?? null : null
   const recentPrompt = recentDate ? getPromptForDate(recentDate) : null
+
+  // Filtered entry list (for tag browsing view)
+  const filteredDates = [...visibleEntries.keys()].sort().reverse()
 
   return (
     <div className={styles.page}>
@@ -137,7 +158,41 @@ export default async function LogPage() {
 
       <section aria-label="log entries">
         <LogSearch />
-        {recentEntry && recentPrompt ? (
+        {allTags.length > 0 && (
+          <LogTagFilter tags={allTags} activeTag={activeTag} />
+        )}
+        {activeTag ? (
+          filteredDates.length > 0 ? (
+            <>
+              <p className={styles.tagFilterLabel}>
+                entries tagged <span className={styles.tagFilterActive}>{activeTag}</span>
+              </p>
+              <ul className={styles.tagEntryList} aria-label={`entries tagged ${activeTag}`}>
+                {filteredDates.map((date) => {
+                  const entry = visibleEntries.get(date)!
+                  const prompt = getPromptForDate(date)
+                  return (
+                    <li key={date} className={styles.tagEntryItem}>
+                      <Link href={`/log/${date}`} className={styles.tagEntryLink}>
+                        <span className={styles.tagEntryDate}>{formatDisplayDate(date)}</span>
+                        <span className={styles.tagEntryExcerpt}>
+                          {prompt.prompt}
+                        </span>
+                        {entry.response && (
+                          <span className={styles.tagEntryResponse}>
+                            {entry.response.slice(0, 80)}{entry.response.length > 80 ? '…' : ''}
+                          </span>
+                        )}
+                      </Link>
+                    </li>
+                  )
+                })}
+              </ul>
+            </>
+          ) : (
+            <p className={styles.emptyState}>no entries tagged {activeTag} in the past 60 days.</p>
+          )
+        ) : recentEntry && recentPrompt ? (
           <>
             <article className={styles.entryView} aria-label="most recent entry">
               <header className={styles.entryDate}>
@@ -163,7 +218,7 @@ export default async function LogPage() {
             <footer className={styles.entryFoot}>
               <span>
                 showing the most recent.{' '}
-                <Link href={`/log/${recentDate}`}>browse by date</Link>
+                <Link href={`/log/${recentDate}`}>all entries</Link>
               </span>
               <span>{recentEntry.is_published ? 'published' : 'private'}</span>
             </footer>

@@ -46,6 +46,7 @@ describe('check-in word input', () => {
           task_done: false,
           is_published: false,
           checkin_word: 'steady',
+          tags: [],
           created_at: '2026-06-17T09:00:00Z',
           updated_at: '2026-06-17T09:00:00Z',
         }}

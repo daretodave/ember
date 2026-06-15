@@ -11,6 +11,7 @@ function makeEntry(date: string, responseLength: number): Entry {
     task_done: false,
     is_published: false,
     checkin_word: null,
+    tags: [],
     created_at: `${date}T10:00:00Z`,
     updated_at: `${date}T10:00:00Z`,
   }

@@ -72,6 +72,7 @@ describe('EntrySave — payload', () => {
             task_done: false,
             is_published: false,
             checkin_word: null,
+            tags: [],
           }),
         }),
       )

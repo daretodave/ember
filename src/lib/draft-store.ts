@@ -2,7 +2,7 @@ const DB_NAME = 'ember-drafts'
 const STORE_NAME = 'drafts'
 const DB_VERSION = 1
 
-export type Draft = { response: string; taskDone: boolean; checkinWord: string }
+export type Draft = { response: string; taskDone: boolean; checkinWord: string; tagsRaw?: string }
 
 function openDB(): Promise<IDBDatabase> {
   return new Promise((resolve, reject) => {

@@ -11,6 +11,7 @@ const BASE_ENTRY: Entry = {
   task_done: false,
   is_published: false,
   checkin_word: null,
+  tags: [],
   created_at: '2026-05-10T09:00:00Z',
   updated_at: '2026-05-10T09:00:00Z',
 }

@@ -24,6 +24,7 @@ const SAMPLE_ENTRY = {
   task_done: false,
   is_published: false,
   checkin_word: null,
+  tags: [],
   updated_at: '2026-05-21T14:30:00.000Z',
   created_at: '2026-05-21T10:00:00.000Z',
 }

@@ -59,6 +59,7 @@ describe('offline draft — load on mount', () => {
           task_done: false,
           is_published: false,
           checkin_word: null,
+          tags: [],
           created_at: '2026-05-21T09:00:00Z',
           updated_at: '2026-05-21T09:00:00Z',
         }}

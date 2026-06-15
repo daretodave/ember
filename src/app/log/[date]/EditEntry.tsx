@@ -2,7 +2,7 @@
 
 import { useCallback, useState } from 'react'
 import type { Entry } from '@/lib/entries'
-import { formatSavedTime } from '@/lib/entries'
+import { formatSavedTime, parseTagInput } from '@/lib/entries'
 import styles from './page.module.css'
 
 type SaveState = 'idle' | 'saving' | 'saved' | 'error'
@@ -19,6 +19,7 @@ export function EditEntry({ date, task, initialEntry }: Props) {
   const [taskDone, setTaskDone] = useState(initialEntry.task_done)
   const [isPublished, setIsPublished] = useState(initialEntry.is_published)
   const [checkinWord, setCheckinWord] = useState(initialEntry.checkin_word ?? '')
+  const [tags, setTags] = useState<string[]>(initialEntry.tags ?? [])
   const [savedAt, setSavedAt] = useState<string | null>(initialEntry.updated_at)
 
   // Edit-mode working copy
@@ -27,6 +28,7 @@ export function EditEntry({ date, task, initialEntry }: Props) {
   const [editTaskDone, setEditTaskDone] = useState(false)
   const [editIsPublished, setEditIsPublished] = useState(false)
   const [editCheckinWord, setEditCheckinWord] = useState('')
+  const [editTagsRaw, setEditTagsRaw] = useState('')
   const [saveState, setSaveState] = useState<SaveState>('idle')
   const [errorMsg, setErrorMsg] = useState('')
 
@@ -35,10 +37,11 @@ export function EditEntry({ date, task, initialEntry }: Props) {
     setEditTaskDone(taskDone)
     setEditIsPublished(isPublished)
     setEditCheckinWord(checkinWord)
+    setEditTagsRaw(tags.join(', '))
     setSaveState('idle')
     setErrorMsg('')
     setIsEditing(true)
-  }, [response, taskDone, isPublished, checkinWord])
+  }, [response, taskDone, isPublished, checkinWord, tags])
 
   const cancelEdit = useCallback(() => {
     setIsEditing(false)
@@ -60,6 +63,7 @@ export function EditEntry({ date, task, initialEntry }: Props) {
           task_done: editTaskDone,
           is_published: editIsPublished,
           checkin_word: editCheckinWord.trim() || null,
+          tags: parseTagInput(editTagsRaw),
         }),
       })
 
@@ -69,6 +73,7 @@ export function EditEntry({ date, task, initialEntry }: Props) {
         setTaskDone(data.task_done)
         setIsPublished(data.is_published)
         setCheckinWord(data.checkin_word ?? '')
+        setTags(data.tags ?? [])
         setSavedAt(data.updated_at)
         setSaveState('saved')
         setIsEditing(false)
@@ -112,6 +117,22 @@ export function EditEntry({ date, task, initialEntry }: Props) {
             }}
             placeholder="one word."
             maxLength={30}
+          />
+        </div>
+
+        <div className={styles.checkinRow}>
+          <label htmlFor="edit-tags" className={styles.checkinLabel}>tags</label>
+          <input
+            id="edit-tags"
+            type="text"
+            className={styles.checkinInput}
+            value={editTagsRaw}
+            onChange={(e) => {
+              setEditTagsRaw(e.target.value)
+              if (saveState === 'saved') setSaveState('idle')
+            }}
+            placeholder="word, word."
+            maxLength={200}
           />
         </div>
 
@@ -184,6 +205,14 @@ export function EditEntry({ date, task, initialEntry }: Props) {
           <span className={styles.checkinAnnotationMark}>—</span>{' '}
           {checkinWord}
         </p>
+      )}
+
+      {tags.length > 0 && (
+        <div className={styles.tagRow}>
+          {tags.map((tag) => (
+            <span key={tag} className={styles.tag}>{tag}</span>
+          ))}
+        </div>
       )}
 
       {response ? (

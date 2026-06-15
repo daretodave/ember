@@ -1,4 +1,5 @@
 import { checkRateLimit, utcDayStart } from '@/lib/rate-limit'
+import { sanitizeTags } from '@/lib/entries'
 import { createClient } from '@/lib/supabase/server'
 import { NextResponse } from 'next/server'
 
@@ -8,6 +9,7 @@ type EntryPayload = {
   task_done: boolean
   is_published: boolean
   checkin_word?: string | null
+  tags?: string[]
 }
 
 export async function POST(request: Request) {
@@ -28,7 +30,7 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: 'invalid json' }, { status: 400 })
   }
 
-  const { date, response, task_done, is_published, checkin_word } = body
+  const { date, response, task_done, is_published, checkin_word, tags } = body
 
   if (!date || typeof date !== 'string' || !/^\d{4}-\d{2}-\d{2}$/.test(date)) {
     return NextResponse.json({ error: 'date is required (YYYY-MM-DD)' }, { status: 400 })
@@ -77,6 +79,8 @@ export async function POST(request: Request) {
     }
   }
 
+  const sanitizedTags = Array.isArray(tags) ? sanitizeTags(tags) : undefined
+
   const { data, error } = await supabase
     .from('entries')
     .upsert(
@@ -87,6 +91,7 @@ export async function POST(request: Request) {
         task_done: task_done ?? false,
         is_published: is_published ?? false,
         checkin_word: sanitizedCheckinWord,
+        ...(sanitizedTags !== undefined ? { tags: sanitizedTags } : {}),
       },
       { onConflict: 'user_id,date' },
     )
