@@ -63,7 +63,7 @@
 - [x] Phase 30 — Authentication funnel UX clarity (`/signin` pre/post-submit states) — 4cfb1d8
 - [x] Phase 31 — Entry search (full-text search across past entries) — bd77eca
 - [x] Phase 32 — Year in review (quiet annual recap on `/log`) — 1d48c85
-- [ ] Phase 33 — Daily reminder (opt-in email nudge to write)
+- [x] Phase 33 — Daily reminder (opt-in email nudge to write) — 5820332
 - [ ] Phase 34 — One-word check-in (optional per-entry mood/weather word)
 - [ ] Phase 35 — Entry tags + themed browsing
 - [ ] Phase 36 — Markdown rendering in entries (plain storage, rendered view)
