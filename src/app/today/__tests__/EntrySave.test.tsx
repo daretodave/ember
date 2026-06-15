@@ -51,6 +51,7 @@ describe('EntrySave — payload', () => {
         response: 'test text',
         task_done: false,
         is_published: false,
+        checkin_word: null,
         created_at: '2026-05-26T09:00:00Z',
         updated_at: '2026-05-26T09:05:00Z',
       }),
@@ -70,9 +71,41 @@ describe('EntrySave — payload', () => {
             response: 'test text',
             task_done: false,
             is_published: false,
+            checkin_word: null,
           }),
         }),
       )
+    })
+  })
+
+  it('includes checkin_word in payload when entered', async () => {
+    global.fetch = vi.fn().mockResolvedValue({
+      ok: true,
+      json: async () => ({
+        id: '1',
+        user_id: 'u1',
+        date: '2026-05-26',
+        response: 'text',
+        task_done: false,
+        is_published: false,
+        checkin_word: 'steady',
+        created_at: '2026-05-26T09:00:00Z',
+        updated_at: '2026-05-26T09:05:00Z',
+      }),
+    } as Response)
+
+    render(<TodayEntry {...BASE_PROPS} />)
+    typeInEntry('text')
+
+    const checkinInput = screen.getAllByPlaceholderText('one word.')[0]
+    fireEvent.change(checkinInput, { target: { value: 'steady' } })
+    clickSave()
+
+    await waitFor(() => {
+      const body = JSON.parse(
+        (global.fetch as ReturnType<typeof vi.fn>).mock.calls[0][1].body as string,
+      ) as Record<string, unknown>
+      expect(body.checkin_word).toBe('steady')
     })
   })
 
@@ -86,6 +119,7 @@ describe('EntrySave — payload', () => {
         response: 'text',
         task_done: true,
         is_published: false,
+        checkin_word: null,
         created_at: '2026-05-26T09:00:00Z',
         updated_at: '2026-05-26T09:05:00Z',
       }),
@@ -151,6 +185,7 @@ describe('EntrySave — save state', () => {
         response: 'text',
         task_done: false,
         is_published: false,
+        checkin_word: null,
         created_at: '2026-05-26T09:00:00Z',
         updated_at: '2026-05-26T09:05:00Z',
       }),
@@ -167,6 +202,7 @@ describe('EntrySave — save state', () => {
         response: 'text',
         task_done: false,
         is_published: false,
+        checkin_word: null,
         created_at: '2026-05-26T09:00:00Z',
         updated_at: '2026-05-26T09:05:00Z',
       }),

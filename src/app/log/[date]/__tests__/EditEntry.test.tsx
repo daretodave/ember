@@ -10,6 +10,7 @@ const BASE_ENTRY: Entry = {
   response: 'first paragraph\n\nsecond paragraph',
   task_done: false,
   is_published: false,
+  checkin_word: null,
   created_at: '2026-05-10T09:00:00Z',
   updated_at: '2026-05-10T09:00:00Z',
 }

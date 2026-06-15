@@ -31,7 +31,7 @@ beforeEach(() => {
 
 describe('offline draft — load on mount', () => {
   it('restores a saved draft when initialEntry is null', async () => {
-    vi.mocked(getDraft).mockResolvedValue({ response: 'restored text', taskDone: false })
+    vi.mocked(getDraft).mockResolvedValue({ response: 'restored text', taskDone: false, checkinWord: '' })
 
     render(<TodayEntry {...baseProps} />)
 
@@ -58,6 +58,7 @@ describe('offline draft — load on mount', () => {
           response: 'server entry',
           task_done: false,
           is_published: false,
+          checkin_word: null,
           created_at: '2026-05-21T09:00:00Z',
           updated_at: '2026-05-21T09:00:00Z',
         }}
@@ -102,6 +103,7 @@ describe('clearDraft on save', () => {
         response: 'text',
         task_done: false,
         is_published: false,
+        checkin_word: null,
         created_at: '2026-05-21T09:00:00Z',
         updated_at: '2026-05-21T09:05:00Z',
       }),

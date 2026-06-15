@@ -20,21 +20,21 @@ describe('getDraft', () => {
 
 describe('saveDraft / getDraft round-trip', () => {
   it('stores and retrieves a draft', async () => {
-    await saveDraft(DATE, { response: 'hello world', taskDone: true })
+    await saveDraft(DATE, { response: 'hello world', taskDone: true, checkinWord: 'calm' })
     const draft = await getDraft(DATE)
-    expect(draft).toEqual({ response: 'hello world', taskDone: true })
+    expect(draft).toEqual({ response: 'hello world', taskDone: true, checkinWord: 'calm' })
   })
 
   it('overwrites an existing draft', async () => {
-    await saveDraft(DATE, { response: 'first', taskDone: false })
-    await saveDraft(DATE, { response: 'second', taskDone: true })
-    expect(await getDraft(DATE)).toEqual({ response: 'second', taskDone: true })
+    await saveDraft(DATE, { response: 'first', taskDone: false, checkinWord: '' })
+    await saveDraft(DATE, { response: 'second', taskDone: true, checkinWord: 'steady' })
+    expect(await getDraft(DATE)).toEqual({ response: 'second', taskDone: true, checkinWord: 'steady' })
   })
 })
 
 describe('clearDraft', () => {
   it('removes a stored draft', async () => {
-    await saveDraft(DATE, { response: 'to delete', taskDone: false })
+    await saveDraft(DATE, { response: 'to delete', taskDone: false, checkinWord: '' })
     await clearDraft(DATE)
     expect(await getDraft(DATE)).toBeNull()
   })

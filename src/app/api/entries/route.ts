@@ -7,6 +7,7 @@ type EntryPayload = {
   response: string
   task_done: boolean
   is_published: boolean
+  checkin_word?: string | null
 }
 
 export async function POST(request: Request) {
@@ -27,7 +28,7 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: 'invalid json' }, { status: 400 })
   }
 
-  const { date, response, task_done, is_published } = body
+  const { date, response, task_done, is_published, checkin_word } = body
 
   if (!date || typeof date !== 'string' || !/^\d{4}-\d{2}-\d{2}$/.test(date)) {
     return NextResponse.json({ error: 'date is required (YYYY-MM-DD)' }, { status: 400 })
@@ -38,6 +39,21 @@ export async function POST(request: Request) {
   }
   if (typeof response !== 'string') {
     return NextResponse.json({ error: 'response must be a string' }, { status: 400 })
+  }
+
+  // Validate optional check-in word: single word, max 30 chars
+  let sanitizedCheckinWord: string | null = null
+  if (checkin_word !== undefined && checkin_word !== null) {
+    const trimmed = String(checkin_word).trim()
+    if (trimmed.length > 0) {
+      if (trimmed.length > 30) {
+        return NextResponse.json({ error: 'check-in word must be 30 characters or fewer' }, { status: 400 })
+      }
+      if (/\s/.test(trimmed)) {
+        return NextResponse.json({ error: 'check-in word must be a single word (no spaces)' }, { status: 400 })
+      }
+      sanitizedCheckinWord = trimmed
+    }
   }
 
   // Only rate-limit new entry creation, not updates to an already-existing entry.
@@ -70,6 +86,7 @@ export async function POST(request: Request) {
         response,
         task_done: task_done ?? false,
         is_published: is_published ?? false,
+        checkin_word: sanitizedCheckinWord,
       },
       { onConflict: 'user_id,date' },
     )

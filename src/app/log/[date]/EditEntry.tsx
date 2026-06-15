@@ -18,6 +18,7 @@ export function EditEntry({ date, task, initialEntry }: Props) {
   const [response, setResponse] = useState(initialEntry.response)
   const [taskDone, setTaskDone] = useState(initialEntry.task_done)
   const [isPublished, setIsPublished] = useState(initialEntry.is_published)
+  const [checkinWord, setCheckinWord] = useState(initialEntry.checkin_word ?? '')
   const [savedAt, setSavedAt] = useState<string | null>(initialEntry.updated_at)
 
   // Edit-mode working copy
@@ -25,6 +26,7 @@ export function EditEntry({ date, task, initialEntry }: Props) {
   const [editResponse, setEditResponse] = useState('')
   const [editTaskDone, setEditTaskDone] = useState(false)
   const [editIsPublished, setEditIsPublished] = useState(false)
+  const [editCheckinWord, setEditCheckinWord] = useState('')
   const [saveState, setSaveState] = useState<SaveState>('idle')
   const [errorMsg, setErrorMsg] = useState('')
 
@@ -32,10 +34,11 @@ export function EditEntry({ date, task, initialEntry }: Props) {
     setEditResponse(response)
     setEditTaskDone(taskDone)
     setEditIsPublished(isPublished)
+    setEditCheckinWord(checkinWord)
     setSaveState('idle')
     setErrorMsg('')
     setIsEditing(true)
-  }, [response, taskDone, isPublished])
+  }, [response, taskDone, isPublished, checkinWord])
 
   const cancelEdit = useCallback(() => {
     setIsEditing(false)
@@ -56,6 +59,7 @@ export function EditEntry({ date, task, initialEntry }: Props) {
           response: editResponse,
           task_done: editTaskDone,
           is_published: editIsPublished,
+          checkin_word: editCheckinWord.trim() || null,
         }),
       })
 
@@ -64,6 +68,7 @@ export function EditEntry({ date, task, initialEntry }: Props) {
         setResponse(data.response)
         setTaskDone(data.task_done)
         setIsPublished(data.is_published)
+        setCheckinWord(data.checkin_word ?? '')
         setSavedAt(data.updated_at)
         setSaveState('saved')
         setIsEditing(false)
@@ -76,7 +81,7 @@ export function EditEntry({ date, task, initialEntry }: Props) {
       setErrorMsg('network error. save failed.')
       setSaveState('error')
     }
-  }, [date, editResponse, editTaskDone, editIsPublished])
+  }, [date, editResponse, editTaskDone, editIsPublished, editCheckinWord])
 
   if (isEditing) {
     return (
@@ -92,6 +97,22 @@ export function EditEntry({ date, task, initialEntry }: Props) {
           <p className={styles.taskBody}>
             <span className={styles.taskMuted}>{task}</span>
           </p>
+        </div>
+
+        <div className={styles.checkinRow}>
+          <label htmlFor="edit-checkin" className={styles.checkinLabel}>check-in</label>
+          <input
+            id="edit-checkin"
+            type="text"
+            className={styles.checkinInput}
+            value={editCheckinWord}
+            onChange={(e) => {
+              setEditCheckinWord(e.target.value)
+              if (saveState === 'saved') setSaveState('idle')
+            }}
+            placeholder="one word."
+            maxLength={30}
+          />
         </div>
 
         <label htmlFor="edit-entry-response" className={styles.entryLabel}>response</label>
@@ -157,6 +178,13 @@ export function EditEntry({ date, task, initialEntry }: Props) {
         )}
         {task}
       </p>
+
+      {checkinWord && (
+        <p className={styles.checkinAnnotation}>
+          <span className={styles.checkinAnnotationMark}>—</span>{' '}
+          {checkinWord}
+        </p>
+      )}
 
       {response ? (
         <div className={styles.entryResponse}>

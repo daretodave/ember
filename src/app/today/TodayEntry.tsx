@@ -21,6 +21,7 @@ export function TodayEntry({ date, task, prompt, initialEntry, hasUsername = tru
   const [response, setResponse] = useState(initialEntry?.response ?? '')
   const [taskDone, setTaskDone] = useState(initialEntry?.task_done ?? false)
   const [isPublished, setIsPublished] = useState(initialEntry?.is_published ?? false)
+  const [checkinWord, setCheckinWord] = useState(initialEntry?.checkin_word ?? '')
   const [saveState, setSaveState] = useState<SaveState>(initialEntry !== null ? 'saved' : 'idle')
   const [savedAt, setSavedAt] = useState<string | null>(initialEntry?.updated_at ?? null)
   const [errorMsg, setErrorMsg] = useState('')
@@ -54,6 +55,7 @@ export function TodayEntry({ date, task, prompt, initialEntry, hasUsername = tru
       if (draft) {
         setResponse(draft.response)
         setTaskDone(draft.taskDone)
+        setCheckinWord(draft.checkinWord ?? '')
         setSaveState('draft')
       }
     })
@@ -100,12 +102,19 @@ export function TodayEntry({ date, task, prompt, initialEntry, hasUsername = tru
       const res = await fetch('/api/entries', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ date, response, task_done: taskDone, is_published: isPublished }),
+        body: JSON.stringify({
+          date,
+          response,
+          task_done: taskDone,
+          is_published: isPublished,
+          checkin_word: checkinWord.trim() || null,
+        }),
       })
 
       if (res.ok) {
         const data = (await res.json()) as Entry
         setSavedAt(data.updated_at)
+        setCheckinWord(data.checkin_word ?? '')
         setSaveState('saved')
         clearDraft(date)
       } else {
@@ -117,7 +126,7 @@ export function TodayEntry({ date, task, prompt, initialEntry, hasUsername = tru
       setErrorMsg('network error. save failed.')
       setSaveState('error')
     }
-  }, [date, response, taskDone, isPublished])
+  }, [date, response, taskDone, isPublished, checkinWord])
 
   // Auto-retry save on reconnect if there is unsaved content
   useEffect(() => {
@@ -152,9 +161,9 @@ export function TodayEntry({ date, task, prompt, initialEntry, hasUsername = tru
     // Debounce-save to IndexedDB
     if (draftTimerRef.current) clearTimeout(draftTimerRef.current)
     draftTimerRef.current = setTimeout(() => {
-      saveDraft(date, { response: value, taskDone })
+      saveDraft(date, { response: value, taskDone, checkinWord })
     }, 500)
-  }, [date, saveState, taskDone])
+  }, [date, saveState, taskDone, checkinWord])
 
   function saveIndicatorText() {
     if (saveState === 'saving') return 'saving.'
@@ -184,6 +193,25 @@ export function TodayEntry({ date, task, prompt, initialEntry, hasUsername = tru
             <span className={styles.taskMuted}>— {task}</span>
           </p>
         </div>
+
+        <div className={styles.checkinRow}>
+          <label htmlFor="today-checkin" className={styles.checkinLabel}>check-in</label>
+          <input
+            id="today-checkin"
+            type="text"
+            className={styles.checkinInput}
+            value={checkinWord}
+            onChange={(e) => {
+              setCheckinWord(e.target.value)
+              if (saveState === 'saved') setSaveState('idle')
+            }}
+            placeholder="one word."
+            maxLength={30}
+            tabIndex={isFocus ? -1 : undefined}
+            aria-describedby="checkin-desc"
+          />
+        </div>
+        <p id="checkin-desc" className={styles.checkinHint}>optional. a mood or weather word for this day.</p>
 
         <label htmlFor="today-entry-response" className={styles.entryLabel}>response</label>
         <textarea
@@ -259,6 +287,23 @@ export function TodayEntry({ date, task, prompt, initialEntry, hasUsername = tru
       >
         <div className={styles.focusContent}>
           <p className={styles.focusPrompt}>{prompt}</p>
+
+          <div className={styles.checkinRow}>
+            <label htmlFor="focus-checkin" className={styles.checkinLabel}>check-in</label>
+            <input
+              id="focus-checkin"
+              type="text"
+              className={styles.checkinInput}
+              value={checkinWord}
+              onChange={(e) => {
+                setCheckinWord(e.target.value)
+                if (saveState === 'saved') setSaveState('idle')
+              }}
+              placeholder="one word."
+              maxLength={30}
+              tabIndex={isFocus ? 0 : -1}
+            />
+          </div>
 
           <label htmlFor="focus-entry-response" className={styles.entryLabel}>response</label>
           <textarea

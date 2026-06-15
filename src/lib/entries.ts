@@ -7,6 +7,7 @@ export type Entry = {
   response: string
   task_done: boolean
   is_published: boolean
+  checkin_word: string | null
   created_at: string
   updated_at: string
 }

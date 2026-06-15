@@ -210,6 +210,58 @@
   border-bottom-color: var(--color-ink);
 }
 
+/* ----------- check-in annotation (read mode) ----------- */
+.checkinAnnotation {
+  font-family: var(--font-mono);
+  font-size: var(--type-12);
+  color: var(--color-ink-muted);
+  margin: calc(-1 * var(--space-4)) 0 var(--space-6);
+  letter-spacing: 0.04em;
+}
+
+.checkinAnnotationMark {
+  color: var(--color-ink-faint);
+}
+
+/* ----------- check-in input (edit mode) ----------- */
+.checkinRow {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-3);
+  margin-bottom: var(--space-5);
+}
+
+.checkinLabel {
+  font-family: var(--font-sans);
+  font-size: var(--type-12);
+  letter-spacing: 0.04em;
+  color: var(--color-ink-muted);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.checkinInput {
+  font-family: var(--font-serif);
+  font-size: var(--type-16);
+  color: var(--color-ink);
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid var(--color-border-faint);
+  padding: 0 0 2px;
+  width: 160px;
+  outline: none;
+  transition: border-color var(--motion-fade) var(--easing);
+}
+
+.checkinInput:focus {
+  border-bottom-color: var(--color-accent);
+}
+
+.checkinInput::placeholder {
+  color: var(--color-ink-faint);
+  font-style: italic;
+}
+
 /* ----------- edit mode ----------- */
 .task {
   display: flex;
