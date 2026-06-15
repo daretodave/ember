@@ -1,4 +1,5 @@
 import { MosaicGlyph } from '@/components/mosaic/MosaicGlyph'
+import { EntryMarkdown } from '@/components/entry/EntryMarkdown'
 import { get60DayEntries, getYearEntries, formatDisplayDate, offsetDate, todayUtcDate, sanitizeTag } from '@/lib/entries'
 import { getMonthInReview } from '@/lib/monthInReview'
 import { getYearInReview } from '@/lib/yearInReview'
@@ -208,11 +209,7 @@ export default async function LogPage({ searchParams }: Props) {
                 />
                 {recentPrompt.task}
               </p>
-              <div className={styles.entryResponse}>
-                {recentEntry.response.split('\n\n').filter(Boolean).map((para, i) => (
-                  <p key={i}>{para}</p>
-                ))}
-              </div>
+              <EntryMarkdown content={recentEntry.response} className={styles.entryResponse} />
             </article>
 
             <footer className={styles.entryFoot}>

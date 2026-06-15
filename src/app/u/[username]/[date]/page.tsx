@@ -1,4 +1,5 @@
 import { MosaicGlyph } from '@/components/mosaic/MosaicGlyph'
+import { EntryMarkdown } from '@/components/entry/EntryMarkdown'
 import { formatDisplayDate, getAdjacentPublishedDates, getPublishedEntryByDate, todayUtcDate } from '@/lib/entries'
 import { getProfileByUsername } from '@/lib/profile'
 import { getPromptForDate } from '@/lib/prompts'
@@ -107,11 +108,7 @@ export default async function PublicEntryPage({ params }: Props) {
         <h1 className={styles.entryPrompt}>{promptData.prompt}</h1>
         <p className={styles.entryTask}>{promptData.task}</p>
 
-        <div className={styles.entryResponse}>
-          {entry.response.split('\n\n').filter(Boolean).map((para, i) => (
-            <p key={i}>{para}</p>
-          ))}
-        </div>
+        <EntryMarkdown content={entry.response} className={styles.entryResponse} />
       </main>
 
       <nav className={styles.entryNav} aria-label="entry navigation">

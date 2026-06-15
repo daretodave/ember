@@ -28,7 +28,9 @@
     "@supabase/supabase-js": "^2.49.4",
     "next": "^15.3.2",
     "react": "^19.1.0",
-    "react-dom": "^19.1.0"
+    "react-dom": "^19.1.0",
+    "react-markdown": "^10.1.0",
+    "rehype-sanitize": "^6.0.0"
   },
   "devDependencies": {
     "@biomejs/biome": "^1.9.4",

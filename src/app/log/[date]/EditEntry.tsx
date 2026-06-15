@@ -3,6 +3,7 @@
 import { useCallback, useState } from 'react'
 import type { Entry } from '@/lib/entries'
 import { formatSavedTime, parseTagInput } from '@/lib/entries'
+import { EntryMarkdown } from '@/components/entry/EntryMarkdown'
 import styles from './page.module.css'
 
 type SaveState = 'idle' | 'saving' | 'saved' | 'error'
@@ -216,11 +217,7 @@ export function EditEntry({ date, task, initialEntry }: Props) {
       )}
 
       {response ? (
-        <div className={styles.entryResponse}>
-          {response.split('\n\n').filter(Boolean).map((para, i) => (
-            <p key={i}>{para}</p>
-          ))}
-        </div>
+        <EntryMarkdown content={response} className={styles.entryResponse} />
       ) : (
         <p className={styles.noEntry}>no entry body yet.</p>
       )}
