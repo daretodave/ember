@@ -1,7 +1,7 @@
 # External-observer findings — Ember
 
-> Last pass: 2026-06-12 at commit 988fbcf
-> Pass count: 55
+> Last pass: 2026-06-15 at commit 5fac7a3
+> Pass count: 56
 
 > Written by `/critique` after walking the live site as a
 > fresh-eyes visitor. Drained by `/iterate`.
@@ -114,6 +114,51 @@
 - observation: the /log page meta description reads "a 60-day writing log — prompts, responses, and published entries." for a new user with no entries, none of those three content types are present on the page. a visitor arriving from a search result reads a description that lists content the page does not yet contain.
 - evidence: src/app/log/layout.tsx description: "a 60-day writing log — prompts, responses, and published entries." authenticated capture body text: "the log is empty. each entry fills a tile in the mosaic above. today's entry will appear here." — no prompts, responses, or published entries rendered.
 - suggested fix: change the description to "a 60-day writing log — one entry per day, shown as a mosaic and a list." to describe the page structure rather than its content state; holds in both empty and populated states.
+- source: browser
+
+### [MED] /settings — prompt variety radio inputs lack fieldset/legend grouping; WCAG 1.3.1 group relationship not conveyed to screen readers
+- pass: 56 (commit 5fac7a3)
+- viewport: both
+- category: a11y
+- observation: the "standard" and "personalized" options on /settings are radio inputs preceded by a "prompt variety" label text and explanation paragraph. without a <fieldset> + <legend> grouping the radio inputs, screen readers cannot associate the options with the group label "prompt variety" — each option is announced in isolation with no group context. WCAG 1.3.1 (Info and Relationships) requires that group relationships conveyed visually also be available to AT.
+- evidence: settings capture: "prompt variety\n\nstandard: same prompt for everyone each day. personalized: ..." text appears as a paragraph above "standard\npersonalized" with no structural grouping apparent; compare display name and timezone which each have label/input pairs.
+- suggested fix: wrap the prompt variety radio inputs in a <fieldset> with a <legend>prompt variety</legend> in src/app/settings/SettingsForm.tsx, replacing the current heading/paragraph approach with a proper ARIA group structure.
+- source: browser
+
+### [LOW] / — "today" entry in the seven-day preview has no accessible identification; only visual styling differentiates it from future days
+- pass: 56 (commit 5fac7a3)
+- viewport: both
+- category: a11y
+- observation: the landing page seven-day preview highlights the current day visually via a dayToday CSS class (background and accent color on the date). no accessible attribute communicates "today" to AT users — there is no aria-current="date", no aria-label suffix, and no visually-hidden text inside the date element. screen reader users scanning the list hear "Mon 15 Jun — what part of your day..." with no indication this item differs from the six future days.
+- evidence: anonymous capture: the "today" row in the seven-day preview renders "today\nMon 15 Jun\n..." with "today" as a day-header label, but src/app/page.tsx likely renders the same list structure for all seven days with a conditional className. no aria-current or sr-only "today" label in the accessible tree.
+- suggested fix: add aria-current="date" to the today list item in the seven-day preview on src/app/page.tsx, or prepend a visually-hidden <span className="sr-only">today — </span> inside the date element when day.isToday is true.
+- source: browser
+
+### [LOW] / — landing page H1 is the product tagline; "ember" name absent from AT heading tree
+- pass: 56 (commit 5fac7a3)
+- viewport: both
+- category: a11y
+- observation: the landing page H1 reads "ten minutes of intention before the day swallows you." the product name "ember" appears only in the lockup (a decorative div with aria-hidden on the glyph and a plain span for the wordmark) and in the page <title> element. AT users navigating by headings — a common pattern on unfamiliar pages — encounter a poetic tagline as the sole H1 with no heading-level product identifier. the page title compensates for users who read it, but heading navigation bypasses the title.
+- evidence: anonymous capture: body text opens with "skip to content\nember\nsign in\nten minutes of intention before the day swallows you." — "ten minutes..." is the H1. the lockup wordmark "ember" is plain DOM text in the pre-heading nav area, not a heading.
+- suggested fix: add a visually-hidden <span className="sr-only">ember — </span> prefix inside the H1 element in src/app/page.tsx, mirroring the approach used for /today's page-identity sr-only prefix shipped in pass 54 at 8c951ee.
+- source: browser
+
+### [LOW] /signin — email input placeholder "email address" duplicates the label "email" in a slightly different register
+- pass: 56 (commit 5fac7a3)
+- viewport: both
+- category: voice
+- observation: the email input on /signin has label text "email" and placeholder text "email address". the label is a terse single-word field-type identifier; the placeholder adds "address" and disappears on first keystroke. the combination is redundant — the placeholder adds no meaningful guidance and departs from the single-word label register. the product's other inputs (display name, username) follow the same terse label style without placeholder text.
+- evidence: anonymous /signin capture: "email\n\na sign-in link is sent to this address..." — label "email" followed by placeholder text "email address" on the input. the body capture does not render placeholder text but the page.tsx source would show <input placeholder="email address" />.
+- suggested fix: remove the placeholder attribute from the email input in src/app/signin/page.tsx; the "email" label is sufficient and its removal is consistent with the site's minimal register.
+- source: browser
+
+### [LOW] /today — focus-mode exit button "done writing" uses a participial phrase; breaks the product's noun-phrase register
+- pass: 56 (commit 5fac7a3)
+- viewport: both
+- category: voice
+- observation: the focus-mode overlay exit button is labeled "done writing". all other interactive labels in the product use noun phrases or single restrained words: "log", "settings", "save", "publish", "focus", "sign out", "back to home". "done writing" is a two-word participial construction that reads as a user declaration rather than a calm control label. the label appears only when focus mode is active.
+- evidence: authenticated /today capture: "done writing" appears as a standalone action label at the end of the focus-mode overlay text, after the prompt, textarea, and save controls.
+- suggested fix: change the label to "done" in src/app/today/TodayEntry.tsx to match the spare noun-phrase register used throughout; "done" is unambiguous in a single-control overlay context where the only action is closing.
 - source: browser
 
 ### [LOW] /signin — submit button label "send a link" is an imperative verb phrase
