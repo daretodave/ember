@@ -1,7 +1,7 @@
 # External-observer findings — Ember
 
-> Last pass: 2026-06-15 at commit ee8ddd0
-> Pass count: 57
+> Last pass: 2026-06-15 at commit a9827d4
+> Pass count: 58
 
 > Written by `/critique` after walking the live site as a
 > fresh-eyes visitor. Drained by `/iterate`.
@@ -2254,6 +2254,60 @@
 - observation: the prompt variety option reads "personalized: a unique prompt generated from recent entries. falls back to a standard prompt until entries exist." "until entries exist" is vague — a user with one entry cannot tell whether personalisation is active or whether the fallback is still in use. the setting appears consequential but offers no signal about when it actually activates.
 - evidence: authenticated /settings capture: "personalized: a unique prompt generated from recent entries. falls back to a standard prompt until entries exist."
 - suggested fix: specify a concrete threshold, e.g. "personalized: a unique prompt generated from your recent entries. requires a few entries to take effect — uses the standard prompt until then." if the threshold is defined in code, echo it here.
+- source: browser
+
+### [MED] /signin — submit button has no :focus-visible rule; keyboard focus invisible on sign-in form
+- pass: 58 (commit a9827d4)
+- viewport: both
+- category: a11y
+- observation: the submit button ("send link.") on /signin has no :focus or :focus-visible rule. tailwind v4 preflight resets browser default outlines. a keyboard user tabbing to the button sees no visible focus indicator. the email input received an outline fix at bd69812 and the landing page ctaBtn received :focus-visible at 32c93fb, but the submit button in page.module.css was not updated in either pass.
+- evidence: src/app/signin/page.module.css: no :focus or :focus-visible rule on .submit. compare .fieldInput:focus { outline: 2px solid var(--color-accent); outline-offset: 2px; } and landing page .ctaBtn:focus-visible added at 32c93fb.
+- suggested fix: add .submit:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 2px; } to src/app/signin/page.module.css, consistent with the pattern on .fieldInput and .ctaBtn.
+- source: browser
+
+### [MED] /settings — daily reminder "off" radio aria-describedby points to description of the active ("on") behavior
+- pass: 58 (commit a9827d4)
+- viewport: both
+- category: a11y
+- observation: both "off" and "on" radio inputs for the daily reminder share aria-describedby pointing to the same paragraph id. that paragraph describes the active-reminder behavior ("a quiet email at your chosen time to write today's entry. never sent if you have already written."). screen readers announcing the "off" option speak text that explains what happens when the reminder is on, not when it is disabled — misleading users who select "off".
+- evidence: src/app/settings/SettingsForm.tsx: both off and on radio inputs carry aria-describedby="desc-reminder-off". the paragraph at id="desc-reminder-off" reads "a quiet email at your chosen time to write today's entry. never sent if you have already written." — active-state behavior, not the no-reminder state.
+- suggested fix: give each radio its own description: id="desc-reminder-off" paragraph text "no reminder email will be sent." on the off radio; a separate id="desc-reminder-on" paragraph describing active behavior on the on radio; update aria-describedby on each radio accordingly.
+- source: browser
+
+### [MED] /today — focus-mode check-in and tags inputs have no accessible descriptions; hint paragraphs hidden by aria-hidden
+- pass: 58 (commit a9827d4)
+- viewport: both
+- category: a11y
+- observation: when focus mode is active, the main entry section receives aria-hidden, removing hint paragraphs for check-in ("optional. a mood or weather word for this day.") and tags ("optional. up to five tags, comma-separated.") from the AT tree. the focus-overlay inputs for both fields have no aria-describedby, so screen readers in focus mode have no accessible description of either input's purpose or constraints.
+- evidence: src/app/today/TodayEntry.tsx: focus-overlay check-in input and tags input (approximately lines 315–344) have no aria-describedby. hint paragraphs with the relevant descriptions are inside <section aria-hidden={isFocus || undefined}> (line 184), which hides them from AT when focus mode is active.
+- suggested fix: add hint paragraphs inside the focus overlay (with ids such as "focus-checkin-desc" and "focus-tags-desc") and add matching aria-describedby attributes to the corresponding focus-mode inputs.
+- source: browser
+
+### [MED] /log — "all entries" link implies an archive but navigates to the single most-recent entry's dated page
+- pass: 58 (commit a9827d4)
+- viewport: both
+- category: navigation
+- observation: the section footer below the most-recent entry card reads "showing the most recent. all entries" where "all entries" is a link. the label implies a full archive listing, but the link resolves to /log/${recentDate} — a single dated-entry detail page. a first-time user clicking "all entries" expecting a full log index reaches one entry instead.
+- evidence: authenticated /log capture: "showing the most recent. all entries". src/app/log/page.tsx line 218: <Link href={`/log/${recentDate}`}>all entries</Link> — recentDate is the most recent entry date, resolving to a single page.
+- suggested fix: change the link text to "view entry" or the specific date (e.g. "Mon 15 Jun") to accurately describe the destination; "all entries" implies an index that does not exist at that URL.
+- source: browser
+
+### [LOW] /log — search input aria-label "search your entries" overrides visible label; introduces second-person "your"
+- pass: 58 (commit a9827d4)
+- viewport: both
+- category: a11y
+- observation: the log search field has both a visible <label> ("search entries") and an aria-label="search your entries" on the input. aria-label wins in accessible name computation, making the visible label irrelevant to screen readers. the two strings are inconsistent, and the aria-label introduces second-person "your" absent from the visible label — contrary to the voice guide.
+- evidence: src/app/log/LogSearch.tsx: <label htmlFor="log-search">search entries</label> as visible label; aria-label="search your entries" on the input overrides it for AT. the visible label and AT-computed name diverge.
+- suggested fix: remove aria-label from the input and rely solely on the programmatically-associated <label>; "search entries" is sufficient and consistent with the visible UI without introducing second-person copy.
+- source: browser
+
+### [LOW] / — "the next seven days" section heading includes today; heading implies future-only content
+- pass: 58 (commit a9827d4)
+- viewport: both
+- category: comprehension
+- observation: the seven-day preview section heading reads "the next seven days" but the first item in the list is today's prompt, not tomorrow's. the list spans today through six future days (7 items total, starting with "today / Mon 15 Jun"). "next" implies future-only to a first-time visitor, who would not expect today's prompt to appear under that heading.
+- evidence: anonymous capture: "the next seven days ... today\nMon 15 Jun\nwhat part of your day do you look forward to..." — today is the first item in the list under the heading. prompt label logic: index 0 is labeled "today", included in the seven-item preview.
+- suggested fix: change the heading to "the coming week" or "seven days of prompts" to describe a list that begins with today without implying future-only content.
 - source: browser
 
 ## Done
