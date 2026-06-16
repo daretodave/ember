@@ -6,6 +6,16 @@
 
 ## Pending
 
+### [ ] [2.7] /log — "the past 60 days" heading overstates window scope; ambiguous for new users with sparse entries
+- category: external-critique
+- impact: 3
+- ease: 9
+- note: scored 2026-06-16 — from critique pass 60 (897e523); heading "the past 60 days" paired with a sparse stat like "2 days written." is ambiguous for new users — cannot tell whether 60 is the browsing window or an expected count
+- observation: src/app/log/page.tsx line 157: <h1 id="mosaic-heading" className={styles.mosaicMeta}>the past 60 days</h1> — no clarifying phrase indicating this is a window, not a target count
+- suggested fix: change heading to "the past 60 days — a writing window." to explicitly clarify the 60-day period is a browsing window
+- source: /critique pass 60 (commit 897e523)
+- issue: #68
+
 ### [x] [3.6] /settings — export and print controls abut without whitespace; concatenated in accessible text
 - category: external-critique
 - impact: 4

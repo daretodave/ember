@@ -154,7 +154,7 @@ export default async function LogPage({ searchParams }: Props) {
             <p className={styles.weeklyReflectionLabel}>written by ember from your week</p>
           </div>
         )}
-        <h1 id="mosaic-heading" className={styles.mosaicMeta}>the past 60 days</h1>
+        <h1 id="mosaic-heading" className={styles.mosaicMeta}>the past 60 days — a writing window.</h1>
         <a href="#log-content" className="skip-link">skip to log</a>
         <LogMosaic tiles={tiles} />
         {written > 0 && (
