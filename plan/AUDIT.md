@@ -6,7 +6,7 @@
 
 ## Pending
 
-### [ ] [2.7] /log — "the past 60 days" heading overstates window scope; ambiguous for new users with sparse entries
+### [x] [2.7] /log — "the past 60 days" heading overstates window scope; ambiguous for new users with sparse entries
 - category: external-critique
 - impact: 3
 - ease: 9
@@ -15,6 +15,7 @@
 - suggested fix: change heading to "the past 60 days — a writing window." to explicitly clarify the 60-day period is a browsing window
 - source: /critique pass 60 (commit 897e523)
 - issue: #68
+- resolution: changed heading text to "the past 60 days — a writing window." in src/app/log/page.tsx. Shipped at eb6ce9d.
 
 ### [x] [3.6] /settings — export and print controls abut without whitespace; concatenated in accessible text
 - category: external-critique

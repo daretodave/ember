@@ -29,7 +29,7 @@
 - issue: #67
 - resolution: added {' '} between the two elements in src/app/settings/page.tsx. Shipped at 74e15f2.
 
-### [LOW] /log — "the past 60 days" heading overstates window scope for sparse accounts
+### [x] [LOW] /log — "the past 60 days" heading overstates window scope for sparse accounts
 - pass: 60 (commit 897e523)
 - viewport: both
 - category: comprehension
@@ -37,6 +37,8 @@
 - evidence: /log capture: "the past 60 days\n\n2 days written. 0 days published." — heading states a 60-day window but the stat confirms only 2 entries exist with presumably 58 empty mosaic tiles.
 - suggested fix: add a brief clarifying sub-label such as "a 60-day writing window" or rephrase the heading as "the past 60 days — a window, not a count" to remove the ambiguity for new users.
 - source: browser
+- issue: #68
+- resolution: changed heading text to "the past 60 days — a writing window." in src/app/log/page.tsx. Shipped at eb6ce9d.
 
 ### [LOW] /settings — prompt source radio labels embed full descriptions inline; verbose under AT announcement
 - pass: 60 (commit 897e523)
