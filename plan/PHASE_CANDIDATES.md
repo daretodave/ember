@@ -1,7 +1,7 @@
 # Ember — phase candidates
 
-> Last pass: 2026-06-16 at commit 8db4373
-> Pass count: 137
+> Last pass: 2026-06-16 at commit 4eb95b4
+> Pass count: 138
 
 Candidates proposed by `/expand`. Promotion to `plan/steps/01_build_plan.md`
 happens only via local `/oversight` — never from the cloud loop.
@@ -16,7 +16,7 @@ happens only via local `/oversight` — never from the cloud loop.
 ### [ ] [score 5.0] New-surface a11y sweep — passes 57-58 a11y findings on search, reminder, focus-mode, and log surfaces
 
 - proposed: 2026-06-15, expand pass 136
-- status: 2026-06-16 — /signin submit :focus-visible resolved (f571cbb, 3715e9e); pass 59 adds /settings weekly-reflection aria-describedby [LOW] to scope; candidate now 4 items (2 MED, 2 LOW) across 4 surfaces
+- status: 2026-06-16 — /signin submit :focus-visible resolved (f571cbb, 3715e9e); pass 59 adds /settings weekly-reflection aria-describedby [LOW] to scope; daily-reminder and weekly-reflection aria-describedby resolved (b08765f, 4eb95b4); candidate now 2 items (1 MED, 1 LOW) across 2 surfaces
 - source signals:
   - critique pass 58 (commit a9827d4): /signin — submit button has no :focus-visible rule; keyboard focus invisible [MED] — .submit class in page.module.css has no :focus-visible; pattern was fixed on .fieldInput (bd69812) and .ctaBtn (32c93fb) but not on the form submit button; fix: add .submit:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 2px; } to src/app/signin/page.module.css — RESOLVED at f571cbb
   - critique pass 58 (commit a9827d4): /settings — daily reminder "off" radio aria-describedby points to description of the active ("on") behavior [MED] — both off and on radios share aria-describedby="desc-reminder-off"; the paragraph describes active-reminder behavior, not the no-reminder state; fix: split into two description paragraphs (id="desc-reminder-off" and id="desc-reminder-on") with matching aria-describedby on each radio in src/app/settings/SettingsForm.tsx
@@ -77,13 +77,15 @@ happens only via local `/oversight` — never from the cloud loop.
 ### [ ] [score 4.0] Sub-threshold polish sweep — SEO, a11y, and semantics micro-fixes orphaned below iterate threshold
 
 - proposed: 2026-06-03, expand pass 90
-- status: 2026-06-12 — 14 scope items pending (2, 3, 5, 20, 21, 22, 23,
-  24, 25, 26, 27, 28, 29, 30). Items 24-27 added from critique passes 51-52;
-  items 28-29 added from critique pass 53 (expand pass 133); item 30 added
-  from critique pass 54 (expand pass 135). Resolved since filing: 1 (37d4e8a),
-  4 (81072fa), 6 (f13c754), 7 (0101b1b), 8 (c3671bd), 9 (af927c1),
-  10 (567174d), 11 (43d1502), 12 (1c922ec), 13 (02aa0fd), 14 (faedf1d),
-  15 (549ebbc), 16 (18aef81), 17 (04498b9), 18 (9ffab40), 19 (0de5180).
+- status: 2026-06-16 — items 24 (.dayTask::before, 8905030) and 30 (/today
+  section landmark, 0922be8) confirmed resolved; 12 scope items pending (2,
+  3, 5, 20, 21, 22, 23, 25, 26, 27, 28, 29). Items 24-27 added from critique
+  passes 51-52; items 28-29 added from critique pass 53 (expand pass 133);
+  item 30 added from critique pass 54 (expand pass 135). Resolved since
+  filing: 1 (37d4e8a), 4 (81072fa), 6 (f13c754), 7 (0101b1b), 8 (c3671bd),
+  9 (af927c1), 10 (567174d), 11 (43d1502), 12 (1c922ec), 13 (02aa0fd),
+  14 (faedf1d), 15 (549ebbc), 16 (18aef81), 17 (04498b9), 18 (9ffab40),
+  19 (0de5180), 24 (8905030), 30 (0922be8).
 - source signals (pending items):
   - item 2: / Twitter card images array lacks alt text [1.8] — `twitter.images` is a plain string array; next.js requires object array `[{ url, alt }]` to emit an alt attribute (fix: `twitter: { images: [{ url: '/opengraph-image', alt: 'ember — a daily writing ritual' }] }` in src/app/layout.tsx)
   - item 3: / MosaicPreview aria-label "60 days of practice" misrepresents illustrative content [1.8] (fix: change to "an example of 60 days tracked" in src/components/mosaic/MosaicPreview.tsx)
@@ -129,9 +131,11 @@ happens only via local `/oversight` — never from the cloud loop.
 ### [ ] [score 4.0] Voice coherence tail — post-phase 22 copy register gaps on new UI surfaces
 
 - proposed: 2026-06-12, expand pass 132
-- status: 2026-06-12 — item 6 added from critique pass 54 (expand pass 135):
-  /signin submit button idle label imperative. Now 6 scope items total; all
-  copy-only changes.
+- status: 2026-06-16 — items 1 (/signin "on its way", Phase 30), 5 (/log
+  "browse by date" → "all entries"), and 6 (/signin "send a link" → "send
+  link.", Phase 30) confirmed resolved; 3 scope items pending: /settings
+  delete-account "your account", /settings "export your data", / "today's
+  prompt is waiting."
 - source signals:
   - critique pass 51 (commit 0107c11): /signin — confirmation paragraph "a sign-in link is on its way." uses colloquial idiom departing from the flat bookish register; "directly" adverb in following clause adds no information [LOW] — fix: "a sign-in link has been sent. following it opens today's prompt. links expire after 24 hours. no password. no other mail."
   - critique pass 52 (commit b4d3589): /settings — delete-account confirmation warning reads "permanently delete your account" — second-person possessive within the same two-step flow that uses first-person for the trigger button ("delete my account") [LOW] — fix: "this will permanently delete the account and all entries. there is no undo."
