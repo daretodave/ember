@@ -208,11 +208,13 @@ export default async function LogPage({ searchParams }: Props) {
         ) : recentEntry && recentPrompt ? (
           <>
             <article className={styles.entryView} aria-label="most recent entry">
-              <header className={styles.entryDate}>
-                {formatDisplayDate(recentDate!)}
-                {recentDate === today && ' · today'}
+              <header>
+                <h2 className={styles.entryDate}>
+                  {formatDisplayDate(recentDate!)}
+                  {recentDate === today && ' · today'}
+                </h2>
               </header>
-              <h2 className={styles.entryPrompt}>{recentPrompt.prompt}</h2>
+              <p className={styles.entryPrompt}>{recentPrompt.prompt}</p>
               <p className={styles.entryTask}>
                 <span
                   className={recentEntry.task_done ? styles.entryTaskCheck : undefined}
