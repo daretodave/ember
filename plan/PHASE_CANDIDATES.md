@@ -1,7 +1,7 @@
 # Ember — phase candidates
 
-> Last pass: 2026-06-16 at commit 1ba1c4e
-> Pass count: 139
+> Last pass: 2026-06-16 at commit 5f3510f
+> Pass count: 140
 
 Candidates proposed by `/expand`. Promotion to `plan/steps/01_build_plan.md`
 happens only via local `/oversight` — never from the cloud loop.
@@ -16,7 +16,7 @@ happens only via local `/oversight` — never from the cloud loop.
 ### [ ] [score 5.0] New-surface a11y sweep — passes 57-58 a11y findings on search, reminder, focus-mode, and log surfaces
 
 - proposed: 2026-06-15, expand pass 136
-- status: 2026-06-16 — /signin submit :focus-visible resolved (f571cbb, 3715e9e); pass 59 adds /settings weekly-reflection aria-describedby [LOW] to scope; daily-reminder and weekly-reflection aria-describedby resolved (b08765f, 4eb95b4); focus-mode check-in/tags aria-describedby resolved (22b0bcd, 22b0bcd); pass 60 (1ba1c4e) adds /today day-strip aria-hidden [LOW] and /settings prompt-source radio label verbosity [LOW] to scope; candidate now 3 items (3 LOW)
+- status: 2026-06-16 — /signin submit :focus-visible resolved (f571cbb, 3715e9e); pass 59 adds /settings weekly-reflection aria-describedby [LOW] to scope; daily-reminder and weekly-reflection aria-describedby resolved (b08765f, 4eb95b4); focus-mode check-in/tags aria-describedby resolved (22b0bcd, 22b0bcd); pass 60 (1ba1c4e) adds /today day-strip aria-hidden [LOW] and /settings prompt-source radio label verbosity [LOW] to scope; pass 140: day-strip aria-hidden confirmed false positive (aria-hidden already present at 9b1e99f; CRITIQUE.md [x]); candidate now 2 items (2 LOW)
 - source signals:
   - critique pass 58 (commit a9827d4): /signin — submit button has no :focus-visible rule; keyboard focus invisible [MED] — .submit class in page.module.css has no :focus-visible; pattern was fixed on .fieldInput (bd69812) and .ctaBtn (32c93fb) but not on the form submit button; fix: add .submit:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 2px; } to src/app/signin/page.module.css — RESOLVED at f571cbb
   - critique pass 58 (commit a9827d4): /settings — daily reminder "off" radio aria-describedby points to description of the active ("on") behavior [MED] — both off and on radios share aria-describedby="desc-reminder-off"; the paragraph describes active-reminder behavior, not the no-reminder state; fix: split into two description paragraphs (id="desc-reminder-off" and id="desc-reminder-on") with matching aria-describedby on each radio in src/app/settings/SettingsForm.tsx
@@ -33,7 +33,7 @@ happens only via local `/oversight` — never from the cloud loop.
 ### [ ] [score 4.5] Voice, navigation, and comprehension fixes — passes 57-58 findings on stat line philosophy, link labels, and section copy
 
 - proposed: 2026-06-15, expand pass 136
-- status: 2026-06-16 — quiet-day stat line resolved (0cf2771, eb5b8d0); pass 60 (1ba1c4e) adds /log "the past 60 days" heading overstates scope [LOW] to comprehension sub-scope; candidate now 5 items (1 MED, 4 LOW) across 3 routes
+- status: 2026-06-16 — quiet-day stat line resolved (0cf2771); "all entries" link resolved (74143b7, now "full entry"); pass 60 (1ba1c4e) adds /log "the past 60 days" heading [LOW] to scope; pass 140: "past 60 days" heading resolved (eb6ce9d, text now "the past 60 days — a writing window."); candidate now 3 items (3 LOW): /log search aria-label "your entries", / "the next seven days" heading, /settings "personalized" threshold copy
 - source signals:
   - critique pass 57 (commit ee8ddd0): /log — "59 days quiet" stat line implies a performance score; contradicts "a missed day leaves no mark" philosophy [MED] — the stat line "N days written. N days quiet. N days published." displays the absence count prominently alongside the practice count; this is the opposite of the bearings and landing page promise; fix: remove "N days quiet." from the stat line so only written + published counts appear (src/app/log/page.tsx stat-line generation) — RESOLVED at 0cf2771
   - critique pass 58 (commit a9827d4): /log — "all entries" link implies an archive but navigates to single most-recent entry's dated page [MED] — link text "all entries" was chosen to replace "browse by date" (voice coherence pass) but the destination /log/${recentDate} is a single entry, not an archive; fix: change link text to the destination date string or "view entry" to accurately describe the link in src/app/log/page.tsx
@@ -80,7 +80,7 @@ happens only via local `/oversight` — never from the cloud loop.
 ### [ ] [score 4.0] Sub-threshold polish sweep — SEO, a11y, and semantics micro-fixes orphaned below iterate threshold
 
 - proposed: 2026-06-03, expand pass 90
-- status: 2026-06-16 — items 24 (.dayTask::before, 8905030) and 30 (/today section landmark, 0922be8) confirmed resolved; pass 60 (1ba1c4e) adds item 31 (/settings export/print whitespace a11y) to scope; 13 scope items pending (2, 3, 5, 20, 21, 22, 23, 25, 26, 27, 28, 29, 31). Items 24-27 added from critique passes 51-52; items 28-29 added from critique pass 53 (expand pass 133); item 30 added from critique pass 54 (expand pass 135). Resolved since filing: 1 (37d4e8a), 4 (81072fa), 6 (f13c754), 7 (0101b1b), 8 (c3671bd), 9 (af927c1), 10 (567174d), 11 (43d1502), 12 (1c922ec), 13 (02aa0fd), 14 (faedf1d), 15 (549ebbc), 16 (18aef81), 17 (04498b9), 18 (9ffab40), 19 (0de5180), 24 (8905030), 30 (0922be8).
+- status: 2026-06-16 — items 24 (.dayTask::before, 8905030) and 30 (/today section landmark, 0922be8) confirmed resolved; pass 60 (1ba1c4e) adds item 31 (/settings export/print whitespace a11y) to scope; pass 140: items 29 (/log article date h2, 3efd399) and 31 (/settings export/print whitespace, 74e15f2) resolved; 11 scope items pending (2, 3, 5, 20, 21, 22, 23, 25, 26, 27, 28). Items 24-27 added from critique passes 51-52; items 28-29 added from critique pass 53 (expand pass 133); item 30 added from critique pass 54 (expand pass 135); item 31 added from pass 60. Resolved since filing: 1 (37d4e8a), 4 (81072fa), 6 (f13c754), 7 (0101b1b), 8 (c3671bd), 9 (af927c1), 10 (567174d), 11 (43d1502), 12 (1c922ec), 13 (02aa0fd), 14 (faedf1d), 15 (549ebbc), 16 (18aef81), 17 (04498b9), 18 (9ffab40), 19 (0de5180), 24 (8905030), 29 (3efd399), 30 (0922be8), 31 (74e15f2).
 - source signals (pending items):
   - item 2: / Twitter card images array lacks alt text [1.8] — `twitter.images` is a plain string array; next.js requires object array `[{ url, alt }]` to emit an alt attribute (fix: `twitter: { images: [{ url: '/opengraph-image', alt: 'ember — a daily writing ritual' }] }` in src/app/layout.tsx)
   - item 3: / MosaicPreview aria-label "60 days of practice" misrepresents illustrative content [1.8] (fix: change to "an example of 60 days tracked" in src/components/mosaic/MosaicPreview.tsx)
@@ -128,10 +128,13 @@ happens only via local `/oversight` — never from the cloud loop.
 
 - proposed: 2026-06-12, expand pass 132
 - status: 2026-06-16 — items 1 (/signin "on its way", Phase 30), 5 (/log
-  "browse by date" → "all entries"), and 6 (/signin "send a link" → "send
-  link.", Phase 30) confirmed resolved; 3 scope items pending: /settings
-  delete-account "your account", /settings "export your data", / "today's
-  prompt is waiting."
+  "browse by date" → "all entries" → "full entry"), and 6 (/signin "send a
+  link" → "send link.", Phase 30) confirmed resolved; pass 140: adds /settings
+  "sign out" second-person imperative [LOW] (AUDIT.md [2.0]) and /today
+  focus-exit button "done writing" participial phrase [LOW] (CRITIQUE.md pass 59)
+  — neither covered by any existing candidate; 5 scope items pending: /settings
+  delete-account "your account", /settings "export your data", / "today's prompt
+  is waiting.", /settings "sign out" label, /today "done writing" exit label
 - source signals:
   - critique pass 51 (commit 0107c11): /signin — confirmation paragraph "a sign-in link is on its way." uses colloquial idiom departing from the flat bookish register; "directly" adverb in following clause adds no information [LOW] — fix: "a sign-in link has been sent. following it opens today's prompt. links expire after 24 hours. no password. no other mail."
   - critique pass 52 (commit b4d3589): /settings — delete-account confirmation warning reads "permanently delete your account" — second-person possessive within the same two-step flow that uses first-person for the trigger button ("delete my account") [LOW] — fix: "this will permanently delete the account and all entries. there is no undo."
