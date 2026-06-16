@@ -1,7 +1,7 @@
 # Ember — phase candidates
 
-> Last pass: 2026-06-16 at commit 4eb95b4
-> Pass count: 138
+> Last pass: 2026-06-16 at commit 1ba1c4e
+> Pass count: 139
 
 Candidates proposed by `/expand`. Promotion to `plan/steps/01_build_plan.md`
 happens only via local `/oversight` — never from the cloud loop.
@@ -16,30 +16,33 @@ happens only via local `/oversight` — never from the cloud loop.
 ### [ ] [score 5.0] New-surface a11y sweep — passes 57-58 a11y findings on search, reminder, focus-mode, and log surfaces
 
 - proposed: 2026-06-15, expand pass 136
-- status: 2026-06-16 — /signin submit :focus-visible resolved (f571cbb, 3715e9e); pass 59 adds /settings weekly-reflection aria-describedby [LOW] to scope; daily-reminder and weekly-reflection aria-describedby resolved (b08765f, 4eb95b4); focus-mode check-in/tags aria-describedby resolved (22b0bcd, this tick); candidate now 1 item (1 LOW) — /log "private" label free-floating
+- status: 2026-06-16 — /signin submit :focus-visible resolved (f571cbb, 3715e9e); pass 59 adds /settings weekly-reflection aria-describedby [LOW] to scope; daily-reminder and weekly-reflection aria-describedby resolved (b08765f, 4eb95b4); focus-mode check-in/tags aria-describedby resolved (22b0bcd, 22b0bcd); pass 60 (1ba1c4e) adds /today day-strip aria-hidden [LOW] and /settings prompt-source radio label verbosity [LOW] to scope; candidate now 3 items (3 LOW)
 - source signals:
   - critique pass 58 (commit a9827d4): /signin — submit button has no :focus-visible rule; keyboard focus invisible [MED] — .submit class in page.module.css has no :focus-visible; pattern was fixed on .fieldInput (bd69812) and .ctaBtn (32c93fb) but not on the form submit button; fix: add .submit:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 2px; } to src/app/signin/page.module.css — RESOLVED at f571cbb
   - critique pass 58 (commit a9827d4): /settings — daily reminder "off" radio aria-describedby points to description of the active ("on") behavior [MED] — both off and on radios share aria-describedby="desc-reminder-off"; the paragraph describes active-reminder behavior, not the no-reminder state; fix: split into two description paragraphs (id="desc-reminder-off" and id="desc-reminder-on") with matching aria-describedby on each radio in src/app/settings/SettingsForm.tsx
   - critique pass 59 (commit eb5b8d0): /settings — weekly-reflection "off" and "on" radio inputs both carry aria-describedby="desc-reflection-off"; the paragraph at that id describes active-reflection behavior, not the no-reflection state; fix: add a second description paragraph id="desc-reflection-on" with active behavior text and update the "on" radio's aria-describedby accordingly in src/app/settings/SettingsForm.tsx [LOW]
   - critique pass 58 (commit a9827d4): /today — focus-mode check-in and tags inputs have no accessible descriptions; hint paragraphs hidden by aria-hidden [MED] — the main-entry section (aria-hidden when isFocus) contains the hint paragraphs for check-in and tags; the focus-overlay inputs have no aria-describedby; fix: duplicate hint paragraphs inside the focus overlay and add aria-describedby on the corresponding focus-mode inputs in src/app/today/TodayEntry.tsx
   - critique pass 57 (commit ee8ddd0): /log — "private" label on entry listing is free-floating text with no programmatic association to its entry [LOW] — "private" appears as trailing text after the entry preview with no aria-describedby or placement inside the article element; fix: move the private badge inside the article element and add context via aria-label or visually-hidden prefix in src/app/log/page.tsx
+  - critique pass 60 (commit 1ba1c4e): /today — day-strip abbreviated weekday labels not aria-hidden; AT reads weekday name twice per entry [LOW] — abbreviated day name ('Wed', 'Thu') precedes full date string ('Wed 10 Jun 2026 — no entry') with no aria-hidden on the abbreviation element; fix: add aria-hidden="true" to the abbreviated day label element in src/app/today/DayStrip.tsx
+  - critique pass 60 (commit 1ba1c4e): /settings — prompt source radio labels embed full descriptions inline; verbose under AT announcement [LOW] — each radio label contains the pack name and a full descriptive clause after an em-dash; daily-reminder and weekly-reflection use aria-describedby for supplementary text (a resolved pattern); prompt-source options do not; fix: separate description into sibling <span> with aria-describedby so the radio label is the pack name alone
 - rationale: phases 31-35 (entry search, year-in-review, daily reminder, one-word check-in, entry tags) introduced new UI surfaces that have each accumulated at least one a11y gap. The 3 MED findings are all keyboard/AT-visibility gaps identical in severity to findings that prompted dedicated iterate fixes in passes 49-54. Together they form a focused one-phase close with no schema changes and no new routes.
-- proposed scope: 1 phase — ship all four scope items above
+- proposed scope: 1 phase — ship all pending scope items (3 remaining)
 - estimated phases: 1
 - conflicts: none — no new routes; no schema changes; all are attribute/CSS additions
 
 ### [ ] [score 4.5] Voice, navigation, and comprehension fixes — passes 57-58 findings on stat line philosophy, link labels, and section copy
 
 - proposed: 2026-06-15, expand pass 136
-- status: 2026-06-16 — quiet-day stat line resolved (0cf2771, eb5b8d0); candidate now 4 items (1 MED, 3 LOW) across 3 routes
+- status: 2026-06-16 — quiet-day stat line resolved (0cf2771, eb5b8d0); pass 60 (1ba1c4e) adds /log "the past 60 days" heading overstates scope [LOW] to comprehension sub-scope; candidate now 5 items (1 MED, 4 LOW) across 3 routes
 - source signals:
   - critique pass 57 (commit ee8ddd0): /log — "59 days quiet" stat line implies a performance score; contradicts "a missed day leaves no mark" philosophy [MED] — the stat line "N days written. N days quiet. N days published." displays the absence count prominently alongside the practice count; this is the opposite of the bearings and landing page promise; fix: remove "N days quiet." from the stat line so only written + published counts appear (src/app/log/page.tsx stat-line generation) — RESOLVED at 0cf2771
   - critique pass 58 (commit a9827d4): /log — "all entries" link implies an archive but navigates to single most-recent entry's dated page [MED] — link text "all entries" was chosen to replace "browse by date" (voice coherence pass) but the destination /log/${recentDate} is a single entry, not an archive; fix: change link text to the destination date string or "view entry" to accurately describe the link in src/app/log/page.tsx
   - critique pass 58 (commit a9827d4): /log — search input aria-label "search your entries" overrides visible label and introduces second-person "your" [LOW] — aria-label on the input wins over the associated <label>; the visible label "search entries" and AT-computed name "search your entries" diverge; "your" violates voice guide; fix: remove aria-label from input in src/app/log/LogSearch.tsx and rely on the programmatically-associated <label>
   - critique pass 58 (commit a9827d4): / — "the next seven days" section heading includes today; heading implies future-only content [LOW] — the seven-item list starts with "today"; the heading "the next seven days" implies future-only; fix: change to "the coming week" or "seven days of prompts" in src/app/page.tsx
   - critique pass 57 (commit ee8ddd0): /settings — "personalized" prompt description does not state the minimum entry threshold [LOW] — "falls back to a standard prompt until entries exist" is vague; a user with one entry cannot tell if personalization is active; fix: specify a concrete threshold phrase, e.g. "requires a few entries to take effect" in src/app/settings/SettingsForm.tsx
-- rationale: the "59 days quiet" stat line is the highest-priority finding: it directly contradicts the stated product philosophy on the authenticated /log page, which every user sees. the "all entries" mislabeling introduces navigation confusion on the same page. the remaining 3 items are all 1-line copy fixes already scoped to src/ files. Together they close voice and navigation gaps introduced by phases 31-36, matching the coverage pattern of the voice coherence tail candidate (which addressed phases 21-30).
-- proposed scope: 1 phase — ship all five scope items above
+  - critique pass 60 (commit 1ba1c4e): /log — "the past 60 days" heading overstates window scope for sparse accounts [LOW] — new users see "the past 60 days" heading alongside "2 days written. 0 days published." stat; "60 days" is ambiguous — browsing window or expected count; fix: add a brief clarifying sub-label such as "a 60-day window" or rephrase heading to remove count ambiguity for new users (src/app/log/page.tsx)
+- rationale: the "59 days quiet" stat line is the highest-priority finding: it directly contradicts the stated product philosophy on the authenticated /log page, which every user sees. the "all entries" mislabeling introduces navigation confusion on the same page. the remaining items are all 1-line copy fixes already scoped to src/ files. Together they close voice, navigation, and comprehension gaps introduced by phases 31-36.
+- proposed scope: 1 phase — ship all pending scope items (5 remaining)
 - estimated phases: 1
 - conflicts: none — copy-only and attribute-only; no new routes; no schema changes
 
@@ -77,15 +80,7 @@ happens only via local `/oversight` — never from the cloud loop.
 ### [ ] [score 4.0] Sub-threshold polish sweep — SEO, a11y, and semantics micro-fixes orphaned below iterate threshold
 
 - proposed: 2026-06-03, expand pass 90
-- status: 2026-06-16 — items 24 (.dayTask::before, 8905030) and 30 (/today
-  section landmark, 0922be8) confirmed resolved; 12 scope items pending (2,
-  3, 5, 20, 21, 22, 23, 25, 26, 27, 28, 29). Items 24-27 added from critique
-  passes 51-52; items 28-29 added from critique pass 53 (expand pass 133);
-  item 30 added from critique pass 54 (expand pass 135). Resolved since
-  filing: 1 (37d4e8a), 4 (81072fa), 6 (f13c754), 7 (0101b1b), 8 (c3671bd),
-  9 (af927c1), 10 (567174d), 11 (43d1502), 12 (1c922ec), 13 (02aa0fd),
-  14 (faedf1d), 15 (549ebbc), 16 (18aef81), 17 (04498b9), 18 (9ffab40),
-  19 (0de5180), 24 (8905030), 30 (0922be8).
+- status: 2026-06-16 — items 24 (.dayTask::before, 8905030) and 30 (/today section landmark, 0922be8) confirmed resolved; pass 60 (1ba1c4e) adds item 31 (/settings export/print whitespace a11y) to scope; 13 scope items pending (2, 3, 5, 20, 21, 22, 23, 25, 26, 27, 28, 29, 31). Items 24-27 added from critique passes 51-52; items 28-29 added from critique pass 53 (expand pass 133); item 30 added from critique pass 54 (expand pass 135). Resolved since filing: 1 (37d4e8a), 4 (81072fa), 6 (f13c754), 7 (0101b1b), 8 (c3671bd), 9 (af927c1), 10 (567174d), 11 (43d1502), 12 (1c922ec), 13 (02aa0fd), 14 (faedf1d), 15 (549ebbc), 16 (18aef81), 17 (04498b9), 18 (9ffab40), 19 (0de5180), 24 (8905030), 30 (0922be8).
 - source signals (pending items):
   - item 2: / Twitter card images array lacks alt text [1.8] — `twitter.images` is a plain string array; next.js requires object array `[{ url, alt }]` to emit an alt attribute (fix: `twitter: { images: [{ url: '/opengraph-image', alt: 'ember — a daily writing ritual' }] }` in src/app/layout.tsx)
   - item 3: / MosaicPreview aria-label "60 days of practice" misrepresents illustrative content [1.8] (fix: change to "an example of 60 days tracked" in src/components/mosaic/MosaicPreview.tsx)
@@ -101,6 +96,7 @@ happens only via local `/oversight` — never from the cloud loop.
   - item 28: /signin — openGraph metadata block has no images property; share card renders without brand image [2.4] (pass 53) — next.js per-route openGraph merging replaces the full key when a child page overrides it; the /signin layout's openGraph block omits images so links shared to /signin produce an imageless card; fix: add images: [{ url: '/opengraph-image', width: 1200, height: 630, alt: 'ember — a daily writing ritual' }] to the openGraph block in src/app/signin/layout.tsx and the same twitter.images to the twitter block
   - item 29: /log — entry article header contains date as plain text with no heading element; heading hierarchy inside the article is broken [2.4] (pass 53) — the <header> inside <article aria-label="most recent entry"> contains the date string with no heading element; AT users navigating by heading encounter the prompt h2 as the first and only heading inside the article; fix: wrap the date string in <h2> and demote the prompt line to <p className={styles.entryPrompt}>
   - item 30: /today — writing surface has no landmark or heading; heading navigation skips directly from H1 (prompt) to H2 (day strip) [2.4] (pass 54) — task check, textarea, and controls render as a flat fragment in TodayEntry.tsx with no section element; AT users navigating by landmark cannot reach the writing surface; fix: wrap TodayEntry outermost content in <section aria-label="today's entry"> (src/app/today/TodayEntry.tsx)
+  - item 31: /settings — export and print controls abut without whitespace; concatenated in accessible text [1.8] (pass 60) — "export your data" and "print your book" appear as "export your dataprint your book" in accessible text with no whitespace separator between the two elements; fix: add a whitespace text node between the two sibling elements in src/app/settings/page.tsx
 - rationale: easy-to-fix findings accumulate below the iterate threshold with no resolution path; each is a 1–2 line change. They don't cluster with any other candidate but together form a coherent one-pass batch closing real gaps in SEO metadata, AT accuracy, and touch-device comprehension.
 - proposed scope: 1 phase — ship all pending items above
 - estimated phases: 1
