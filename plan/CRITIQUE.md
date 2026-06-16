@@ -2256,7 +2256,7 @@
 - suggested fix: specify a concrete threshold, e.g. "personalized: a unique prompt generated from your recent entries. requires a few entries to take effect — uses the standard prompt until then." if the threshold is defined in code, echo it here.
 - source: browser
 
-### [MED] /signin — submit button has no :focus-visible rule; keyboard focus invisible on sign-in form
+### [x] [MED] /signin — submit button has no :focus-visible rule; keyboard focus invisible on sign-in form
 - pass: 58 (commit a9827d4)
 - viewport: both
 - category: a11y
@@ -2264,6 +2264,7 @@
 - evidence: src/app/signin/page.module.css: no :focus or :focus-visible rule on .submit. compare .fieldInput:focus { outline: 2px solid var(--color-accent); outline-offset: 2px; } and landing page .ctaBtn:focus-visible added at 32c93fb.
 - suggested fix: add .submit:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 2px; } to src/app/signin/page.module.css, consistent with the pattern on .fieldInput and .ctaBtn.
 - source: browser
+- resolution: added .submit:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 2px; } to src/app/signin/page.module.css. Shipped at f571cbb.
 
 ### [MED] /settings — daily reminder "off" radio aria-describedby points to description of the active ("on") behavior
 - pass: 58 (commit a9827d4)

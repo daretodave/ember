@@ -6,6 +6,17 @@
 
 ## Pending
 
+### [x] [5.4] /signin — submit button has no :focus-visible rule; keyboard focus invisible on sign-in form
+- category: a11y
+- impact: 6
+- ease: 9
+- note: scored 2026-06-16 — from critique pass 58 (a9827d4); tailwind v4 preflight resets browser default outlines; .submit has hover and disabled states but no :focus-visible rule; the email input (.fieldInput:focus) and landing CTA (.ctaBtn:focus-visible) both have outline: 2px solid var(--color-accent) fixes, but the submit button was missed in both passes; keyboard users tabbing to the sign-in button see no visible indicator
+- observation: src/app/signin/page.module.css: no :focus or :focus-visible rule on .submit; .fieldInput:focus has outline: 2px solid var(--color-accent); outline-offset: 2px
+- suggested fix: add .submit:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 2px; } to src/app/signin/page.module.css
+- source: /critique pass 58 (commit a9827d4)
+- issue: #60
+- resolution: added .submit:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 2px; } to src/app/signin/page.module.css. Shipped at f571cbb.
+
 ### [x] [4.5] / — .dayTask::before pseudo-element renders checkbox-like marker on read-only 7-day preview tasks; implies interactivity
 - category: visual
 - impact: 5
