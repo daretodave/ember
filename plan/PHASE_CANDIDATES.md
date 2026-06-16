@@ -1,7 +1,7 @@
 # Ember — phase candidates
 
-> Last pass: 2026-06-15 at commit ed4d89a
-> Pass count: 136
+> Last pass: 2026-06-16 at commit 8db4373
+> Pass count: 137
 
 Candidates proposed by `/expand`. Promotion to `plan/steps/01_build_plan.md`
 happens only via local `/oversight` — never from the cloud loop.
@@ -16,10 +16,11 @@ happens only via local `/oversight` — never from the cloud loop.
 ### [ ] [score 5.0] New-surface a11y sweep — passes 57-58 a11y findings on search, reminder, focus-mode, and log surfaces
 
 - proposed: 2026-06-15, expand pass 136
-- status: 2026-06-15 — 4 a11y findings (3 MED, 1 LOW) from critique passes 57-58 across 4 distinct surfaces introduced in phases 31-35. None captured in existing candidates.
+- status: 2026-06-16 — /signin submit :focus-visible resolved (f571cbb, 3715e9e); pass 59 adds /settings weekly-reflection aria-describedby [LOW] to scope; candidate now 4 items (2 MED, 2 LOW) across 4 surfaces
 - source signals:
-  - critique pass 58 (commit a9827d4): /signin — submit button has no :focus-visible rule; keyboard focus invisible [MED] — .submit class in page.module.css has no :focus-visible; pattern was fixed on .fieldInput (bd69812) and .ctaBtn (32c93fb) but not on the form submit button; fix: add .submit:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 2px; } to src/app/signin/page.module.css
+  - critique pass 58 (commit a9827d4): /signin — submit button has no :focus-visible rule; keyboard focus invisible [MED] — .submit class in page.module.css has no :focus-visible; pattern was fixed on .fieldInput (bd69812) and .ctaBtn (32c93fb) but not on the form submit button; fix: add .submit:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 2px; } to src/app/signin/page.module.css — RESOLVED at f571cbb
   - critique pass 58 (commit a9827d4): /settings — daily reminder "off" radio aria-describedby points to description of the active ("on") behavior [MED] — both off and on radios share aria-describedby="desc-reminder-off"; the paragraph describes active-reminder behavior, not the no-reminder state; fix: split into two description paragraphs (id="desc-reminder-off" and id="desc-reminder-on") with matching aria-describedby on each radio in src/app/settings/SettingsForm.tsx
+  - critique pass 59 (commit eb5b8d0): /settings — weekly-reflection "off" and "on" radio inputs both carry aria-describedby="desc-reflection-off"; the paragraph at that id describes active-reflection behavior, not the no-reflection state; fix: add a second description paragraph id="desc-reflection-on" with active behavior text and update the "on" radio's aria-describedby accordingly in src/app/settings/SettingsForm.tsx [LOW]
   - critique pass 58 (commit a9827d4): /today — focus-mode check-in and tags inputs have no accessible descriptions; hint paragraphs hidden by aria-hidden [MED] — the main-entry section (aria-hidden when isFocus) contains the hint paragraphs for check-in and tags; the focus-overlay inputs have no aria-describedby; fix: duplicate hint paragraphs inside the focus overlay and add aria-describedby on the corresponding focus-mode inputs in src/app/today/TodayEntry.tsx
   - critique pass 57 (commit ee8ddd0): /log — "private" label on entry listing is free-floating text with no programmatic association to its entry [LOW] — "private" appears as trailing text after the entry preview with no aria-describedby or placement inside the article element; fix: move the private badge inside the article element and add context via aria-label or visually-hidden prefix in src/app/log/page.tsx
 - rationale: phases 31-35 (entry search, year-in-review, daily reminder, one-word check-in, entry tags) introduced new UI surfaces that have each accumulated at least one a11y gap. The 3 MED findings are all keyboard/AT-visibility gaps identical in severity to findings that prompted dedicated iterate fixes in passes 49-54. Together they form a focused one-phase close with no schema changes and no new routes.
@@ -30,9 +31,9 @@ happens only via local `/oversight` — never from the cloud loop.
 ### [ ] [score 4.5] Voice, navigation, and comprehension fixes — passes 57-58 findings on stat line philosophy, link labels, and section copy
 
 - proposed: 2026-06-15, expand pass 136
-- status: 2026-06-15 — 5 copy/attribute findings (2 MED, 3 LOW) from critique passes 57-58 across 3 routes. One MED finding directly contradicts the core "a missed day leaves no mark" philosophy.
+- status: 2026-06-16 — quiet-day stat line resolved (0cf2771, eb5b8d0); candidate now 4 items (1 MED, 3 LOW) across 3 routes
 - source signals:
-  - critique pass 57 (commit ee8ddd0): /log — "59 days quiet" stat line implies a performance score; contradicts "a missed day leaves no mark" philosophy [MED] — the stat line "N days written. N days quiet. N days published." displays the absence count prominently alongside the practice count; this is the opposite of the bearings and landing page promise; fix: remove "N days quiet." from the stat line so only written + published counts appear (src/app/log/page.tsx stat-line generation)
+  - critique pass 57 (commit ee8ddd0): /log — "59 days quiet" stat line implies a performance score; contradicts "a missed day leaves no mark" philosophy [MED] — the stat line "N days written. N days quiet. N days published." displays the absence count prominently alongside the practice count; this is the opposite of the bearings and landing page promise; fix: remove "N days quiet." from the stat line so only written + published counts appear (src/app/log/page.tsx stat-line generation) — RESOLVED at 0cf2771
   - critique pass 58 (commit a9827d4): /log — "all entries" link implies an archive but navigates to single most-recent entry's dated page [MED] — link text "all entries" was chosen to replace "browse by date" (voice coherence pass) but the destination /log/${recentDate} is a single entry, not an archive; fix: change link text to the destination date string or "view entry" to accurately describe the link in src/app/log/page.tsx
   - critique pass 58 (commit a9827d4): /log — search input aria-label "search your entries" overrides visible label and introduces second-person "your" [LOW] — aria-label on the input wins over the associated <label>; the visible label "search entries" and AT-computed name "search your entries" diverge; "your" violates voice guide; fix: remove aria-label from input in src/app/log/LogSearch.tsx and rely on the programmatically-associated <label>
   - critique pass 58 (commit a9827d4): / — "the next seven days" section heading includes today; heading implies future-only content [LOW] — the seven-item list starts with "today"; the heading "the next seven days" implies future-only; fix: change to "the coming week" or "seven days of prompts" in src/app/page.tsx
