@@ -325,8 +325,10 @@ export function TodayEntry({ date, task, prompt, initialEntry, hasUsername = tru
               placeholder="one word."
               maxLength={30}
               tabIndex={isFocus ? 0 : -1}
+              aria-describedby="focus-checkin-desc"
             />
           </div>
+          <p id="focus-checkin-desc" className={styles.checkinHint}>optional. a mood or weather word for this day.</p>
 
           <div className={styles.checkinRow}>
             <label htmlFor="focus-tags" className={styles.checkinLabel}>tags</label>
@@ -342,8 +344,10 @@ export function TodayEntry({ date, task, prompt, initialEntry, hasUsername = tru
               placeholder="word, word."
               maxLength={200}
               tabIndex={isFocus ? 0 : -1}
+              aria-describedby="focus-tags-desc"
             />
           </div>
+          <p id="focus-tags-desc" className={styles.checkinHint}>optional. up to five tags, comma-separated.</p>
 
           <label htmlFor="focus-entry-response" className={styles.entryLabel}>response</label>
           <textarea
