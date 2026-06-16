@@ -148,7 +148,7 @@
 - source: /critique pass 53 (commit 3f0847a)
 - resolution: changed link text to "all entries" in src/app/log/page.tsx. Shipped in Phase 30 (verified stale at 22b0bcd).
 
-### [ ] [2.4] /signin — openGraph metadata has no images property; share card renders without image
+### [x] [2.4] /signin — openGraph metadata has no images property; share card renders without image
 - category: seo
 - impact: 3
 - ease: 8
@@ -156,6 +156,8 @@
 - observation: src/app/signin/layout.tsx: openGraph: { title, description, url } — no images property; contrast src/app/layout.tsx which sets images: [{ url: '/opengraph-image', width: 1200, height: 630, alt: '...' }]
 - suggested fix: add images: [{ url: '/opengraph-image', width: 1200, height: 630, alt: 'ember — a daily writing ritual' }] to the openGraph block in src/app/signin/layout.tsx and the same twitter.images to the twitter block
 - source: /critique pass 53 (commit 3f0847a)
+- issue: #65
+- resolution: added images arrays to both openGraph and twitter blocks in src/app/signin/layout.tsx. Shipped at fe60b35.
 
 ### [ ] [2.4] /log — entry article header contains date as plain text with no heading element; heading hierarchy inside article is broken
 - category: a11y

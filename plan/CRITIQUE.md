@@ -198,7 +198,7 @@
 - issue: #48
 - resolution: converted outer div to <section aria-label="today's entry"> in TodayEntry.tsx. Shipped at 0922be8.
 
-### [LOW] /signin — openGraph metadata has no images property; share card renders without image
+### [x] [LOW] /signin — openGraph metadata has no images property; share card renders without image
 - pass: 53 (commit 3f0847a)
 - viewport: both
 - category: seo
@@ -206,6 +206,7 @@
 - evidence: src/app/signin/layout.tsx: openGraph: { title: 'ember · sign in', description: '...', url: '/signin' } — no images property. contrast src/app/layout.tsx which sets images: [{ url: '/opengraph-image', width: 1200, height: 630, alt: '...' }].
 - suggested fix: add images: [{ url: '/opengraph-image', width: 1200, height: 630, alt: 'ember — a daily writing ritual' }] to the openGraph block in src/app/signin/layout.tsx and the same twitter.images to the twitter block.
 - source: browser
+- resolution: added images arrays to both openGraph and twitter blocks. Shipped at fe60b35.
 
 ### [x] [LOW] /signin, /today, /settings — error fallback copy uses second-person imperative "try again."
 - pass: 53 (commit 3f0847a)
