@@ -1,12 +1,48 @@
 # External-observer findings — Ember
 
-> Last pass: 2026-06-16 at commit eb5b8d0
-> Pass count: 59
+> Last pass: 2026-06-16 at commit 897e523
+> Pass count: 60
 
 > Written by `/critique` after walking the live site as a
 > fresh-eyes visitor. Drained by `/iterate`.
 
 ## Pending
+
+### [LOW] /today — day-strip abbreviated weekday labels not aria-hidden; AT reads weekday name twice per entry
+- pass: 60 (commit 897e523)
+- viewport: both
+- category: a11y
+- observation: the "last seven days" strip renders an abbreviated weekday label ('Wed', 'Thu', etc.) immediately before the full date string ('Wed 10 Jun 2026 — no entry') for each item. if the abbreviated label is not aria-hidden, AT users hear the weekday name announced twice — once from the abbreviation and once from the full date string.
+- evidence: /today capture: "Wed\nWed 10 Jun 2026 — no entry\nThu\nThu 11 Jun 2026 — no entry" — abbreviated day name precedes the full date text for each strip item with no aria-hidden on the abbreviation element.
+- suggested fix: add aria-hidden="true" to the abbreviated day label element in src/app/today/DayStrip.tsx so AT reads only the full date string per strip item.
+- source: browser
+
+### [LOW] /settings — export and print controls abut without whitespace; concatenated in accessible text
+- pass: 60 (commit 897e523)
+- viewport: both
+- category: a11y
+- observation: the "export your data" and "print your book" controls appear in the accessible text without any whitespace separator — concatenated as "export your dataprint your book". if the elements are inline siblings with no whitespace text node between them, a screen reader may announce both as a single continuous string.
+- evidence: /settings capture: "export your dataprint your book" — no space between the two link/button labels. contrast surrounding controls which each appear on their own line in the capture.
+- suggested fix: add a whitespace text node (a space or line break) between the two elements in src/app/settings/page.tsx so they are announced as separate controls.
+- source: browser
+
+### [LOW] /log — "the past 60 days" heading overstates window scope for sparse accounts
+- pass: 60 (commit 897e523)
+- viewport: both
+- category: comprehension
+- observation: the /log page heading reads "the past 60 days" while the stat line reads "2 days written. 0 days published." for a new user, the large scoped heading paired with a sparse count creates ambiguity — a first-time reader cannot tell whether "60 days" is the browsing window or an expected entry count, and the mismatch may read as a broken or incomplete feature.
+- evidence: /log capture: "the past 60 days\n\n2 days written. 0 days published." — heading states a 60-day window but the stat confirms only 2 entries exist with presumably 58 empty mosaic tiles.
+- suggested fix: add a brief clarifying sub-label such as "a 60-day writing window" or rephrase the heading as "the past 60 days — a window, not a count" to remove the ambiguity for new users.
+- source: browser
+
+### [LOW] /settings — prompt source radio labels embed full descriptions inline; verbose under AT announcement
+- pass: 60 (commit 897e523)
+- viewport: both
+- category: a11y
+- observation: each prompt source radio option embeds a full descriptive clause after an em-dash in the label ("standard — a varied daily prompt.", "gratitude — noticing what has arrived and what continues."). when a screen reader announces the radio, it reads the entire multi-clause label. the daily-reminder and weekly-reflection options use aria-describedby for supplementary text; the prompt source options could follow the same pattern.
+- evidence: /settings capture: "standard — a varied daily prompt.\ngratitude — noticing what has arrived and what continues.\ncraft — attention to making, process, and material.\nstoic — what is yours to do, and what is not.\ngrief — carrying loss, change, and what remains." — full description embedded in each radio label text.
+- suggested fix: separate each description into a sibling <span> with aria-describedby so the radio label is the pack name alone ("standard", "gratitude", etc.) and the description is supplementary context, matching the pattern used for daily-reminder and weekly-reflection.
+- source: browser
 
 ### [x] [MED] /signin — email input removes browser focus outline with no adequate replacement; WCAG 2.4.11 gap
 - pass: 53 (commit 3f0847a)
