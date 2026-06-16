@@ -8,7 +8,7 @@
 
 ## Pending
 
-### [LOW] /today — day-strip abbreviated weekday labels not aria-hidden; AT reads weekday name twice per entry
+### [x] [LOW] /today — day-strip abbreviated weekday labels not aria-hidden; AT reads weekday name twice per entry
 - pass: 60 (commit 897e523)
 - viewport: both
 - category: a11y
@@ -16,8 +16,9 @@
 - evidence: /today capture: "Wed\nWed 10 Jun 2026 — no entry\nThu\nThu 11 Jun 2026 — no entry" — abbreviated day name precedes the full date text for each strip item with no aria-hidden on the abbreviation element.
 - suggested fix: add aria-hidden="true" to the abbreviated day label element in src/app/today/DayStrip.tsx so AT reads only the full date string per strip item.
 - source: browser
+- resolution: false positive — aria-hidden="true" was already on the stripDate <span> (added at 9b1e99f); capture showed both the aria-hidden visual label and the sr-only full date string, which is correct AT behaviour. Duplicate of the resolved finding at pass 58 line 450. Closed without code change.
 
-### [LOW] /settings — export and print controls abut without whitespace; concatenated in accessible text
+### [x] [LOW] /settings — export and print controls abut without whitespace; concatenated in accessible text
 - pass: 60 (commit 897e523)
 - viewport: both
 - category: a11y
@@ -25,6 +26,8 @@
 - evidence: /settings capture: "export your dataprint your book" — no space between the two link/button labels. contrast surrounding controls which each appear on their own line in the capture.
 - suggested fix: add a whitespace text node (a space or line break) between the two elements in src/app/settings/page.tsx so they are announced as separate controls.
 - source: browser
+- issue: #67
+- resolution: added {' '} between the two elements in src/app/settings/page.tsx. Shipped at 74e15f2.
 
 ### [LOW] /log — "the past 60 days" heading overstates window scope for sparse accounts
 - pass: 60 (commit 897e523)

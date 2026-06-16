@@ -6,6 +6,17 @@
 
 ## Pending
 
+### [x] [3.6] /settings — export and print controls abut without whitespace; concatenated in accessible text
+- category: external-critique
+- impact: 4
+- ease: 9
+- note: scored 2026-06-16 — from critique pass 60 (1ba1c4e); adjacent inline-block links had no whitespace text node between them; AT concatenated "export your dataprint your book" as a single string in reading mode
+- observation: src/app/settings/page.tsx: <a>export your data</a><Link>print your book</Link> — no text node between adjacent inline-block siblings
+- suggested fix: add {' '} between the two elements so they are announced as separate controls
+- source: /critique pass 60 (commit 1ba1c4e)
+- issue: #67
+- resolution: added {' '} between the two elements in src/app/settings/page.tsx. Shipped at 74e15f2.
+
 ### [x] [4.5] /log — "all entries" link misdescribes destination; implies a full archive but navigates to single most-recent entry
 - category: external-critique
 - impact: 5
