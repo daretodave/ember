@@ -2220,7 +2220,7 @@
 - suggested fix: add a short visible caption in the previewMark section, e.g. a <p> reading "the log, over time." so sighted first-time visitors understand the graphic's meaning without relying on the at-only aria-label.
 - source: browser
 
-### [MED] /log — "59 days quiet" stat line implies a performance score; contradicts "a missed day leaves no mark" philosophy
+### [x] [MED] /log — "59 days quiet" stat line implies a performance score; contradicts "a missed day leaves no mark" philosophy
 - pass: 57 (commit ee8ddd0)
 - viewport: both
 - category: voice
@@ -2228,6 +2228,8 @@
 - evidence: authenticated /log capture: "1 day written. 59 days quiet. 0 days published." — the quiet-day count is derived and prominently displayed.
 - suggested fix: remove the "N days quiet" figure from the stat line. show only "N days written. N days published." so the line reports practice without counting absence.
 - source: browser
+- issue: #61
+- resolution: removed `const quiet` and the quiet span from /log stat line in src/app/log/page.tsx. Shipped at 0cf2771.
 
 ### [LOW] /today — save timestamp "last saved · 06:36" shows time only; no date context when session persists across midnight
 - pass: 57 (commit ee8ddd0)

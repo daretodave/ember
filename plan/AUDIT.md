@@ -6,6 +6,14 @@
 
 ## Pending
 
+### [x] [6.3] /log — "N days quiet" stat line implies a performance score; contradicts no-streak philosophy
+- category: external-critique
+- impact: 7
+- ease: 9
+- note: scored 2026-06-16 — from critique pass 57 (ee8ddd0); "N days quiet" placed absence as a comparative figure alongside written days, contradicting "the log shows what is, not what isn't" and "a missed day leaves no mark"; removed the quiet-day count from the stat line; stat now shows only written and published counts
+- issue: #61
+- resolution: removed const quiet and quiet span from src/app/log/page.tsx. Shipped at 0cf2771.
+
 ### [x] [5.4] /signin — submit button has no :focus-visible rule; keyboard focus invisible on sign-in form
 - category: a11y
 - impact: 6
