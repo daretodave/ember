@@ -128,7 +128,7 @@
 - suggested fix: change the description to "a 60-day writing log — one entry per day, shown as a mosaic and a list." to describe the page structure rather than its content state; holds in both empty and populated states.
 - source: browser
 
-### [MED] /settings — prompt variety radio inputs lack fieldset/legend grouping; WCAG 1.3.1 group relationship not conveyed to screen readers
+### [x] [MED] /settings — prompt variety radio inputs lack fieldset/legend grouping; WCAG 1.3.1 group relationship not conveyed to screen readers
 - pass: 56 (commit 5fac7a3)
 - viewport: both
 - category: a11y
@@ -136,6 +136,8 @@
 - evidence: settings capture: "prompt variety\n\nstandard: same prompt for everyone each day. personalized: ..." text appears as a paragraph above "standard\npersonalized" with no structural grouping apparent; compare display name and timezone which each have label/input pairs.
 - suggested fix: wrap the prompt variety radio inputs in a <fieldset> with a <legend>prompt variety</legend> in src/app/settings/SettingsForm.tsx, replacing the current heading/paragraph approach with a proper ARIA group structure.
 - source: browser
+- issue: #62
+- resolution: added id="label-variety" to the <span className={styles.label}> and changed aria-label="prompt variety" to aria-labelledby="label-variety" on the radioGroup div, programmatically linking the visible label to the group per WCAG 1.3.1. Shipped at a63de96.
 
 ### [LOW] / — "today" entry in the seven-day preview has no accessible identification; only visual styling differentiates it from future days
 - pass: 56 (commit 5fac7a3)

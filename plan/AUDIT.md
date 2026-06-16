@@ -6,6 +6,14 @@
 
 ## Pending
 
+### [x] [4.0] /settings — prompt variety radiogroup not linked to visible label; WCAG 1.3.1
+- category: external-critique
+- impact: 5
+- ease: 8
+- note: scored 2026-06-16 — from critique pass 56 (5fac7a3); visible <span>prompt variety</span> label had no programmatic link to the role="radiogroup" div; group was named via aria-label (duplicate literal) rather than aria-labelledby pointing to the visible element; WCAG 1.3.1 requires that visual relationships be programmatically determinable
+- issue: #62
+- resolution: added id="label-variety" to the label span; changed aria-label="prompt variety" to aria-labelledby="label-variety" on the radioGroup div. Shipped at a63de96.
+
 ### [x] [6.3] /log — "N days quiet" stat line implies a performance score; contradicts no-streak philosophy
 - category: external-critique
 - impact: 7
