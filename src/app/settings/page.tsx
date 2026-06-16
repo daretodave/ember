@@ -79,6 +79,7 @@ export default async function SettingsPage() {
         >
           export your data
         </a>
+        {' '}
         <Link
           href="/export/book"
           className={styles.exportLink}
