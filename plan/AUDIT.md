@@ -6,6 +6,14 @@
 
 ## Pending
 
+### [ ] [5.4] /settings — daily reminder and weekly reflection "on" radios share aria-describedby with "off" state description; wrong state described
+- category: external-critique
+- impact: 6
+- ease: 9
+- note: scored 2026-06-16 — from critique passes 58 (a9827d4) and 59 (eb5b8d0); both daily-reminder and weekly-reflection radio groups have their "on" radio's aria-describedby pointing to the "off" state description paragraph; daily-reminder [MED]: "desc-reminder-off" reads active behavior ("a quiet email…") but is also referenced by the "off" radio; weekly-reflection [LOW]: "desc-reflection-off" reads active behavior but also referenced by both; screen reader users selecting "off" hear the active-state description and vice versa
+- source: /critique passes 58–59
+- issue: #63
+
 ### [x] [4.0] /settings — prompt variety radiogroup not linked to visible label; WCAG 1.3.1
 - category: external-critique
 - impact: 5

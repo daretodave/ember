@@ -259,6 +259,9 @@ export function SettingsForm({
       <div className={styles.field}>
         <span className={styles.label}>daily reminder</span>
         <p className={styles.hint} id="desc-reminder-off">
+          no reminder email will be sent.
+        </p>
+        <p className={styles.hint} id="desc-reminder-on">
           a quiet email at your chosen time to write today's entry. never sent if you have already written.
         </p>
         <div className={styles.radioGroup} role="radiogroup" aria-label="daily reminder">
@@ -282,7 +285,7 @@ export function SettingsForm({
               checked={reminderOptInVal}
               onChange={() => setReminderOptInVal(true)}
               className={styles.radioInput}
-              aria-describedby="desc-reminder-off"
+              aria-describedby="desc-reminder-on"
             />
             on
           </label>
@@ -312,6 +315,9 @@ export function SettingsForm({
       <div className={styles.field}>
         <span className={styles.label}>weekly reflection</span>
         <p className={styles.hint} id="desc-reflection-off">
+          no weekly reflection will be generated.
+        </p>
+        <p className={styles.hint} id="desc-reflection-on">
           a short paragraph written by ember from your week's entries, visible on your log. generated once per week; never shown if you wrote fewer than three entries.
         </p>
         <div className={styles.radioGroup} role="radiogroup" aria-label="weekly reflection">
@@ -335,7 +341,7 @@ export function SettingsForm({
               checked={weeklyReflectionVal}
               onChange={() => setWeeklyReflectionVal(true)}
               className={styles.radioInput}
-              aria-describedby="desc-reflection-off"
+              aria-describedby="desc-reflection-on"
             />
             on
           </label>
