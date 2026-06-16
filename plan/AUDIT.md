@@ -192,7 +192,7 @@
 - issue: #65
 - resolution: added images arrays to both openGraph and twitter blocks in src/app/signin/layout.tsx. Shipped at fe60b35.
 
-### [ ] [2.4] /log — entry article header contains date as plain text with no heading element; heading hierarchy inside article is broken
+### [x] [2.4] /log — entry article header contains date as plain text with no heading element; heading hierarchy inside article is broken
 - category: a11y
 - impact: 3
 - ease: 8
@@ -200,6 +200,8 @@
 - observation: src/app/log/page.tsx: <header className={styles.entryDate}>{formatDisplayDate(recentDate!)} {recentDate === today && ' · today'}</header> followed by <h2 className={styles.entryPrompt}>{recentPrompt.prompt}</h2> — no heading wrapper on date
 - suggested fix: wrap the date string inside the article <header> in an <h2> element and demote the prompt line to <p>, so heading sequence within the article is: date (h2) → prompt (paragraph)
 - source: /critique pass 53 (commit 3f0847a)
+- issue: #69
+- resolution: moved className={styles.entryDate} from <header> to inner <h2>; changed <h2 className={styles.entryPrompt}> to <p>. Heading sequence in article is now h2 (date) → p (prompt). Shipped at 3efd399.
 
 ### [ ] [2.1] /signin — lockup Link carries aria-hidden="true" on a focusable element; ARIA anti-pattern
 - category: a11y
