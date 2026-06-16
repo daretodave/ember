@@ -2301,7 +2301,7 @@
 - source: browser
 - resolution: added aria-describedby="focus-checkin-desc" and aria-describedby="focus-tags-desc" to overlay inputs; added duplicate hint paragraphs inside the focus overlay in TodayEntry.tsx. Shipped at 22b0bcd.
 
-### [MED] /log — "all entries" link implies an archive but navigates to the single most-recent entry's dated page
+### [x] [MED] /log — "all entries" link implies an archive but navigates to the single most-recent entry's dated page
 - pass: 58 (commit a9827d4)
 - viewport: both
 - category: navigation
@@ -2309,6 +2309,8 @@
 - evidence: authenticated /log capture: "showing the most recent. all entries". src/app/log/page.tsx line 218: <Link href={`/log/${recentDate}`}>all entries</Link> — recentDate is the most recent entry date, resolving to a single page.
 - suggested fix: change the link text to "view entry" or the specific date (e.g. "Mon 15 Jun") to accurately describe the destination; "all entries" implies an index that does not exist at that URL.
 - source: browser
+- issue: #66
+- resolution: changed link text from "all entries" to "full entry" in src/app/log/page.tsx. Shipped at 74143b7.
 
 ### [LOW] /log — search input aria-label "search your entries" overrides visible label; introduces second-person "your"
 - pass: 58 (commit a9827d4)

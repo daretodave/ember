@@ -6,6 +6,17 @@
 
 ## Pending
 
+### [x] [4.5] /log — "all entries" link misdescribes destination; implies a full archive but navigates to single most-recent entry
+- category: external-critique
+- impact: 5
+- ease: 9
+- note: scored 2026-06-16 — from critique pass 58 (a9827d4); link text "all entries" was introduced when "browse by date" was replaced in the voice coherence pass; "all entries" implies a full archive index but the href resolves to /log/${recentDate} — a single dated-entry detail page; a user clicking "all entries" expecting an index reaches one entry instead; mismatch erodes navigation trust on the core authenticated page
+- observation: src/app/log/page.tsx line 230: <Link href={`/log/${recentDate}`}>all entries</Link> — destination is a single /log/[date] page; the surrounding copy "showing the most recent." reinforces that this is one entry, not an archive
+- suggested fix: change link text to "full entry" — noun phrase, accurate description of a single-entry detail page, reads naturally after "showing the most recent."
+- source: /critique pass 58 (commit a9827d4)
+- issue: #66
+- resolution: changed link text from "all entries" to "full entry" in src/app/log/page.tsx. Shipped at 74143b7.
+
 ### [x] [3.5] /today — focus-mode check-in and tags inputs have no accessible descriptions; hint paragraphs are aria-hidden in main section
 - category: a11y
 - impact: 5
