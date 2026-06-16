@@ -6,6 +6,17 @@
 
 ## Pending
 
+### [x] [3.5] /today — focus-mode check-in and tags inputs have no accessible descriptions; hint paragraphs are aria-hidden in main section
+- category: a11y
+- impact: 5
+- ease: 7
+- note: scored 2026-06-16 — from critique pass 58 (a9827d4); the main section wraps aria-hidden={isFocus || undefined} when focus mode is active, taking the hint paragraphs (#checkin-desc, #tags-desc) out of the AT tree; the focus overlay inputs (#focus-checkin, #focus-tags) have no aria-describedby; AT users in focus mode cannot access the "optional. a mood or weather word for this day." and "optional. up to five tags, comma-separated." descriptions; the publish checkbox already has a duplicated description in the overlay (id="publish-desc-focus") using the same pattern but check-in and tags were not duplicated
+- observation: TodayEntry.tsx: main section at line 184 has aria-hidden={isFocus || undefined}; line 215: aria-describedby="checkin-desc" on #today-checkin; description at line 218; line 233: aria-describedby="tags-desc" on #today-tags; description at line 237; focus overlay lines 314-346: #focus-checkin and #focus-tags inputs have no aria-describedby and no description paragraphs exist in the overlay for these two inputs
+- suggested fix: add aria-describedby="focus-checkin-desc" to the #focus-checkin input and <p id="focus-checkin-desc" className={styles.checkinHint}>optional. a mood or weather word for this day.</p> after the check-in row; similarly add aria-describedby="focus-tags-desc" to #focus-tags and <p id="focus-tags-desc" className={styles.checkinHint}>optional. up to five tags, comma-separated.</p> after the tags row
+- source: /critique pass 58 (commit a9827d4)
+- issue: #64
+- resolution: added aria-describedby="focus-checkin-desc" and aria-describedby="focus-tags-desc" to overlay inputs; added duplicate hint paragraphs with ids "focus-checkin-desc" and "focus-tags-desc" inside the focus overlay in TodayEntry.tsx. Shipped at 22b0bcd.
+
 ### [x] [5.4] /settings — daily reminder and weekly reflection "on" radios share aria-describedby with "off" state description; wrong state described
 - category: external-critique
 - impact: 6
@@ -85,7 +96,7 @@
 - issue: #46
 - resolution: added <span className={styles.srOnly}>today — </span> inside H1 before prompt in src/app/today/page.tsx. Shipped at 8c951ee.
 
-### [ ] [2.7] /signin — submit button idle label "send a link" is an imperative verb phrase; voice guide violation
+### [x] [2.7] /signin — submit button idle label "send a link" is an imperative verb phrase; voice guide violation
 - category: voice
 - impact: 3
 - ease: 9
@@ -93,6 +104,7 @@
 - observation: src/app/signin/page.tsx: {state === 'sending' ? 'sending.' : 'send a link'} — idle-state label uses imperative form
 - suggested fix: change idle label to "get a sign-in link" or similar noun-phrase form to match voice guide
 - source: /critique pass 54 (commit 4ca3212)
+- resolution: changed idle label to "send link." — terse, period-terminated, parallels "sending." in-progress state. Shipped in Phase 30 (verified stale at 22b0bcd).
 
 ### [x] [2.4] /today — writing surface has no landmark or heading; heading navigation skips writing area
 - category: a11y
@@ -126,7 +138,7 @@
 - issue: #43
 - resolution: added aria-label="ember" to <footer> in src/app/page.tsx and src/app/signin/page.tsx. Shipped this tick.
 
-### [ ] [2.7] /log — "browse by date" link label uses second-person imperative verb
+### [x] [2.7] /log — "browse by date" link label uses second-person imperative verb
 - category: voice
 - impact: 3
 - ease: 9
@@ -134,6 +146,7 @@
 - observation: src/app/log/page.tsx: <Link href={`/log/${recentDate}`}>browse by date</Link> — inside the entryFoot section
 - suggested fix: change link text to "all entries" or "full log" to replace the imperative verb with a noun phrase
 - source: /critique pass 53 (commit 3f0847a)
+- resolution: changed link text to "all entries" in src/app/log/page.tsx. Shipped in Phase 30 (verified stale at 22b0bcd).
 
 ### [ ] [2.4] /signin — openGraph metadata has no images property; share card renders without image
 - category: seo

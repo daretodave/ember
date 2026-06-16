@@ -2290,7 +2290,7 @@
 - source: browser
 - resolution: changed desc-reminder-off text to "no reminder email will be sent."; added desc-reminder-on with active copy; updated on-radio aria-describedby to desc-reminder-on. Also fixed identical pattern for weekly reflection (pass 59). Shipped at b08765f.
 
-### [MED] /today — focus-mode check-in and tags inputs have no accessible descriptions; hint paragraphs hidden by aria-hidden
+### [x] [MED] /today — focus-mode check-in and tags inputs have no accessible descriptions; hint paragraphs hidden by aria-hidden
 - pass: 58 (commit a9827d4)
 - viewport: both
 - category: a11y
@@ -2298,6 +2298,7 @@
 - evidence: src/app/today/TodayEntry.tsx: focus-overlay check-in input and tags input (approximately lines 315–344) have no aria-describedby. hint paragraphs with the relevant descriptions are inside <section aria-hidden={isFocus || undefined}> (line 184), which hides them from AT when focus mode is active.
 - suggested fix: add hint paragraphs inside the focus overlay (with ids such as "focus-checkin-desc" and "focus-tags-desc") and add matching aria-describedby attributes to the corresponding focus-mode inputs.
 - source: browser
+- resolution: added aria-describedby="focus-checkin-desc" and aria-describedby="focus-tags-desc" to overlay inputs; added duplicate hint paragraphs inside the focus overlay in TodayEntry.tsx. Shipped at 22b0bcd.
 
 ### [MED] /log — "all entries" link implies an archive but navigates to the single most-recent entry's dated page
 - pass: 58 (commit a9827d4)
