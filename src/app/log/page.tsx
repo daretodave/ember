@@ -89,7 +89,6 @@ export default async function LogPage({ searchParams }: Props) {
 
   // Counts for the summary line — derived from full entries map, not tile state
   const written = entries.size
-  const quiet = 60 - entries.size
   const published = [...entries.values()].filter((e) => e.is_published).length
 
   const monthInReview = getMonthInReview(entries, today)
@@ -161,10 +160,7 @@ export default async function LogPage({ searchParams }: Props) {
         {written > 0 && (
           <p className={styles.mosaicCount}>
             {written} {written === 1 ? 'day' : 'days'} written.{' '}
-            <span>
-              {quiet} {quiet === 1 ? 'day' : 'days'} quiet.{' '}
-              {published} {published === 1 ? 'day' : 'days'} published.
-            </span>
+            {published} {published === 1 ? 'day' : 'days'} published.
           </p>
         )}
       </section>
