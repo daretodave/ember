@@ -1,7 +1,7 @@
 # External-observer findings — Ember
 
-> Last pass: 2026-06-15 at commit a9827d4
-> Pass count: 58
+> Last pass: 2026-06-16 at commit eb5b8d0
+> Pass count: 59
 
 > Written by `/critique` after walking the live site as a
 > fresh-eyes visitor. Drained by `/iterate`.
@@ -81,6 +81,15 @@
 - suggested fix: align the confirmation to the singular definite register: change "sign-in links expire after 24 hours." to "the link expires after 24 hours." to refer to the specific link just sent.
 - source: browser
 - resolution: removed expiry from pre-submit; changed post-submit to "the link expires after 24 hours." Shipped in Phase 30.
+
+### [LOW] /settings — weekly-reflection radio inputs share aria-describedby pointing to "off" state description; "on" state misdescribed
+- pass: 59 (commit eb5b8d0)
+- viewport: both
+- category: a11y
+- observation: both "off" and "on" radio inputs for the weekly-reflection group share aria-describedby="desc-reflection-off". the paragraph at id="desc-reflection-off" reads "a short paragraph written by ember from your week's entries, visible on your log. generated once per week; never shown if you wrote fewer than three entries." — active-state behavior, not the disabled state. a screen reader user selecting "off" hears the description for the active state. the identical bug exists on the daily-reminder group (filed pass 58) but the weekly-reflection group was not covered in that finding.
+- evidence: src/app/settings/SettingsForm.tsx lines 326 and 338: both "off" and "on" reflection radios carry aria-describedby="desc-reflection-off". no id="desc-reflection-on" paragraph exists.
+- suggested fix: add a second description paragraph for the "on" state (id="desc-reflection-on") with text such as "ember will compose a short reflection from your week's entries once per week." and update the "on" radio's aria-describedby to "desc-reflection-on".
+- source: browser
 
 ### [LOW] / — landing page footer aria-label="ember" does not represent the full footer content; tagline absent from landmark name
 - pass: 55 (commit 988fbcf)
