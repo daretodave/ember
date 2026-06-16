@@ -227,7 +227,7 @@ export default async function LogPage({ searchParams }: Props) {
             <footer className={styles.entryFoot}>
               <span>
                 showing the most recent.{' '}
-                <Link href={`/log/${recentDate}`}>all entries</Link>
+                <Link href={`/log/${recentDate}`}>full entry</Link>
               </span>
               <span>{recentEntry.is_published ? 'published' : 'private'}</span>
             </footer>
