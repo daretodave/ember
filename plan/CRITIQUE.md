@@ -82,7 +82,7 @@
 - source: browser
 - resolution: removed expiry from pre-submit; changed post-submit to "the link expires after 24 hours." Shipped in Phase 30.
 
-### [LOW] /settings — weekly-reflection radio inputs share aria-describedby pointing to "off" state description; "on" state misdescribed
+### [x] [LOW] /settings — weekly-reflection radio inputs share aria-describedby pointing to "off" state description; "on" state misdescribed
 - pass: 59 (commit eb5b8d0)
 - viewport: both
 - category: a11y
@@ -90,6 +90,7 @@
 - evidence: src/app/settings/SettingsForm.tsx lines 326 and 338: both "off" and "on" reflection radios carry aria-describedby="desc-reflection-off". no id="desc-reflection-on" paragraph exists.
 - suggested fix: add a second description paragraph for the "on" state (id="desc-reflection-on") with text such as "ember will compose a short reflection from your week's entries once per week." and update the "on" radio's aria-describedby to "desc-reflection-on".
 - source: browser
+- resolution: changed desc-reflection-off text to "no weekly reflection will be generated."; added desc-reflection-on with active copy; updated on-radio aria-describedby to desc-reflection-on. Fixed together with the daily-reminder sibling (pass 58). Shipped at b08765f.
 
 ### [LOW] / — landing page footer aria-label="ember" does not represent the full footer content; tagline absent from landmark name
 - pass: 55 (commit 988fbcf)
@@ -2279,7 +2280,7 @@
 - source: browser
 - resolution: added .submit:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 2px; } to src/app/signin/page.module.css. Shipped at f571cbb.
 
-### [MED] /settings — daily reminder "off" radio aria-describedby points to description of the active ("on") behavior
+### [x] [MED] /settings — daily reminder "off" radio aria-describedby points to description of the active ("on") behavior
 - pass: 58 (commit a9827d4)
 - viewport: both
 - category: a11y
@@ -2287,6 +2288,7 @@
 - evidence: src/app/settings/SettingsForm.tsx: both off and on radio inputs carry aria-describedby="desc-reminder-off". the paragraph at id="desc-reminder-off" reads "a quiet email at your chosen time to write today's entry. never sent if you have already written." — active-state behavior, not the no-reminder state.
 - suggested fix: give each radio its own description: id="desc-reminder-off" paragraph text "no reminder email will be sent." on the off radio; a separate id="desc-reminder-on" paragraph describing active behavior on the on radio; update aria-describedby on each radio accordingly.
 - source: browser
+- resolution: changed desc-reminder-off text to "no reminder email will be sent."; added desc-reminder-on with active copy; updated on-radio aria-describedby to desc-reminder-on. Also fixed identical pattern for weekly reflection (pass 59). Shipped at b08765f.
 
 ### [MED] /today — focus-mode check-in and tags inputs have no accessible descriptions; hint paragraphs hidden by aria-hidden
 - pass: 58 (commit a9827d4)
