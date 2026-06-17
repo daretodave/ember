@@ -1,12 +1,57 @@
 # External-observer findings — Ember
 
-> Last pass: 2026-06-16 at commit 897e523
-> Pass count: 60
+> Last pass: 2026-06-17 at commit d450909
+> Pass count: 61
 
 > Written by `/critique` after walking the live site as a
 > fresh-eyes visitor. Drained by `/iterate`.
 
 ## Pending
+
+### [MED] /today — formatSavedTime always renders UTC time; users in non-UTC timezones see an incorrect save timestamp
+- pass: 61 (commit d450909)
+- viewport: both
+- category: comprehension
+- observation: the "last saved" indicator on /today (e.g. "last saved · 01:46") formats the timestamp using getUTCHours() and getUTCMinutes() — UTC is hardcoded. a user whose timezone is UTC+5 who saves at 6:46 AM local time sees "01:46" — the UTC equivalent. for a journaling app where prompt delivery and entry dating are both timezone-aware, an incorrect local-time save indicator undermines trust in the save record and conflicts with the app's own timezone setting.
+- evidence: src/lib/entries.ts formatSavedTime(): const h = String(d.getUTCHours()).padStart(2, '0'); const m = String(d.getUTCMinutes()).padStart(2, '0') — no user-timezone conversion. the /today page shows "last saved · 01:46" which reflects UTC, not the user's saved timezone.
+- suggested fix: pass the user's IANA timezone string (already stored in the profile) to formatSavedTime and use toLocaleTimeString with the user's timezone option, or apply a UTC-to-user-tz offset using the same timezone logic as the date stamp above the prompt.
+- source: browser
+
+### [MED] /settings — "print your book" link gives no context for first-time users; "book" is undefined in the UI
+- pass: 61 (commit d450909)
+- viewport: both
+- category: comprehension
+- observation: the link "print your book" appears on /settings between "export your data" and "delete my account" with no surrounding explanation of what "book" refers to. a first-time user who has written a handful of entries has no prior context that their entries can be compiled into a printable document. the concept is introduced only through the action label itself, leaving the user to guess what the feature produces.
+- evidence: /settings capture: "export your data print your book\ndelete my account and all my entries" — no description precedes or follows the link; contrast "export your data" which is self-describing.
+- suggested fix: add a brief prose line adjacent to the link, e.g. "format your entries as a printable document." to give the feature a one-line description, or add a tooltip/aria-description that conveys what "book" produces.
+- source: browser
+
+### [LOW] /log — "showing the most recent." is a sentence fragment with no object noun
+- pass: 61 (commit d450909)
+- viewport: both
+- category: comprehension
+- observation: the truncation notice below the most recent entry card reads "showing the most recent." — a participial sentence fragment with no noun complement. a reader encountering this phrase in isolation has no explicit object: most recent what? the surrounding entry card provides implicit context, but the sentence is grammatically incomplete and reads oddly as interface copy.
+- evidence: src/app/log/page.tsx line 231: "showing the most recent.{' '}" followed by <Link>full entry</Link> — the prose fragment appears before the "full entry" link with no explicit noun.
+- suggested fix: rewrite as "showing the most recent entry." to supply the missing object noun and produce a grammatically complete sentence.
+- source: browser
+
+### [LOW] /today — "will remain private" asserts an existing published-but-private state rather than a conditional
+- pass: 61 (commit d450909)
+- viewport: both
+- category: voice
+- observation: the inline notice reads "no public username is set. published entries will remain private until a username is added in settings." the phrase "will remain private" implies that entries are already in a published-but-private holding state. for a user who has not yet published anything, no such state exists — the phrasing incorrectly asserts a current condition. a clearer phrasing would frame this as a conditional: what happens if you publish without a username, not what is currently happening.
+- evidence: src/app/today/TodayEntry.tsx line 293: "no public username is set. published entries will remain private until a username is added in settings." — "will remain" is assertive present-continuous, not conditional.
+- suggested fix: change to "if published without a username, entries remain private until a username is added." to make the conditional explicit rather than asserting an existing published-but-private state.
+- source: browser
+
+### [LOW] /settings — prompt source pack descriptions visible only on selection; unchosen options give no preview
+- pass: 61 (commit d450909)
+- viewport: both
+- category: comprehension
+- observation: the prompt source section shows a description (e.g. "a varied daily prompt.") only for the currently selected pack via a dynamic paragraph. options like "stoic" or "grief" have no visible description until selected. a first-time user browsing the list sees five option names — standard, gratitude, craft, stoic, grief — with no indication of what each category entails until they actively select it. pack names like "grief" may give pause without the context that the description would provide.
+- evidence: /settings capture: "prompt source\n\na varied daily prompt.\n\nstandard\ngratitude\ncraft\nstoic\ngrief" — only the selected pack's description visible; unchosen options shown as bare labels with no inline hint.
+- suggested fix: add a brief parenthetical or visually-subordinate description beneath each option label (similar to how the daily-reminder and weekly-reflection on/off options each have their own description paragraphs) so users can scan all options without having to select each.
+- source: browser
 
 ### [x] [LOW] /today — day-strip abbreviated weekday labels not aria-hidden; AT reads weekday name twice per entry
 - pass: 60 (commit 897e523)
