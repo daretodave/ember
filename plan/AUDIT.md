@@ -6,6 +6,34 @@
 
 ## Pending
 
+### [ ] [3.6] /log — "showing the most recent." is a sentence fragment with no object noun
+- category: external-critique
+- impact: 4
+- ease: 9
+- note: scored 2026-06-17 — from critique pass 61 (d450909); "showing the most recent." is a participial fragment with no noun complement; affects all authenticated users on the daily /log page; fix: add "entry" to complete the sentence
+- observation: src/app/log/page.tsx line 231: showing the most recent.{' '} — no object noun complement; "most recent what?" is left implicit
+- suggested fix: change to "showing the most recent entry." to produce a grammatically complete sentence
+- source: /critique pass 61 (commit d450909)
+- issue: #73
+
+### [ ] [2.7] /today — "will remain private" asserts existing state rather than a conditional
+- category: external-critique
+- impact: 3
+- ease: 9
+- note: scored 2026-06-17 — from critique pass 61 (d450909); "published entries will remain private until a username is added" implies entries are already in a published-but-private state; for a user who has never published, this state does not exist; conditional framing is more accurate
+- observation: src/app/today/TodayEntry.tsx line 293: "no public username is set. published entries will remain private until a username is added in settings." — "will remain" is assertive present-continuous, not conditional
+- suggested fix: change to "if published without a username, entries remain private until a username is added." to make the conditional explicit
+- source: /critique pass 61 (commit d450909)
+
+### [ ] [1.8] /settings — prompt pack descriptions only visible for selected option; unchosen options have no preview
+- category: external-critique
+- impact: 3
+- ease: 6
+- note: scored 2026-06-17 — from critique pass 61 (d450909); description paragraph shows only for the currently selected pack; users browsing options like "grief" or "stoic" see bare labels with no context until they select
+- observation: /settings: "prompt source\n\na varied daily prompt.\n\nstandard\ngratitude\ncraft\nstoic\ngrief" — only selected pack description visible; unchosen options shown as bare labels
+- suggested fix: add brief parenthetical descriptions beneath each option label in the radio/select list so all options are self-describing without selection
+- source: /critique pass 61 (commit d450909)
+
 ### [x] [4.0] /settings — "print your book" link gives no context; "book" is undefined for first-time users
 - category: external-critique
 - impact: 5
