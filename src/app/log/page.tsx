@@ -17,15 +17,15 @@ import styles from './page.module.css'
 
 export const metadata = {
   title: 'ember · log',
-  description: 'a 60-day writing log — prompts, responses, and published entries.',
+  description: 'a 60-day writing log — one entry per day, shown as a mosaic and a list.',
   openGraph: {
     title: 'ember · log',
-    description: 'a 60-day writing log — prompts, responses, and published entries.',
+    description: 'a 60-day writing log — one entry per day, shown as a mosaic and a list.',
     url: '/log',
   },
   twitter: {
     title: 'ember · log',
-    description: 'a 60-day writing log — prompts, responses, and published entries.',
+    description: 'a 60-day writing log — one entry per day, shown as a mosaic and a list.',
   },
 }
 
