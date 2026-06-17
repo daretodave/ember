@@ -6,7 +6,45 @@
 
 ## Pending
 
-### [x] [3.6] /log — meta description lists content types absent in the empty state
+### [x] [5.4] /log — LogSearch aria-label overrides linked label; AT announces different name than sighted users see
+- category: a11y
+- impact: 6
+- ease: 9
+- note: scored 2026-06-17 — from critique pass 62 (0da2351); the search input in LogSearch.tsx has a linked <label> with text "search entries" (htmlFor="log-search") and a redundant aria-label="search your entries" on the input; aria-label takes precedence over the linked label, so AT announces "search your entries" while sighted users see "search entries"; wording diverges and the linked label is programmatically overridden
+- observation: src/app/log/LogSearch.tsx line 62: <label htmlFor="log-search">search entries</label>; line 74: aria-label="search your entries" on the input — aria-label overrides the linked label
+- suggested fix: remove aria-label="search your entries" from the input; the linked <label> provides the programmatic name
+- source: /critique pass 62 (commit 0da2351)
+- issue: #76
+- resolution: removed aria-label="search your entries" from the input in LogSearch.tsx; the linked <label> is now the sole accessible name; updated LogSearch tests to query by linked label text. Shipped at 6c673e1.
+
+### [ ] [2.8] /settings — daily-reminder and weekly-reflection descriptions rendered unconditionally; contradictory text visible simultaneously
+- category: external-critique
+- impact: 4
+- ease: 7
+- note: scored 2026-06-17 — from critique pass 62 (0da2351); both "no reminder email will be sent." and "a quiet email at your chosen time…" paragraphs render unconditionally regardless of the selected radio; sighted users see contradictory descriptions simultaneously
+- observation: src/app/settings/SettingsForm.tsx: both desc-reminder-off and desc-reminder-on rendered unconditionally
+- suggested fix: conditionally render only the description matching the currently selected radio value
+- source: /critique pass 62 (commit 0da2351)
+
+### [ ] [2.7] /log — "days published" unit incongruent with per-entry publish action
+- category: external-critique
+- impact: 3
+- ease: 9
+- note: scored 2026-06-17 — from critique pass 62 (0da2351); stat line reads "N days published" but the publish action operates on entries throughout the product; "days" is the wrong unit
+- observation: src/app/log/page.tsx: {published} {published === 1 ? 'day' : 'days'} published. — "days" unit used for publish count
+- suggested fix: change to {published} {published === 1 ? 'entry' : 'entries'} published.
+- source: /critique pass 62 (commit 0da2351)
+
+### [ ] [2.7] /settings — save button title omits "weekly reflection" from enumerated saved fields
+- category: external-critique
+- impact: 3
+- ease: 9
+- note: scored 2026-06-17 — from critique pass 62 (0da2351); title lists five fields but weekly_reflection_opt_in is submitted in the same POST without being named; tooltip gives incomplete picture
+- observation: src/app/settings/SettingsForm.tsx line 391: title="saves display name, timezone, prompt variety, daily reminder, and public username." — weekly reflection absent
+- suggested fix: simplify to "saves all settings." or add "weekly reflection" to the enumeration
+- source: /critique pass 62 (commit 0da2351)
+
+### [ ] [1.8] /settings — prompt pack descriptions only visible for selected option; unchosen options have no preview
 - category: seo
 - impact: 4
 - ease: 9

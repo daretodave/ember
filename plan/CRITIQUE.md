@@ -52,7 +52,7 @@
 - issue: #74
 - resolution: reworded both instances (main section + focus overlay) to "if published without a username, entries remain private until a username is added in settings." Shipped at 787b20b.
 
-### [MED] /log — LogSearch aria-label conflicts with linked label; AT announces different name than sighted users see
+### [x] [MED] /log — LogSearch aria-label conflicts with linked label; AT announces different name than sighted users see
 - pass: 62 (commit 0da2351)
 - viewport: both
 - category: a11y
@@ -60,6 +60,8 @@
 - evidence: src/app/log/LogSearch.tsx line 62: <label htmlFor="log-search">search entries</label>; line 74: aria-label="search your entries" on the input — aria-label overrides the linked label.
 - suggested fix: remove the aria-label attribute from the search input in LogSearch.tsx; the linked <label> provides the programmatic name and its text "search entries" is already consistent with the product's terse register.
 - source: browser
+- issue: #76
+- resolution: removed aria-label from the search input; the linked <label> is now the sole accessible name. Shipped at 6c673e1.
 
 ### [LOW] /settings — daily-reminder and weekly-reflection description paragraphs both rendered unconditionally; contradictory text visible simultaneously
 - pass: 62 (commit 0da2351)
