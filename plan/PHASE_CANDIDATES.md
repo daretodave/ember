@@ -1,7 +1,7 @@
 # Ember — phase candidates
 
-> Last pass: 2026-06-17 at commit 85a437b
-> Pass count: 141
+> Last pass: 2026-06-17 at commit 3f9e5a6
+> Pass count: 142
 
 Candidates proposed by `/expand`. Promotion to `plan/steps/01_build_plan.md`
 happens only via local `/oversight` — never from the cloud loop.
@@ -33,7 +33,7 @@ happens only via local `/oversight` — never from the cloud loop.
 ### [ ] [score 4.5] Voice, navigation, and comprehension fixes — passes 57-58 findings on stat line philosophy, link labels, and section copy
 
 - proposed: 2026-06-15, expand pass 136
-- status: 2026-06-16 — quiet-day stat line resolved (0cf2771); "all entries" link resolved (74143b7, now "full entry"); pass 60 (1ba1c4e) adds /log "the past 60 days" heading [LOW] to scope; pass 140: "past 60 days" heading resolved (eb6ce9d, text now "the past 60 days — a writing window."); candidate now 3 items (3 LOW): /log search aria-label "your entries", / "the next seven days" heading, /settings "personalized" threshold copy
+- status: 2026-06-17 — quiet-day stat line resolved (0cf2771); "all entries" link resolved (74143b7, now "full entry"); pass 60 (1ba1c4e) adds /log "the past 60 days" heading [LOW] to scope; pass 140: "past 60 days" heading resolved (eb6ce9d, text now "the past 60 days — a writing window."); pass 142: adds /settings prompt-pack descriptions only visible on selection [LOW] (CRITIQUE.md pass 61, AUDIT.md [1.8]) — descriptions visible only for selected pack; fix: add inline descriptions beneath each option label so all options self-describe; candidate now 4 items (4 LOW): /log search aria-label "your entries", / "the next seven days" heading, /settings "personalized" threshold copy, /settings prompt-pack descriptions hidden until selected
 - source signals:
   - critique pass 57 (commit ee8ddd0): /log — "59 days quiet" stat line implies a performance score; contradicts "a missed day leaves no mark" philosophy [MED] — the stat line "N days written. N days quiet. N days published." displays the absence count prominently alongside the practice count; this is the opposite of the bearings and landing page promise; fix: remove "N days quiet." from the stat line so only written + published counts appear (src/app/log/page.tsx stat-line generation) — RESOLVED at 0cf2771
   - critique pass 58 (commit a9827d4): /log — "all entries" link implies an archive but navigates to single most-recent entry's dated page [MED] — link text "all entries" was chosen to replace "browse by date" (voice coherence pass) but the destination /log/${recentDate} is a single entry, not an archive; fix: change link text to the destination date string or "view entry" to accurately describe the link in src/app/log/page.tsx
@@ -127,14 +127,16 @@ happens only via local `/oversight` — never from the cloud loop.
 ### [ ] [score 4.0] Voice coherence tail — post-phase 22 copy register gaps on new UI surfaces
 
 - proposed: 2026-06-12, expand pass 132
-- status: 2026-06-16 — items 1 (/signin "on its way", Phase 30), 5 (/log
+- status: 2026-06-17 — items 1 (/signin "on its way", Phase 30), 5 (/log
   "browse by date" → "all entries" → "full entry"), and 6 (/signin "send a
   link" → "send link.", Phase 30) confirmed resolved; pass 140: adds /settings
   "sign out" second-person imperative [LOW] (AUDIT.md [2.0]) and /today
-  focus-exit button "done writing" participial phrase [LOW] (CRITIQUE.md pass 59)
-  — neither covered by any existing candidate; 5 scope items pending: /settings
-  delete-account "your account", /settings "export your data", / "today's prompt
-  is waiting.", /settings "sign out" label, /today "done writing" exit label
+  focus-exit button "done writing" participial phrase [LOW] (CRITIQUE.md pass 59);
+  pass 142: adds /today "will remain private" assertive framing [LOW] (CRITIQUE.md
+  pass 61, AUDIT.md [2.7]) — conditional phrasing fix; 6 scope items pending:
+  /settings delete-account "your account", /settings "export your data",
+  / "today's prompt is waiting.", /settings "sign out" label, /today "done writing"
+  exit label, /today "will remain private" conditional framing
 - source signals:
   - critique pass 51 (commit 0107c11): /signin — confirmation paragraph "a sign-in link is on its way." uses colloquial idiom departing from the flat bookish register; "directly" adverb in following clause adds no information [LOW] — fix: "a sign-in link has been sent. following it opens today's prompt. links expire after 24 hours. no password. no other mail."
   - critique pass 52 (commit b4d3589): /settings — delete-account confirmation warning reads "permanently delete your account" — second-person possessive within the same two-step flow that uses first-person for the trigger button ("delete my account") [LOW] — fix: "this will permanently delete the account and all entries. there is no undo."
