@@ -30,7 +30,7 @@
 - issue: #72
 - resolution: added description paragraph "your entries compiled as a printable document." with aria-describedby on the link in src/app/settings/page.tsx. Shipped at efa451c.
 
-### [LOW] /log — "showing the most recent." is a sentence fragment with no object noun
+### [x] [LOW] /log — "showing the most recent." is a sentence fragment with no object noun
 - pass: 61 (commit d450909)
 - viewport: both
 - category: comprehension
@@ -38,6 +38,8 @@
 - evidence: src/app/log/page.tsx line 231: "showing the most recent.{' '}" followed by <Link>full entry</Link> — the prose fragment appears before the "full entry" link with no explicit noun.
 - suggested fix: rewrite as "showing the most recent entry." to supply the missing object noun and produce a grammatically complete sentence.
 - source: browser
+- issue: #73
+- resolution: changed "showing the most recent." to "showing the most recent entry." in src/app/log/page.tsx. Shipped at 3bdfb77.
 
 ### [LOW] /today — "will remain private" asserts an existing published-but-private state rather than a conditional
 - pass: 61 (commit d450909)

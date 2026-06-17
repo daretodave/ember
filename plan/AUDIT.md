@@ -6,7 +6,7 @@
 
 ## Pending
 
-### [ ] [3.6] /log — "showing the most recent." is a sentence fragment with no object noun
+### [x] [3.6] /log — "showing the most recent." is a sentence fragment with no object noun
 - category: external-critique
 - impact: 4
 - ease: 9
@@ -15,6 +15,7 @@
 - suggested fix: change to "showing the most recent entry." to produce a grammatically complete sentence
 - source: /critique pass 61 (commit d450909)
 - issue: #73
+- resolution: changed "showing the most recent." to "showing the most recent entry." in src/app/log/page.tsx. Shipped at 3bdfb77.
 
 ### [ ] [2.7] /today — "will remain private" asserts existing state rather than a conditional
 - category: external-critique
