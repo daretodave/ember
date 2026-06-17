@@ -1,7 +1,7 @@
 # Ember — phase candidates
 
-> Last pass: 2026-06-16 at commit 5f3510f
-> Pass count: 140
+> Last pass: 2026-06-17 at commit 85a437b
+> Pass count: 141
 
 Candidates proposed by `/expand`. Promotion to `plan/steps/01_build_plan.md`
 happens only via local `/oversight` — never from the cloud loop.
@@ -80,7 +80,7 @@ happens only via local `/oversight` — never from the cloud loop.
 ### [ ] [score 4.0] Sub-threshold polish sweep — SEO, a11y, and semantics micro-fixes orphaned below iterate threshold
 
 - proposed: 2026-06-03, expand pass 90
-- status: 2026-06-16 — items 24 (.dayTask::before, 8905030) and 30 (/today section landmark, 0922be8) confirmed resolved; pass 60 (1ba1c4e) adds item 31 (/settings export/print whitespace a11y) to scope; pass 140: items 29 (/log article date h2, 3efd399) and 31 (/settings export/print whitespace, 74e15f2) resolved; 11 scope items pending (2, 3, 5, 20, 21, 22, 23, 25, 26, 27, 28). Items 24-27 added from critique passes 51-52; items 28-29 added from critique pass 53 (expand pass 133); item 30 added from critique pass 54 (expand pass 135); item 31 added from pass 60. Resolved since filing: 1 (37d4e8a), 4 (81072fa), 6 (f13c754), 7 (0101b1b), 8 (c3671bd), 9 (af927c1), 10 (567174d), 11 (43d1502), 12 (1c922ec), 13 (02aa0fd), 14 (faedf1d), 15 (549ebbc), 16 (18aef81), 17 (04498b9), 18 (9ffab40), 19 (0de5180), 24 (8905030), 29 (3efd399), 30 (0922be8), 31 (74e15f2).
+- status: 2026-06-16 — items 24 (.dayTask::before, 8905030) and 30 (/today section landmark, 0922be8) confirmed resolved; pass 60 (1ba1c4e) adds item 31 (/settings export/print whitespace a11y) to scope; pass 140: items 29 (/log article date h2, 3efd399) and 31 (/settings export/print whitespace, 74e15f2) resolved; pass 141: items 2 (/ twitter card alt text, bac93ea) and 28 (/signin openGraph images, fe60b35) confirmed resolved — both shipped before this pass, not caught in prior status update; 9 scope items pending (3, 5, 20, 21, 22, 23, 25, 26, 27). Items 24-27 added from critique passes 51-52; items 28-29 added from critique pass 53 (expand pass 133); item 30 added from critique pass 54 (expand pass 135); item 31 added from pass 60. Resolved since filing: 1 (37d4e8a), 2 (bac93ea), 4 (81072fa), 6 (f13c754), 7 (0101b1b), 8 (c3671bd), 9 (af927c1), 10 (567174d), 11 (43d1502), 12 (1c922ec), 13 (02aa0fd), 14 (faedf1d), 15 (549ebbc), 16 (18aef81), 17 (04498b9), 18 (9ffab40), 19 (0de5180), 24 (8905030), 28 (fe60b35), 29 (3efd399), 30 (0922be8), 31 (74e15f2).
 - source signals (pending items):
   - item 2: / Twitter card images array lacks alt text [1.8] — `twitter.images` is a plain string array; next.js requires object array `[{ url, alt }]` to emit an alt attribute (fix: `twitter: { images: [{ url: '/opengraph-image', alt: 'ember — a daily writing ritual' }] }` in src/app/layout.tsx)
   - item 3: / MosaicPreview aria-label "60 days of practice" misrepresents illustrative content [1.8] (fix: change to "an example of 60 days tracked" in src/components/mosaic/MosaicPreview.tsx)
