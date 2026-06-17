@@ -59,12 +59,16 @@ export function formatDisplayDate(isoDate: string): string {
   return `${WEEKDAYS[d.getUTCDay()]} ${d.getUTCDate()} ${MONTHS[d.getUTCMonth()]} ${d.getUTCFullYear()}`
 }
 
-/** Format a UTC ISO timestamp as "HH:MM" for the "last saved" stamp. */
-export function formatSavedTime(isoTimestamp: string): string {
+/** Format a UTC ISO timestamp as "HH:MM" in the user's timezone for the "last saved" stamp. */
+export function formatSavedTime(isoTimestamp: string, timezone?: string): string {
   const d = new Date(isoTimestamp)
-  const h = String(d.getUTCHours()).padStart(2, '0')
-  const m = String(d.getUTCMinutes()).padStart(2, '0')
-  return `last saved · ${h}:${m}`
+  const timeStr = new Intl.DateTimeFormat('en-GB', {
+    timeZone: timezone ?? 'UTC',
+    hour: '2-digit',
+    minute: '2-digit',
+    hour12: false,
+  }).format(d)
+  return `last saved · ${timeStr}`
 }
 
 /** Short weekday for strip tiles: "Mon" */

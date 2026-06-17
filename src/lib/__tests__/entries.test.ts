@@ -46,12 +46,21 @@ describe('formatDisplayDate', () => {
 })
 
 describe('formatSavedTime', () => {
-  it('formats a UTC timestamp as HH:MM', () => {
+  it('formats a UTC timestamp as HH:MM (no timezone defaults to UTC)', () => {
     expect(formatSavedTime('2026-05-13T07:21:00Z')).toBe('last saved · 07:21')
   })
 
   it('zero-pads hours and minutes', () => {
     expect(formatSavedTime('2026-05-13T09:05:00Z')).toBe('last saved · 09:05')
+  })
+
+  it('converts to the given IANA timezone', () => {
+    // UTC+5:30 (Asia/Kolkata): 07:21 UTC → 12:51 IST
+    expect(formatSavedTime('2026-05-13T07:21:00Z', 'Asia/Kolkata')).toBe('last saved · 12:51')
+  })
+
+  it('stays correct for UTC timezone explicitly passed', () => {
+    expect(formatSavedTime('2026-05-13T07:21:00Z', 'UTC')).toBe('last saved · 07:21')
   })
 })
 

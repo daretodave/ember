@@ -85,7 +85,7 @@ export default async function TodayPage() {
           <span className={styles.srOnly}>today — </span>{prompt}
         </h1>
 
-        <TodayEntry date={date} initialEntry={todayEntry} task={task} prompt={prompt} hasUsername={Boolean(profile?.username)} />
+        <TodayEntry date={date} initialEntry={todayEntry} task={task} prompt={prompt} hasUsername={Boolean(profile?.username)} timezone={profile?.timezone} />
 
         <OnThisDay entry={onThisDay} todayYear={new Date(date + 'T00:00:00Z').getUTCFullYear()} />
       </main>

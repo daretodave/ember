@@ -15,9 +15,10 @@ type Props = {
   prompt: string
   initialEntry: Entry | null
   hasUsername?: boolean
+  timezone?: string
 }
 
-export function TodayEntry({ date, task, prompt, initialEntry, hasUsername = true }: Props) {
+export function TodayEntry({ date, task, prompt, initialEntry, hasUsername = true, timezone }: Props) {
   const [response, setResponse] = useState(initialEntry?.response ?? '')
   const [taskDone, setTaskDone] = useState(initialEntry?.task_done ?? false)
   const [isPublished, setIsPublished] = useState(initialEntry?.is_published ?? false)
@@ -172,7 +173,7 @@ export function TodayEntry({ date, task, prompt, initialEntry, hasUsername = tru
   function saveIndicatorText() {
     if (saveState === 'saving') return 'saving.'
     if (!isOnline && saveState !== 'saved') return 'saved locally. will sync when online.'
-    if (saveState === 'saved' && savedAt) return formatSavedTime(savedAt)
+    if (saveState === 'saved' && savedAt) return formatSavedTime(savedAt, timezone)
     if (saveState === 'draft') return 'draft restored.'
     if (saveState === 'idle' && response === '') return ''
     return 'not yet saved.'

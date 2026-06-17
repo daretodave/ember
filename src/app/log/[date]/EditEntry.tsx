@@ -12,9 +12,10 @@ type Props = {
   date: string
   task: string
   initialEntry: Entry
+  timezone?: string
 }
 
-export function EditEntry({ date, task, initialEntry }: Props) {
+export function EditEntry({ date, task, initialEntry, timezone }: Props) {
   // Committed display state — updated after each successful save
   const [response, setResponse] = useState(initialEntry.response)
   const [taskDone, setTaskDone] = useState(initialEntry.task_done)
@@ -154,7 +155,7 @@ export function EditEntry({ date, task, initialEntry }: Props) {
 
         <div className={styles.entryMeta}>
           <span className={styles.lastSaved} aria-live="polite">
-            {savedAt ? formatSavedTime(savedAt) : 'unsaved'}
+            {savedAt ? formatSavedTime(savedAt, timezone) : 'unsaved'}
           </span>
           <div className={styles.entryActions}>
             <label className={styles.publishToggle}>

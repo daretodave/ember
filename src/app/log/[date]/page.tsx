@@ -1,5 +1,6 @@
 import { MosaicGlyph } from '@/components/mosaic/MosaicGlyph'
 import { formatDisplayDate, getEntryByDate, todayUtcDate } from '@/lib/entries'
+import { getProfile } from '@/lib/profile'
 import { getPromptForDate } from '@/lib/prompts'
 import { createClient } from '@/lib/supabase/server'
 import Link from 'next/link'
@@ -43,9 +44,10 @@ export default async function LogDatePage({ params }: Props) {
     redirect('/signin')
   }
 
-  const [entry, promptData] = await Promise.all([
+  const [entry, promptData, profile] = await Promise.all([
     getEntryByDate(supabase, user.id, date),
     Promise.resolve(getPromptForDate(date)),
+    getProfile(supabase, user.id),
   ])
 
   const displayDate = formatDisplayDate(date)
@@ -78,7 +80,7 @@ export default async function LogDatePage({ params }: Props) {
         <h1 className={styles.entryPrompt}>{promptData.prompt}</h1>
 
         {entry ? (
-          <EditEntry date={date} task={promptData.task} initialEntry={entry} />
+          <EditEntry date={date} task={promptData.task} initialEntry={entry} timezone={profile?.timezone} />
         ) : (
           <>
             <p className={styles.entryTask}>
