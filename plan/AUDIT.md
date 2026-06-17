@@ -6,6 +6,17 @@
 
 ## Pending
 
+### [x] [3.2] /settings — prompt source option text embeds verbose descriptions; AT reads full clause per option
+- category: external-critique
+- impact: 4
+- ease: 8
+- note: scored 2026-06-17 — from critique pass 60; <option> elements in the prompt-pack <select> render as "{label} — {description}", so AT announces the full description clause ("a varied daily prompt.", "noticing what has arrived and what continues.") for each option when navigating the dropdown. The <select> already has a generic hint via aria-describedby; per-option descriptions should not be embedded in option text.
+- observation: src/app/settings/SettingsForm.tsx line 253: {PROMPT_PACKS[key].label} — {PROMPT_PACKS[key].description} in each <option>; AT reads the description clause for every option during select navigation
+- suggested fix: change <option> text to just {PROMPT_PACKS[key].label}; update the hint paragraph (id="desc-prompt-pack") to show PROMPT_PACKS[promptPackVal].description dynamically, so the selected pack's description is visible/announced via aria-describedby rather than embedded in the option text
+- source: /critique pass 60 (commit 897e523)
+- issue: #70
+- resolution: changed <option> text to just {PROMPT_PACKS[key].label}; updated hint paragraph to show PROMPT_PACKS[promptPackVal].description dynamically. Shipped at 7fa8ae7.
+
 ### [x] [2.7] /log — "the past 60 days" heading overstates window scope; ambiguous for new users with sparse entries
 - category: external-critique
 - impact: 3

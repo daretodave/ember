@@ -40,7 +40,7 @@
 - issue: #68
 - resolution: changed heading text to "the past 60 days — a writing window." in src/app/log/page.tsx. Shipped at eb6ce9d.
 
-### [LOW] /settings — prompt source radio labels embed full descriptions inline; verbose under AT announcement
+### [x] [LOW] /settings — prompt source radio labels embed full descriptions inline; verbose under AT announcement
 - pass: 60 (commit 897e523)
 - viewport: both
 - category: a11y
@@ -48,6 +48,8 @@
 - evidence: /settings capture: "standard — a varied daily prompt.\ngratitude — noticing what has arrived and what continues.\ncraft — attention to making, process, and material.\nstoic — what is yours to do, and what is not.\ngrief — carrying loss, change, and what remains." — full description embedded in each radio label text.
 - suggested fix: separate each description into a sibling <span> with aria-describedby so the radio label is the pack name alone ("standard", "gratitude", etc.) and the description is supplementary context, matching the pattern used for daily-reminder and weekly-reflection.
 - source: browser
+- issue: #70
+- resolution: changed <option> text to just the pack label name; the hint paragraph (aria-describedby="desc-prompt-pack") now dynamically shows the selected pack's description. Shipped at 7fa8ae7.
 
 ### [x] [MED] /signin — email input removes browser focus outline with no adequate replacement; WCAG 2.4.11 gap
 - pass: 53 (commit 3f0847a)
