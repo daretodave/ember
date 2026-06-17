@@ -238,7 +238,8 @@ export function SettingsForm({
           prompt source
         </label>
         <p className={styles.hint} id="desc-prompt-pack">
-          choose a themed collection for your daily prompt. personalized variety overrides this selection.
+          {PROMPT_PACKS[promptPackVal].description}
+          {personalizedVal && ' personalized variety overrides this selection.'}
         </p>
         <select
           id="prompt-pack"
@@ -250,7 +251,7 @@ export function SettingsForm({
         >
           {(Object.keys(PROMPT_PACKS) as PromptPack[]).map((key) => (
             <option key={key} value={key}>
-              {PROMPT_PACKS[key].label} — {PROMPT_PACKS[key].description}
+              {PROMPT_PACKS[key].label}
             </option>
           ))}
         </select>
