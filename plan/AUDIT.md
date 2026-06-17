@@ -17,7 +17,7 @@
 - issue: #73
 - resolution: changed "showing the most recent." to "showing the most recent entry." in src/app/log/page.tsx. Shipped at 3bdfb77.
 
-### [ ] [2.7] /today — "will remain private" asserts existing state rather than a conditional
+### [x] [2.7] /today — "will remain private" asserts existing state rather than a conditional
 - category: external-critique
 - impact: 3
 - ease: 9
@@ -25,6 +25,8 @@
 - observation: src/app/today/TodayEntry.tsx line 293: "no public username is set. published entries will remain private until a username is added in settings." — "will remain" is assertive present-continuous, not conditional
 - suggested fix: change to "if published without a username, entries remain private until a username is added." to make the conditional explicit
 - source: /critique pass 61 (commit d450909)
+- issue: #74
+- resolution: reworded both instances (main section + focus overlay) to "if published without a username, entries remain private until a username is added in settings." Updated EntrySave unit tests. Shipped at 787b20b.
 
 ### [ ] [1.8] /settings — prompt pack descriptions only visible for selected option; unchosen options have no preview
 - category: external-critique

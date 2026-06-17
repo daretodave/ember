@@ -41,7 +41,7 @@
 - issue: #73
 - resolution: changed "showing the most recent." to "showing the most recent entry." in src/app/log/page.tsx. Shipped at 3bdfb77.
 
-### [LOW] /today — "will remain private" asserts an existing published-but-private state rather than a conditional
+### [x] [LOW] /today — "will remain private" asserts an existing published-but-private state rather than a conditional
 - pass: 61 (commit d450909)
 - viewport: both
 - category: voice
@@ -49,6 +49,8 @@
 - evidence: src/app/today/TodayEntry.tsx line 293: "no public username is set. published entries will remain private until a username is added in settings." — "will remain" is assertive present-continuous, not conditional.
 - suggested fix: change to "if published without a username, entries remain private until a username is added." to make the conditional explicit rather than asserting an existing published-but-private state.
 - source: browser
+- issue: #74
+- resolution: reworded both instances (main section + focus overlay) to "if published without a username, entries remain private until a username is added in settings." Shipped at 787b20b.
 
 ### [LOW] /settings — prompt source pack descriptions visible only on selection; unchosen options give no preview
 - pass: 61 (commit d450909)
