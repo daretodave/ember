@@ -83,9 +83,13 @@ export default async function SettingsPage() {
         <Link
           href="/export/book"
           className={styles.exportLink}
+          aria-describedby="desc-book"
         >
           print your book
         </Link>
+        <p id="desc-book" className={styles.hint} style={{ marginTop: 'var(--space-2)' }}>
+          your entries compiled as a printable document.
+        </p>
         <DeleteAccountSection />
       </main>
       <footer className={styles.footer}>
