@@ -71,7 +71,6 @@ export function LogSearch() {
         onChange={(e) => setQuery(e.target.value)}
         autoComplete="off"
         spellCheck={false}
-        aria-label="search your entries"
       />
       {showNoResults && <p className={styles.noResults}>nothing found.</p>}
       {showError && <p className={styles.noResults}>search unavailable.</p>}

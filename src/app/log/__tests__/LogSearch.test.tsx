@@ -37,7 +37,7 @@ describe('LogSearch', () => {
 
   it('renders the search input', () => {
     render(<LogSearch />)
-    expect(screen.getByLabelText('search your entries')).toBeInTheDocument()
+    expect(screen.getByLabelText('search entries')).toBeInTheDocument()
   })
 
   it('shows placeholder text', () => {
@@ -60,7 +60,7 @@ describe('LogSearch', () => {
     })
 
     render(<LogSearch />)
-    fireEvent.change(screen.getByLabelText('search your entries'), {
+    fireEvent.change(screen.getByLabelText('search entries'), {
       target: { value: 'morning' },
     })
 
@@ -81,7 +81,7 @@ describe('LogSearch', () => {
     })
 
     render(<LogSearch />)
-    fireEvent.change(screen.getByLabelText('search your entries'), {
+    fireEvent.change(screen.getByLabelText('search entries'), {
       target: { value: 'xyznotfound' },
     })
 
@@ -97,7 +97,7 @@ describe('LogSearch', () => {
     mockFetch.mockResolvedValueOnce({ ok: false })
 
     render(<LogSearch />)
-    fireEvent.change(screen.getByLabelText('search your entries'), {
+    fireEvent.change(screen.getByLabelText('search entries'), {
       target: { value: 'error' },
     })
 
