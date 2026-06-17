@@ -19,7 +19,7 @@
 - issue: #71
 - resolution: updated formatSavedTime to accept optional timezone; uses Intl.DateTimeFormat with user's IANA timezone; threaded through TodayEntry and EditEntry props; LogDatePage now fetches profile. Shipped at 09338c0.
 
-### [MED] /settings — "print your book" link gives no context for first-time users; "book" is undefined in the UI
+### [x] [MED] /settings — "print your book" link gives no context for first-time users; "book" is undefined in the UI
 - pass: 61 (commit d450909)
 - viewport: both
 - category: comprehension
@@ -27,6 +27,8 @@
 - evidence: /settings capture: "export your data print your book\ndelete my account and all my entries" — no description precedes or follows the link; contrast "export your data" which is self-describing.
 - suggested fix: add a brief prose line adjacent to the link, e.g. "format your entries as a printable document." to give the feature a one-line description, or add a tooltip/aria-description that conveys what "book" produces.
 - source: browser
+- issue: #72
+- resolution: added description paragraph "your entries compiled as a printable document." with aria-describedby on the link in src/app/settings/page.tsx. Shipped at efa451c.
 
 ### [LOW] /log — "showing the most recent." is a sentence fragment with no object noun
 - pass: 61 (commit d450909)

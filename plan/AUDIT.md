@@ -6,6 +6,17 @@
 
 ## Pending
 
+### [x] [4.0] /settings — "print your book" link gives no context; "book" is undefined for first-time users
+- category: external-critique
+- impact: 5
+- ease: 8
+- note: scored 2026-06-17 — from critique pass 61 (d450909); "print your book" appeared on /settings with no adjacent description of what "book" produces; first-time users had to guess the feature's output from the action label alone
+- observation: src/app/settings/page.tsx lines 83-88: <Link href="/export/book">print your book</Link> — no description paragraph or aria-describedby; contrast "export your data" which is self-describing
+- suggested fix: add a brief prose line adjacent to the link with aria-describedby so both sighted and AT users understand the feature
+- source: /critique pass 61 (commit d450909)
+- issue: #72
+- resolution: added description paragraph "your entries compiled as a printable document." with aria-describedby on the link in src/app/settings/page.tsx. Shipped at efa451c.
+
 ### [x] [4.9] /today — formatSavedTime renders UTC time; users in non-UTC timezones see wrong save timestamp
 - category: external-critique
 - impact: 7
