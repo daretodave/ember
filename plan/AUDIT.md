@@ -6,6 +6,17 @@
 
 ## Pending
 
+### [x] [3.6] /log — meta description lists content types absent in the empty state
+- category: seo
+- impact: 4
+- ease: 9
+- note: scored 2026-06-17 — from critique pass 55 (988fbcf); the meta description "a 60-day writing log — prompts, responses, and published entries." lists three content types that are absent from the page for any user with an empty log; a search visitor arriving with an empty account sees none of those three items; the description should be state-agnostic, describing page structure not content state
+- observation: src/app/log/page.tsx lines 20, 23, 28: description: 'a 60-day writing log — prompts, responses, and published entries.' — "prompts, responses, and published entries" are content types present only when entries exist; new users with empty logs see none of these
+- suggested fix: change to "a 60-day writing log — one entry per day, shown as a mosaic and a list." to describe structure rather than content state
+- source: /critique pass 55 (commit 988fbcf)
+- issue: #75
+- resolution: changed description to "a 60-day writing log — one entry per day, shown as a mosaic and a list." in all three metadata fields (description, openGraph.description, twitter.description) in src/app/log/page.tsx. Shipped at 5daca14.
+
 ### [x] [3.6] /log — "showing the most recent." is a sentence fragment with no object noun
 - category: external-critique
 - impact: 4

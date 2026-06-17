@@ -216,7 +216,7 @@
 - suggested fix: change the aside aria-label to a noun phrase such as "sign-in prompt" or "account access" to remove the imperative verb from the landmark name.
 - source: browser
 
-### [LOW] /log — meta description lists content types absent in the empty state; misleads visitors arriving from search
+### [x] [LOW] /log — meta description lists content types absent in the empty state; misleads visitors arriving from search
 - pass: 55 (commit 988fbcf)
 - viewport: both
 - category: comprehension
@@ -224,6 +224,8 @@
 - evidence: src/app/log/layout.tsx description: "a 60-day writing log — prompts, responses, and published entries." authenticated capture body text: "the log is empty. each entry fills a tile in the mosaic above. today's entry will appear here." — no prompts, responses, or published entries rendered.
 - suggested fix: change the description to "a 60-day writing log — one entry per day, shown as a mosaic and a list." to describe the page structure rather than its content state; holds in both empty and populated states.
 - source: browser
+- issue: #75
+- resolution: changed description to "a 60-day writing log — one entry per day, shown as a mosaic and a list." in src/app/log/page.tsx. Shipped at 5daca14.
 
 ### [x] [MED] /settings — prompt variety radio inputs lack fieldset/legend grouping; WCAG 1.3.1 group relationship not conveyed to screen readers
 - pass: 56 (commit 5fac7a3)
