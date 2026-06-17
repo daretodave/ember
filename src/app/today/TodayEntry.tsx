@@ -291,7 +291,7 @@ export function TodayEntry({ date, task, prompt, initialEntry, hasUsername = tru
 
         {!hasUsername && (
           <p className={styles.publishHint}>
-            no public username is set. published entries will remain private until a username is added in{' '}
+            if published without a username, entries remain private until a username is added in{' '}
             <Link href="/settings" tabIndex={isFocus ? -1 : undefined}>settings</Link>.
           </p>
         )}
@@ -394,7 +394,7 @@ export function TodayEntry({ date, task, prompt, initialEntry, hasUsername = tru
 
           {!hasUsername && (
             <p className={styles.publishHint}>
-              no public username is set. published entries will remain private until a username is added in{' '}
+              if published without a username, entries remain private until a username is added in{' '}
               <Link href="/settings" tabIndex={isFocus ? 0 : -1}>settings</Link>.
             </p>
           )}
