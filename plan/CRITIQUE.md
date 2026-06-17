@@ -8,7 +8,7 @@
 
 ## Pending
 
-### [MED] /today — formatSavedTime always renders UTC time; users in non-UTC timezones see an incorrect save timestamp
+### [x] [MED] /today — formatSavedTime always renders UTC time; users in non-UTC timezones see an incorrect save timestamp
 - pass: 61 (commit d450909)
 - viewport: both
 - category: comprehension
@@ -16,6 +16,8 @@
 - evidence: src/lib/entries.ts formatSavedTime(): const h = String(d.getUTCHours()).padStart(2, '0'); const m = String(d.getUTCMinutes()).padStart(2, '0') — no user-timezone conversion. the /today page shows "last saved · 01:46" which reflects UTC, not the user's saved timezone.
 - suggested fix: pass the user's IANA timezone string (already stored in the profile) to formatSavedTime and use toLocaleTimeString with the user's timezone option, or apply a UTC-to-user-tz offset using the same timezone logic as the date stamp above the prompt.
 - source: browser
+- issue: #71
+- resolution: updated formatSavedTime to accept optional timezone; uses Intl.DateTimeFormat with user's IANA timezone; threaded through TodayEntry and EditEntry props; LogDatePage now fetches profile. Shipped at 09338c0.
 
 ### [MED] /settings — "print your book" link gives no context for first-time users; "book" is undefined in the UI
 - pass: 61 (commit d450909)

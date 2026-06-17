@@ -6,6 +6,17 @@
 
 ## Pending
 
+### [x] [4.9] /today — formatSavedTime renders UTC time; users in non-UTC timezones see wrong save timestamp
+- category: external-critique
+- impact: 7
+- ease: 7
+- note: scored 2026-06-17 — from critique pass 61 (607995d); formatSavedTime() used getUTCHours()/getUTCMinutes(), hardcoding UTC; a user in UTC+5 saving at 06:46 local time saw "last saved · 01:46"; journaling app's timezone setting made the mismatch trust-undermining
+- observation: src/lib/entries.ts formatSavedTime(): d.getUTCHours() and d.getUTCMinutes() — no timezone conversion
+- suggested fix: use Intl.DateTimeFormat with the user's IANA timezone; pass timezone from profile through TodayEntry and EditEntry props
+- source: /critique pass 61 (commit 607995d)
+- issue: #71
+- resolution: updated formatSavedTime to accept optional timezone, uses Intl.DateTimeFormat(en-GB, {timeZone}); threaded timezone from profile through TodayEntry and EditEntry; LogDatePage now fetches profile to supply timezone. Shipped at 09338c0.
+
 ### [x] [3.2] /settings — prompt source option text embeds verbose descriptions; AT reads full clause per option
 - category: external-critique
 - impact: 4
