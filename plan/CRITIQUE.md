@@ -1,7 +1,7 @@
 # External-observer findings — Ember
 
-> Last pass: 2026-06-17 at commit d450909
-> Pass count: 61
+> Last pass: 2026-06-17 at commit 0da2351
+> Pass count: 62
 
 > Written by `/critique` after walking the live site as a
 > fresh-eyes visitor. Drained by `/iterate`.
@@ -51,6 +51,42 @@
 - source: browser
 - issue: #74
 - resolution: reworded both instances (main section + focus overlay) to "if published without a username, entries remain private until a username is added in settings." Shipped at 787b20b.
+
+### [MED] /log — LogSearch aria-label conflicts with linked label; AT announces different name than sighted users see
+- pass: 62 (commit 0da2351)
+- viewport: both
+- category: a11y
+- observation: the search input on /log has a linked <label> with text "search entries" (htmlFor="log-search") and a redundant aria-label="search your entries" on the input element itself. the aria-label takes precedence over the linked label, so screen readers announce "search your entries" while sighted users see "search entries". the wording diverges — "your entries" vs. "entries" — and the aria-label makes the visible label programmatically meaningless.
+- evidence: src/app/log/LogSearch.tsx line 62: <label htmlFor="log-search">search entries</label>; line 74: aria-label="search your entries" on the input — aria-label overrides the linked label.
+- suggested fix: remove the aria-label attribute from the search input in LogSearch.tsx; the linked <label> provides the programmatic name and its text "search entries" is already consistent with the product's terse register.
+- source: browser
+
+### [LOW] /settings — daily-reminder and weekly-reflection description paragraphs both rendered unconditionally; contradictory text visible simultaneously
+- pass: 62 (commit 0da2351)
+- viewport: both
+- category: comprehension
+- observation: the daily reminder section renders two description paragraphs — "no reminder email will be sent." and "a quiet email at your chosen time to write today's entry. never sent if you have already written." — unconditionally in the DOM. a sighted user sees both sentences as sequential body text regardless of which option is selected, which reads as contradictory: the page simultaneously claims no reminder will be sent and describes how a reminder works. the same pattern applies to the weekly reflection section.
+- evidence: /settings capture: "daily reminder\n\nno reminder email will be sent.\n\na quiet email at your chosen time to write today's entry. never sent if you have already written.\n\noff\non" — both paragraphs visible; src/app/settings/SettingsForm.tsx lines 262-266: both desc-reminder-off and desc-reminder-on rendered unconditionally.
+- suggested fix: conditionally render only the description matching the currently selected radio value (or apply display:none to the inactive description), so a sighted user sees one non-contradictory description at a time — matching the prompt-source field pattern that shows only the active pack's description.
+- source: browser
+
+### [LOW] /log — "days published" unit incongruent with per-entry publish action
+- pass: 62 (commit 0da2351)
+- viewport: both
+- category: voice
+- observation: the /log stat line reads "3 days written. 0 days published." the "days written" unit is coherent because one entry maps to one day. "days published" is not — the publish toggle throughout the product operates on entries ("when published, this entry appears on the public profile."), not days. the inconsistency is visible on every /log visit and will become more apparent once a user has published entries.
+- evidence: /log capture: "3 days written. 0 days published."; src/app/log/page.tsx line 163: `{published} {published === 1 ? 'day' : 'days'} published.` — "days" unit used for publish count.
+- suggested fix: change the publish count to `{published} {published === 1 ? 'entry' : 'entries'} published.` to match the entry-centric language used throughout the publish flow.
+- source: browser
+
+### [LOW] /settings — save button title omits "weekly reflection" from enumerated saved fields
+- pass: 62 (commit 0da2351)
+- viewport: both
+- category: comprehension
+- observation: the settings save button has title="saves display name, timezone, prompt variety, daily reminder, and public username." — five fields. weekly reflection is a sixth field submitted in the same POST body but absent from the tooltip. a user who relies on the title to confirm what is saved has an incomplete picture, and the omission will repeat silently if more fields are added.
+- evidence: src/app/settings/SettingsForm.tsx line 391: title="saves display name, timezone, prompt variety, daily reminder, and public username." — weekly_reflection_opt_in at line 133 is included in the POST body but not named.
+- suggested fix: either add "weekly reflection" to the title text ("saves display name, timezone, prompt variety, daily reminder, weekly reflection, and public username.") or simplify to "saves all settings." to prevent future omissions.
+- source: browser
 
 ### [LOW] /settings — prompt source pack descriptions visible only on selection; unchosen options give no preview
 - pass: 61 (commit d450909)
