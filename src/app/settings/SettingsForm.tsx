@@ -239,7 +239,10 @@ export function SettingsForm({
         </label>
         <p className={styles.hint} id="desc-prompt-pack">
           {PROMPT_PACKS[promptPackVal].description}
-          {personalizedVal && ' personalized variety overrides this selection.'}
+          {' '}
+          {personalizedVal
+            ? 'personalized variety overrides this selection.'
+            : 'inactive when variety is set to personalized.'}
         </p>
         <select
           id="prompt-pack"
