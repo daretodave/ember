@@ -72,7 +72,7 @@
 - suggested fix: change the today cell's state label from "no entry" to "writing" (or omit the status suffix entirely for the current day when the user is signed in on /today), so the strip does not indicate absence while composition is in progress.
 - source: browser
 
-### [LOW] /today — optional metadata fields check-in and tags appear above the primary response textarea in form reading order
+### [x] [LOW] /today — optional metadata fields check-in and tags appear above the primary response textarea in form reading order
 - pass: 63 (commit 9c5368e)
 - viewport: both
 - category: comprehension
@@ -80,6 +80,7 @@
 - evidence: /today capture: "check-in\noptional. a mood or weather word for this day.\n\ntags\noptional. up to five tags, comma-separated.\n\nresponse\n\npublish\nfocus\nsave" — both optional fields precede the response textarea in both normal view and the focus overlay.
 - suggested fix: reorder the form so the response textarea appears first (immediately after the prompt and tiny task), with check-in and tags positioned below it, so the primary writing surface is the first interactive element the user encounters.
 - source: browser
+- resolution: response label and textarea moved before check-in and tags in both normal section and focus overlay in TodayEntry.tsx. Shipped at 93b81b1.
 
 ### [x] [LOW] /settings — no copy explains whether "prompt source" selection applies when "personalized" prompt variety is active
 - pass: 63 (commit 9c5368e)

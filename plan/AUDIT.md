@@ -17,7 +17,7 @@
 - issue: #77
 - resolution: changed conditional note to always render: standard mode shows "inactive when variety is set to personalized." and personalized mode shows "personalized variety overrides this selection." Shipped at b819a8e.
 
-### [ ] [2.8] /today — optional metadata fields check-in and tags appear before the response textarea in form reading order
+### [x] [2.8] /today — optional metadata fields check-in and tags appear before the response textarea in form reading order
 - category: external-critique
 - impact: 4
 - ease: 7
@@ -25,6 +25,8 @@
 - observation: src/app/today/TodayEntry.tsx: check-in → tags → response order in both normal and focus-mode overlay
 - suggested fix: reorder the form so the response textarea appears first, with check-in and tags positioned below it
 - source: /critique pass 63 (commit 9c5368e)
+- issue: #79
+- resolution: moved response label and textarea before check-in and tags in both the normal section and focus-mode overlay in TodayEntry.tsx; aria-describedby and tabIndex guards preserved. Shipped at 93b81b1.
 
 ### [ ] [2.7] /log — "(edited)" state indicator uses parentheses; inconsistent with em-dash pattern used for all other entry states
 - category: external-critique
