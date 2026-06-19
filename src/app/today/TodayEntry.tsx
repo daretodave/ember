@@ -199,6 +199,17 @@ export function TodayEntry({ date, task, prompt, initialEntry, hasUsername = tru
           </p>
         </div>
 
+        <label htmlFor="today-entry-response" className={styles.entryLabel}>response</label>
+        <textarea
+          id="today-entry-response"
+          className={styles.entry}
+          value={response}
+          onChange={handleResponseChange}
+          placeholder="there is no rush."
+          rows={8}
+          tabIndex={isFocus ? -1 : undefined}
+        />
+
         <div className={styles.checkinRow}>
           <label htmlFor="today-checkin" className={styles.checkinLabel}>check-in</label>
           <input
@@ -236,17 +247,6 @@ export function TodayEntry({ date, task, prompt, initialEntry, hasUsername = tru
           />
         </div>
         <p id="tags-desc" className={styles.checkinHint}>optional. up to five tags, comma-separated.</p>
-
-        <label htmlFor="today-entry-response" className={styles.entryLabel}>response</label>
-        <textarea
-          id="today-entry-response"
-          className={styles.entry}
-          value={response}
-          onChange={handleResponseChange}
-          placeholder="there is no rush."
-          rows={8}
-          tabIndex={isFocus ? -1 : undefined}
-        />
 
         <div className={styles.entryMeta}>
           <span className={styles.lastSaved} aria-live="polite">
@@ -312,6 +312,18 @@ export function TodayEntry({ date, task, prompt, initialEntry, hasUsername = tru
         <div className={styles.focusContent}>
           <p className={styles.focusPrompt}>{prompt}</p>
 
+          <label htmlFor="focus-entry-response" className={styles.entryLabel}>response</label>
+          <textarea
+            id="focus-entry-response"
+            ref={focusTextareaRef}
+            className={styles.entry}
+            value={response}
+            onChange={handleResponseChange}
+            placeholder="there is no rush."
+            rows={8}
+            tabIndex={isFocus ? 0 : -1}
+          />
+
           <div className={styles.checkinRow}>
             <label htmlFor="focus-checkin" className={styles.checkinLabel}>check-in</label>
             <input
@@ -349,18 +361,6 @@ export function TodayEntry({ date, task, prompt, initialEntry, hasUsername = tru
             />
           </div>
           <p id="focus-tags-desc" className={styles.checkinHint}>optional. up to five tags, comma-separated.</p>
-
-          <label htmlFor="focus-entry-response" className={styles.entryLabel}>response</label>
-          <textarea
-            id="focus-entry-response"
-            ref={focusTextareaRef}
-            className={styles.entry}
-            value={response}
-            onChange={handleResponseChange}
-            placeholder="there is no rush."
-            rows={8}
-            tabIndex={isFocus ? 0 : -1}
-          />
 
           <div className={styles.entryMeta}>
             <span className={styles.lastSaved} aria-live="polite">
