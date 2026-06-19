@@ -110,7 +110,7 @@
 - suggested fix: place the description paragraph as an immediate visual sibling of the "print your book" element, separated from "export your data" by whitespace or layout, so proximity makes the attribution unambiguous.
 - source: browser
 
-### [LOW] /settings — daily-reminder and weekly-reflection description paragraphs both rendered unconditionally; contradictory text visible simultaneously
+### [x] [LOW] /settings — daily-reminder and weekly-reflection description paragraphs both rendered unconditionally; contradictory text visible simultaneously
 - pass: 62 (commit 0da2351)
 - viewport: both
 - category: comprehension
@@ -118,6 +118,7 @@
 - evidence: /settings capture: "daily reminder\n\nno reminder email will be sent.\n\na quiet email at your chosen time to write today's entry. never sent if you have already written.\n\noff\non" — both paragraphs visible; src/app/settings/SettingsForm.tsx lines 262-266: both desc-reminder-off and desc-reminder-on rendered unconditionally.
 - suggested fix: conditionally render only the description matching the currently selected radio value (or apply display:none to the inactive description), so a sighted user sees one non-contradictory description at a time — matching the prompt-source field pattern that shows only the active pack's description.
 - source: browser
+- resolution: collapsed each pair into a single <p> with stable ID whose content switches on the current radio value; both radios share one aria-describedby ID. Shipped at acf5e52.
 
 ### [LOW] /log — "days published" unit incongruent with per-entry publish action
 - pass: 62 (commit 0da2351)

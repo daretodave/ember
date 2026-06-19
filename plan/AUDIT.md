@@ -64,7 +64,7 @@
 - issue: #76
 - resolution: removed aria-label="search your entries" from the input in LogSearch.tsx; the linked <label> is now the sole accessible name; updated LogSearch tests to query by linked label text. Shipped at 6c673e1.
 
-### [ ] [2.8] /settings — daily-reminder and weekly-reflection descriptions rendered unconditionally; contradictory text visible simultaneously
+### [x] [2.8] /settings — daily-reminder and weekly-reflection descriptions rendered unconditionally; contradictory text visible simultaneously
 - category: external-critique
 - impact: 4
 - ease: 7
@@ -72,6 +72,8 @@
 - observation: src/app/settings/SettingsForm.tsx: both desc-reminder-off and desc-reminder-on rendered unconditionally
 - suggested fix: conditionally render only the description matching the currently selected radio value
 - source: /critique pass 62 (commit 0da2351)
+- issue: #78
+- resolution: collapsed each pair into a single <p> with stable ID whose content switches on the current radio value; both radios in each section share one aria-describedby ID. Shipped at acf5e52.
 
 ### [ ] [2.7] /log — "days published" unit incongruent with per-entry publish action
 - category: external-critique
