@@ -6,6 +6,53 @@
 
 ## Pending
 
+### [x] [3.6] /settings — no note explains that prompt source is inactive when variety is set to personalized
+- category: external-critique
+- impact: 4
+- ease: 9
+- note: scored 2026-06-19 — from critique pass 63 (9c5368e); the prompt source section shows no text explaining its interaction with the prompt variety setting; a user on standard variety who considers switching to personalized cannot tell whether their source selection will still apply; the select is disabled when personalized is active but no note explains this when standard is active
+- observation: src/app/settings/SettingsForm.tsx line 242: {personalizedVal && ' personalized variety overrides this selection.'} — note only shown when personalized is already selected; users in standard mode see no relationship context
+- suggested fix: change to always show a note, e.g. when standard: "inactive when variety is set to personalized." and when personalized: "personalized variety overrides this selection."
+- source: /critique pass 63 (commit 9c5368e)
+- issue: #77
+- resolution: changed conditional note to always render: standard mode shows "inactive when variety is set to personalized." and personalized mode shows "personalized variety overrides this selection." Shipped at b819a8e.
+
+### [ ] [2.8] /today — optional metadata fields check-in and tags appear before the response textarea in form reading order
+- category: external-critique
+- impact: 4
+- ease: 7
+- note: scored 2026-06-19 — from critique pass 63 (9c5368e); check-in and tags (both marked "optional.") appear above the response textarea, the primary writing surface; first-time users encounter two optional fields before the textarea where writing happens; reorder so response is first
+- observation: src/app/today/TodayEntry.tsx: check-in → tags → response order in both normal and focus-mode overlay
+- suggested fix: reorder the form so the response textarea appears first, with check-in and tags positioned below it
+- source: /critique pass 63 (commit 9c5368e)
+
+### [ ] [2.7] /log — "(edited)" state indicator uses parentheses; inconsistent with em-dash pattern used for all other entry states
+- category: external-critique
+- impact: 3
+- ease: 9
+- note: scored 2026-06-19 — from critique pass 63 (9c5368e); every other entry state label in the product uses em-dash separation ("Sat 13 Jun 2026 — no entry", "Mon 15 Jun 2026 — written"); the edited indicator uses parentheses ("e2e write test — today (edited)") — the sole departure from this pattern
+- observation: /log entry excerpt renders "(edited)" as a parenthetical suffix; em-dash is used everywhere else for state labels
+- suggested fix: change "(edited)" to "— edited" to match the product's typographic register for state labels
+- source: /critique pass 63 (commit 9c5368e)
+
+### [ ] [2.4] /settings — "print your book" description paragraph visually ambiguous; may read as describing both export and print links
+- category: external-critique
+- impact: 3
+- ease: 8
+- note: scored 2026-06-19 — from critique pass 63 (9c5368e); the description "your entries compiled as a printable document." appears after both "export your data" and "print your book" links with no visual separator attributing it to the print link alone; a sighted user scanning top-to-bottom may read it as describing either or both controls
+- observation: src/app/settings/page.tsx: description paragraph follows both link elements without a clear visual association to the print link
+- suggested fix: place the description as an immediate visual sibling of "print your book" separated from "export your data" by layout or whitespace
+- source: /critique pass 63 (commit 9c5368e)
+
+### [ ] [1.8] /today — day strip labels current day "no entry" while user is on the active writing surface
+- category: external-critique
+- impact: 3
+- ease: 6
+- note: scored 2026-06-19 — from critique pass 63 (9c5368e); the seven-day strip shows "today, Fri 19 Jun 2026 — no entry" when no saved entry exists for the current day; a user mid-composition may read "no entry" as an error indicator rather than an accurate pre-save state; misleading signal on the primary writing route
+- observation: src/app/today/DayStrip.tsx: today cell shows "no entry" status regardless of whether the user is actively composing
+- suggested fix: change today cell status from "no entry" to "writing" (or omit the status suffix for the current day on /today) while user is signed in on /today
+- source: /critique pass 63 (commit 9c5368e)
+
 ### [x] [5.4] /log — LogSearch aria-label overrides linked label; AT announces different name than sighted users see
 - category: a11y
 - impact: 6

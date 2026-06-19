@@ -81,7 +81,7 @@
 - suggested fix: reorder the form so the response textarea appears first (immediately after the prompt and tiny task), with check-in and tags positioned below it, so the primary writing surface is the first interactive element the user encounters.
 - source: browser
 
-### [LOW] /settings — no copy explains whether "prompt source" selection applies when "personalized" prompt variety is active
+### [x] [LOW] /settings — no copy explains whether "prompt source" selection applies when "personalized" prompt variety is active
 - pass: 63 (commit 9c5368e)
 - viewport: both
 - category: comprehension
@@ -89,6 +89,8 @@
 - evidence: /settings capture: "prompt variety\nstandard: same prompt for everyone each day. personalized: a unique prompt generated from recent entries. falls back to a standard prompt until entries exist.\nstandard\npersonalized\nprompt source\na varied daily prompt.\nstandard\ngratitude\ncraft\nstoic\ngrief" — two adjacent settings controls with no explanatory link between them.
 - suggested fix: add a brief clarifying note to the prompt source section — e.g. "applies when prompt variety is set to standard; personalized variety draws from your entry history regardless of source." — so the interaction between the two settings is visible to users.
 - source: browser
+- issue: #77
+- resolution: changed conditional note to always render; standard mode shows "inactive when variety is set to personalized." and personalized mode shows "personalized variety overrides this selection." Shipped at b819a8e.
 
 ### [LOW] /log — "(edited)" state indicator uses parentheses; inconsistent with the em-dash separator pattern used for all other entry states
 - pass: 63 (commit 9c5368e)
