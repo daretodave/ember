@@ -1,7 +1,7 @@
 # Ember — phase candidates
 
-> Last pass: 2026-06-17 at commit fa8dd2b
-> Pass count: 143
+> Last pass: 2026-06-19 at commit 1529d3e
+> Pass count: 144
 
 Candidates proposed by `/expand`. Promotion to `plan/steps/01_build_plan.md`
 happens only via local `/oversight` — never from the cloud loop.
@@ -33,7 +33,7 @@ happens only via local `/oversight` — never from the cloud loop.
 ### [ ] [score 4.5] Voice, navigation, and comprehension fixes — passes 57-58 findings on stat line philosophy, link labels, and section copy
 
 - proposed: 2026-06-15, expand pass 136
-- status: 2026-06-17 — quiet-day stat line resolved (0cf2771); "all entries" link resolved (74143b7, now "full entry"); pass 60 (1ba1c4e) adds /log "the past 60 days" heading [LOW] to scope; pass 140: "past 60 days" heading resolved (eb6ce9d, text now "the past 60 days — a writing window."); pass 142: adds /settings prompt-pack descriptions only visible on selection [LOW] (CRITIQUE.md pass 61, AUDIT.md [1.8]) — descriptions visible only for selected pack; fix: add inline descriptions beneath each option label so all options self-describe; candidate now 4 items (4 LOW): /log search aria-label "your entries", / "the next seven days" heading, /settings "personalized" threshold copy, /settings prompt-pack descriptions hidden until selected
+- status: 2026-06-19 — quiet-day stat line resolved (0cf2771); "all entries" link resolved (74143b7, now "full entry"); pass 60 (1ba1c4e) adds /log "the past 60 days" heading [LOW] to scope; pass 140: "past 60 days" heading resolved (eb6ce9d, text now "the past 60 days — a writing window."); pass 142: adds /settings prompt-pack descriptions [LOW] to scope; pass 144: adds /log "(edited)" parentheses vs. em-dash [2.7] (AUDIT pass 63, commit 9c5368e) — fix: change "(edited)" to "— edited" to match the em-dash state-label pattern used everywhere else; and /log "days published" unit [2.7] (AUDIT pass 62, commit 0da2351) — fix: change "N days published" to "N entries published" since the publish action operates per entry not per day; candidate now 6 items (6 LOW): /log search aria-label "your entries", / "the next seven days" heading, /settings "personalized" threshold copy, /settings prompt-pack descriptions, /log "(edited)" → "— edited", /log "N days published" → "N entries published"
 - source signals:
   - critique pass 57 (commit ee8ddd0): /log — "59 days quiet" stat line implies a performance score; contradicts "a missed day leaves no mark" philosophy [MED] — the stat line "N days written. N days quiet. N days published." displays the absence count prominently alongside the practice count; this is the opposite of the bearings and landing page promise; fix: remove "N days quiet." from the stat line so only written + published counts appear (src/app/log/page.tsx stat-line generation) — RESOLVED at 0cf2771
   - critique pass 58 (commit a9827d4): /log — "all entries" link implies an archive but navigates to single most-recent entry's dated page [MED] — link text "all entries" was chosen to replace "browse by date" (voice coherence pass) but the destination /log/${recentDate} is a single entry, not an archive; fix: change link text to the destination date string or "view entry" to accurately describe the link in src/app/log/page.tsx
@@ -148,6 +148,31 @@ happens only via local `/oversight` — never from the cloud loop.
 - proposed scope: 1 phase — ship all six scope items above
 - estimated phases: 1
 - conflicts: none — copy-only; no new routes; no schema changes
+
+### [ ] [score 4.5] /settings description clarity and completeness — conditional rendering and label completeness
+
+- proposed: 2026-06-19, expand pass 144
+- source signals:
+  - AUDIT [2.8] (pass 62, commit 0da2351): /settings — daily-reminder and weekly-reflection description paragraphs render unconditionally; both "no reminder email will be sent." and "a quiet email at your chosen time…" are visible simultaneously regardless of the selected radio; sighted users see contradictory descriptions at once; fix: conditionally render only the description matching the currently selected radio value in src/app/settings/SettingsForm.tsx (same pattern for both reminder and reflection sections)
+  - AUDIT [2.4] (pass 63, commit 9c5368e): /settings — "your entries compiled as a printable document." description paragraph appears after both "export your data" and "print your book" links with no visual separator; a sighted user scanning top-to-bottom may read it as describing either or both controls; fix: place the description as an immediate visual sibling of "print your book" and separate it from "export your data" by layout or whitespace in src/app/settings/page.tsx
+  - AUDIT [2.7] (pass 62, commit 0da2351): /settings — save button title "saves display name, timezone, prompt variety, daily reminder, and public username." omits "weekly reflection" from the enumerated saved fields; the tooltip gives an incomplete picture as settings sections grow; fix: simplify to "saves all settings." — accurate as new sections ship, no enumeration maintenance required in src/app/settings/SettingsForm.tsx
+- rationale: three description-accuracy and grouping issues on /settings filed from critique passes 62-63. The unconditional-rendering finding is a functional clarity bug — contradictory text is visible simultaneously for every user who has configured reminders or reflections. The other two are label precision and visual grouping issues on the same route. All three are 1-2 line UI changes. No existing candidate covers them; they are distinct from the sub-threshold polish sweep's AT-accuracy scope and from the voice coherence tail's register scope.
+- proposed scope: 1 phase — (1) in SettingsForm.tsx, conditionally render only the description paragraph matching the currently selected radio for both the daily-reminder and weekly-reflection sections (aria-describedby wiring already exists from phase 15 a11y work; this is a conditional-render addition); (2) in settings/page.tsx, add whitespace or structural grouping so the "print your book" description is visually associated with the print link and separated from "export your data"; (3) in SettingsForm.tsx, change save button title attribute to "saves all settings."
+- estimated phases: 1
+- conflicts: none — no new routes; no schema changes; SettingsForm.tsx and settings/page.tsx UI-only changes
+
+### [ ] [score 4.0] /today primary-surface clarity — form ordering and in-session state accuracy
+
+- proposed: 2026-06-19, expand pass 144
+- source signals:
+  - AUDIT [2.8] (pass 63, commit 9c5368e): /today — check-in and tags (both marked "optional.") appear above the response textarea in form reading order; a first-time user encounters two optional metadata fields before reaching the textarea where writing happens; same ordering is mirrored in the focus-mode overlay; fix: reorder so response appears first, with check-in and tags below it in src/app/today/TodayEntry.tsx
+  - CRITIQUE [LOW] (pass 63, commit 9c5368e): /today — same form-order finding independently observed; "check-in → tags → response" in both normal view and focus overlay; two optional fields precede the primary writing surface
+  - AUDIT [1.8] (pass 63, commit 9c5368e): /today — today cell in the seven-day strip shows "today, Fri 19 Jun 2026 — no entry" when no saved entry exists; a user mid-composition may read "no entry" as an error indicator rather than an accurate pre-save state; fix: change today cell status from "no entry" to "writing" or omit the suffix for the current day on /today in src/app/today/DayStrip.tsx
+  - CRITIQUE [LOW] (pass 63, commit 9c5368e): /today — same day-strip finding independently observed; strip reflects database state rather than in-session state while user is actively composing
+- rationale: two independent signal types (audit + critique) confirm each of the two findings on /today — the most high-traffic authenticated route. Form ordering directly affects first-time users who may not identify where to write; the "no entry" state label directly contradicts visible in-session activity. Both are UI-only changes with no schema or route changes. Signal multiplicity elevates both findings above their individual scores.
+- proposed scope: 1 phase — (1) reorder TodayEntry.tsx form so the response textarea appears first, with check-in and tags positioned below it, in both the normal layout and the focus-mode overlay (aria-describedby and focus semantics must be preserved after reorder); (2) in DayStrip.tsx, change today cell's state label from "no entry" to "writing" when the user is signed in on /today and no saved entry exists, so the strip does not indicate absence while composition is in progress
+- estimated phases: 1
+- conflicts: none — no new routes; no schema changes; TodayEntry.tsx and DayStrip.tsx UI-only changes; focus-mode overlay must mirror the reorder; today-vs-not-today logic already present in DayStrip for the "today" prefix
 
 ## Promoted
 
