@@ -160,7 +160,7 @@ export default async function LogPage({ searchParams }: Props) {
         {written > 0 && (
           <p className={styles.mosaicCount}>
             {written} {written === 1 ? 'day' : 'days'} written.{' '}
-            {published} {published === 1 ? 'day' : 'days'} published.
+            {published} {published === 1 ? 'entry' : 'entries'} published.
           </p>
         )}
       </section>
