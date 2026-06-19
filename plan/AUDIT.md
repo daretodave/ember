@@ -6,6 +6,17 @@
 
 ## Pending
 
+### [x] [5.4] / — "today's prompt is waiting." uses anthropomorphism; the prompt does not have agency
+- category: voice
+- impact: 6
+- ease: 9
+- note: scored 2026-06-19 — from critique pass 53 (3f0847a); the sticky CTA reads "today's prompt is waiting." — "waiting" assigns agency to the prompt, inconsistent with the flat declarative register used throughout the product; a first-time visitor encounters this on the landing page on every session
+- observation: src/app/page.tsx line 92: today&apos;s prompt is waiting.{' '} — "waiting" implies the prompt is an agent with intent
+- suggested fix: change to "today's prompt is ready." — declarative, no agency, same framing signal
+- source: /critique pass 53 (commit 3f0847a); also in plan/PHASE_CANDIDATES.md "voice coherence tail" pending scope
+- issue: #80
+- resolution: changed "today's prompt is waiting." to "today's prompt is ready." in src/app/page.tsx. Shipped at 93cc59e.
+
 ### [x] [3.6] /settings — no note explains that prompt source is inactive when variety is set to personalized
 - category: external-critique
 - impact: 4
