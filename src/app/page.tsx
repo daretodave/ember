@@ -89,7 +89,7 @@ export default function LandingPage() {
       <aside className={styles.cta} aria-label="sign in">
         <div className={styles.ctaInner}>
           <p className={styles.ctaCopy}>
-            today&apos;s prompt is waiting.{' '}
+            today&apos;s prompt is ready.{' '}
             <span>a new address creates an account. a returning address receives a sign-in link. no password. no other mail.</span>
           </p>
           <Link className={styles.ctaBtn} href="/signin" aria-label="sign in to ember">
