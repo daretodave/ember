@@ -1,7 +1,7 @@
 # External-observer findings — Ember
 
-> Last pass: 2026-06-17 at commit 0da2351
-> Pass count: 62
+> Last pass: 2026-06-19 at commit 9c5368e
+> Pass count: 63
 
 > Written by `/critique` after walking the live site as a
 > fresh-eyes visitor. Drained by `/iterate`.
@@ -62,6 +62,51 @@
 - source: browser
 - issue: #76
 - resolution: removed aria-label from the search input; the linked <label> is now the sole accessible name. Shipped at 6c673e1.
+
+### [LOW] /today — day strip labels the current day "no entry" while the user is on the active writing surface
+- pass: 63 (commit 9c5368e)
+- viewport: both
+- category: comprehension
+- observation: the "the last seven days" strip shows "today, Fri 19 Jun 2026 — no entry" when no saved entry exists for the current day. a first-time signed-in user actively composing their first entry sees "no entry" adjacent to "today" — the strip reflects database state rather than in-session state. the label is accurate but creates a misleading signal: a user mid-composition may read it as an error indicator rather than an accurate pre-save state.
+- evidence: /today capture: "today\ntoday, Fri 19 Jun 2026 — no entry" — the today cell in the day strip shows "no entry" while the user is on the /today writing surface.
+- suggested fix: change the today cell's state label from "no entry" to "writing" (or omit the status suffix entirely for the current day when the user is signed in on /today), so the strip does not indicate absence while composition is in progress.
+- source: browser
+
+### [LOW] /today — optional metadata fields check-in and tags appear above the primary response textarea in form reading order
+- pass: 63 (commit 9c5368e)
+- viewport: both
+- category: comprehension
+- observation: the /today form presents fields in this order: check-in → tags → response. both check-in and tags carry "optional." labels while response is the primary writing surface. a user arriving to write encounters two optional metadata inputs before reaching the textarea where writing happens. the same ordering is mirrored in the focus-mode overlay. on first use this may cause a user to interact with optional fields before they understand where the main entry goes.
+- evidence: /today capture: "check-in\noptional. a mood or weather word for this day.\n\ntags\noptional. up to five tags, comma-separated.\n\nresponse\n\npublish\nfocus\nsave" — both optional fields precede the response textarea in both normal view and the focus overlay.
+- suggested fix: reorder the form so the response textarea appears first (immediately after the prompt and tiny task), with check-in and tags positioned below it, so the primary writing surface is the first interactive element the user encounters.
+- source: browser
+
+### [LOW] /settings — no copy explains whether "prompt source" selection applies when "personalized" prompt variety is active
+- pass: 63 (commit 9c5368e)
+- viewport: both
+- category: comprehension
+- observation: the settings page shows "prompt variety" (standard vs. personalized) immediately above "prompt source" (standard, gratitude, craft, stoic, grief) with no text connecting them. a user who selects "personalized" variety and then chooses a themed source such as "grief" cannot determine whether the personalized prompt will draw from grief-category themes or ignore the source setting entirely. the two controls have an undocumented precedence relationship.
+- evidence: /settings capture: "prompt variety\nstandard: same prompt for everyone each day. personalized: a unique prompt generated from recent entries. falls back to a standard prompt until entries exist.\nstandard\npersonalized\nprompt source\na varied daily prompt.\nstandard\ngratitude\ncraft\nstoic\ngrief" — two adjacent settings controls with no explanatory link between them.
+- suggested fix: add a brief clarifying note to the prompt source section — e.g. "applies when prompt variety is set to standard; personalized variety draws from your entry history regardless of source." — so the interaction between the two settings is visible to users.
+- source: browser
+
+### [LOW] /log — "(edited)" state indicator uses parentheses; inconsistent with the em-dash separator pattern used for all other entry states
+- pass: 63 (commit 9c5368e)
+- viewport: both
+- category: voice
+- observation: the entry excerpt in the /log listing renders as "e2e write test — today (edited)". the "(edited)" suffix uses parentheses as its typographic container. all other entry state indicators in the product use em-dash separation: "Sat 13 Jun 2026 — no entry", "Mon 15 Jun 2026 — written". parentheses do not appear anywhere else in the product's rendered text and represent the sole departure from the em-dash state pattern.
+- evidence: /log capture: "e2e write test — today (edited)" — parenthetical suffix; contrast day-strip entries: "Sat 13 Jun 2026 — no entry", "Mon 15 Jun 2026 — written".
+- suggested fix: change the edited indicator to use the em-dash separator pattern: append "— edited" after the entry title or excerpt rather than "(edited)", consistent with the product's typographic register for state labels.
+- source: browser
+
+### [LOW] /settings — description "your entries compiled as a printable document." visually ambiguous after both export and print links
+- pass: 63 (commit 9c5368e)
+- viewport: both
+- category: comprehension
+- observation: the settings data-controls section reads "export your data  print your book" followed on the next line by "your entries compiled as a printable document." the description paragraph is intended to describe "print your book" only, but it appears in the text flow after both links with no visual separator attributing it to the print link alone. a sighted user scanning top-to-bottom may read the description as applying to "export your data" or to both controls.
+- evidence: /settings capture: "export your data print your book\n\nyour entries compiled as a printable document." — description follows both link labels without a separator element.
+- suggested fix: place the description paragraph as an immediate visual sibling of the "print your book" element, separated from "export your data" by whitespace or layout, so proximity makes the attribution unambiguous.
+- source: browser
 
 ### [LOW] /settings — daily-reminder and weekly-reflection description paragraphs both rendered unconditionally; contradictory text visible simultaneously
 - pass: 62 (commit 0da2351)
