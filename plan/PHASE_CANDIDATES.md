@@ -1,7 +1,7 @@
 # Ember — phase candidates
 
-> Last pass: 2026-06-19 at commit 1529d3e
-> Pass count: 144
+> Last pass: 2026-06-19 at commit 6a704ba
+> Pass count: 145
 
 Candidates proposed by `/expand`. Promotion to `plan/steps/01_build_plan.md`
 happens only via local `/oversight` — never from the cloud loop.
@@ -149,9 +149,10 @@ happens only via local `/oversight` — never from the cloud loop.
 - estimated phases: 1
 - conflicts: none — copy-only; no new routes; no schema changes
 
-### [ ] [score 4.5] /settings description clarity and completeness — conditional rendering and label completeness
+### [ ] [score 3.5] /settings description clarity and completeness — label completeness and visual grouping
 
 - proposed: 2026-06-19, expand pass 144
+- status: 2026-06-19 — scope item 1 (unconditional reminder/reflection descriptions) resolved at acf5e52; candidate rescored 4.5 → 3.5; 2 scope items remain (items 2 and 3)
 - source signals:
   - AUDIT [2.8] (pass 62, commit 0da2351): /settings — daily-reminder and weekly-reflection description paragraphs render unconditionally; both "no reminder email will be sent." and "a quiet email at your chosen time…" are visible simultaneously regardless of the selected radio; sighted users see contradictory descriptions at once; fix: conditionally render only the description matching the currently selected radio value in src/app/settings/SettingsForm.tsx (same pattern for both reminder and reflection sections)
   - AUDIT [2.4] (pass 63, commit 9c5368e): /settings — "your entries compiled as a printable document." description paragraph appears after both "export your data" and "print your book" links with no visual separator; a sighted user scanning top-to-bottom may read it as describing either or both controls; fix: place the description as an immediate visual sibling of "print your book" and separate it from "export your data" by layout or whitespace in src/app/settings/page.tsx
