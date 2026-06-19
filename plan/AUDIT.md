@@ -88,7 +88,7 @@
 - issue: #78
 - resolution: collapsed each pair into a single <p> with stable ID whose content switches on the current radio value; both radios in each section share one aria-describedby ID. Shipped at acf5e52.
 
-### [ ] [2.7] /log — "days published" unit incongruent with per-entry publish action
+### [x] [2.7] /log — "days published" unit incongruent with per-entry publish action
 - category: external-critique
 - impact: 3
 - ease: 9
@@ -96,6 +96,8 @@
 - observation: src/app/log/page.tsx: {published} {published === 1 ? 'day' : 'days'} published. — "days" unit used for publish count
 - suggested fix: change to {published} {published === 1 ? 'entry' : 'entries'} published.
 - source: /critique pass 62 (commit 0da2351)
+- issue: #81
+- resolution: changed "day"/"days" to "entry"/"entries" for published count in src/app/log/page.tsx. Shipped at 6364442.
 
 ### [ ] [2.7] /settings — save button title omits "weekly reflection" from enumerated saved fields
 - category: external-critique
