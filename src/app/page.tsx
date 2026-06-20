@@ -71,7 +71,7 @@ export default function LandingPage() {
 
         <section className={styles.closing} aria-label="about ember">
           <p>
-            ember does not personalize your morning.
+            by default, ember does not personalize your morning.
           </p>
           <p>
             there are no streaks to break, no reminders to dismiss, no
