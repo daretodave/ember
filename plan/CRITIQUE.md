@@ -8,7 +8,7 @@
 
 ## Pending
 
-### [LOW] /today — "focus" action button has no label or description explaining what it does
+### [x] [LOW] /today — "focus" action button has no label or description explaining what it does
 - pass: 65 (commit ca4122a)
 - viewport: both
 - category: comprehension
@@ -16,8 +16,9 @@
 - evidence: /today capture: "publish\nfocus\nsave" — no description adjacent to the focus button; the focus overlay content only appears after activation and is not announced before interaction.
 - suggested fix: add a title attribute or aria-description to the focus button, e.g. title="enter distraction-free writing mode", so the purpose is discoverable before activation.
 - source: browser
+- resolution: false positive — the focus button already carried aria-label="enters a distraction-free writing view." and title="enters a distraction-free writing view." at commit ca4122a when the reader ran (confirmed via git show ca4122a). The reader's raw-text capture omitted these attributes. No code change needed.
 
-### [LOW] /today — "done writing" control reads as a state declaration; its function is not explained
+### [x] [LOW] /today — "done writing" control reads as a state declaration; its function is not explained
 - pass: 65 (commit ca4122a)
 - viewport: both
 - category: comprehension
@@ -25,6 +26,7 @@
 - evidence: /today capture: "save\n\nwhen published, this entry appears on the public profile...\n\ndone writing\nthe last seven days" — "done writing" appears after the save controls with no adjacent description of its effect.
 - suggested fix: add a title attribute to the "done writing" control, e.g. title="collapses the writing area", so its function is discoverable without activation.
 - source: browser
+- resolution: false positive — the "done writing" button already carried aria-label="exits the distraction-free writing view." and title="exits the distraction-free writing view." at commit ca4122a when the reader ran (confirmed via git show ca4122a). The reader's raw-text capture omitted these attributes. No code change needed.
 
 ### [x] [LOW] /signin — "send link." button label ends with a period; isolated departure from all other action controls
 - pass: 65 (commit ca4122a)
@@ -46,7 +48,7 @@
 - suggested fix: rewrite as "this setting is inactive when prompt variety is set to personalized." to supply the missing subject and clarify the scope of inactivity.
 - source: browser
 
-### [LOW] /log — "private" state badge trails the "full entry" link with no anchoring label
+### [x] [LOW] /log — "private" state badge trails the "full entry" link with no anchoring label
 - pass: 65 (commit ca4122a)
 - viewport: both
 - category: comprehension
@@ -54,6 +56,8 @@
 - evidence: /log capture: "showing the most recent entry. full entry\nprivate" — "private" appears after the link text with no prefix label to anchor it as a state indicator.
 - suggested fix: add a sr-only prefix or aria-label to the badge element, e.g. aria-label="publication status: private", so the state is grammatically anchored in both visual and accessible reading order.
 - source: browser
+- issue: #89
+- resolution: added aria-label="publication status: published/private" to the badge span in src/app/log/page.tsx. Shipped at 3692363.
 
 ### [LOW] /today — focus overlay content permanently in DOM; form block doubled for raw-DOM consumers and Playwright captures
 - pass: 64 (commit 0879794)

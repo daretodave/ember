@@ -6,6 +6,26 @@
 
 ## Pending
 
+### [x] [3.6] /log — "private" state badge trails "full entry" link with no anchoring label; reads as fragment in linear order
+- category: external-critique
+- impact: 4
+- ease: 9
+- note: scored 2026-06-20 — from critique pass 65 (ca4122a); the /log footer shows "showing the most recent entry. full entry" then "private" on the next line in linear reading order; no label attributes "private" as a publication-status badge; AT users and linear readers may interpret it as a descriptor of the link or an incomplete sentence fragment
+- observation: src/app/log/page.tsx: `<span>{recentEntry.is_published ? 'published' : 'private'}</span>` — no aria-label or sr-only prefix anchors the badge as a publication status indicator
+- suggested fix: add aria-label="publication status: private" (or "publication status: published") to the span so the AT name is self-describing in isolation
+- source: /critique pass 65 (commit ca4122a)
+- issue: #89
+- resolution: added aria-label="publication status: published/private" to the badge span in src/app/log/page.tsx. Shipped at 3692363.
+
+### [ ] [2.7] /settings — "inactive when variety is set to personalized." has no grammatical subject; "inactive" is a bare predicate adjective
+- category: external-critique
+- impact: 3
+- ease: 9
+- note: scored 2026-06-20 — from critique pass 65 (ca4122a); the prompt source description reads "a varied daily prompt. inactive when variety is set to personalized." — "inactive" has no explicit subject, leaving readers to guess whether the setting, its influence, or the entire feature becomes inactive
+- observation: src/app/settings/SettingsForm.tsx: `'inactive when variety is set to personalized.'` — bare predicate adjective with no subject
+- suggested fix: rewrite as "this setting is inactive when prompt variety is set to personalized." to supply the missing subject
+- source: /critique pass 65 (commit ca4122a)
+
 ### [x] [2.7] /settings — delete-account confirmation uses second-person "your account"; trigger button uses first-person "my account"
 - category: voice
 - impact: 3
