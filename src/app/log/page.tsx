@@ -231,7 +231,7 @@ export default async function LogPage({ searchParams }: Props) {
                 showing the most recent entry.{' '}
                 <Link href={`/log/${recentDate}`}>full entry</Link>
               </span>
-              <span>{recentEntry.is_published ? 'published' : 'private'}</span>
+              <span aria-label={`publication status: ${recentEntry.is_published ? 'published' : 'private'}`}>{recentEntry.is_published ? 'published' : 'private'}</span>
             </footer>
           </>
         ) : (
