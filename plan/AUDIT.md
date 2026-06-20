@@ -59,7 +59,7 @@
 - issue: #88
 - resolution: removed trailing period from both "send link." and "sending." button label states in src/app/signin/page.tsx; updated unit test and e2e spec. Shipped at feb9262.
 
-### [ ] [2.7] /settings — "export your data" uses second-person possessive; voice guide prohibits second-person imperative copy
+### [x] [2.7] /settings — "export your data" uses second-person possessive; voice guide prohibits second-person imperative copy
 - category: voice
 - impact: 3
 - ease: 9
@@ -67,6 +67,8 @@
 - observation: src/app/settings/page.tsx line 80: `export your data` — second-person "your" as link text
 - suggested fix: change to "export data" — noun phrase; no second-person direct address
 - source: /critique pass 52 (commit b4d3589); also in plan/PHASE_CANDIDATES.md "voice coherence tail" pending scope
+- issue: #90
+- resolution: changed "export your data" to "export data" in src/app/settings/page.tsx. Shipped at ef35b89.
 
 ### [x] [3.6] / — "the next seven days" heading includes today; implies future-only content
 - category: voice
