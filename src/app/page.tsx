@@ -63,6 +63,11 @@ export default function LandingPage() {
                       {day.task}
                     </span>
                   </p>
+                  {day.isToday && (
+                    <p className={styles.daySignIn}>
+                      <Link href="/signin">sign in to write.</Link>
+                    </p>
+                  )}
                 </div>
               </li>
             ))}

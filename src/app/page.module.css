@@ -188,6 +188,19 @@
   font-family: var(--font-sans);
 }
 
+.daySignIn {
+  font-family: var(--font-serif);
+  font-size: var(--type-14);
+  color: var(--color-ink-muted);
+  margin: 0;
+}
+
+.daySignIn a {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
 .dayToday {
   background: var(--color-paper-sunk);
   margin: 0 calc(-1 * var(--space-5));
