@@ -1,7 +1,7 @@
 # Ember — phase candidates
 
-> Last pass: 2026-06-19 at commit 6a704ba
-> Pass count: 145
+> Last pass: 2026-06-20 at commit 52d65c3
+> Pass count: 146
 
 Candidates proposed by `/expand`. Promotion to `plan/steps/01_build_plan.md`
 happens only via local `/oversight` — never from the cloud loop.
@@ -127,16 +127,7 @@ happens only via local `/oversight` — never from the cloud loop.
 ### [ ] [score 4.0] Voice coherence tail — post-phase 22 copy register gaps on new UI surfaces
 
 - proposed: 2026-06-12, expand pass 132
-- status: 2026-06-17 — items 1 (/signin "on its way", Phase 30), 5 (/log
-  "browse by date" → "all entries" → "full entry"), and 6 (/signin "send a
-  link" → "send link.", Phase 30) confirmed resolved; pass 140: adds /settings
-  "sign out" second-person imperative [LOW] (AUDIT.md [2.0]) and /today
-  focus-exit button "done writing" participial phrase [LOW] (CRITIQUE.md pass 59);
-  pass 142: adds /today "will remain private" assertive framing [LOW] (CRITIQUE.md
-  pass 61, AUDIT.md [2.7]) — conditional phrasing fix; 6 scope items pending:
-  /settings delete-account "your account", /settings "export your data",
-  / "today's prompt is waiting.", /settings "sign out" label, /today "done writing"
-  exit label, /today "will remain private" conditional framing
+- status: 2026-06-20 — item 3 (/ "today's prompt is waiting." → "today's prompt is ready.") resolved at 93cc59e; item 6 (/today "will remain private" → conditional framing) resolved at 787b20b; 4 scope items now pending: /settings delete-account "your account", /settings "export your data", /settings "sign out" label, /today "done writing" exit label. (Prior: 2026-06-17 — items 1, 5, 6 confirmed resolved; pass 140: added /settings "sign out" and /today "done writing"; pass 142: added /today "will remain private")
 - source signals:
   - critique pass 51 (commit 0107c11): /signin — confirmation paragraph "a sign-in link is on its way." uses colloquial idiom departing from the flat bookish register; "directly" adverb in following clause adds no information [LOW] — fix: "a sign-in link has been sent. following it opens today's prompt. links expire after 24 hours. no password. no other mail."
   - critique pass 52 (commit b4d3589): /settings — delete-account confirmation warning reads "permanently delete your account" — second-person possessive within the same two-step flow that uses first-person for the trigger button ("delete my account") [LOW] — fix: "this will permanently delete the account and all entries. there is no undo."
@@ -152,7 +143,7 @@ happens only via local `/oversight` — never from the cloud loop.
 ### [ ] [score 3.5] /settings description clarity and completeness — label completeness and visual grouping
 
 - proposed: 2026-06-19, expand pass 144
-- status: 2026-06-19 — scope item 1 (unconditional reminder/reflection descriptions) resolved at acf5e52; candidate rescored 4.5 → 3.5; 2 scope items remain (items 2 and 3)
+- status: 2026-06-20 — item 3 (save button title) resolved at 33dfa2b; 1 scope item remains (item 2: "print your book" description ambiguity). (Prior: 2026-06-19 — item 1 resolved at acf5e52; rescored 4.5 → 3.5)
 - source signals:
   - AUDIT [2.8] (pass 62, commit 0da2351): /settings — daily-reminder and weekly-reflection description paragraphs render unconditionally; both "no reminder email will be sent." and "a quiet email at your chosen time…" are visible simultaneously regardless of the selected radio; sighted users see contradictory descriptions at once; fix: conditionally render only the description matching the currently selected radio value in src/app/settings/SettingsForm.tsx (same pattern for both reminder and reflection sections)
   - AUDIT [2.4] (pass 63, commit 9c5368e): /settings — "your entries compiled as a printable document." description paragraph appears after both "export your data" and "print your book" links with no visual separator; a sighted user scanning top-to-bottom may read it as describing either or both controls; fix: place the description as an immediate visual sibling of "print your book" and separate it from "export your data" by layout or whitespace in src/app/settings/page.tsx
@@ -165,6 +156,7 @@ happens only via local `/oversight` — never from the cloud loop.
 ### [ ] [score 4.0] /today primary-surface clarity — form ordering and in-session state accuracy
 
 - proposed: 2026-06-19, expand pass 144
+- status: 2026-06-20 — item 1 (form reorder: response textarea before check-in and tags) resolved at 93b81b1; 1 scope item remains (day strip "no entry" → "writing" while composing)
 - source signals:
   - AUDIT [2.8] (pass 63, commit 9c5368e): /today — check-in and tags (both marked "optional.") appear above the response textarea in form reading order; a first-time user encounters two optional metadata fields before reaching the textarea where writing happens; same ordering is mirrored in the focus-mode overlay; fix: reorder so response appears first, with check-in and tags below it in src/app/today/TodayEntry.tsx
   - CRITIQUE [LOW] (pass 63, commit 9c5368e): /today — same form-order finding independently observed; "check-in → tags → response" in both normal view and focus overlay; two optional fields precede the primary writing surface

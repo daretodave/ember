@@ -133,7 +133,7 @@
 - issue: #84
 - resolution: simplified title to "saves all settings." in src/app/settings/SettingsForm.tsx. Shipped at 33dfa2b.
 
-### [ ] [1.8] /settings — prompt pack descriptions only visible for selected option; unchosen options have no preview
+### [x] [1.8] /log — meta description lists content types absent for sparse accounts; state-agnostic description needed
 - category: seo
 - impact: 4
 - ease: 9

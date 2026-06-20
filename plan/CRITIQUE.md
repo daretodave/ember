@@ -124,7 +124,7 @@
 - issue: #77
 - resolution: changed conditional note to always render; standard mode shows "inactive when variety is set to personalized." and personalized mode shows "personalized variety overrides this selection." Shipped at b819a8e.
 
-### [LOW] /log — "(edited)" state indicator uses parentheses; inconsistent with the em-dash separator pattern used for all other entry states
+### [x] [LOW] /log — "(edited)" state indicator uses parentheses; inconsistent with the em-dash separator pattern used for all other entry states
 - pass: 63 (commit 9c5368e)
 - viewport: both
 - category: voice
@@ -132,6 +132,7 @@
 - evidence: /log capture: "e2e write test — today (edited)" — parenthetical suffix; contrast day-strip entries: "Sat 13 Jun 2026 — no entry", "Mon 15 Jun 2026 — written".
 - suggested fix: change the edited indicator to use the em-dash separator pattern: append "— edited" after the entry title or excerpt rather than "(edited)", consistent with the product's typographic register for state labels.
 - source: browser
+- resolution: false positive — the "(edited)" text is e2e test sentinel content written to the database by apps/e2e/tests/auth-flow.spec.ts; the edit test appends " (edited)" to the WRITE_CONTENT string. no UI state indicator for edited entries exists in the product code. no code change needed. confirmed at AUDIT.md (commit 9c5368e).
 
 ### [LOW] /settings — description "your entries compiled as a printable document." visually ambiguous after both export and print links
 - pass: 63 (commit 9c5368e)
@@ -162,7 +163,7 @@
 - source: browser
 - resolution: changed "days published" to "entries published" in src/app/log/page.tsx. Shipped at 6364442.
 
-### [LOW] /settings — save button title omits "weekly reflection" from enumerated saved fields
+### [x] [LOW] /settings — save button title omits "weekly reflection" from enumerated saved fields
 - pass: 62 (commit 0da2351)
 - viewport: both
 - category: comprehension
@@ -170,6 +171,8 @@
 - evidence: src/app/settings/SettingsForm.tsx line 391: title="saves display name, timezone, prompt variety, daily reminder, and public username." — weekly_reflection_opt_in at line 133 is included in the POST body but not named.
 - suggested fix: either add "weekly reflection" to the title text ("saves display name, timezone, prompt variety, daily reminder, weekly reflection, and public username.") or simplify to "saves all settings." to prevent future omissions.
 - source: browser
+- issue: #84
+- resolution: simplified title to "saves all settings." in src/app/settings/SettingsForm.tsx. Shipped at 33dfa2b.
 
 ### [LOW] /settings — prompt source pack descriptions visible only on selection; unchosen options give no preview
 - pass: 61 (commit d450909)
