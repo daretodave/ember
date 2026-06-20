@@ -8,15 +8,6 @@
 
 ## Pending
 
-### [MED] / — "today" label in prompt preview implies entry access for anonymous visitors
-- pass: 65 (commit ca4122a)
-- viewport: both
-- category: comprehension
-- observation: the 7-day prompt preview on the landing page labels one entry "today" alongside a full date, using the same label the authenticated writing surface uses. an anonymous visitor seeing "today / Sat 20 Jun" may expect this to open the writing surface. no adjacent copy explains that the preview is read-only and that writing requires sign-in.
-- evidence: / capture: "today\nSat 20 Jun\n\nwhat do you avoid thinking about by staying busy?\n\ntiny task — building in one pocket of unscheduled time and leaving it unfilled." — "today" label is identical to the authenticated day label; no affordance signals that the content is preview-only.
-- suggested fix: add a one-line note to the preview section distinguishing it as a preview, or label the "today" entry row differently from the interactive authenticated surface — e.g. change the preview heading to "the coming week — a preview" and add a "sign in to write" link adjacent to the today entry.
-- source: browser
-
 ### [LOW] /today — "focus" action button has no label or description explaining what it does
 - pass: 65 (commit ca4122a)
 - viewport: both
@@ -2608,6 +2599,17 @@
 - source: browser
 
 ## Done
+
+### [x] [MED] / — "today" label in prompt preview implies entry access for anonymous visitors
+- pass: 65 (commit ca4122a)
+- viewport: both
+- category: comprehension
+- observation: the 7-day prompt preview on the landing page labels one entry "today" alongside a full date, using the same label the authenticated writing surface uses. an anonymous visitor seeing "today / Sat 20 Jun" may expect this to open the writing surface. no adjacent copy explains that the preview is read-only and that writing requires sign-in.
+- evidence: / capture: "today\nSat 20 Jun\n\nwhat do you avoid thinking about by staying busy?\n\ntiny task — building in one pocket of unscheduled time and leaving it unfilled." — "today" label is identical to the authenticated day label; no affordance signals that the content is preview-only.
+- suggested fix: add a one-line note to the preview section distinguishing it as a preview, or label the "today" entry row differently from the interactive authenticated surface — e.g. change the preview heading to "the coming week — a preview" and add a "sign in to write" link adjacent to the today entry.
+- source: browser
+- issue: #87
+- resolution: added conditional "sign in to write." link (→ /signin) inside the today entry's dayBody in page.tsx and page.module.css; displayed only on the landing page for anonymous visitors; does not touch getSevenDayPreview or any authenticated surface. Shipped at 2e79151.
 
 ### [x] [LOW] /signin — submit button label "send the link" uses definite article before any link exists
 - pass: 43 (commit 5e1498c)

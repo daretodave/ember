@@ -17,6 +17,17 @@
 - issue: #85
 - resolution: changed "permanently delete your account and all entries." to "this will permanently delete the account and all entries." in DeleteAccountSection.tsx. Shipped at d17517f.
 
+### [x] [4.8] / — "today" label in preview gives no affordance that content is read-only; writing requires sign-in
+- category: external-critique
+- impact: 6
+- ease: 8
+- note: scored 2026-06-20 — from critique pass 65 (ca4122a); the landing page 7-day preview labels the first entry "today" using the same label the authenticated writing surface uses; anonymous visitors have no signal the preview is read-only or that writing requires sign-in
+- observation: src/app/page.tsx: today entry in getSevenDayPreview list renders with `day.label = 'today'` and no adjacent note indicating read-only / sign-in required
+- suggested fix: add "sign in to write." link adjacent to the today entry in the preview section
+- source: /critique pass 65 (commit ca4122a)
+- issue: #87
+- resolution: added conditional "sign in to write." link (→ /signin) inside the today entry's dayBody in page.tsx/page.module.css. Shipped at 2e79151.
+
 ### [ ] [2.7] /settings — "export your data" uses second-person possessive; voice guide prohibits second-person imperative copy
 - category: voice
 - impact: 3
