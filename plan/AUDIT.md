@@ -6,6 +6,34 @@
 
 ## Pending
 
+### [ ] [2.7] /settings — delete-account confirmation uses second-person "your account"; trigger button uses first-person "my account"
+- category: voice
+- impact: 3
+- ease: 9
+- note: scored 2026-06-20 — from critique pass 52 (b4d3589); the trigger button reads "delete my account and all my entries" (first-person) but the confirmation warning immediately following reads "permanently delete your account and all entries." (second-person possessive); the inconsistency within a single two-step flow reads as an editorial error; voice guide prohibits second-person possessive in body copy
+- observation: src/app/settings/DeleteAccountSection.tsx line 44: `permanently delete your account and all entries. there is no undo.` — second-person "your" in the same flow whose trigger uses first-person "my"
+- suggested fix: change to "this will permanently delete the account and all entries. there is no undo." — drops possessive entirely; the alertdialog's aria-label already names the action ("confirm account deletion"), so no pronoun is needed
+- source: /critique pass 52 (commit b4d3589); also in plan/PHASE_CANDIDATES.md "voice coherence tail" pending scope
+- issue: #85
+
+### [ ] [2.7] /settings — "export your data" uses second-person possessive; voice guide prohibits second-person imperative copy
+- category: voice
+- impact: 3
+- ease: 9
+- note: scored 2026-06-20 — from critique pass 52 (b4d3589); "export your data" is a second-person possessive phrase on the settings page; voice guide prohibits second-person imperative copy; the noun phrase "export data" describes the action without direct address
+- observation: src/app/settings/page.tsx line 80: `export your data` — second-person "your" as link text
+- suggested fix: change to "export data" — noun phrase; no second-person direct address
+- source: /critique pass 52 (commit b4d3589); also in plan/PHASE_CANDIDATES.md "voice coherence tail" pending scope
+
+### [ ] [2.7] / — "the next seven days" heading includes today; implies future-only content
+- category: voice
+- impact: 3
+- ease: 9
+- note: scored 2026-06-20 — from critique pass 58 (a9827d4); the seven-day prompt preview section heading "the next seven days" implies the content is future-only, but the first item in the list is today's prompt; heading contradicts the actual content
+- observation: src/app/page.tsx line 42: `the next seven days` — first item in the preview list is today, so "next" overstates future-ness
+- suggested fix: change to "the coming week" or "seven days of prompts" to describe the window without implying future-only content
+- source: /critique pass 58 (commit a9827d4); also in plan/PHASE_CANDIDATES.md "voice coherence tail" pending scope
+
 ### [x] [2.7] / — "ember does not personalize your morning" reads as absolute; opt-in personalized variety on /settings appears to contradict it
 - category: external-critique
 - impact: 3

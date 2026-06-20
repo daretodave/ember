@@ -41,7 +41,7 @@ export function DeleteAccountSection() {
       ) : (
         <div className={styles.deleteConfirm} role="alertdialog" aria-modal="true" aria-label="confirm account deletion" aria-describedby="delete-warning">
           <p id="delete-warning" className={styles.deleteWarning}>
-            permanently delete your account and all entries. there is no undo.
+            this will permanently delete the account and all entries. there is no undo.
           </p>
           {errorMsg && (
             <p className={styles.deleteError} role="alert">{errorMsg}</p>
