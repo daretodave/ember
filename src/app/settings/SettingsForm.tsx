@@ -389,7 +389,7 @@ export function SettingsForm({
           type="submit"
           className={styles.saveBtn}
           disabled={saveState === 'saving'}
-          title="saves display name, timezone, prompt variety, daily reminder, and public username."
+          title="saves all settings."
         >
           {saveState === 'saving' ? 'saving.' : 'save'}
         </button>

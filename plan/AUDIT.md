@@ -130,6 +130,7 @@
 - observation: src/app/settings/SettingsForm.tsx line 391: title="saves display name, timezone, prompt variety, daily reminder, and public username." — weekly reflection absent
 - suggested fix: simplify to "saves all settings." or add "weekly reflection" to the enumeration
 - source: /critique pass 62 (commit 0da2351)
+- issue: #84
 
 ### [ ] [1.8] /settings — prompt pack descriptions only visible for selected option; unchosen options have no preview
 - category: seo
