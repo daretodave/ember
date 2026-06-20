@@ -159,7 +159,7 @@ export default async function LogPage({ searchParams }: Props) {
         <LogMosaic tiles={tiles} />
         {written > 0 && (
           <p className={styles.mosaicCount}>
-            {written} {written === 1 ? 'day' : 'days'} written.{' '}
+            {written} {written === 1 ? 'entry' : 'entries'} written.{' '}
             {published} {published === 1 ? 'entry' : 'entries'} published.
           </p>
         )}
