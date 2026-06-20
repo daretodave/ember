@@ -1,7 +1,7 @@
 # Ember — phase candidates
 
-> Last pass: 2026-06-20 at commit 52d65c3
-> Pass count: 146
+> Last pass: 2026-06-20 at commit 5d903f5
+> Pass count: 147
 
 Candidates proposed by `/expand`. Promotion to `plan/steps/01_build_plan.md`
 happens only via local `/oversight` — never from the cloud loop.
@@ -127,7 +127,7 @@ happens only via local `/oversight` — never from the cloud loop.
 ### [ ] [score 4.0] Voice coherence tail — post-phase 22 copy register gaps on new UI surfaces
 
 - proposed: 2026-06-12, expand pass 132
-- status: 2026-06-20 — item 3 (/ "today's prompt is waiting." → "today's prompt is ready.") resolved at 93cc59e; item 6 (/today "will remain private" → conditional framing) resolved at 787b20b; 4 scope items now pending: /settings delete-account "your account", /settings "export your data", /settings "sign out" label, /today "done writing" exit label. (Prior: 2026-06-17 — items 1, 5, 6 confirmed resolved; pass 140: added /settings "sign out" and /today "done writing"; pass 142: added /today "will remain private")
+- status: 2026-06-20 — /settings delete-account "your account" resolved at d17517f; candidate now 3 scope items pending: /settings "export your data", /settings "sign out" label, /today "done writing" exit label. (Prior: 2026-06-20 — item 3 (/ "today's prompt is waiting." → "today's prompt is ready.") resolved at 93cc59e; item 6 (/today "will remain private" → conditional framing) resolved at 787b20b; 4 scope items pending)
 - source signals:
   - critique pass 51 (commit 0107c11): /signin — confirmation paragraph "a sign-in link is on its way." uses colloquial idiom departing from the flat bookish register; "directly" adverb in following clause adds no information [LOW] — fix: "a sign-in link has been sent. following it opens today's prompt. links expire after 24 hours. no password. no other mail."
   - critique pass 52 (commit b4d3589): /settings — delete-account confirmation warning reads "permanently delete your account" — second-person possessive within the same two-step flow that uses first-person for the trigger button ("delete my account") [LOW] — fix: "this will permanently delete the account and all entries. there is no undo."
