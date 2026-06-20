@@ -17,7 +17,7 @@
 - suggested fix: conditionally render the focus overlay's inner content (prompt, fields, controls) only when isFocus is true; keep the outer container div in the DOM for the opacity transition. src/app/today/TodayEntry.tsx.
 - source: browser
 
-### [LOW] /log — stat line "N days written" paired with "N entries published"; unit inconsistency within the same sentence
+### [x] [LOW] /log — stat line "N days written" paired with "N entries published"; unit inconsistency within the same sentence
 - pass: 64 (commit 0879794)
 - viewport: both
 - category: voice
@@ -25,6 +25,8 @@
 - evidence: /log capture: "4 days written. 0 entries published." — "days" unit in first clause; "entries" unit in second clause of the same stat line. src/app/log/page.tsx.
 - suggested fix: change the written count to use "entries" to align with the published-count unit: `{written} {written === 1 ? 'entry' : 'entries'} written.`
 - source: browser
+- issue: #82
+- resolution: changed `{written === 1 ? 'day' : 'days'}` to `{written === 1 ? 'entry' : 'entries'}` in src/app/log/page.tsx line 162. Shipped at 275c3d6.
 
 ### [LOW] / vs /settings — "ember does not personalize your morning" reads as absolute; opt-in personalized variety appears to contradict it
 - pass: 64 (commit 0879794)

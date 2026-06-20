@@ -6,6 +6,17 @@
 
 ## Pending
 
+### [x] [2.7] /log — stat line "days written" / "entries published" unit mismatch in same sentence
+- category: external-critique
+- impact: 3
+- ease: 9
+- note: scored 2026-06-20 — from critique pass 64 (0879794); the stat line read "4 days written. 0 entries published." — adjacent clauses for the same countable object used different units; "days written" was the residual after "days published" was corrected in a prior pass
+- observation: src/app/log/page.tsx line 162: `{written} {written === 1 ? 'day' : 'days'} written.` — "day/days" unit while the adjacent published count uses "entry/entries"
+- suggested fix: change to `{written} {written === 1 ? 'entry' : 'entries'} written.`
+- source: /critique pass 64 (commit 0879794)
+- issue: #82
+- resolution: changed 'day'/'days' to 'entry'/'entries' in src/app/log/page.tsx. Shipped at 275c3d6.
+
 ### [x] [5.4] / — "today's prompt is waiting." uses anthropomorphism; the prompt does not have agency
 - category: voice
 - impact: 6
