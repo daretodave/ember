@@ -15,7 +15,7 @@ test('landing page has correct heading', async ({ page }) => {
 test('landing page shows seven-day preview section', async ({ page }) => {
   await page.goto('/')
   const h2 = page.locator('h2')
-  await expect(h2).toContainText('the next seven days')
+  await expect(h2).toContainText('the coming week')
 })
 
 test('landing page has sign-in CTA', async ({ page }) => {

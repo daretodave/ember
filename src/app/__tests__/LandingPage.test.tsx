@@ -26,7 +26,7 @@ describe('LandingPage', () => {
 
   it('seven-day preview section is a named region landmark accessible by its heading', () => {
     render(<LandingPage />)
-    expect(screen.getByRole('region', { name: 'the next seven days' })).toBeInTheDocument()
+    expect(screen.getByRole('region', { name: 'the coming week' })).toBeInTheDocument()
   })
 
   it('closing philosophy section is a named region landmark', () => {
