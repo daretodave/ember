@@ -122,7 +122,7 @@
 - issue: #81
 - resolution: changed "day"/"days" to "entry"/"entries" for published count in src/app/log/page.tsx. Shipped at 6364442.
 
-### [ ] [2.7] /settings — save button title omits "weekly reflection" from enumerated saved fields
+### [x] [2.7] /settings — save button title omits "weekly reflection" from enumerated saved fields
 - category: external-critique
 - impact: 3
 - ease: 9
@@ -131,6 +131,7 @@
 - suggested fix: simplify to "saves all settings." or add "weekly reflection" to the enumeration
 - source: /critique pass 62 (commit 0da2351)
 - issue: #84
+- resolution: simplified title to "saves all settings." in src/app/settings/SettingsForm.tsx. Shipped at 33dfa2b.
 
 ### [ ] [1.8] /settings — prompt pack descriptions only visible for selected option; unchosen options have no preview
 - category: seo
