@@ -20,7 +20,7 @@ test('signin page has email input', async ({ page }) => {
 test('signin page has submit button', async ({ page }) => {
   await page.goto('/signin')
   const btn = page.locator('button[type="submit"]')
-  await expect(btn).toContainText('send link.')
+  await expect(btn).toContainText('send link')
 })
 
 test('signin page has no horizontal overflow at 375px', async ({ page }) => {

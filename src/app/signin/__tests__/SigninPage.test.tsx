@@ -11,7 +11,7 @@ describe('SigninPage — initial state', () => {
   it('renders the email input and submit button', () => {
     render(<SigninPage />)
     expect(screen.getByLabelText('email')).toBeInTheDocument()
-    expect(screen.getByRole('button', { name: 'send link.' })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: 'send link' })).toBeInTheDocument()
   })
 
   it('does not show confirmation or error on load', () => {
@@ -40,7 +40,7 @@ describe('SigninPage — initial state', () => {
 })
 
 describe('SigninPage — sending state', () => {
-  it('shows "sending." and disables submit while request is in flight', async () => {
+  it('shows "sending" and disables submit while request is in flight', async () => {
     let settle: (v: Response) => void
     global.fetch = vi.fn().mockReturnValue(
       new Promise<Response>((r) => {
@@ -55,7 +55,7 @@ describe('SigninPage — sending state', () => {
     fireEvent.submit(document.querySelector('form')!)
 
     await waitFor(() => {
-      expect(screen.getByRole('button', { name: 'sending.' })).toBeDisabled()
+      expect(screen.getByRole('button', { name: 'sending' })).toBeDisabled()
     })
 
     settle!({ ok: true, json: async () => ({}) } as Response)
@@ -78,7 +78,7 @@ describe('SigninPage — sent state', () => {
     await waitFor(() => {
       expect(screen.getByTestId('signin-confirmation')).toBeInTheDocument()
     })
-    expect(screen.queryByRole('button', { name: 'send link.' })).not.toBeInTheDocument()
+    expect(screen.queryByRole('button', { name: 'send link' })).not.toBeInTheDocument()
   })
 
   it('moves focus to the confirmation paragraph after successful send', async () => {
