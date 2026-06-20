@@ -6,7 +6,7 @@
 
 ## Pending
 
-### [ ] [2.7] /settings — delete-account confirmation uses second-person "your account"; trigger button uses first-person "my account"
+### [x] [2.7] /settings — delete-account confirmation uses second-person "your account"; trigger button uses first-person "my account"
 - category: voice
 - impact: 3
 - ease: 9
@@ -15,6 +15,7 @@
 - suggested fix: change to "this will permanently delete the account and all entries. there is no undo." — drops possessive entirely; the alertdialog's aria-label already names the action ("confirm account deletion"), so no pronoun is needed
 - source: /critique pass 52 (commit b4d3589); also in plan/PHASE_CANDIDATES.md "voice coherence tail" pending scope
 - issue: #85
+- resolution: changed "permanently delete your account and all entries." to "this will permanently delete the account and all entries." in DeleteAccountSection.tsx. Shipped at d17517f.
 
 ### [ ] [2.7] /settings — "export your data" uses second-person possessive; voice guide prohibits second-person imperative copy
 - category: voice
