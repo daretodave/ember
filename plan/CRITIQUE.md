@@ -1,12 +1,66 @@
 # External-observer findings — Ember
 
-> Last pass: 2026-06-20 at commit 0879794
-> Pass count: 64
+> Last pass: 2026-06-20 at commit ca4122a
+> Pass count: 65
 
 > Written by `/critique` after walking the live site as a
 > fresh-eyes visitor. Drained by `/iterate`.
 
 ## Pending
+
+### [MED] / — "today" label in prompt preview implies entry access for anonymous visitors
+- pass: 65 (commit ca4122a)
+- viewport: both
+- category: comprehension
+- observation: the 7-day prompt preview on the landing page labels one entry "today" alongside a full date, using the same label the authenticated writing surface uses. an anonymous visitor seeing "today / Sat 20 Jun" may expect this to open the writing surface. no adjacent copy explains that the preview is read-only and that writing requires sign-in.
+- evidence: / capture: "today\nSat 20 Jun\n\nwhat do you avoid thinking about by staying busy?\n\ntiny task — building in one pocket of unscheduled time and leaving it unfilled." — "today" label is identical to the authenticated day label; no affordance signals that the content is preview-only.
+- suggested fix: add a one-line note to the preview section distinguishing it as a preview, or label the "today" entry row differently from the interactive authenticated surface — e.g. change the preview heading to "the coming week — a preview" and add a "sign in to write" link adjacent to the today entry.
+- source: browser
+
+### [LOW] /today — "focus" action button has no label or description explaining what it does
+- pass: 65 (commit ca4122a)
+- viewport: both
+- category: comprehension
+- observation: the writing surface presents three adjacent action controls: publish, focus, save. "publish" and "save" are self-describing. "focus" has no adjacent description, tooltip, or surrounding copy explaining what activating it will do. a first-time user has no signal that "focus" opens a distraction-free overlay writing mode.
+- evidence: /today capture: "publish\nfocus\nsave" — no description adjacent to the focus button; the focus overlay content only appears after activation and is not announced before interaction.
+- suggested fix: add a title attribute or aria-description to the focus button, e.g. title="enter distraction-free writing mode", so the purpose is discoverable before activation.
+- source: browser
+
+### [LOW] /today — "done writing" control reads as a state declaration; its function is not explained
+- pass: 65 (commit ca4122a)
+- viewport: both
+- category: comprehension
+- observation: "done writing" appears after the save controls at the bottom of the writing surface. the label reads as a declarative completion statement rather than a control label. a first-time user cannot determine from the label alone whether activating it saves the entry, navigates away, marks the day complete, or collapses the writing area.
+- evidence: /today capture: "save\n\nwhen published, this entry appears on the public profile...\n\ndone writing\nthe last seven days" — "done writing" appears after the save controls with no adjacent description of its effect.
+- suggested fix: add a title attribute to the "done writing" control, e.g. title="collapses the writing area", so its function is discoverable without activation.
+- source: browser
+
+### [LOW] /signin — "send link." button label ends with a period; isolated departure from all other action controls
+- pass: 65 (commit ca4122a)
+- viewport: both
+- category: voice
+- observation: the submit button on /signin reads "send link." with a trailing period. every other action control in the product carries no terminal punctuation — publish, save, focus, sign out. the voice guide specifies periods for tooltip and hover copy as complete sentences, not for button labels. the trailing period on "send link." is the only instance of a period on an action button in the product.
+- evidence: /signin capture: "send link." — compare /today: "publish", "save"; /settings: "save", "sign out" — no other action button ends with a period.
+- suggested fix: remove the trailing period from the "send link" button label to align with the period-free typographic register of all other action controls.
+- source: browser
+
+### [LOW] /settings — "inactive when variety is set to personalized" has no grammatical subject
+- pass: 65 (commit ca4122a)
+- viewport: both
+- category: comprehension
+- observation: the prompt source description reads "a varied daily prompt. inactive when variety is set to personalized." the word "inactive" has no explicit subject — a first-time reader cannot determine whether the source setting itself, its influence on prompt generation, or the entire prompt source feature becomes inactive.
+- evidence: /settings capture: "prompt source\n\na varied daily prompt. inactive when variety is set to personalized." — "inactive" is a bare predicate adjective with no subject or referent.
+- suggested fix: rewrite as "this setting is inactive when prompt variety is set to personalized." to supply the missing subject and clarify the scope of inactivity.
+- source: browser
+
+### [LOW] /log — "private" state badge trails the "full entry" link with no anchoring label
+- pass: 65 (commit ca4122a)
+- viewport: both
+- category: comprehension
+- observation: the most recent entry card ends with "showing the most recent entry. full entry" followed by "private" on the next line. without a label attributing "private" as a publication state badge, a linear reader may interpret it as a descriptor of the "full entry" link or as an incomplete sentence fragment.
+- evidence: /log capture: "showing the most recent entry. full entry\nprivate" — "private" appears after the link text with no prefix label to anchor it as a state indicator.
+- suggested fix: add a sr-only prefix or aria-label to the badge element, e.g. aria-label="publication status: private", so the state is grammatically anchored in both visual and accessible reading order.
+- source: browser
 
 ### [LOW] /today — focus overlay content permanently in DOM; form block doubled for raw-DOM consumers and Playwright captures
 - pass: 64 (commit 0879794)
