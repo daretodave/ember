@@ -1,12 +1,39 @@
 # External-observer findings — Ember
 
-> Last pass: 2026-06-19 at commit 9c5368e
-> Pass count: 63
+> Last pass: 2026-06-20 at commit 0879794
+> Pass count: 64
 
 > Written by `/critique` after walking the live site as a
 > fresh-eyes visitor. Drained by `/iterate`.
 
 ## Pending
+
+### [LOW] /today — focus overlay content permanently in DOM; form block doubled for raw-DOM consumers and Playwright captures
+- pass: 64 (commit 0879794)
+- viewport: both
+- category: a11y
+- observation: the focus-mode overlay on /today is permanently rendered in the DOM (outer container kept for the CSS opacity transition on close). the AT tree issue was addressed at pass 50 via aria-hidden={!isFocus || undefined}. however the inner content — prompt text, response, check-in, tags, publish, save controls, and the privacy notices — remains in the DOM at all times, visible to raw-DOM traversals, Playwright innerText, and search crawlers. the writing surface content appears twice sequentially in every capture.
+- evidence: /today capture: "response / check-in / optional. a mood or weather word for this day. / tags / optional. up to five tags, comma-separated. / publish / focus / save / when published..." followed immediately by "what do you avoid thinking about by staying busy? / response / check-in / optional... / publish / save / when published... / done writing" — full form block present twice, with aria-hidden suppressing only AT reading order.
+- suggested fix: conditionally render the focus overlay's inner content (prompt, fields, controls) only when isFocus is true; keep the outer container div in the DOM for the opacity transition. src/app/today/TodayEntry.tsx.
+- source: browser
+
+### [LOW] /log — stat line "N days written" paired with "N entries published"; unit inconsistency within the same sentence
+- pass: 64 (commit 0879794)
+- viewport: both
+- category: voice
+- observation: the /log stat line reads "4 days written. 0 entries published." the first clause uses "days" as the count unit; the second uses "entries". both refer to the same countable objects — one journal response per calendar day. the mismatch was introduced when "days published" was corrected to "entries published" in a prior pass, leaving "days written" unchanged. a user reads two different units in adjacent clauses for logically equivalent objects.
+- evidence: /log capture: "4 days written. 0 entries published." — "days" unit in first clause; "entries" unit in second clause of the same stat line. src/app/log/page.tsx.
+- suggested fix: change the written count to use "entries" to align with the published-count unit: `{written} {written === 1 ? 'entry' : 'entries'} written.`
+- source: browser
+
+### [LOW] / vs /settings — "ember does not personalize your morning" reads as absolute; opt-in personalized variety appears to contradict it
+- pass: 64 (commit 0879794)
+- viewport: both
+- category: comprehension
+- observation: the landing page asserts "ember does not personalize your morning." as a product philosophy statement with no qualification. the /settings page offers a "personalized" prompt variety — an opt-in that generates prompts from the user's recent entries. a visitor who reads the landing page and later explores settings encounters an apparent contradiction: the product declares it does not personalize, then offers personalization as a feature. the opt-in nature is not communicated on the landing page.
+- evidence: / capture: "ember does not personalize your morning." — /settings capture: "personalized: a unique prompt generated from recent entries." — no qualifier bridges the two statements.
+- suggested fix: add a brief qualifier to the landing page, e.g. "by default, ember does not personalize the morning." to signal that the opt-in exists without weakening the default philosophy; or add a context note to the settings personalized option, e.g. "this is an opt-in departure; the default experience is the same for everyone."
+- source: browser
 
 ### [x] [MED] /today — formatSavedTime always renders UTC time; users in non-UTC timezones see an incorrect save timestamp
 - pass: 61 (commit d450909)
@@ -121,7 +148,7 @@
 - source: browser
 - resolution: collapsed each pair into a single <p> with stable ID whose content switches on the current radio value; both radios share one aria-describedby ID. Shipped at acf5e52.
 
-### [LOW] /log — "days published" unit incongruent with per-entry publish action
+### [x] [LOW] /log — "days published" unit incongruent with per-entry publish action
 - pass: 62 (commit 0da2351)
 - viewport: both
 - category: voice
@@ -129,6 +156,7 @@
 - evidence: /log capture: "3 days written. 0 days published."; src/app/log/page.tsx line 163: `{published} {published === 1 ? 'day' : 'days'} published.` — "days" unit used for publish count.
 - suggested fix: change the publish count to `{published} {published === 1 ? 'entry' : 'entries'} published.` to match the entry-centric language used throughout the publish flow.
 - source: browser
+- resolution: changed "days published" to "entries published" in src/app/log/page.tsx. Shipped at 6364442.
 
 ### [LOW] /settings — save button title omits "weekly reflection" from enumerated saved fields
 - pass: 62 (commit 0da2351)
@@ -403,7 +431,7 @@
 - source: browser
 - resolution: /signin fallback changed to "the link could not be sent."; /today, /settings, /log/[date], DeleteAccountSection fallbacks changed to "save failed."/"deletion failed." suffix variants. Shipped at 6b2fb77.
 
-### [LOW] / — sticky CTA "today's prompt is waiting." uses mild anthropomorphism inconsistent with the flat declarative register
+### [x] [LOW] / — sticky CTA "today's prompt is waiting." uses mild anthropomorphism inconsistent with the flat declarative register
 - pass: 53 (commit 3f0847a)
 - viewport: both
 - category: voice
@@ -411,8 +439,9 @@
 - evidence: src/app/page.tsx: today&apos;s prompt is waiting. — in the <p className={styles.ctaCopy}> preceding the sign-in link.
 - suggested fix: rewrite as "today's prompt is ready." to keep the inanimate declarative register.
 - source: browser
+- resolution: changed to "today's prompt is ready." in src/app/page.tsx. Shipped at 93cc59e.
 
-### [LOW] /log — "browse by date" link label uses second-person imperative verb
+### [x] [LOW] /log — "browse by date" link label uses second-person imperative verb
 - pass: 53 (commit 3f0847a)
 - viewport: both
 - category: voice
@@ -420,8 +449,9 @@
 - evidence: src/app/log/page.tsx: <Link href={`/log/${recentDate}`}>browse by date</Link> — inside the entryFoot section below the most recent entry card.
 - suggested fix: change link text to "all entries" or "full log" to replace the imperative verb with a descriptive noun phrase consistent with the product's voice.
 - source: browser
+- resolution: changed to "full entry" (more accurate — link navigates to a single dated entry, not an archive). Shipped at 74143b7.
 
-### [LOW] /log — entry article header contains date as plain text with no heading element; heading hierarchy inside article is broken
+### [x] [LOW] /log — entry article header contains date as plain text with no heading element; heading hierarchy inside article is broken
 - pass: 53 (commit 3f0847a)
 - viewport: both
 - category: a11y
@@ -429,6 +459,7 @@
 - evidence: src/app/log/page.tsx: <header className={styles.entryDate}>{formatDisplayDate(recentDate!)} {recentDate === today && ' · today'}</header> followed by <h2 className={styles.entryPrompt}>{recentPrompt.prompt}</h2> — the date text inside <header> has no heading wrapper.
 - suggested fix: wrap the date string inside the article <header> in an <h2> element and demote the prompt line to <p className={styles.entryPrompt}>, so the heading sequence within the article is: date (h2) → prompt (paragraph).
 - source: browser
+- resolution: date string wrapped in <h2>; prompt demoted to <p> in src/app/log/page.tsx. Shipped at 3efd399.
 
 ### [x] [MED] /signin — email input has no autocomplete="email"; WCAG 1.3.5 not met
 - pass: 51 (commit 0107c11)
