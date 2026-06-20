@@ -26,7 +26,7 @@
 - suggested fix: add a title attribute to the "done writing" control, e.g. title="collapses the writing area", so its function is discoverable without activation.
 - source: browser
 
-### [LOW] /signin — "send link." button label ends with a period; isolated departure from all other action controls
+### [x] [LOW] /signin — "send link." button label ends with a period; isolated departure from all other action controls
 - pass: 65 (commit ca4122a)
 - viewport: both
 - category: voice
@@ -34,6 +34,8 @@
 - evidence: /signin capture: "send link." — compare /today: "publish", "save"; /settings: "save", "sign out" — no other action button ends with a period.
 - suggested fix: remove the trailing period from the "send link" button label to align with the period-free typographic register of all other action controls.
 - source: browser
+- issue: #88
+- resolution: removed trailing period from "send link." and "sending." in src/app/signin/page.tsx. Shipped at feb9262.
 
 ### [LOW] /settings — "inactive when variety is set to personalized" has no grammatical subject
 - pass: 65 (commit ca4122a)

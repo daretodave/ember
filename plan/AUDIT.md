@@ -28,6 +28,17 @@
 - issue: #87
 - resolution: added conditional "sign in to write." link (→ /signin) inside the today entry's dayBody in page.tsx/page.module.css. Shipped at 2e79151.
 
+### [x] [3.6] /signin — "send link." button label ends with a period; isolated departure from all other action controls
+- category: external-critique
+- impact: 4
+- ease: 9
+- note: scored 2026-06-20 — from critique pass 65 (ca4122a); the submit button on /signin reads "send link." with a trailing period; every other action control in the product carries no terminal punctuation — publish, save, focus, sign out; the voice guide specifies periods for tooltip/hover copy as complete sentences, not for button labels
+- observation: src/app/signin/page.tsx line 96: `{state === 'sending' ? 'sending.' : 'send link.'}` — trailing period on both label states; no other action button ends with a period
+- suggested fix: change to `{state === 'sending' ? 'sending' : 'send link'}` — remove trailing period from both states
+- source: /critique pass 65 (commit ca4122a)
+- issue: #88
+- resolution: removed trailing period from both "send link." and "sending." button label states in src/app/signin/page.tsx; updated unit test and e2e spec. Shipped at feb9262.
+
 ### [ ] [2.7] /settings — "export your data" uses second-person possessive; voice guide prohibits second-person imperative copy
 - category: voice
 - impact: 3
