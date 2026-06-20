@@ -26,14 +26,16 @@
 - suggested fix: change to "export data" — noun phrase; no second-person direct address
 - source: /critique pass 52 (commit b4d3589); also in plan/PHASE_CANDIDATES.md "voice coherence tail" pending scope
 
-### [ ] [2.7] / — "the next seven days" heading includes today; implies future-only content
+### [x] [3.6] / — "the next seven days" heading includes today; implies future-only content
 - category: voice
-- impact: 3
+- impact: 4
 - ease: 9
-- note: scored 2026-06-20 — from critique pass 58 (a9827d4); the seven-day prompt preview section heading "the next seven days" implies the content is future-only, but the first item in the list is today's prompt; heading contradicts the actual content
+- note: rescored 2026-06-20 — landing page (highest-traffic surface) sees more readers than /log where similar copy findings scored impact 4; original score of 2.7 used impact 3 (settings-page baseline)
 - observation: src/app/page.tsx line 42: `the next seven days` — first item in the preview list is today, so "next" overstates future-ness
 - suggested fix: change to "the coming week" or "seven days of prompts" to describe the window without implying future-only content
 - source: /critique pass 58 (commit a9827d4); also in plan/PHASE_CANDIDATES.md "voice coherence tail" pending scope
+- issue: #86
+- resolution: changed heading text to "the coming week" in src/app/page.tsx; updated unit test and smoke e2e spec. Shipped at 52489d8.
 
 ### [x] [2.7] / — "ember does not personalize your morning" reads as absolute; opt-in personalized variety on /settings appears to contradict it
 - category: external-critique
