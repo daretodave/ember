@@ -28,7 +28,7 @@
 - issue: #82
 - resolution: changed `{written === 1 ? 'day' : 'days'}` to `{written === 1 ? 'entry' : 'entries'}` in src/app/log/page.tsx line 162. Shipped at 275c3d6.
 
-### [LOW] / vs /settings — "ember does not personalize your morning" reads as absolute; opt-in personalized variety appears to contradict it
+### [x] [LOW] / vs /settings — "ember does not personalize your morning" reads as absolute; opt-in personalized variety appears to contradict it
 - pass: 64 (commit 0879794)
 - viewport: both
 - category: comprehension
@@ -36,6 +36,8 @@
 - evidence: / capture: "ember does not personalize your morning." — /settings capture: "personalized: a unique prompt generated from recent entries." — no qualifier bridges the two statements.
 - suggested fix: add a brief qualifier to the landing page, e.g. "by default, ember does not personalize the morning." to signal that the opt-in exists without weakening the default philosophy; or add a context note to the settings personalized option, e.g. "this is an opt-in departure; the default experience is the same for everyone."
 - source: browser
+- issue: #83
+- resolution: changed "ember does not personalize your morning." to "by default, ember does not personalize your morning." in src/app/page.tsx. "your morning" kept per /oversight 2026-06-11. Shipped at 6988a58.
 
 ### [x] [MED] /today — formatSavedTime always renders UTC time; users in non-UTC timezones see an incorrect save timestamp
 - pass: 61 (commit d450909)

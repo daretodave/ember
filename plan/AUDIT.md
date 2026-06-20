@@ -6,6 +6,17 @@
 
 ## Pending
 
+### [x] [2.7] / — "ember does not personalize your morning" reads as absolute; opt-in personalized variety on /settings appears to contradict it
+- category: external-critique
+- impact: 3
+- ease: 9
+- note: scored 2026-06-20 — from critique pass 64 (0879794); the landing page declared "ember does not personalize your morning." with no qualification; /settings offers a "personalized" prompt variety opt-in, creating an apparent contradiction for users who read both pages
+- observation: src/app/page.tsx: "ember does not personalize your morning." — no qualifier for the opt-in
+- suggested fix: add "by default," prefix to signal the opt-in exists without weakening the default philosophy statement
+- source: /critique pass 64 (commit 0879794)
+- issue: #83
+- resolution: changed to "by default, ember does not personalize your morning." in src/app/page.tsx. Shipped at 6988a58.
+
 ### [x] [2.7] /log — stat line "days written" / "entries published" unit mismatch in same sentence
 - category: external-critique
 - impact: 3
@@ -50,7 +61,7 @@
 - issue: #79
 - resolution: moved response label and textarea before check-in and tags in both the normal section and focus-mode overlay in TodayEntry.tsx; aria-describedby and tabIndex guards preserved. Shipped at 93b81b1.
 
-### [ ] [2.7] /log — "(edited)" state indicator uses parentheses; inconsistent with em-dash pattern used for all other entry states
+### [x] [2.7] /log — "(edited)" state indicator uses parentheses; inconsistent with em-dash pattern used for all other entry states
 - category: external-critique
 - impact: 3
 - ease: 9
@@ -58,6 +69,7 @@
 - observation: /log entry excerpt renders "(edited)" as a parenthetical suffix; em-dash is used everywhere else for state labels
 - suggested fix: change "(edited)" to "— edited" to match the product's typographic register for state labels
 - source: /critique pass 63 (commit 9c5368e)
+- resolution: false positive — the "(edited)" text was e2e test sentinel content written to the database by apps/e2e/tests/auth-flow.spec.ts (WRITE_CONTENT = 'e2e write test — today'; edit test appends ' (edited)'). No UI state indicator exists in the product. No code change needed.
 
 ### [ ] [2.4] /settings — "print your book" description paragraph visually ambiguous; may read as describing both export and print links
 - category: external-critique
