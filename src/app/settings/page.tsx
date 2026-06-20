@@ -77,7 +77,7 @@ export default async function SettingsPage() {
           className={styles.exportLink}
           download
         >
-          export your data
+          export data
         </a>
         {' '}
         <Link
